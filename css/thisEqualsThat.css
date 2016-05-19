@@ -1,0 +1,147 @@
+#logo
+{ display: inline;
+}
+
+#modelClassUL
+{ display: inline;
+}
+
+.modelClassLI
+{ display: inline;
+}
+
+.modelClassLI img
+{ max-height: 80px;
+  max-width: 100px;
+}
+
+.masterReferenceSVGSelectList
+{ position: absolute;
+  left: -100px;
+  top: -10000000px;
+}
+.referenceSVGSelectListItem
+{ height: 64px;
+  width: 64px;
+}
+.userSelectedReferenceSVG_selected
+{ background-color: lightgrey;
+}
+
+div.model
+{ position: relative;
+}
+
+div.modelInstance
+{ width: 45%;
+  float:left;
+  position: relative;
+  margin-right: 5%;
+}
+
+div.modelSliders
+{ overflow: auto;
+}
+
+div.inputFieldElement
+{ display: inline;
+  /*width: 65px;*/
+  float: left;
+  margin-right: 10px;
+}
+div.inputFieldLabel
+{ font-size: 10px;
+  white-space: nowrap;
+}
+div.inputFieldSlider
+{ height: 200px;
+}
+input.inputFieldText[type=text]
+{ width: 65px;
+}
+
+div.modelOutputContainer
+{ background-image: url(/graphics/thisEquals/downArrowOutput.feint.png);
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+  background-origin: 20% 40%;
+  margin-top: -50px;
+  padding-top: 70px;
+  width: 50%;
+  margin-left: 10%;
+  padding-left: 10%;
+  padding-right: 15%;
+  padding-bottom: 40px;
+}
+div.bottomModelSelectDiv
+{   position: absolute;
+    right: 0px;
+    top: 130px;
+}
+div.bottomModelSelectDiv select
+{   background-color: rgba(0,0,0,0);
+    background-image: url(/graphics/thisEquals/convert-to-that.png);
+    background-size: 100% 100%;
+    height: 100px;
+}
+
+
+div.containerLabel
+{ font-size: 16pt;
+  color: rgb(40,40,200);
+}
+
+
+div.svgModelRoot
+{ width:  600px;
+  height: 400px;
+
+  float: left;
+  position: relative;
+}
+div.svgModelRoot svg
+{ position: absolute;
+}
+div.referenceSVG
+{ width: 50px;
+  height: 50px;
+  background-color: green;
+  position: absolute;
+  bottom: 0px;
+  right: 100px;
+}
+
+div.customSVGPane
+{ padding: 20px;
+  padding-top: 40px;
+  border-radius: 12px;
+  background-color: #ff8800;
+  width: 200px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+div.customSVGPane.googleConnect
+{ padding-top: 20px;
+  background-color: #4444cc;
+}
+div.customSVGPaneSubmitButton
+{ background-color: red;  
+  width: 20px;
+  height: 20px;
+}
+
+div.referenceSVGSelectListContainer
+{ overflow-y : scroll;
+  height: 400px;
+}
+
+div.colorControl
+{ float: left;  
+  background: grey;
+  padding: 5px;
+}
+div.colorControl > *
+{  padding: 5px;
+}
+

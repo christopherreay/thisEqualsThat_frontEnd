@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-flat-20030114.dtd">
+<svg xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink" 
+ xmlns:z="http://debeissat.nicolas.free.fr/svg3d/svg3d.rng" 
+onload="svg3d.init(this)" z:xInfinite="300" z:yInfinite="200" z:zRatio="2">
+	<title>SVG animation - half pipe 3d</title>
+	<g id="g1" onclick="svg3d.toggleRotation()">
+      <path id="faceBack"   class="face faceBack"   style="fill: rgba(213, 174, 174, 1.0);" d="M0,0,123.6 L200,0,123.6 L200,76.4,123.6 L0,76.4,123.6 Z" 
+            z:threeD="true">
+        </path>
+      <path id="faceBottom" class="face faceBottom" style="fill: rgba(213, 174, 174, 1.0);" d="M0,76.4,0 L200,76.4,0 L200,76.4,123.6 L0,76.4,123.6 Z" 
+            z:threeD="true">
+        </path>
+      <path id="faceRight"  class="face faceRight"  style="fill: rgba(164, 159, 159, 1.0);" d="M200,0,0 L200,0,123.6 L200,76.4,123.6 L200,76.4,0 Z" 
+            z:threeD="true">
+        </path>      
+      <path id="faceLeft"   class="face faceLeft"   style="fill: rgba(31, 29, 29, 1.0);"    d="M0,0,0 L0,0,123.6 L0,76.4,123.6 L0,76.4,0 Z" 
+            z:threeD="true">
+        </path>
+      <path id="faceTop"    class="face faceTop"    style="fill: rgba(58, 57, 57, 1.0);"    d="M0,0,0 L200,0,0 L200,0,123.6 L0,0,123.6 Z" 
+            z:threeD="true">
+        </path>
+     <path id="faceFront"   class="face faceFront"  style="fill: rgba(35, 35, 35, 0.9);"    d="M0,0,0 L200,0,0 L200,76.4,0 L0,76.4,0 Z" 
+            z:threeD="true">
+        </path>
+	</g>
+</svg>

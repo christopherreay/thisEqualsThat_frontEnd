@@ -1,0 +1,33 @@
+div.modelSliders
+{ overflow: visible;
+
+}
+.inputFieldSlider
+{ display: none;
+}
+
+div.modelOutputContainer
+{ background-image: none;
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+  background-origin: 20% 40%;
+  margin-top: -50px;
+  padding-top: 70px;
+  width: 50%;
+  margin-left: 10%;
+  padding-left: 10%;
+  padding-right: 15%;
+  padding-bottom: 55px;
+}
+
+.bottomModelSelectDiv
+{ display: none;
+}
+
+.modelClassLI > img
+{ max-height: 64px;
+}
+
+div.colorControl
+{ display: none;
+}

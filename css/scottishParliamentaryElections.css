@@ -1,0 +1,298 @@
+html, body
+{ height: 100%;
+  background-color: #1FBCD6;
+  overflow: hidden;
+}
+
+textarea
+{   resize: none;
+    overflow-y: scroll;
+    height: 90%;
+    width: 90%;
+    background-color: rgba(255,255,255,0.2);
+    border-radius: 8px;
+    margin-right: 20px;
+}
+div#swings
+{ opacity: 0.9;
+}
+
+div.swingString
+{ z-index: 20;
+}
+
+div#constituencySwings
+{ position:absolute;
+  left:   20%;
+  width:  40%;
+  top:    0%;
+  height: 15%;
+}
+div#listSwings
+{ position:absolute;
+  left:   60%;
+  width:  40%;
+  top:    0%;
+  height: 15%;
+}
+
+div.tooltip
+{ 
+  position: absolute;
+  z-index: 10;
+  visibility: hidden;
+  font-size: 2em;
+  color: black;
+  text-shadow: 0px 0px 8px white, 0px 0px 8px white, 0px 0px 8px white, 0px 0px 8px white, 0px 0px 8px white;
+}
+
+#scotland
+{ position: absolute;
+
+  height: 95%;
+  width: 100%;
+
+  display: inline-block;
+  overflow: none;
+}
+
+#scotland .map
+{ height: 100%;
+  width:  100%;
+
+  position: absolute;
+  /*visibility: hidden;*/
+}
+ 
+#regions .region:hover
+{ opacity: 0.7;
+  z-index: 2;
+}
+
+#constituencies.map
+{ left:5%;
+  top: 20%;
+  width: 40%;
+  height: 80%;
+}
+
+
+path
+{ fill:   lightgrey;
+  stroke: black;
+  stroke-width: 1;
+}
+
+/*#constituencies.map > svg > g > g > *:hover,*/
+.hoverConstituency, .hoverConstituency *
+{ fill: red;
+}
+div.vote
+{ color: white;
+}
+
+#parliamentContainer.map.vote
+{ left: 50%;
+  top: 20%;
+  width: 45%;
+  height: 20%;
+
+  background-color: none;
+  color: white;
+}
+#fullData.map.vote
+{ left:     50%;
+  top:      45%;
+  width:    45%;
+  height:   55%;
+
+  background-color: rgba(255, 255, 255, 0.3);
+
+  overflow-y: scroll;
+}
+
+pre 
+{outline: 1px solid #ccc; padding: 5px; margin: 5px; 
+  font-size: 10px;
+}
+.string { color: green; }
+.number { color: darkorange; }
+.boolean { color: blue; }
+.null { color: magenta; }
+.key { color: red; }
+
+
+
+#logo
+{ display: inline;
+}
+
+#modelClassUL
+{ display: inline;
+}
+
+.modelClassLI
+{ display: inline;
+}
+
+.modelClassLI img
+{ max-height: 80px;
+  max-width: 100px;
+}
+
+.masterReferenceSVGSelectList
+{ position: absolute;
+  left: -100px;
+  top: -10000000px;
+}
+.referenceSVGSelectListItem
+{ height: 64px;
+  width: 64px;
+}
+.userSelectedReferenceSVG_selected
+{ background-color: lightgrey;
+}
+
+div.model
+{ position: relative;
+}
+
+div.modelInstance
+{ width: 45%;
+  float:left;
+  position: relative;
+  margin-right: 5%;
+}
+
+div.modelSliders
+{ overflow: auto;
+}
+
+div.inputFieldElement
+{ display: inline;
+  /*width: 65px;*/
+  float: left;
+  margin-right: 10px;
+}
+div.inputFieldLabel
+{ font-size: 10px;
+  white-space: nowrap;
+}
+div.inputFieldSlider
+{ height: 200px;
+}
+input.inputFieldText[type=text]
+{ width: 65px;
+}
+
+div.modelOutputContainer
+{ background-image: url(/graphics/thisEquals/downArrowOutput.feint.png);
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+  background-origin: 20% 40%;
+  margin-top: -50px;
+  padding-top: 70px;
+  width: 50%;
+  margin-left: 10%;
+  padding-left: 10%;
+  padding-right: 15%;
+  padding-bottom: 40px;
+}
+div.bottomModelSelectDiv
+{   position: absolute;
+    right: 0px;
+    top: 130px;
+}
+div.bottomModelSelectDiv select
+{   background-color: rgba(0,0,0,0);
+    background-image: url(/graphics/thisEquals/convert-to-that.png);
+    background-size: 100% 100%;
+    height: 100px;
+}
+
+
+div.containerLabel
+{ font-size: 16pt;
+  color: rgb(40,40,200);
+}
+
+
+div.svgModelRoot
+{ width:  600px;
+  height: 400px;
+
+  float: left;
+  position: relative;
+}
+div.svgModelRoot svg
+{ position: absolute;
+}
+div.referenceSVG
+{ width: 50px;
+  height: 50px;
+  background-color: green;
+  position: absolute;
+  bottom: 0px;
+  right: 100px;
+}
+
+div.customSVGPane
+{ padding: 20px;
+  padding-top: 40px;
+  border-radius: 12px;
+  background-color: #ff8800;
+  width: 200px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+div.customSVGPane.googleConnect
+{ padding-top: 20px;
+  background-color: #4444cc;
+}
+div.customSVGPaneSubmitButton
+{ background-color: red;  
+  width: 20px;
+  height: 20px;
+}
+
+div.referenceSVGSelectListContainer
+{ overflow-y : scroll;
+  height: 400px;
+}
+
+div.colorControl
+{ float: left;  
+  background: grey;
+  padding: 5px;
+}
+div.colorControl > *
+{  padding: 5px;
+}
+
+
+
+
+
+
+.sNP, .sNP *
+{ fill: yellow;
+}
+.conservative, .conservative *
+{ fill: blue;
+}
+.labour, .labour *
+{ fill: red;
+}
+.liberalDemocrat, .liberalDemocrat *
+{ fill: goldenrod;
+}
+.green, .green *
+{ fill: #24FF24;
+}
+.rISE, .rISE *
+{ fill: darkred;
+}
+.solidarity, .solidarity *
+{ fill: darkgreen;
+}

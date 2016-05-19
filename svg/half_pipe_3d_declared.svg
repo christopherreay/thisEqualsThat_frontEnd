@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-flat-20030114.dtd">
+<svg xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink" 
+ xmlns:z="http://debeissat.nicolas.free.fr/svg3d/svg3d.rng" 
+ width="100%" height="100%" onload="svg3d.init(this)" z:xInfinite="300" z:yInfinite="200" z:zRatio="2">
+	<script type="text/ecmascript" xlink:href="../svg3d/svg3d.js" />
+    <script type="text/ecmascript" xlink:href="../svg3d/svg3d_parsing.js" />
+    <script type="text/ecmascript" xlink:href="../svg3d/dom_utils.js" />
+	<title>SVG animation - half pipe 3d</title>
+	<g id="g1" onclick="svg3d.toggleRotation()">
+        <path id="face0" style="fill: yellow; opacity: 0.6;" d="M0,0,0 L123.6,0,0 L123.6,76.4,0 L0,76.4,0 Z" z:threeD="true">
+            <z:rotation incRotX="0.07" incRotY="0.1" incRotZ="0.01" />
+        </path>
+		<path id="face1" style="fill: yellow; opacity: 0.6;" d="M0,0,200 L123.6,0,200 L123.6,76.4,200 L0,76.4,200 Z" z:threeD="true">
+            <z:rotation incRotX="0.07" incRotY="0.1" incRotZ="0.01" />
+        </path>
+		<path id="face2" style="fill: gold; opacity: 0.2;" d="M0,0,0 L0,0,200 L0,76.4,200 L0,76.4,0 Z" z:threeD="true">
+            <z:rotation incRotX="0.07" incRotY="0.1" incRotZ="0.01" />
+        </path>
+		<path id="face3" style="fill: gold; opacity: 0.2;" d="M123.6,0,0 L123.6,0,200 L123.6,76.4,200 L123.6,76.4,0 Z" z:threeD="true">
+            <z:rotation incRotX="0.07" incRotY="0.1" incRotZ="0.01" />
+        </path>
+		<path id="face4" style="fill: goldenRod; opacity: 0.4;" d="M0,0,0 L123.6,0,0 L123.6,0,200 L0,0,200 Z" z:threeD="true">
+            <z:rotation incRotX="0.07" incRotY="0.1" incRotZ="0.01" />
+        </path>
+		<path id="face5" style="fill: goldenRod; opacity: 0.4;" d="M0,76.4,0 L123.6,76.4,0 L123.6,76.4,200 L0,76.4,200 Z" z:threeD="true">
+            <z:rotation incRotX="0.07" incRotY="0.1" incRotZ="0.01" />
+        </path>
+        
+	</g>
+</svg>

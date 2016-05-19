@@ -1,0 +1,9 @@
+{ "translate3d" : {"x": 200, "y": 600, "z": -800},
+			"clone3d": {
+				"x": 600,
+        "surface": 4000,
+				"y": -600, 
+				"z": 300
+			},
+  "fileName" : "rg1024_metal_barrel"
+}
