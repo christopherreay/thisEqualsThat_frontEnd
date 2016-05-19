@@ -61,7 +61,7 @@ input.inputFieldText[type=text]
 }
 
 div.modelOutputContainer
-{ background-image: url(/graphics/thisEquals/downArrowOutput.feint.png);
+{ background-image: url(/static/graphics/thisEquals/downArrowOutput.feint.png);
   background-size: 50% 100%;
   background-repeat: no-repeat;
   background-origin: 20% 40%;
@@ -80,7 +80,7 @@ div.bottomModelSelectDiv
 }
 div.bottomModelSelectDiv select
 {   background-color: rgba(0,0,0,0);
-    background-image: url(/graphics/thisEquals/convert-to-that.png);
+    background-image: url(/static/graphics/thisEquals/convert-to-that.png);
     background-size: 100% 100%;
     height: 100px;
 }
