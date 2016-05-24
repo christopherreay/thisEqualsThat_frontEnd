@@ -8,12 +8,12 @@ this.ModelFieldInput = function(modelInstance, data)
   { if (! this.hasOwnProperty("uiSlider"))
     { var fieldData = this.data;
 
-      var sliderOptions = this["slider_"+fieldData.rangeType+"SliderOptions"](); 
-      sliderOptions["orientation"] = "vertical"
+      var sliderOptions = this["slider_"+fieldData.rangeType+"SliderOptions"]();
+      sliderOptions["orientation"] = "horizontal"
       console.debug("sliderOptions", sliderOptions);
-      
-      this.uiElement    = 
-        $("<div />", 
+
+      this.uiElement    =
+        $("<div />",
           { class: "inputFieldElement"
           }
         );
@@ -27,15 +27,15 @@ this.ModelFieldInput = function(modelInstance, data)
           { class: "inputFieldText",
             type: "text",
           }
-        );      
+        );
       var uiSlider =
         $("<div />",
           { class: "inputFieldSlider"
           }
         ).slider(sliderOptions);
       uiSlider.data("thisEquals.modelField", this);
-      
-      
+
+
       this.uiValueText  = uiValueText;
       this.uiSlider     = uiSlider;
 
@@ -49,7 +49,7 @@ this.ModelFieldInput = function(modelInstance, data)
   { console.debug("linear");
     var fieldData = this.data;
     var This = this;
-    var sliderOptions = 
+    var sliderOptions =
       { max: fieldData.rangeTop,
         min: fieldData.rangeBottom,
         value: fieldData.currentValue,
@@ -69,15 +69,15 @@ this.ModelFieldInput = function(modelInstance, data)
     var maxv = Math.log(max);
     var minv = Math.log(min);
 
-    this.logSliderConstants = 
+    this.logSliderConstants =
       { minv: minv,
         min:  min,
         // calculate adjustment factor
         scale: (maxv-minv) / (halfMax-min)
       };
-      
+
     var This = this;
-    var sliderOptions = 
+    var sliderOptions =
       { max: halfMax,
         min: min,
         value: this.actualToSlider(fieldData.currentValue),
@@ -89,12 +89,12 @@ this.ModelFieldInput = function(modelInstance, data)
           { This.currentValue = This.sliderToActual(ui.value);
             This.updateValueText();
             This.modelInstance.inputFieldAltered(
-              { inputField: JSON.stringify(This.fullAddress), 
+              { inputField: JSON.stringify(This.fullAddress),
                 newValue: This.currentValue
               });
           }
       };
-    
+
     return sliderOptions;
   }
   this.ModelFieldInput.prototype.sliderToActual = function(sliderValue)
@@ -108,7 +108,7 @@ this.ModelFieldInput = function(modelInstance, data)
   this.ModelFieldInput.prototype.setValueFromActual = function(actual)
   { this.currentValue = actual;
     this.updateValueSlider();
-    this.updateValueText(); 
+    this.updateValueText();
   }
   this.ModelFieldInput.prototype.updateValueSlider = function()
   { this.uiSlider.value(this.actualToSlider(currentValue));
