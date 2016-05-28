@@ -13,11 +13,11 @@ window.attachFunc = function(parent, name, functionContent)
 }
 function PopupCenter(url, title, w, h) 
 { // Fixes dual-screen position                         Most browsers      Firefox
-  var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
-  var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+  var dualScreenLeft  = window.screenLeft != undefined ? window.screenLeft : screen.left;
+  var dualScreenTop   = window.screenTop  != undefined ? window.screenTop : screen.top;
 
-  var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
-  var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+  var width   = window.innerWidth   ? window.innerWidth   : document.documentElement.clientWidth  ? document.documentElement.clientWidth  : screen.width;
+  var height  = window.innerHeight  ? window.innerHeight  : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
 
   var left = ((width / 2) - (w / 2)) + dualScreenLeft;
   var top = ((height / 2) - (h / 2)) + dualScreenTop;
@@ -872,26 +872,27 @@ thisEqualsThat.oop = function()
             $("<a class='googleConnect_loginButton'>Login to Google</a>")
             .on("click", 
                 function()
-                { var pollingComplete = false;
+                { var pollingComplete       = false;
+                  var googleConnect_window  = false;
                   var emailAddress = display.googleConnect_email.val();
-                  var googleConnect_window = PopupCenter("googleConnect/login?emailAddress="+display.googleConnect_email.val()+"", "googleConnect", 200,200);
                   (function poll() 
                       { $.ajax(
                         { "url": "/googleConnect/gotCredentials",
                           "type": "POST",
                           "data": {"emailAddress": emailAddress},
                           "success": function(data) 
-                          { debugger;
-                            console.log("polling", data);
-                            if (data.gotCredentials == true)
-                            { googleConnect_window.close();
+                          { console.log("polling", data);
+                            if (googleConnect_window == false)
+                            { googleConnect_window = PopupCenter("googleConnect/login?emailAddress="+display.googleConnect_email.val()+"", "googleConnect", 400,200);
+                            }
+                            else if (data.gotCredentials == true)
+                            { googleConnect_window.close(); 
                               pollingComplete = true;
-                              alert("install stuff");
                             }
                           },
                           "error": function(jqXHR ,textStatus, errorThrown){debugger;},
                           "dataType": "json",
-                          "complete": function(){if (!pollingComplete) setTimeout(poll, 2000)},
+                          "complete": function(){console.log("polling status: ", pollingComplete); if (!pollingComplete) setTimeout(poll, 2000)},
                           "timeout": 2000,
                         });
                       }
@@ -908,13 +909,14 @@ thisEqualsThat.oop = function()
             )
             .on("change", 
                 function()
-                { var ajaxOptions = 
+                { alert("change spreadsheetURL");
+                  var ajaxOptions = 
                       { "url":  "/googleConnect/getSheets",
                         "type": "POST",
                         "data": { "emailAddress":   display.googleConnect_email.val(),
                                   "spreadsheetURL": display.googleConnect_spreadsheetURL.val(),
                                 },
-                        "success" : function(data){alert(data);},
+                        "success" : function(data){console.log(data);},
                         "dataType": "json",
                       }    
                   $.ajax(ajaxOptions);
