@@ -268,9 +268,9 @@ thisEqualsThat.oop = function()
               var referenceSVGSelectListItemDiv = $("<div class='referenceSVGSelectListItem' />").attr("thisEquals_fileHandle", referenceSVGData.fileHandle);
               var referenceSVGSelectListItemLI  = $("<li />");
               var referenceSVGSelectListItemSVG = $(document.createElementNS(d3.ns.prefix.svg, "svg"))
-                  .attr("xmlns",        "http://www.w3.org/2000/svg")
-                  .attr("xmlns:xlink",  "http://www.w3.org/1999/xlink")
-                  .attr("xmlns:z",      "http://debeissat.nicolas.free.fr/svg3d/svg3d.rng")
+                  .attr("xmlns",        "//www.w3.org/2000/svg")
+                  .attr("xmlns:xlink",  "//www.w3.org/1999/xlink")
+                  .attr("xmlns:z",      "//debeissat.nicolas.free.fr/svg3d/svg3d.rng")
                   .attr("width",        "100%")
                   .attr("height",       "100%")
               var clonedG = referenceRootG.clone().appendTo(referenceSVGSelectListItemSVG);
@@ -589,9 +589,9 @@ thisEqualsThat.oop = function()
       display.referenceSVG          = $("<div class='referenceSVG'  />");
       var containerSVG        = document.createElementNS(d3.ns.prefix.svg, "svg");
       $(containerSVG)
-          .attr("xmlns",        "http://www.w3.org/2000/svg")
-          .attr("xmlns:xlink",  "http://www.w3.org/1999/xlink")
-          .attr("xmlns:z",      "http://debeissat.nicolas.free.fr/svg3d/svg3d.rng")
+          .attr("xmlns",        "//www.w3.org/2000/svg")
+          .attr("xmlns:xlink",  "//www.w3.org/1999/xlink")
+          .attr("xmlns:z",      "//debeissat.nicolas.free.fr/svg3d/svg3d.rng")
           .attr("id",           "svgHTMLElement_"+this.id)
           .attr("width",        "100%")
           .attr("height",       "100%")
@@ -1058,7 +1058,7 @@ thisEqualsThat.oop = function()
                 var xAxisD = "m0,0 "+ "l"+axisBBox.width+",0";
                 //This.display.svgMeasureAxisY.setAttribute("transform", "translate("+(axisBBox.x + axisBBox.width + 10)+ " "+(axisBBox.y)+")");
                 //This.display.svgMeasureAxisX.setAttribute("transform", "translate("+(axisBBox.x)+                       " "+(axisBBox.y + axisBBox.height + 10)+")");
-                /*This.display.svgMeasureY = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                /*This.display.svgMeasureY = document.createElementNS("//www.w3.org/2000/svg", "path");
                 This.display.svgMeasureY.setAttribute("id", "svgMeasureY_"+This.id);
                 This.display.svgMeasureY.setAttribute("d", yAxisD);
                 This.display.svgMeasureY.setAttribute("stroke", "black");
