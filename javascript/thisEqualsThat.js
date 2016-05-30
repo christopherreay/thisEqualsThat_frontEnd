@@ -29,6 +29,16 @@ function PopupCenter(url, title, w, h)
   }
   return newWindow;
 }
+
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)        
+    } : null;
+}
+
 thisEqualsThat.oop = function()
 { this.ThisEqualsThatScene = function(displayContainerDiv)
   { this.displayContainerDiv = displayContainerDiv;
@@ -342,8 +352,10 @@ thisEqualsThat.oop = function()
   { $this = $(this);
     var modelField = $(this).data("thisEquals.modelField");
     $modelField = $(modelField)
-    modelField.uiSlider.data("thisEquals.disableWriteToTextField", true);
-    modelField.uiSlider.slider("value", modelField.actualToSlider(modelField.uiValueText.val()));
+    if (modelField.hasOwnProperty("uiSlider"))
+    { modelField.uiSlider.data("thisEquals.disableWriteToTextField", true);
+      modelField.uiSlider.slider("value", modelField.actualToSlider(modelField.uiValueText.val()));
+    }
     $modelField.data("thisEquals.oldValue", modelField.uiValueText.val());
     console.log($(modelField).data("thisEquals.oldValue"));
 
@@ -439,8 +451,9 @@ thisEqualsThat.oop = function()
     return this;
   }
 
-  this.ModelInstance.prototype.inputFieldAltered = function(fieldChangeData, successFunction)
-  { var This = this;
+  this.ModelInstance.prototype.inputFieldAltered = function(fieldChangeData, successFunction, doNotUpdateUI)
+  { if (!doNotUpdateUI) doNotUpdateUI = false;
+    var This = this;
     fieldChangeData	= $.extend({modelInstanceID: this.id}, fieldChangeData);
     var ajaxOptions = 
       { url: "inputFieldAltered",
@@ -451,13 +464,13 @@ thisEqualsThat.oop = function()
           This.lastAlteredOutputField.data.currentValue = data.newValue;
           This.lastAlteredVisualisationField.data.currentValue = data.svg3dDisplayJSON.svgFieldValue;
           This.svg3dDisplayJSON = data.svg3dDisplayJSON;
-          This.displayCurrentOutput()
+          if (!doNotUpdateUI) This.displayCurrentOutput()
           if (    This.bottomModelInstance && data.bottomModelData 
               &&  This.bottomModelInstance.lastAlteredOutputField && This.bottomModelInstance.lastAlteredOutputField.data)
           { This.bottomModelInstance.lastAlteredOutputField.data.currentValue = data.bottomModelData.newValue
             This.bottomModelInstance.lastAlteredVisualisationField.data.currentValue = data.bottomModelData.svg3dDisplayJSON.svgFieldValue;
             This.bottomModelInstance.svg3dDisplayJSON = data.bottomModelData.svg3dDisplayJSON
-            This.bottomModelInstance.displayCurrentOutput()
+            if (! doNotUpdateUI) This.bottomModelInstance.displayCurrentOutput()
           }
           if (successFunction)
             successFunction(data, status, request);
@@ -916,7 +929,18 @@ thisEqualsThat.oop = function()
                         "data": { "emailAddress":   display.googleConnect_email.val(),
                                   "spreadsheetURL": display.googleConnect_spreadsheetURL.val(),
                                 },
-                        "success" : function(data){console.log(data);},
+                        "success" : 
+                            function(data)
+                            { console.log(data);
+                              display.googleConnect_sheetSelect.empty()
+                              display.googleConnect_sheetSelect.append($("<option value='Select Sheet'>Select Sheet</option>"));
+                              $.each
+                              ( data.sheetNames, 
+                                function(index)
+                                { display.googleConnect_sheetSelect.append($("<option value='"+index+"'>"+this+"</option>"));
+                                }    
+                              )
+                            },
                         "dataType": "json",
                       }    
                   $.ajax(ajaxOptions);
@@ -930,6 +954,75 @@ thisEqualsThat.oop = function()
              }
             );
         display.googleConnect.append(display.googleConnect_sheetSelect);
+
+        display.googleConnect_cellRange = 
+            $("<input />",
+              { "class": 'googleConnect cellRange',
+              }
+            )
+        display.googleConnect.append(display.googleConnect_cellRange);
+
+        display.googleConnect_requestRangeData = 
+            $("<a />",
+              { "class": "googleConnect requestRangeData"
+              }
+            ).text("Request Range Data")
+            .on
+            ( "click",
+              function()
+              { alert("request range data");
+                  var ajaxOptions = 
+                      { "url":  "/googleConnect/getCellRange",
+                        "type": "POST",
+                        "data": { "emailAddress":   display.googleConnect_email.val(),
+                                  "spreadsheetURL": display.googleConnect_spreadsheetURL.val(),
+                                  "sheetName":      display.googleConnect_sheetSelect.val(),
+                                  "cellRange":      display.googleConnect_cellRange.val(),
+                                },
+                        "success" : 
+                            function(data)
+                            { console.log(data);
+                              // debugger;
+
+                              var dataRow     = data.cellRangeData.values[0];
+                              var colorRow    = data.cellRangeData.backgrounds[0];
+                              var columnCount = dataRow.length;
+                              ratioString     = dataRow.join("|");
+                              colorChangeString = 
+                                  $.map
+                                  ( colorRow, 
+                                    function(hex, i)
+                                    { rgb = hexToRgb(hex);
+                                      return "rgb("+(rgb.r-125)+","+(rgb.g-125)+","+(rgb.b-125)+")";
+                                    }
+                                  );
+                              colorChangeString = colorChangeString.join("|");
+                              This.inputFields['["colours"]'].uiValueText.val(colorChangeString);
+                              This.inputFields[ '["ratios"]'].uiValueText.val(ratioString)      ;
+
+                              var alterField = This.inputFields['["colours"]'];  
+                              This.inputFieldAltered(
+                              { inputField: alterField.fullAddress, 
+                                newValue:   alterField.uiValueText.val()
+                              }, 
+                              function()
+                              { var alterField = This.inputFields['["ratios"]'];  
+                                This.inputFieldAltered(
+                                    { inputField: alterField.fullAddress, 
+                                      newValue:   alterField.uiValueText.val()
+                                    }
+                                )
+                              },
+                              true
+                              );
+                            },
+                        "dataType": "json",
+                      }    
+                  $.ajax(ajaxOptions);
+              }
+            );
+        display.googleConnect.append(display.googleConnect_requestRangeData)
+
 
 
 
