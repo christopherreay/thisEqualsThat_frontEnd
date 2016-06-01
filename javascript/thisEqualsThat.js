@@ -38,6 +38,18 @@ function hexToRgb(hex) {
         b: parseInt(result[3], 16)        
     } : null;
 }
+function normalDistribution(mu, sigma, nsamples){
+    if(!nsamples) nsamples = 6
+    if(!sigma) sigma = 1
+    if(!mu) mu=0
+
+    var run_total = 0
+    for(var i=0 ; i<nsamples ; i++){
+       run_total += Math.random()
+    }
+
+    return sigma*(run_total - nsamples/2)/(nsamples/2) + mu
+}
 
 thisEqualsThat.oop = function()
 { this.ThisEqualsThatScene = function(displayContainerDiv)
@@ -675,8 +687,8 @@ thisEqualsThat.oop = function()
           }
       );
       display.ccRandomiseColors = $("<input id='ccRandomise_"   + This.id + "' type='button' value='Random'/>");
-      display.ccRandomiseColors.on("click",
-          function()
+      display.ccRandomiseColors_function = 
+          function(mult)
           { $(svgVisualisationG).find("path")
                 .each(  function()
                     { var colorRGB  = $(this).css("fill"); 
@@ -685,11 +697,11 @@ thisEqualsThat.oop = function()
                       if (colorRGB.indexOf("rgb") === 0)
                       { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
                         r = Number(rgb[1]);
-                        newR = Math.round(Math.max((((Math.random()* 10.0) - 5) ) + r, 0));
+                        newR = Math.round(Math.max((((mult * normalDistribution() * 10.0) - 5) ) + r, 0));
                         g = Number(rgb[2]);
-                        newG = Math.round(Math.max((((Math.random()* 10.0) - 5) ) + g, 0));
+                        newG = Math.round(Math.max((((mult * normalDistribution()* 10.0) - 5) ) + g, 0));
                         b = Number(rgb[3]);
-                        newB = Math.round(Math.max((((Math.random()* 10.0) - 5) ) + b, 0));
+                        newB = Math.round(Math.max((((mult * normalDistribution()* 10.0) - 5) ) + b, 0));
                         if (4 in rgb && rgb[4] != "")
                           newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
                         else
@@ -702,18 +714,19 @@ thisEqualsThat.oop = function()
                     }
                 )
             This.svg_createSaveLink(This);
-          }
-      );
+          };
+      display.ccRandomiseColors.on("click", display.ccRandomiseColors_function);
+
       display.ccRandomiseColorsByGroup = $("<input id='ccRandomiseGroup_"   + This.id + "' type='button' value='Random Group'/>");
-      display.ccRandomiseColorsByGroup.on("click",
-          function()
+      display.ccRandomiseColorsByGroup_function = 
+          function(mult)
           { $(svgVisualisationG).find("g")
                 .each(  function()
                     { 
                         
-                        var changeR = Math.round((((Math.random()* 10.0) - 5) ));
-                        var changeG = Math.round((((Math.random()* 10.0) - 5) ));
-                        var changeB = Math.round((((Math.random()* 10.0) - 5) ));
+                        var changeR = Math.round( 5 *  mult * normalDistribution() );
+                        var changeG = Math.round( 5  * mult * normalDistribution() );
+                        var changeB = Math.round( 5  * mult * normalDistribution() );
                         
                         //$(this).css("fill", newRGB);
                         //newStyle = this.getAttribute("style");
@@ -741,19 +754,20 @@ thisEqualsThat.oop = function()
                     }
                 )
             This.svg_createSaveLink(This);
-          }
-      );
+          };
+      display.ccRandomiseColorsByGroup.on("click", display.ccRandomiseColorsByGroup_function);
+
       display.ccRandomisePosition = $("<input id='ccRandomisePosition_"   + This.id + "' type='button' value='Random Position'/>");
-      display.ccRandomisePosition.on("click",
-          function()
+      display.ccRandomisePosition_function = 
+          function(mult)
           { $(svgVisualisationG).find("g")
                 .each(  function()
                     { var gBBox = this.getBBox();
                       var maxXChange = gBBox.width  / 80;
                       var maxYChange = gBBox.height / 80;
 
-                      var changeX = (((Math.random()* maxXChange * 2) - maxXChange) );
-                      var changeY = (((Math.random()* maxYChange * 2) - maxYChange) );
+                      var changeX = ((normalDistribution()  * mult * maxXChange) );
+                      var changeY = ((normalDistribution()  * mult * maxYChange) );
 
                       var transform = this.getAttribute("transform");
                       if (transform === null)
@@ -768,8 +782,8 @@ thisEqualsThat.oop = function()
                     }
                 )
             This.svg_createSaveLink(This);
-          }
-      );
+          };
+      display.ccRandomisePosition.on("click", display.ccRandomisePosition_function);
 
       $(display.ccColor).colorpicker(
         { "alpha": true,
@@ -1267,15 +1281,17 @@ thisEqualsThat.oop = function()
                     var postProcessing  = This.svg3dDisplayJSON.postProcessing;
                     var postProcessingFunctions = {};
                     for (var ccThing in postProcessing)
-                    { //var delay         = 2000.0 / postProcessing[ccThing]
-                      var ccThingButton = This.display[ccThing];
+                    { //var delay ssdasdsdsd        = 2000.0 / postProcessing[ccThing]
+                      var ccFunction = This.display[ccThing+"_function"];
+                      debugger;
+                      var mult = postProcessing[ccThing];
+                      if (mult != 0) ccFunction(mult);
+                      // var ccBuild = postProcessingFunctions[ccThing] = {};
+                      // ccBuild['counter']  = postProcessing[ccThing];
 
-                      var ccBuild = postProcessingFunctions[ccThing] = {};
-                      ccBuild['counter']  = postProcessing[ccThing];
-
-                      for (var counter = 0; counter < ccBuild['counter']; counter ++)
-                      { ccThingButton.trigger("click");
-                      }
+                      // for (var counter = 0; counter < ccBuild['counter']; counter ++)
+                      // { ccThingButton.trigger("click");
+                      // }
                     } 
                     
 
