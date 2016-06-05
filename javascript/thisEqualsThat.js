@@ -1463,7 +1463,7 @@ thisEqualsThat.oop = function()
   }
   this.ModelFieldInput.prototype.getTag_text = function()
   {   var fieldData = this.data;
-      this[0].uiElement    =
+      this.uiElement    =
         $("<div />",
           { "class": "inputFieldElement"
           }
@@ -1474,6 +1474,12 @@ thisEqualsThat.oop = function()
           }
          ).append(this.data.displayFieldAddress);
       var uiValueText =
+        $("<input />",
+          { "class": "inputFieldText",
+            type: "text",
+          }
+        ).first().addClass("unit_"+this.data.unit);
+      var uiValueRBG =
         $("<input />",
           { "class": "inputFieldText",
             type: "text",
@@ -1799,6 +1805,16 @@ $(function(){
 
 $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>');
 
+var colPick = function(e){
+    this.e.colorpicker(
+            { "alpha": false,
+              "colorFormat": "RGB",
+              "buttonClass": 'btn',
+              "hideOn": 'focus',
+              "okOnEnter": true,
+              "inline": true
+        });
+};
     
 //$('body').on('click', function(){
 //    $('.colorPickerElement:first').find('input.inputFieldText').addClass('colorPickerInput');
