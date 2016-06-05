@@ -1463,8 +1463,7 @@ thisEqualsThat.oop = function()
   }
   this.ModelFieldInput.prototype.getTag_text = function()
   {   var fieldData = this.data;
-
-      this.uiElement    =
+      this[0].uiElement    =
         $("<div />",
           { "class": "inputFieldElement"
           }
@@ -1479,7 +1478,7 @@ thisEqualsThat.oop = function()
           { "class": "inputFieldText",
             type: "text",
           }
-        ).addClass("unit_"+this.data.unit);
+        ).first().addClass("unit_"+this.data.unit);
       uiValueText.val(fieldData.defaultValue);
       uiValueText .data("thisEquals.modelField", this);
    
@@ -1778,7 +1777,9 @@ $().ready(
   }
 );
 
-
+var defineColorPicker = function(){
+    $('input.unit_rgb').css('background', '#000');
+};
 
 $(function(){
     
@@ -1792,6 +1793,7 @@ $(function(){
 //    });
 
 
+    
 //$('head').append('<script src="/static/javascript/evol-colorpicker.min.js"></script>');
 //$('head').append('<link rel="stylesheet" href="/static/css/evol-colorpicker.css" media="screen">');
 
@@ -1811,7 +1813,6 @@ $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</di
 //});
     
 //$('.colorPickerElement:first').find('input.inputFieldText').addClass('colorPickerInput');
-
 
   var modelPos = $('.modelClasses').offset().top;
   console.debug(modelPos);
