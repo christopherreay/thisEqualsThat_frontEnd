@@ -1813,7 +1813,6 @@ $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</di
 //$('.colorPickerElement:first').find('input.inputFieldText').addClass('colorPickerInput');
 
 
-    
   var modelPos = $('.modelClasses').offset().top;
   console.debug(modelPos);
   $(window).scroll(function(){

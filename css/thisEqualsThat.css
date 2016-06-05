@@ -61,9 +61,10 @@ div.bottomModelDiv
 {
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.18), 0 8px 16px rgba(0, 0, 0, 0.36);
 }
-.top{
+.top {
     max-width: 960px;
-    padding-left: 40px;
+    line-height: 230px;
+    text-align: center;
 }
 
 #top{
@@ -73,10 +74,9 @@ div.bottomModelDiv
 
 }
 
-
-
-#logo > img
-{ width: 300px;
+#logo > img{ 
+    width: 300px;
+    vertical-align: middle;
 }
 
 div.copyrightContainer{
