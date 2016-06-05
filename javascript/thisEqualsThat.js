@@ -1478,13 +1478,18 @@ thisEqualsThat.oop = function()
           { "class": "inputFieldText",
             type: "text",
           }
-        ).first().addClass("unit_"+this.data.unit);
-      var uiValueRBG =
+        ); 
+      var uiValueTextTest =
         $("<input />",
           { "class": "inputFieldText",
             type: "text",
           }
-        ).first().addClass("unit_"+this.data.unit);
+        );
+      var eachUiElem = [uiValueText, uiValueTextTest];
+      for (i=0; i < 1; ++i){
+          console.debug(eachUiElem[i]);
+      }
+   
       uiValueText.val(fieldData.defaultValue);
       uiValueText .data("thisEquals.modelField", this);
    
@@ -1805,8 +1810,8 @@ $(function(){
 
 $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>');
 
-var colPick = function(e){
-    this.e.colorpicker(
+var colPick = function(){
+    this.colorpicker(
             { "alpha": false,
               "colorFormat": "RGB",
               "buttonClass": 'btn',
