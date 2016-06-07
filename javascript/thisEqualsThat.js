@@ -807,9 +807,9 @@ thisEqualsThat.oop = function()
       d.append(display.bottomModelDiv);
 
 
-      targetContainer.append(this.display.displayElement);
+      targetContainer.append(this.display.displayElement).coloPick();
       //display.bottomModelDiv = sceneContainer;
-
+        
 
 
       //display.displayElement.append(display.textOutputLabel);
@@ -1823,6 +1823,20 @@ var colPick = function(){
         });
 };
     
+    var coloPick = function(e){
+        var _this = this.e;
+        console.debug(_this);
+        };
+//$('ul#modelClassUL > li:nth-child(7)').on('click', function(){
+//  $('.unit_rgb').each(function(index){
+//    var thisInputElement = this;
+//    $('this').colorpicker({
+//      close: fucntion(event, formated, colorPicker){}
+//    });
+//  });
+//});
+
+    
 //$('body').on('click', function(){
 //    $('.colorPickerElement:first').find('input.inputFieldText').addClass('colorPickerInput');
 //        $('.colorPickerElement:first input').colorpicker(
@@ -1833,23 +1847,23 @@ var colPick = function(){
 //              "okOnEnter": true,
 //              "inline": true
 //        });
-//});
+});
     
 //$('.colorPickerElement:first').find('input.inputFieldText').addClass('colorPickerInput');
 
-  var modelPos = $('.modelClasses').offset().top;
-  console.debug(modelPos);
-  $(window).scroll(function(){
-    var scrollYpos = $(document).scrollTop();
-    if (scrollYpos > modelPos ) {
-        $(".modelClasses").addClass("modelClassesFixed");
-        $('.model').addClass('modelScrolled')
-    }else{
-        $(".modelClasses").removeClass("modelClassesFixed");
-        $('.model').removeClass('modelScrolled');
-    }
-  });
-});
+//  var modelPos = $('.modelClasses').offset().top;
+//  console.debug(modelPos);
+//  $(window).scroll(function(){
+//    var scrollYpos = $(document).scrollTop();
+//    if (scrollYpos > modelPos ) {
+//        $(".modelClasses").addClass("modelClassesFixed");
+//        $('.model').addClass('modelScrolled')
+//    }else{
+//        $(".modelClasses").removeClass("modelClassesFixed");
+//        $('.model').removeClass('modelScrolled');
+//    }
+//  });
+//});
 
 
 
