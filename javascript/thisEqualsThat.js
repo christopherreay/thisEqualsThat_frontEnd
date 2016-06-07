@@ -810,7 +810,9 @@ thisEqualsThat.oop = function()
       targetContainer.append(this.display.displayElement).coloPick();
       //display.bottomModelDiv = sceneContainer;
         
-
+      function coloPick(){
+              console.debug($(this));
+      }
 
       //display.displayElement.append(display.textOutputLabel);
       // addOutdatafieldDiv
