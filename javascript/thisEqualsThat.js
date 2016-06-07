@@ -809,10 +809,6 @@ thisEqualsThat.oop = function()
 
       targetContainer.append(this.display.displayElement).coloPick();
       //display.bottomModelDiv = sceneContainer;
-        
-      function coloPick(){
-              console.debug($(this));
-      }
 
       //display.displayElement.append(display.textOutputLabel);
       // addOutdatafieldDiv
@@ -1825,10 +1821,7 @@ var colPick = function(){
         });
 };
     
-    var coloPick = function(e){
-        var _this = this.e;
-        console.debug(_this);
-        };
+
 //$('ul#modelClassUL > li:nth-child(7)').on('click', function(){
 //  $('.unit_rgb').each(function(index){
 //    var thisInputElement = this;
@@ -1838,6 +1831,15 @@ var colPick = function(){
 //  });
 //});
 
+$.fn.coloPick = function() {
+    $('.unit_rgb').colorpicker({
+        inline: false,
+        close: {
+            change,
+            formatted: rgb
+        }
+    });
+};
     
 //$('body').on('click', function(){
 //    $('.colorPickerElement:first').find('input.inputFieldText').addClass('colorPickerInput');
