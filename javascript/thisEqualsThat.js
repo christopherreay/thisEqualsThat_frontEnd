@@ -1828,16 +1828,12 @@ var colPick = function(){
 //    $('this').colorpicker({
 //      close: fucntion(event, formated, colorPicker){}
 //    });
-//  });
+//  }); 
 //});
 
 $.fn.coloPick = function() {
     $('.unit_rgb').colorpicker({
-        inline: false,
-        close: {
-            change,
-            formatted: rgb
-        }
+        inline: false
     });
 };
     
@@ -1855,19 +1851,6 @@ $.fn.coloPick = function() {
     
 //$('.colorPickerElement:first').find('input.inputFieldText').addClass('colorPickerInput');
 
-//  var modelPos = $('.modelClasses').offset().top;
-//  console.debug(modelPos);
-//  $(window).scroll(function(){
-//    var scrollYpos = $(document).scrollTop();
-//    if (scrollYpos > modelPos ) {
-//        $(".modelClasses").addClass("modelClassesFixed");
-//        $('.model').addClass('modelScrolled')
-//    }else{
-//        $(".modelClasses").removeClass("modelClassesFixed");
-//        $('.model').removeClass('modelScrolled');
-//    }
-//  });
-//});
 
 
 
