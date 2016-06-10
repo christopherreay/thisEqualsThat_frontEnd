@@ -887,10 +887,8 @@ div.modelClasses.active > .modelClassLI {
     float: left;
     line-height: 23vh;
 }
-div.modelClasses.active > .hamburger {
-    position: absolute;
-    top: 10px;
-    right: 15px;
+div.modelClasses > .hamburger{
+    display: none;
 }
 /*
     media for netbooks adn large tablets
@@ -937,9 +935,13 @@ div.modelClasses.active > .hamburger {
 }
 
 @media (max-width: 767px){
+    .open-menu{
+        overflow: hidden;
+    }
     #top {
         height: 100vh;
         margin-bottom: -50px;
+        overflow: hidden;
     }
     .top {
         line-height: 95vh;
@@ -958,16 +960,84 @@ div.modelClasses.active > .hamburger {
         width: 100%;
         height: 50px;
         overflow: hidden;
+        -webkit-transition: all .5s cubic-bezier(0.895, 0.030, 0.685, 0.220);
+        transition: all .5s cubic-bezier(0.895, 0.030, 0.685, 0.220);
     }
-    .hamburger{
-        position: absolute;
-        top: 10px;
-        right: 15px;
+    div.modelClasses.active {
+        height: 100%;
+        padding-top: 50px;
+        z-index: 9999;
     }
     #modelClassUL{
-        display: none;
+        opacity: 0;
+        visibility: hidden;
+        -webkit-transition: all .5s cubic-bezier(0.895, 0.030, 0.685, 0.220);
+        transition: all .5s cubic-bezier(0.895, 0.030, 0.685, 0.220);
+    }
+    div.modelClasses > .hamburger {
+        display: block;
+        position: absolute;
+        top: 0px;
+        right: 15px;
+        padding: 13px 0px;
+    }
+    div.modelClasses > .hamburger-box{
+        width: 35px;
+        height: 17px;
+    }
+    div.modelClasses > .hamburger-inner, .hamburger-inner::before, .hamburger-inner::after{
+        width: 35px;
     }
     div.modelClasses.active > #modelClassUL{
-        display: block;
+        opacity: 1;
+        visibility: visible;
+    }
+    div.modelClasses.active > #modelClassUL{
+        width: 100%;
+        height: 100%;
+        padding: 0px 30px;
+    }
+    div.modelClasses > ul#modelClassUL > li.modelClassLI,
+    div.modelClasses.active > ul#modelClassUL > li.modelClassLI{
+        width: 50%;
+        float: left;
+        line-height: 23vh;
+    }
+    div.customSVGPane.googleConnect{
+        position: relative!important;
+        left: 0;
+        right: 0;
+    }
+    div.modelSliders,
+    div.modelOutputTest,
+    div.modelSvgOutput{
+        width: 100%;
+        padding: 0;
+        float: left;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

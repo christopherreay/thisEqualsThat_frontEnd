@@ -1847,6 +1847,8 @@ $.fn.coloPick = function() {
     
 $('.hamburger').on('click', function(){
     $(this).toggleClass('is-active');
+    $('.modelClasses').toggleClass('active');
+    $('body').toggleClass('open-menu')
 });
 //$('body').on('click', function(){
 //    $('.colorPickerElement:first').find('input.inputFieldText').addClass('colorPickerInput');
