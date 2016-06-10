@@ -1776,10 +1776,6 @@ $().ready(
   }
 );
 
-var defineColorPicker = function(){
-    $('input.unit_rgb').css('background', '#000');
-};
-
 $(function(){
     
 //    $('.colorPickerElement').on('click', function(){
@@ -1798,28 +1794,29 @@ $(function(){
 
 $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>');
 
-    $('input.unit_rgb').off('click').on('click', function(e){
-       e.preventDefault();
-       e.colorpicker({
-                  "alpha": false,
-                  "colorFormat": "RGB",
-                  "buttonClass": 'btn',
-                  "hideOn": 'focus',
-                  "okOnEnter": true,
-                  "inline": true
-            });
-    });
+//    $('input.unit_rgb').off('click').on('click', function(e){
+//       e.preventDefault();
+//       e.colorpicker({
+//                  "alpha": false,
+//                  "colorFormat": "RGB",
+//                  "buttonClass": 'btn',
+//                  "hideOn": 'focus',
+//                  "okOnEnter": true,
+//                  "inline": true
+//            });
+//    });
     
-var colPick = function(){
-    this.colorpicker(
-            { "alpha": false,
-              "colorFormat": "RGB",
-              "buttonClass": 'btn',
-              "hideOn": 'focus',
-              "okOnEnter": true,
-              "inline": true
-        });
-};
+
+//var colPick = function(){
+//    this.colorpicker(
+//            { "alpha": false,
+//              "colorFormat": "RGB",
+//              "buttonClass": 'btn',
+//              "hideOn": 'focus',
+//              "okOnEnter": true,
+//              "inline": true
+//        });
+//};
     
 
 //$('ul#modelClassUL > li:nth-child(7)').on('click', function(){
