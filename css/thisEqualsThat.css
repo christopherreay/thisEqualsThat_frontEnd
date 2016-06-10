@@ -160,8 +160,13 @@ div.modelScrolled
 
 .modelClassLI img
 { 
-    vertical-align: middle;
-    max-width: 50px;
+    padding: 39px;
+    padding-top: 41px;
+    width: 100%;
+    position: absolute;
+    top: -5px;
+    right: 0;
+    left: 0;
     -webkit-transform: scale(1);
     transform: scale(1);
     -webkit-transition: all .3s cubic-bezier(.8, -1, .7, 2);
@@ -908,7 +913,13 @@ div.modelClasses > .hamburger{
     }
     
     .modelClassLI img{
-        max-width: 40px;
+        padding: 35px;
+        padding-top: 41px;
+        width: 100%;
+        position: absolute;
+        top: -5px;
+        right: 0;
+        left: 0;
     }
 
     div.inputFieldLabel{
@@ -1060,12 +1071,6 @@ div.modelClasses > .hamburger{
 
 
 .ripplelink{
-  display:block;
-  float:left;
-  width:49.6%;
-  margin:0.2%;
-  height:10em;
-  line-height:10em;
   text-align:center;
   color:#fff;
   text-decoration:none;
@@ -1102,23 +1107,6 @@ div.modelClasses > .hamburger{
 }
 @keyframes ripple {
     100% {opacity: 0; -webkit-transform: scale(2.5); transform: scale(2.5);}
-}
-
-
-.cyan{
-  background:#00bcd4;
-}
-
-.lightgreen{
-  background:#8bc34a;
-}
-
-.amber{
-  background:#ffc107;
-}
-
-.orange{
-  background:#ff9800;
 }
 
 
