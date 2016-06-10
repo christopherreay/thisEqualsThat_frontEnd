@@ -1007,7 +1007,6 @@ div.modelClasses > .hamburger{
     }
     div.customSVGPane.googleConnect{
         position: relative!important;
-        left: 0;
         right: 0;
     }
     div.modelSliders,
@@ -1060,7 +1059,67 @@ div.modelClasses > .hamburger{
 
 
 
+.ripplelink{
+  display:block;
+  float:left;
+  width:49.6%;
+  margin:0.2%;
+  height:10em;
+  line-height:10em;
+  text-align:center;
+  color:#fff;
+  text-decoration:none;
+  position:relative;
+  overflow:hidden;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  z-index:0;
+}
 
+.ripplelink:hover{
+	z-index:1000;
+  box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
+  -webkit-box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
+  -moz-box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
+}
+
+.ink {
+  display: block;
+  position: absolute;
+  background:rgba(255, 255, 255, 0.3);
+  border-radius: 100%;
+  -webkit-transform:scale(0);
+          transform:scale(0);
+}
+
+.animate {
+	-webkit-animation:ripple 0.65s linear;
+        animation:ripple 0.65s linear;
+}
+
+@-webkit-keyframes ripple {
+    100% {opacity: 0; -webkit-transform: scale(2.5);}
+}
+@keyframes ripple {
+    100% {opacity: 0; -webkit-transform: scale(2.5); transform: scale(2.5);}
+}
+
+
+.cyan{
+  background:#00bcd4;
+}
+
+.lightgreen{
+  background:#8bc34a;
+}
+
+.amber{
+  background:#ffc107;
+}
+
+.orange{
+  background:#ff9800;
+}
 
 
 

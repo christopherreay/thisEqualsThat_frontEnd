@@ -4,6 +4,7 @@ thisEqualsThat.graphicLoadVersion = "0.1.1.3.20151102.newReferenceSVGs.womanPain
 thisEqualsThat.svg = {};
 thisEqualsThat.svgStore = {};
 
+
 window.attachFunc = function(parent, name, functionContent)
 { if (!(hasOwnProperty(parent.prototype, name)))
   { var This = parent;
@@ -104,7 +105,7 @@ thisEqualsThat.oop = function()
     this.imageURL = this.imageBaseURL+modelClassName+".svg";
     this.modelClassListLI =
       $("<li />",
-        { "class": "modelClassLI"
+        { "class": "modelClassLI ripplelink cyan"
         }
        ).data("modelClass", this)
        .append($("<img />", { src: this.imageURL } ));
@@ -147,7 +148,28 @@ thisEqualsThat.oop = function()
     $("body").append(this.masterReferenceSVGSelectList);
     // this.svgSelectList.hide();
 
+$(function(){
+    var ink, d, x, y;
+        $(".ripplelink").click(function(e){
+        if($(this).find(".ink").length === 0){
+            $(this).prepend("<span class='ink'></span>");
+        console.debug('click li');
+        }
 
+        ink = $(this).find(".ink");
+        ink.removeClass("animate");
+
+        if(!ink.height() && !ink.width()){
+            d = Math.max($(this).outerWidth(), $(this).outerHeight());
+            ink.css({height: d, width: d});
+        }
+
+        x = e.pageX - $(this).offset().left - ink.width()/2;
+        y = e.pageY - $(this).offset().top - ink.height()/2;
+
+        ink.css({top: y+'px', left: x+'px'}).addClass("animate");
+    });
+});
 
 
     this.svgReferenceDefs =
@@ -1850,19 +1872,32 @@ $('.hamburger').on('click', function(){
     $('.modelClasses').toggleClass('active');
     $('body').toggleClass('open-menu')
 });
-//$('body').on('click', function(){
-//    $('.colorPickerElement:first').find('input.inputFieldText').addClass('colorPickerInput');
-//        $('.colorPickerElement:first input').colorpicker(
-//            { "alpha": false,
-//              "colorFormat": "RGB",
-//              "buttonClass": 'btn',
-//              "hideOn": 'focus',
-//              "okOnEnter": true,
-//              "inline": true
-//        });
+
+$(function(){
+    var ink, d, x, y;
+        $(".ripplelink").click(function(e){
+        if($(this).find(".ink").length === 0){
+            $(this).prepend("<span class='ink'></span>");
+        console.debug('click li');
+        }
+
+        ink = $(this).find(".ink");
+        ink.removeClass("animate");
+
+        if(!ink.height() && !ink.width()){
+            d = Math.max($(this).outerWidth(), $(this).outerHeight());
+            ink.css({height: d, width: d});
+        }
+
+        x = e.pageX - $(this).offset().left - ink.width()/2;
+        y = e.pageY - $(this).offset().top - ink.height()/2;
+
+        ink.css({top: y+'px', left: x+'px'}).addClass("animate");
+    });
+});    
+
 });
     
-//$('.colorPickerElement:first').find('input.inputFieldText').addClass('colorPickerInput');
 
 
 
