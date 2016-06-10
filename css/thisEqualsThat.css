@@ -866,6 +866,33 @@ input.ui-colorpicker-hex-input {
 }
 
 /*
+toggle menu for small device
+*/
+div.modelClasses.active {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    padding-top: 30px;
+}
+div.modelClasses.active > #modelClassUL{
+    width: 100%;
+    height: 100%;
+    padding: 0px 30px;
+}
+div.modelClasses.active > .modelClassLI {
+    width: 50%;
+    float: left;
+    line-height: 23vh;
+}
+div.modelClasses.active > .hamburger {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+/*
     media for netbooks adn large tablets
 */
 @media (max-width: 959px){
@@ -902,8 +929,45 @@ input.ui-colorpicker-hex-input {
         font-size: 15px;
         margin-right: 15px;
     }
+    div.customSVGPane.googleConnect{
+        width: 100%;
+        left: 15px;
+        right: 15px;
+    }
 }
 
 @media (max-width: 767px){
-    
+    #top {
+        height: 100vh;
+        margin-bottom: -50px;
+    }
+    .top {
+        line-height: 95vh;
+    }
+    #logo > img {
+        max-width: 80%;
+    }
+    div.copyrightContainer > p {
+        margin-left: 20px;
+    }
+    div.modelClasses{
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 50px;
+        overflow: hidden;
+    }
+    .hamburger{
+        position: absolute;
+        top: 10px;
+        right: 15px;
+    }
+    #modelClassUL{
+        display: none;
+    }
+    div.modelClasses.active > #modelClassUL{
+        display: block;
+    }
 }
