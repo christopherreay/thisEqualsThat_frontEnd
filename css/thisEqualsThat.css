@@ -935,12 +935,14 @@ div.modelClasses > .hamburger{
 }
 
 @media (max-width: 767px){
+    body{
+        padding: 0;
+    }
     .open-menu{
         overflow: hidden;
     }
     #top {
         height: 100vh;
-        margin-bottom: -50px;
         overflow: hidden;
     }
     .top {
@@ -1001,7 +1003,7 @@ div.modelClasses > .hamburger{
     div.modelClasses.active > ul#modelClassUL > li.modelClassLI{
         width: 50%;
         float: left;
-        line-height: 23vh;
+        line-height: 20vh;
     }
     div.customSVGPane.googleConnect{
         position: relative!important;
@@ -1015,9 +1017,43 @@ div.modelClasses > .hamburger{
         padding: 0;
         float: left;
     }
+    .thisEqualsScene{
+        padding-top: 20px;
+    }
 }
 
-
+@media(max-width: 480px){
+    div.inputFieldLabel,
+    input.inputFieldText[type=text],
+    div.containerLabel,
+    div.inputFieldElement > select,
+    div.modelOutputContainer > select,
+    div.visualisationOutputContainer > select
+    {
+        font-size: 13px;
+    }
+    div.toggleFeatures > label{
+        font-size: 10px;
+    }
+    div.customSVGPaneTitle,
+    .svgSaveLink{
+        width: 100%;
+    }
+    .svgSaveLink > a{
+        float: none;
+    }
+    .custom_svgNameInput,
+    input.svgTextDescription{
+        width: 100%;
+        margin-top: 10px;
+    }
+    div.customSVGPaneSubmitButton{
+        top: 48px;
+    }
+    div.customSVGPane.googleConnect{
+        padding: 40px 20px 20px;
+    }
+}
 
 
 

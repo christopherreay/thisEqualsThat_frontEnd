@@ -586,8 +586,8 @@ thisEqualsThat.oop = function()
      
       display.svgOutput             = $("<div class='svgOutput'  />");
      
-      display.svgSaveLink           = $("<div class='svgSaveLink btn'   />");
       display.svgTextInput          = $("<input type='text' class='svgTextDescription' placeholder='Enter Text Description'/>");
+      display.svgSaveLink           = $("<div class='svgSaveLink btn'   />");
       display.svgModelRoot          = $("<div class='svgModelRoot'  />");
       display.referenceSVG          = $("<div class='referenceSVG'  />");
       var containerSVG        = document.createElementNS(d3.ns.prefix.svg, "svg");
