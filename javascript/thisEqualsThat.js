@@ -1829,8 +1829,17 @@ $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</di
 //});
 
 $.fn.coloPick = function() {
-    $('.unit_rgb').colorpicker({
-        inline: false
+    console.info('CP created');
+    $('input.unit_rgb').colorpicker({
+        inline: false,
+        alpha: false,
+        colorFormat: "RGB",
+        buttonClass: 'btn',
+        color: 'rgb(123,45,67)',
+        altField: 'input.colorPickerInput',
+        close: function(){
+            console.debug($('input.unit_rgb').change());
+        }
     });
 };
     
