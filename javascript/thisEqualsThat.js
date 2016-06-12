@@ -171,7 +171,6 @@ $(function(){
     });
 });
 
-
     this.svgReferenceDefs =
     [ { "heightThreshold": 0.03,  "fileHandle": "Ant",          "height": 0.002},
       { "heightThreshold": 17.2,  "fileHandle": "SuperBlonde",  "height": 1.72},
@@ -1798,7 +1797,7 @@ $().ready(
   }
 );
 
-$(function(){
+$().ready(function(){
     
 //    $('.colorPickerElement').on('click', function(){
 //        $('.colorPickerElement:first input').colorpicker(
@@ -1817,39 +1816,6 @@ $(function(){
 $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>');
 $('.modelClasses').append('<button class="hamburger hamburger--elastic" type="button" aria-label="Menu" aria-controls="navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>');
 
-//    $('input.unit_rgb').off('click').on('click', function(e){
-//       e.preventDefault();
-//       e.colorpicker({
-//                  "alpha": false,
-//                  "colorFormat": "RGB",
-//                  "buttonClass": 'btn',
-//                  "hideOn": 'focus',
-//                  "okOnEnter": true,
-//                  "inline": true
-//            });
-//    });
-    
-
-//var colPick = function(){
-//    this.colorpicker(
-//            { "alpha": false,
-//              "colorFormat": "RGB",
-//              "buttonClass": 'btn',
-//              "hideOn": 'focus',
-//              "okOnEnter": true,
-//              "inline": true
-//        });
-//};
-    
-
-//$('ul#modelClassUL > li:nth-child(7)').on('click', function(){
-//  $('.unit_rgb').each(function(index){
-//    var thisInputElement = this;
-//    $('this').colorpicker({
-//      close: fucntion(event, formated, colorPicker){}
-//    });
-//  }); 
-//});
 
 $.fn.coloPick = function() {
     console.info('CP created');
@@ -1873,28 +1839,28 @@ $('.hamburger').on('click', function(){
     $('body').toggleClass('open-menu')
 });
 
-$(function(){
-    var ink, d, x, y;
-        $(".ripplelink").click(function(e){
-        if($(this).find(".ink").length === 0){
-            $(this).prepend("<span class='ink'></span>");
-        console.debug('click li');
-        }
+    $(function(){
+        var ink, d, x, y;
+            $(".ripplelink").click(function(e){
+            if($(this).find(".ink").length === 0){
+                $(this).prepend("<span class='ink'></span>");
+            console.debug('click li');
+            }
 
-        ink = $(this).find(".ink");
-        ink.removeClass("animate");
+            ink = $(this).find(".ink");
+            ink.removeClass("animate");
 
-        if(!ink.height() && !ink.width()){
-            d = Math.max($(this).outerWidth(), $(this).outerHeight());
-            ink.css({height: d, width: d});
-        }
+            if(!ink.height() && !ink.width()){
+                d = Math.max($(this).outerWidth(), $(this).outerHeight());
+                ink.css({height: d, width: d});
+            }
 
-        x = e.pageX - $(this).offset().left - ink.width()/2;
-        y = e.pageY - $(this).offset().top - ink.height()/2;
+            x = e.pageX - $(this).offset().left - ink.width()/2;
+            y = e.pageY - $(this).offset().top - ink.height()/2;
 
-        ink.css({top: y+'px', left: x+'px'}).addClass("animate");
+            ink.css({top: y+'px', left: x+'px'}).addClass("animate");
+        });
     });
-});    
 
 });
     

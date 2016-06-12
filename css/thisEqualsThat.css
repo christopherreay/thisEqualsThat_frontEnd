@@ -161,7 +161,7 @@ div.modelScrolled
 .modelClassLI img
 { 
     padding: 39px;
-    padding-top: 41px;
+    padding-top: 36px;
     width: 100%;
     position: absolute;
     top: -5px;
@@ -913,15 +913,15 @@ div.modelClasses > .hamburger{
     }
     
     .modelClassLI img{
-        padding: 35px;
-        padding-top: 41px;
-        width: 100%;
-        position: absolute;
-        top: -5px;
-        right: 0;
-        left: 0;
+    position: absolute;
+    width: 36px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -18px;
+    margin-left: -18px;
+    padding: 0;    
     }
-
     div.inputFieldLabel{
         padding-top: 0px;
         font-size: 15px;
@@ -1015,6 +1015,16 @@ div.modelClasses > .hamburger{
         width: 50%;
         float: left;
         line-height: 20vh;
+        height: 20vh;
+    }
+    .modelClassLI img {
+        padding: 0;
+        width: 60px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -30px;
+        margin-left: -30px;
     }
     div.customSVGPane.googleConnect{
         position: relative!important;
@@ -1083,15 +1093,14 @@ div.modelClasses > .hamburger{
 
 .ripplelink:hover{
 	z-index:1000;
-  box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
-  -webkit-box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
-  -moz-box-shadow:rgba(0, 0, 0, 0.3) 0 16px 16px 0;
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .ink {
   display: block;
   position: absolute;
-  background:rgba(255, 255, 255, 0.3);
+  background:rgba(255, 255, 255, 0.8);
   border-radius: 100%;
   -webkit-transform:scale(0);
           transform:scale(0);
