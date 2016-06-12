@@ -1107,15 +1107,15 @@ div.modelClasses > .hamburger{
 }
 
 .animate {
-	-webkit-animation:ripple 0.65s linear;
-        animation:ripple 0.65s linear;
+	-webkit-animation:ripple 0.4s linear;
+        animation:ripple 0.4s linear;
 }
 
 @-webkit-keyframes ripple {
-    100% {opacity: 0; -webkit-transform: scale(2.5);}
+    100% {opacity: 0; -webkit-transform: scale(3.5);}
 }
 @keyframes ripple {
-    100% {opacity: 0; -webkit-transform: scale(2.5); transform: scale(2.5);}
+    100% {opacity: 0; -webkit-transform: scale(3.5); transform: scale(3.5);}
 }
 
 
