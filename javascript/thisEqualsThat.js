@@ -886,7 +886,7 @@ $(function(){
         $("<div />",
           { "class": "customSVGPane googleConnect makeDraggable"
           }
-        ).draggable().css("position", "absolute").css("top", "101%").css("right", "0");
+        ).draggable().css("position", "absolute").css("top", "55%").css("right", "-100%");
         display.googleConnect.append(
           $("<div class='customSVGPaneTitle'>googleConnect</div>"));
         display.googleConnect_email=
