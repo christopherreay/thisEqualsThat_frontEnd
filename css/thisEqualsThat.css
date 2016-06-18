@@ -591,20 +591,20 @@ div.toggleFeatures
     display: block;
     float: right;
     width: 100%;
-    height: 49px;
-    margin-bottom: 20px;
+    height: 39px;
+    margin-bottom: 10px;
     border-bottom: 1px solid #9E9E9E;
 }
 div.toggleFeatures > label
 {
-    margin-right: 40px;
+    margin-right: 0px;
     float: left;
     height: 30px;
     padding: 2px 0;
 }
 div.toggleFeatures > label:last-child
 {
-    margin-right: 0;
+    margin-right: 10px;
 }
 /*
 div.colorControl > *
