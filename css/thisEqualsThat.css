@@ -332,7 +332,7 @@ div.visualisationOutputContainer{
     height: 49px;
     margin-top: 0px;
     margin-bottom: 20px;
-    border-bottom: 1px solid #9E9E9E;
+    border-bottom: 1px         solid #9E9E9E;
 }
 div.visualisationOutputContainer select
 {   float: right;
