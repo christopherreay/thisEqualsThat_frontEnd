@@ -1081,8 +1081,14 @@ div.modelClasses > .hamburger{
 .name_watts > .inputFieldLabel{
   background-image: url(/static/graphics/thisEquals/icons/energy.svg);
   background-repeat: no-repeat;
+  width: 27px;
+  height: 27px;
 }
-
+.name_count > .inputFieldLabel{
+  background-image: url(/static/graphics/thisEquals/icons/LightBulb.svg);
+  width: 81px;
+  height: 27px;
+}
 
 .ripplelink{
   text-align:center;

@@ -1447,7 +1447,8 @@ $(function(){
         $("<div />",
           { "class": "inputFieldLabel"
           }
-         ).append(this.data.displayFieldAddress);
+        );
+        //  .append(this.data.displayFieldAddress);
 
     var select = $("<select />", {"class": "inputFieldSelect"});
     select.data("ModelInputField", this);
@@ -1491,7 +1492,8 @@ $(function(){
         $("<div />",
           { "class": "inputFieldLabel"
           }
-         ).append(this.data.displayFieldAddress);
+        );
+        //  .append(this.data.displayFieldAddress);
       var uiValueText =
         $("<input />",
           { "class": "inputFieldText",
@@ -1537,7 +1539,8 @@ $(function(){
         $("<div />",
           { "class": "inputFieldLabel"
           }
-         ).append(this.data.displayFieldAddress);
+        );
+        // .append(this.data.displayFieldAddress);
       var uiValueText =
         $("<input />",
           { "class": "inputFieldText",
