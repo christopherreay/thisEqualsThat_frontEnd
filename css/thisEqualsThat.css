@@ -74,7 +74,7 @@ div.bottomModelDiv
 
 }
 
-#logo > img{ 
+#logo > img{
     width: 300px;
     vertical-align: middle;
 }
@@ -159,7 +159,7 @@ div.modelScrolled
 }
 
 .modelClassLI img
-{ 
+{
     padding: 39px;
     padding-top: 36px;
     width: 100%;
@@ -173,8 +173,8 @@ div.modelScrolled
     transition: all .3s cubic-bezier(.8, -1, .7, 2);
 }
 .modelClassLI img:hover
-{ 
-    -webkit-transform: scale(1.2); 
+{
+    -webkit-transform: scale(1.2);
     transform: scale(1.2);
 }
 
@@ -202,7 +202,7 @@ div.modelInstance
 }
 
 div.modelSliders
-{ width: 50%;
+{ width: 40%;
   float: left;
   padding-right: 15px;
 }
@@ -251,11 +251,11 @@ div.inputFieldSlider > .ui-state-default
     border: 0;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
-div.inputFieldSlider > .ui-state-hover, div.inputFieldSlider >.ui-widget-content .ui-state-hover 
+div.inputFieldSlider > .ui-state-hover, div.inputFieldSlider >.ui-widget-content .ui-state-hover
 {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.16), 0 8px 16px rgba(0, 0, 0, 0.36);
 }
-div.inputFieldSlider > .ui-state-active, div.inputFieldSlider > .ui-widget-content .ui-state-active 
+div.inputFieldSlider > .ui-state-active, div.inputFieldSlider > .ui-widget-content .ui-state-active
 {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.16), 0 8px 16px rgba(0, 0, 0, 0.36);
 }
@@ -278,7 +278,7 @@ input.inputFieldText[type=text]
 
 div.modelOutputTest{
     position: relative;
-    width: 50%;
+    width: 40%;
     float: left;
     padding-right: 15px;
     clear: both;
@@ -374,7 +374,7 @@ div.modelSvgOutput
 {
     position: relative;
     float: left;
-    width: 50%;
+    width: 60%;
     padding-right: 15px;
     margin-top: -20%;
 /*    clear: both;*/
@@ -434,7 +434,7 @@ div.referenceSVG
 
 div.customSVGList
 { position: relative;
-  overflow-y: hidden; 
+  overflow-y: hidden;
   width: 100%;
   float: right;
   clear: both;
@@ -524,7 +524,7 @@ a.googleConnect_loginButton:hover
 }
 
 div.customSVGPaneSubmitButton
-{ 
+{
     position: absolute;
     top: 10px;
     right: 0px;
@@ -535,7 +535,7 @@ div.customSVGPaneSubmitButton
     color: rgba(255,255,255, 0.84);
 }
 div.customSVGPane.googleConnect
-{ 
+{
     width: 465px;
     padding: 40px 60px 20px;
     background-color: #fff;
@@ -900,19 +900,19 @@ div.modelClasses > .hamburger{
     media for netbooks adn large tablets
 */
 @media (max-width: 959px){
-    #top{ 
-        line-height: 230px; 
+    #top{
+        line-height: 230px;
     }
-    .top{ 
-        padding: 0; 
+    .top{
+        padding: 0;
     }
     #logo{
         text-align: center;
-    }    
+    }
     #logo > img{
         vertical-align: middle;
     }
-    
+
     .modelClassLI img{
     position: absolute;
     width: 36px;
@@ -921,7 +921,7 @@ div.modelClasses > .hamburger{
     left: 50%;
     margin-top: -18px;
     margin-left: -18px;
-    padding: 0;    
+    padding: 0;
     }
     div.inputFieldLabel{
         padding-top: 0px;
@@ -1118,19 +1118,3 @@ div.modelClasses > .hamburger{
 @keyframes ripple {
     100% {opacity: 0; -webkit-transform: scale(3.5); transform: scale(3.5);}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
