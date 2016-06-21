@@ -600,13 +600,13 @@ $(function(){
       display.visualisationOutputContainer       = $("<div class='visualisationOutputContainer'><div class='containerLabel'>Visualisation</div></div>");
 
       display.modelVisualisationValue   = $("<div class='modelVisualisationValue'  />");
-      
+
       display.visualisationFieldsSelect = this.getVisualisationFields().visualisationFieldsSelect;
       display.visualisationOutputContainer.append(display.modelVisualisationValue);
       display.visualisationOutputContainer.append(display.visualisationFieldsSelect);
-     
+
       display.svgOutput             = $("<div class='svgOutput'  />");
-     
+
       display.svgTextInput          = $("<input type='text' class='svgTextDescription' placeholder='Enter Text Description'/>");
       display.svgSaveLink           = $("<div class='svgSaveLink btn'   />");
       display.svgModelRoot          = $("<div class='svgModelRoot'  />");
@@ -823,7 +823,7 @@ $(function(){
       display.modelOutputTest.append(display.svgSaveLink);
       display.modelOutputTest.append(display.svgTextInput);
 
-     
+
       d.append(display.topModelDiv);
       d.append(display.bottomModelDiv);
 
@@ -881,12 +881,12 @@ $(function(){
 
         display.modelOutputTest.append(display.customSVGPane);
         display.modelOutputTest.append(display.bottomModelSelectDiv);
-     
+
         display.googleConnect =
         $("<div />",
           { "class": "customSVGPane googleConnect makeDraggable"
           }
-        ).draggable().css("position", "absolute").css("top", "55%").css("right", "-100%");
+        ).draggable().css("position", "absolute").css("top", "55%").css("right", "-150%");
         display.googleConnect.append(
           $("<div class='customSVGPaneTitle'>googleConnect</div>"));
         display.googleConnect_email=
@@ -1498,10 +1498,10 @@ $(function(){
             type: "text",
           }
         ).addClass("unit_"+this.data.unit);
-   
+
       uiValueText.val(fieldData.defaultValue);
       uiValueText .data("thisEquals.modelField", this);
-   
+
       uiValueText.on("change", this, this.inputField_text_changeFunction);
       this.uiValueText  = uiValueText;
 
@@ -1798,7 +1798,7 @@ $().ready(
 );
 
 $().ready(function(){
-    
+
 //    $('.colorPickerElement').on('click', function(){
 //        $('.colorPickerElement:first input').colorpicker(
 //            { "alpha": false,
@@ -1809,7 +1809,7 @@ $().ready(function(){
 //    });
 
 
-    
+
 //$('head').append('<script src="/static/javascript/evol-colorpicker.min.js"></script>');
 //$('head').append('<link rel="stylesheet" href="/static/css/evol-colorpicker.css" media="screen">');
 
@@ -1831,8 +1831,8 @@ $.fn.coloPick = function() {
         }
     });
 };
-    
-    
+
+
 $('.hamburger').on('click', function(){
     $(this).toggleClass('is-active');
     $('.modelClasses').toggleClass('active');
@@ -1863,7 +1863,7 @@ $('.hamburger').on('click', function(){
     });
 
 });
-    
+
 
 
 

@@ -1078,7 +1078,10 @@ div.modelClasses > .hamburger{
 
 
 
-
+.name_watts > .inputFieldLabel{
+  background-image: url(/static/graphics/thisEquals/icons/energy.svg);
+  background-repeat: no-repeat;
+}
 
 
 .ripplelink{
