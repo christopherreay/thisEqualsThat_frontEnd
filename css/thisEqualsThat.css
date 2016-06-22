@@ -331,7 +331,7 @@ div.visualisationOutputContainer{
     width: 100%;
     height: 39px;
     margin-top: 0px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border-bottom: 1px solid #9E9E9E;
 }
 div.visualisationOutputContainer select
@@ -596,10 +596,10 @@ div.toggleFeatures
 }
 div.toggleFeatures > label
 {
-    margin-right: 10px;
     float: left;
     height: 30px;
     padding: 2px 0;
+    width: 33%;
 }
 div.toggleFeatures > label:last-child
 {
@@ -642,15 +642,15 @@ input.checkbox {
 
 .toggleFeatures .fa{
     position: absolute;
-    top: -2px;
-    right: -2px;
+    top: -1px;
+    right: 1px;
     padding: 4px;
     width: 20px;
     height: 20px;
-    font-size: 13px;
+    font-size: 15px;
 }
 .toggleFeatures .faAligned{
-    right: -1px;
+    right: 2px;
 }
 
 
@@ -665,7 +665,8 @@ input.checkbox {
 .checkbox_ui:before {
   display: block;
   position: absolute;
-  left: 0;
+  top: 2px;
+  left: 2px;
   content: "";
   background-color: #555;
   height: 20px;
@@ -681,8 +682,8 @@ input.checkbox {
 .checkbox_ui .check {
   position: relative;
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   border: 2px solid #555;
   overflow: hidden;
   z-index: 1;
@@ -1194,18 +1195,24 @@ div.modelClasses > .hamburger{
   background-size: cover;
   width: 27px;
   height: 27px;
+  float: right;
+  margin-right: 40px;
 }
 #reference{
   background-image: url(/static/graphics/thisEquals/icons/reference.svg);
   background-size: cover;
   width: 27px;
   height: 27px;
+  float: right;
+  margin-right: 40px;
 }
 #text_description{
   background-image: url(/static/graphics/thisEquals/icons/text_description.svg);
   background-size: cover;
   width: 27px;
   height: 27px;
+  float: right;
+  margin-right: 40px;
 }
 
 .modelOutputContainer > .containerLabel{
