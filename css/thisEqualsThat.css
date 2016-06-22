@@ -332,7 +332,7 @@ div.visualisationOutputContainer{
     height: 49px;
     margin-top: 0px;
     margin-bottom: 20px;
-    border-bottom: 1px         solid #9E9E9E;
+    border-bottom: 1px solid #9E9E9E;
 }
 div.visualisationOutputContainer select
 {   float: right;
@@ -1079,6 +1079,10 @@ div.modelClasses > .hamburger{
 .name_count > .inputFieldLabel,
 .name_time > .inputFieldLabel,
 .name_energy > .inputFieldLabel,
+.name_mass > .inputFieldLabel,
+.name_timeToBreathOut > .inputFieldLabel,
+.name_volume_100 > .inputFieldLabel,
+.name_volume_inAir > .inputFieldLabel,
 .modelOutputContainer > .containerLabel,
 .visualisationOutputContainer > .containerLabel{
   background-size: cover;
@@ -1101,6 +1105,27 @@ div.modelClasses > .hamburger{
 }
 .name_energy > .inputFieldLabel{
   background-image: url(/static/graphics/thisEquals/icons/energ_j.svg);
+  width: 27px;
+  height: 27px;
+}
+
+.name_mass > .inputFieldLabel{
+  background-image: url(/static/graphics/thisEquals/icons/mass_kg.svg);
+  width: 27px;
+  height: 27px;
+}
+.name_timeToBreathOut > .inputFieldLabel{
+  background-image: url(/static/graphics/thisEquals/icons/time_second.svg);
+  width: 27px;
+  height: 27px;
+}
+.name_volume_100 > .inputFieldLabel{
+  background-image: url(/static/graphics/thisEquals/icons/volume_m3.svg);
+  width: 27px;
+  height: 27px;
+}
+.name_volume_inAir > .inputFieldLabel{
+  background-image: url(/static/graphics/thisEquals/icons/volume_air.svg);
   width: 27px;
   height: 27px;
 }
