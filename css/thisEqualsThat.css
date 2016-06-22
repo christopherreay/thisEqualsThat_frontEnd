@@ -1076,8 +1076,14 @@ div.modelClasses > .hamburger{
     }
 }
 
-
-
+.name_watts > .inputFieldLabel,
+.name_count > .inputFieldLabel,
+.name_time > .inputFieldLabel,
+.name_energy > .inputFieldLabel,
+.modelOutputContainer > .containerLabel,
+.visualisationOutputContainer > .containerLabel{
+  background-size: cover;
+}
 .name_watts > .inputFieldLabel{
   background-image: url(/static/graphics/thisEquals/icons/energy.svg);
   background-repeat: no-repeat;
@@ -1086,7 +1092,28 @@ div.modelClasses > .hamburger{
 }
 .name_count > .inputFieldLabel{
   background-image: url(/static/graphics/thisEquals/icons/LightBulb.svg);
-  width: 81px;
+  width: 27px;
+  height: 27px;
+}
+.name_time > .inputFieldLabel{
+  background-image: url(/static/graphics/thisEquals/icons/time_second.svg);
+  width: 27px;
+  height: 27px;
+}
+.name_energy > .inputFieldLabel{
+  background-image: url(/static/graphics/thisEquals/icons/energ_j.svg);
+  width: 27px;
+  height: 27px;
+}
+
+.modelOutputContainer > .containerLabel{
+  background-image: url(/static/graphics/thisEquals/icons/output.svg);
+  width: 27px;
+  height: 27px;
+}
+.visualisationOutputContainer > .containerLabel{
+  background-image: url(/static/graphics/thisEquals/icons/visualisation.svg);
+  width: 27px;
   height: 27px;
 }
 

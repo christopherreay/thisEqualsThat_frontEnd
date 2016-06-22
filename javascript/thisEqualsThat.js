@@ -589,7 +589,7 @@ $(function(){
       display.modelSvgOutput        = $("<div class='modelSvgOutput' />");
 
       display.modelOutputTest        = $("<div class='modelOutputTest' />");
-      display.modelOutputDisplay        = $("<div class='modelOutputContainer'><div class='containerLabel'>Output</div></div>");
+      display.modelOutputDisplay        = $("<div class='modelOutputContainer'><div class='containerLabel'></div></div>");
 
       display.modelOutputValue          = $("<div class='modelOutputValue'  />");
       display.outputFieldsSelect        = this.getOutputFields().outputFieldsSelect;
@@ -597,7 +597,7 @@ $(function(){
       display.modelOutputDisplay.append(display.outputFieldsSelect);
 
 
-      display.visualisationOutputContainer       = $("<div class='visualisationOutputContainer'><div class='containerLabel'>Visualisation</div></div>");
+      display.visualisationOutputContainer       = $("<div class='visualisationOutputContainer'><div class='containerLabel'></div></div>");
 
       display.modelVisualisationValue   = $("<div class='modelVisualisationValue'  />");
 
@@ -1539,8 +1539,7 @@ $(function(){
         $("<div />",
           { "class": "inputFieldLabel"
           }
-        );
-        // .append(this.data.displayFieldAddress);
+        ).append(this.data.displayFieldAddress);
       var uiValueText =
         $("<input />",
           { "class": "inputFieldText",
