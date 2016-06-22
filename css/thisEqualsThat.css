@@ -329,7 +329,7 @@ div.visualisationOutputContainer{
     position: relative;
     float: right;
     width: 100%;
-    height: 49px;
+    height: 39px;
     margin-top: 0px;
     margin-bottom: 20px;
     border-bottom: 1px solid #9E9E9E;
@@ -1087,6 +1087,11 @@ div.modelClasses > .hamburger{
 .name_number > .inputFieldLabel,
 .name_density > .inputFieldLabel,
 .name_volume > .inputFieldLabel,
+.name_colours > .inputFieldLabel,
+.name_randomLayout > .inputFieldLabel,
+.name_numberOfClones > .inputFieldLabel,
+.name_ratios > .inputFieldLabel,
+.name_efficiency > .inputFieldLabel,
 .modelOutputContainer > .containerLabel,
 .visualisationOutputContainer > .containerLabel{
   background-size: cover;
@@ -1153,6 +1158,33 @@ div.modelClasses > .hamburger{
 }
 .analysis > .inputFieldLabel{
   background-image: url(/static/graphics/thisEquals/icons/analysis.svg);
+  width: 27px;
+  height: 27px;
+}
+/*PeopleRationPLay*/
+.name_colours > .inputFieldLabel{
+  background-image: url(/static/graphics/thisEquals/icons/color_pick.svg);
+  width: 27px;
+  height: 27px;
+}
+.name_randomLayout > .inputFieldLabel{
+  background-image: url(/static/graphics/thisEquals/icons/randome.svg);
+  width: 27px;
+  height: 27px;
+}
+.name_numberOfClones > .inputFieldLabel{
+  background-image: url(/static/graphics/thisEquals/icons/person_amuont.svg);
+  width: 27px;
+  height: 27px;
+}
+.name_ratios > .inputFieldLabel{
+  background-image: url(/static/graphics/thisEquals/icons/rations.svg);
+  width: 27px;
+  height: 27px;
+}
+/*CPS*/
+.name_efficiency > .inputFieldLabel{
+  background-image: url(/static/graphics/thisEquals/icons/efficiency.svg);
   width: 27px;
   height: 27px;
 }
