@@ -1189,6 +1189,25 @@ div.modelClasses > .hamburger{
   height: 27px;
 }
 
+#axis{
+  background-image: url(/static/graphics/thisEquals/icons/axis.svg);
+  background-size: cover;
+  width: 27px;
+  height: 27px;
+}
+#reference{
+  background-image: url(/static/graphics/thisEquals/icons/reference.svg);
+  background-size: cover;
+  width: 27px;
+  height: 27px;
+}
+#text_description{
+  background-image: url(/static/graphics/thisEquals/icons/text_description.svg);
+  background-size: cover;
+  width: 27px;
+  height: 27px;
+}
+
 .modelOutputContainer > .containerLabel{
   background-image: url(/static/graphics/thisEquals/icons/output.svg);
   width: 27px;
