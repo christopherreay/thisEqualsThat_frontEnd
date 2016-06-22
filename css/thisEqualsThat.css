@@ -396,16 +396,16 @@ input.svgTextDescription
     float: left;
     background: transparent;
     padding: 5px;
-    padding-top: 12px;
+    padding-top: 15px;
     border-top: 0;
     border-right: 0;
     border-left: 0;
-    width: 180px;
+    width: 45%;
     margin-top: -9px;
     margin-bottom: 20px;
     text-align: left;
     font-family: Roboto;
-    font-size: 16px;
+    font-size: 15px;
     border-bottom: 1px solid #9E9E9E;
     -webkit-transition: all .3s;
     transition: all .3s;
@@ -416,7 +416,6 @@ input.svgTextDescription:hover
 }
 input.svgTextDescription:focus
 {
-    width: 230px;
     color: #0091EA;
     border-color: rgba(33, 150, 243, 1);
 }
@@ -505,13 +504,13 @@ a.googleConnect_loginButton:hover
     padding: 4px;
 }
 .svgSaveLink {
+    width: 52%;
     float: right;
     margin: 0;
-    margin-top: -6px;
+    margin-top: -3px;
 }
 .svgSaveLink > a
 {
-    float: right;
     text-decoration: none;
     color: rgba(255,255,255, 0.9);
     background: rgba(33, 150, 243, .8);
@@ -597,14 +596,14 @@ div.toggleFeatures
 }
 div.toggleFeatures > label
 {
-    margin-right: 0px;
+    margin-right: 10px;
     float: left;
     height: 30px;
     padding: 2px 0;
 }
 div.toggleFeatures > label:last-child
 {
-    margin-right: 10px;
+    margin-right: 0px;
 }
 /*
 div.colorControl > *
