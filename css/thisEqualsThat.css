@@ -79,9 +79,13 @@ div.copyrightContainer> p {
     line-height: 50px;
 }
 div.modelClasses {
-    position: relative;
+    position: fixed;
+    top: 0;
+    right: 0px;
+    width: 400px;
+    height: 100vh;
+    z-index: 999;
     border-bottom: 1px solid #BDBDBD;
-    margin-bottom: 20px;
     background: #eee;
     z-index: 999;
 }
@@ -118,11 +122,12 @@ div.modelScrolled {
     margin-top: 120px;
 }
 #modelClassUL {
-    display: table;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 100px;
+  padding: 5px;
+  padding-top: 150px;
+  display: block;
+  margin: 0;
+  width: 100%;
+  height: 100vh;
 }
 #thisEqualsThatSceneDiv {
     max-width: 960px;
@@ -137,13 +142,13 @@ div.modelScrolled {
     vertical-align: middle;
 }
 .modelClassLI img {
-    padding: 39px;
-    padding-top: 36px;
-    width: 100%;
+    display: block;
     position: absolute;
-    top: -5px;
-    right: 0;
-    left: 0;
+    top: 50%;
+    margin-top: -40px;
+    left: 50%;
+    margin-left: -40px;
+    width: 80px;
     -webkit-transform: scale(1);
     transform: scale(1);
     -webkit-transition: all .3s cubic-bezier(.8, -1, .7, 2);
@@ -1142,6 +1147,9 @@ div.modelClasses> .hamburger {
     height: 27px;
 }
 .ripplelink {
+    float: left;
+    width: 50%;
+    height: 17vh;
     text-align: center;
     color: #fff;
     text-decoration: none;
