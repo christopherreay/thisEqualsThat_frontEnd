@@ -1330,7 +1330,7 @@ $(function(){
                     + savableContainerSVG.get(0).outerHTML + "'"
                 + " title     ='svgRep.svg'"
                 + " download  ='" + This.display.modelOutputValue.text() + ".svg'"
-            + ">Click to Save SVG</a>"
+            + ">" + "<img class='ic-save_svg' src='/static/graphics/thisEquals/icons/save_svg.svg' alt=''>" + "</a>"
           )
       );
     }

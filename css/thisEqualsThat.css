@@ -185,12 +185,12 @@ div.modelOutputTest {
     clear: both;
 }
 div.modelSliders, div.modelOutputTest {
-    width: 30%;
+    width: 35%;
 }
 div.modelSvgOutput {
     position: relative;
     float: left;
-    width: 70%;
+    width: 65%;
     padding-right: 15px;
     margin-top: -20%;
     /*    clear: both;*/
@@ -276,11 +276,26 @@ div.modelOutputContainer> select {
     border-top: 0;
     border-right: 0;
     border-left: 0;
-    width: 70%;
     text-align: right;
     font-family: Roboto;
     font-size: 15px;
     border-bottom: 0;
+}
+div.visualisationOutputContainer select {
+    float: right;
+    background: transparent;
+    padding-top: 2px;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    text-align: right;
+    font-family: Roboto;
+    font-size: 15px;
+    border-bottom: 0;
+}
+div.modelOutputContainer> select,
+div.visualisationOutputContainer select{
+  width: 65%;
 }
 div.bottomModelSelectDiv {
     float: right;
@@ -323,7 +338,6 @@ div.visualisationOutputContainer select {
     font-family: Roboto;
     font-size: 15px;
     border-bottom: 0;
-    w
 }
 div.containerLabel {
     float: left;
@@ -363,7 +377,7 @@ input.svgTextDescription {
     border-top: 0;
     border-right: 0;
     border-left: 0;
-    width: 45%;
+    width: 70%;
     margin-top: -9px;
     margin-bottom: 20px;
     text-align: left;
@@ -455,10 +469,13 @@ a.googleConnect_loginButton:hover {
     padding: 4px;
 }
 .svgSaveLink {
-    width: 52%;
+    width: 26%;
     float: right;
     margin: 0;
     margin-top: -3px;
+    height: 36px;
+    text-align: center;
+    padding: 6px;
 }
 .svgSaveLink> a {
     text-decoration: none;
@@ -469,6 +486,15 @@ a.googleConnect_loginButton:hover {
     text-decoration: none;
     color: rgba(255, 255, 255, 1);
     background: rgba(33, 150, 243, 1);
+}
+.ic-save_svg {
+  width: 23px;
+  height: 23px;
+  opacity: .9;
+  transition: all .3s;
+}
+.ic-save_svg {
+  opacity: 1;
 }
 div.customSVGPaneSubmitButton {
     position: absolute;
