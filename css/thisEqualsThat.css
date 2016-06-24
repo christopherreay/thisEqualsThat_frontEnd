@@ -81,13 +81,15 @@ div.copyrightContainer> p {
 div.modelClasses {
     position: fixed;
     top: 0;
-    right: 0px;
+    right: -400px;
     width: 400px;
     height: 100vh;
     z-index: 999;
     border-bottom: 1px solid #BDBDBD;
     background: #eee;
     z-index: 999;
+    overflow: hidden;
+    transition: all .3s ease;
 }
 div.modelClasses:after {
     position: absolute;
@@ -153,10 +155,6 @@ div.modelScrolled {
     transform: scale(1);
     -webkit-transition: all .3s cubic-bezier(.8, -1, .7, 2);
     transition: all .3s cubic-bezier(.8, -1, .7, 2);
-}
-.modelClassLI img:hover {
-    -webkit-transform: scale(1.2);
-    transform: scale(1.2);
 }
 .masterReferenceSVGSelectList {
     position: absolute;
@@ -817,13 +815,7 @@ toggle menu for small device
 */
 
 div.modelClasses.active {
-    position: fixed;
-    top: 0;
-    left: 0;
     right: 0;
-    width: 100%;
-    height: 100%;
-    padding-top: 30px;
 }
 div.modelClasses.active> #modelClassUL {
     width: 100%;
@@ -834,9 +826,6 @@ div.modelClasses.active> .modelClassLI {
     width: 50%;
     float: left;
     line-height: 23vh;
-}
-div.modelClasses> .hamburger {
-    display: none;
 }
 
 /*
@@ -1163,6 +1152,10 @@ div.modelClasses> .hamburger {
     z-index: 1000;
     box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.ripplelink:hover > img {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
 }
 .ink {
     display: block;

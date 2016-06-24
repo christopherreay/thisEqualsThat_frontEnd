@@ -839,18 +839,19 @@ $(function(){
           { "class": "customSVGPane makeDraggable customSVGList"
           }
         );
-        display.customSVGPane.append(
-          $("<div class='customSVGPaneTitle'>Get SVG from File</div>"));
+        // display.customSVGPane.append(
+        //   $("<div class='customSVGPaneTitle'>Get SVG from File</div>"));
         display.customSVGTitle =
           $("<input />",
-             { "class" : 'custom_svgNameInput'
+             { "class" : 'custom_svgNameInput',
+               'placeholder' : 'Get SVG from File'
              }
             );
         display.customSVGPane.append(display.customSVGTitle);
 
         display.customSVGPane.append(
           $("<div />",
-            { "class" : 'customSVGPaneSubmitButton'
+              { "class" : 'customSVGPaneSubmitButton'
             }
           ).on("click", function(event)
             {
@@ -1817,7 +1818,7 @@ $().ready(function(){
 //$('head').append('<link rel="stylesheet" href="/static/css/evol-colorpicker.css" media="screen">');
 
 $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>');
-$('.modelClasses').append('<button class="hamburger hamburger--elastic" type="button" aria-label="Menu" aria-controls="navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>');
+$('.thisEqualsScene').append('<button class="hamburger hamburger--elastic" type="button" aria-label="Menu" aria-controls="navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>');
 
 
 $.fn.coloPick = function() {
