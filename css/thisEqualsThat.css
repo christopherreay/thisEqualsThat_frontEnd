@@ -4,6 +4,16 @@ body {
     background: #EEEEEE;
     padding-bottom: 50px;
 }
+.open-meune{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 500;
+  overflow: hidden;
+  background: rgba(0,0,0, .5);
+}
 #wrap {
     overflow-x: hidden;
 }
@@ -170,6 +180,7 @@ div.modelScrolled {
 }
 div.model {
     position: relative;
+    margin-top: 10px;
 }
 div.modelInstance {
     width: 100%;
@@ -457,7 +468,7 @@ a.googleConnect_loginButton:hover {
     border-top: 0;
     border-right: 0;
     border-left: 0;
-    width: 225px;
+    width: 100%;
     text-align: left;
     font-family: Roboto;
     font-size: 16px;

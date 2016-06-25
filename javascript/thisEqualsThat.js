@@ -1838,9 +1838,18 @@ $.fn.coloPick = function() {
 
 
 $('.hamburger').on('click', function(){
+
     $(this).toggleClass('is-active');
-    $('.modelClasses').toggleClass('active');
-    $('body').toggleClass('open-menu')
+
+    if ( $(this).hasClass('is-active') ) {
+      $('body').append('<div class="open-meune"></div>');
+      $('.modelClasses').addClass('active');
+    } else {
+      $('.open-meune').remove();
+      $('.modelClasses').removeClass('active');
+    }
+
+
 });
 
     $(function(){
