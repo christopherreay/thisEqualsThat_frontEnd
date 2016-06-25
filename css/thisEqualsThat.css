@@ -309,7 +309,7 @@ div.visualisationOutputContainer select {
 }
 div.modelOutputContainer> select,
 div.visualisationOutputContainer select{
-  width: 65%;
+  width: 80%;
 }
 div.bottomModelSelectDiv {
     float: right;
@@ -347,7 +347,6 @@ div.visualisationOutputContainer select {
     border-top: 0;
     border-right: 0;
     border-left: 0;
-    width: 70%;
     text-align: right;
     font-family: Roboto;
     font-size: 15px;
@@ -365,6 +364,11 @@ div.modelVisualisationValue {
     font-size: 13px;
     color: #757575;
 }
+div.analysis > select.inputFieldSelect {
+  padding: 0;
+  padding-top: 2px;
+  width: 80%;
+}
 div.modelOutputValue {
     position: absolute;
     top: 14px;
@@ -373,9 +377,9 @@ div.modelOutputValue {
     color: #757575;
 }
 div.svgOutput {
-    float: left;
-    width: 100%;
+    width: 400px;
     clear: both;
+    margin: 0 auto;
 }
 div.svgModelRoot {
     width: 100%;
