@@ -157,10 +157,10 @@ div.modelScrolled {
     display: block;
     position: absolute;
     top: 50%;
-    margin-top: -40px;
+    margin-top: -30px;
     left: 50%;
-    margin-left: -40px;
-    width: 80px;
+    margin-left: -30px;
+    width: 60px;
     -webkit-transform: scale(1);
     transform: scale(1);
     -webkit-transition: all .3s cubic-bezier(.8, -1, .7, 2);

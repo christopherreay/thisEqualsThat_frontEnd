@@ -1818,7 +1818,7 @@ $().ready(function(){
 //$('head').append('<link rel="stylesheet" href="/static/css/evol-colorpicker.css" media="screen">');
 
 $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>');
-$('.thisEqualsScene').append('<button class="hamburger hamburger--elastic" type="button" aria-label="Menu" aria-controls="navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>');
+$('.thisEqualsScene').append('<button class="hamburger hamburger--arrow-r" type="button" aria-label="Menu" aria-controls="navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>');
 
 
 $.fn.coloPick = function() {
