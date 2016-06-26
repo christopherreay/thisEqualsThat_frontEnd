@@ -91,10 +91,9 @@ div.copyrightContainer> p {
 div.modelClasses {
     position: fixed;
     top: 0;
-    right: -400px;
+    left: -400px;
     width: 400px;
     height: 100vh;
-    z-index: 999;
     border-bottom: 1px solid #BDBDBD;
     background: #eee;
     z-index: 999;
@@ -829,7 +828,7 @@ toggle menu for small device
 */
 
 div.modelClasses.active {
-    right: 0;
+    left: 0;
 }
 div.modelClasses.active> #modelClassUL {
     width: 100%;
