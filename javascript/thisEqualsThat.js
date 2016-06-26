@@ -851,7 +851,7 @@ $(function(){
 
         display.customSVGPane.append(
           $("<div />",
-              { "class" : 'customSVGPaneSubmitButton'
+              { "class" : 'customSVGPaneSubmitButton btn'
             }
           ).on("click", function(event)
             {
@@ -887,7 +887,7 @@ $(function(){
         $("<div />",
           { "class": "customSVGPane googleConnect makeDraggable"
           }
-        ).draggable().css("position", "absolute").css("top", "55%").css("right", "-150%");
+        ).draggable().css("position", "absolute").css("top", "55%").css("right", "-170%");
         display.googleConnect.append(
           $("<div class='customSVGPaneTitle'>googleConnect</div>"));
         display.googleConnect_email=
