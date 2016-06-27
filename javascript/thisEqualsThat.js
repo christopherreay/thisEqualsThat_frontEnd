@@ -109,7 +109,7 @@ thisEqualsThat.oop = function()
         }
        ).data("modelClass", this)
        .append($("<img />", { src: this.imageURL } ))
-       .append($("<h2 />", { text: this.imageURL } ));
+       .append($("<h3 />", { text: this.name } ));
   }
   this.ModelClass.prototype.imageBaseURL =  "/static/graphics/thisEquals/modelClasses/";
   this.ModelClass.prototype.getModelInstance = function(successFunction)
@@ -648,21 +648,21 @@ $(function(){
 
       display.toggleFeatures = $("<div id='toggleFeatures_"+This.id+"' class='colorControl toggleFeatures' />");
       display.toggle =
-        { "axes":                 $("<input class='checkbox' id = 'toggle_axes_" + This.id + "' type='checkbox'  checked='checked'title='Show / Hide Axes' /><span class='checkbox_ui'><span class='check'><i class='fa fa-check'></i></span></span>"),
+        { "axes":                 $("<input class='checkbox' id = 'toggle_axes_" + This.id + "' type='checkbox'  checked='checked'title='Show / Hide Axes' /><span class='checkbox_ui ch_axis'><span class='check'><i class='fa fa-check'></i></span></span>"),
           "axes.label":           $("<label/>").append('<div id="axis"></div>'),
           "axes.changeEvent"  :
               function(changeEvent)
               { $(display.svgHeightAxis).toggle();
                 This.svg_createSaveLink(This);
               },
-          "svgReferenceG":        $("<input class='checkbox' id  = 'toggle_svgReferenceG_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Frame of Reference'/><span class='checkbox_ui'><span class='check'><i class='fa fa-check faAligned'></i></span></span>"),
+          "svgReferenceG":        $("<input class='checkbox' id  = 'toggle_svgReferenceG_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Frame of Reference'/><span class='checkbox_ui ch_reference'><span class='check'><i class='fa fa-check faAligned'></i></span></span>"),
           "svgReferenceG.label":  $("<label/>").append('<div id="reference"></div>'),
           "svgReferenceG.changeEvent":
               function(changeEvent)
               { $(display.svgReferenceG).toggle();
                 This.svg_createSaveLink(This);
               },
-          "svgTextDescription":        $("<input class='checkbox' id  = 'toggle_svgTextDescription_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Frame of Reference'/><span class='checkbox_ui'><span class='check'><i class='fa fa-check faAligned'></i></span></span>"),
+          "svgTextDescription":        $("<input class='checkbox' id  = 'toggle_svgTextDescription_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Frame of Reference'/><span class='checkbox_ui ch_description'><span class='check'><i class='fa fa-check faAligned'></i></span></span>"),
           "svgTextDescription.label":  $("<label/>").append('<div id="text_description"></div>'),
           "svgTextDescription.changeEvent":
               function(changeEvent)
