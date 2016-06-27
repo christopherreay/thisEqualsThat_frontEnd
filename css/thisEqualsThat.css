@@ -71,7 +71,7 @@ div.bottomModelDiv {
 }
 .top {
     max-width: 960px;
-    line-height: 230px;
+    line-height: 85px;
     text-align: center;
 }
 #top {
@@ -79,7 +79,7 @@ div.bottomModelDiv {
     background: url(/static/graphics/hd_bg_1.png);
 }
 #logo> img {
-    width: 300px;
+    width: 220px;
     vertical-align: middle;
 }
 div.copyrightContainer {
@@ -191,8 +191,8 @@ div.modelScrolled {
     top: -10000000px;
 }
 .referenceSVGSelectListItem {
-    height: 64px;
-    width: 64px;
+    height: 56px;
+    width: 56px;
 }
 .userSelectedReferenceSVG_selected {
     background-color: lightgrey;
@@ -209,29 +209,33 @@ div.modelInstance {
 div.modelSliders {
     width: 30%;
     float: left;
-    padding-right: 15px;
 }
 div.modelOutputTest {
     position: relative;
     float: left;
-    padding-right: 15px;
     clear: both;
 }
-div.modelSliders, div.modelOutputTest {
+div.modelCustomSvg{
+    position: relative;
+    float: left;
+    clear: both;
+}
+div.modelSliders, div.modelOutputTest, div.modelCustomSvg {
     width: 35%;
     margin-top: 20px;
-    padding: 20px;
-    background: #fff;
-    border-radius: 3px;
 }
 div.modelSvgOutput {
     position: absolute;
     top: 20px;
     right: 0;
     width: 63%;
+}
+div.modelSliders, div.modelOutputTest, div.modelSvgOutput, div.modelCustomSvg {
     padding: 20px;
     background: #fff;
     border-radius: 3px;
+    -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
 }
 div.inputFieldElement {
     display: block;
@@ -594,7 +598,7 @@ div.referenceSVGSelectListContainer::-webkit-scrollbar-thumb:window-inactive {
 }
 div.referenceSVGSelectListContainer> ul {
     display: block;
-    width: 3330px;
+    width: 2915px;
     padding: 0;
 }
 div.referenceSVGSelectListContainer> ul> li {

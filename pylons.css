@@ -167,8 +167,6 @@ a:hover
   text-decoration: underline;
 }
 
-
-
 #wrap
 {
   min-height: 100%;
@@ -223,8 +221,7 @@ a:hover
 #top
 {
   color: #000;
-  height: 230px;
-  background: #fff url(headerbg.png) repeat-x 0 top;
+  height: 85px;
   position: relative;
 }
 

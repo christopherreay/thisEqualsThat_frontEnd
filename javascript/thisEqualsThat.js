@@ -590,6 +590,8 @@ $(function(){
       display.modelSvgOutput        = $("<div class='modelSvgOutput' />");
 
       display.modelOutputTest        = $("<div class='modelOutputTest' />");
+
+      display.modelCustomSvg        = $("<div class='modelCustomSvg' />");
       display.modelOutputDisplay        = $("<div class='modelOutputContainer'><div class='containerLabel'></div></div>");
 
       display.modelOutputValue          = $("<div class='modelOutputValue'  />");
@@ -815,14 +817,15 @@ $(function(){
 
       display.topModelDiv.append(display.modelSliders);
       display.topModelDiv.append(display.modelOutputTest);
+      display.topModelDiv.append(display.modelCustomSvg);
       display.topModelDiv.append(display.modelSvgOutput);
       display.modelSvgOutput.append(display.svgOutput);
       display.modelOutputTest.append(display.modelOutputDisplay);
       display.modelOutputTest.append(display.visualisationOutputContainer);
       display.modelOutputTest.append(display.toggleFeatures);
       display.modelOutputTest.append(display.colorControl);
-      display.modelOutputTest.append(display.svgSaveLink);
-      display.modelOutputTest.append(display.svgTextInput);
+      display.modelCustomSvg.append(display.svgSaveLink);
+      display.modelCustomSvg.append(display.svgTextInput);
 
 
       d.append(display.topModelDiv);
@@ -882,14 +885,14 @@ $(function(){
             }
         );
 
-        display.modelOutputTest.append(display.customSVGPane);
+        display.modelCustomSvg.append(display.customSVGPane);
         display.modelOutputTest.append(display.bottomModelSelectDiv);
 
         display.googleConnect =
         $("<div />",
           { "class": "customSVGPane googleConnect makeDraggable"
           }
-        ).draggable().css("position", "absolute").css("top", "55%").css("right", "-150%");
+        ).draggable().css("position", "absolute").css("top", "0").css("right", "-150%");
         display.googleConnect.append(
           $("<div class='customSVGPaneTitle'>googleConnect</div>"));
         display.googleConnect_email=
@@ -979,7 +982,7 @@ $(function(){
           // )
         // );
         //thisEqualsThat.scene.modelContainerDiv.append(display.customSVGPane);
-        display.modelOutputTest.append(display.googleConnect)
+        display.modelCustomSvg.append(display.googleConnect)
     }
     this.display.displayElement.show();
 
