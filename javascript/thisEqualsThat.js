@@ -108,7 +108,8 @@ thisEqualsThat.oop = function()
         { "class": "modelClassLI ripplelink cyan"
         }
        ).data("modelClass", this)
-       .append($("<img />", { src: this.imageURL } ));
+       .append($("<img />", { src: this.imageURL } ))
+       .append($("<h2 />", { text: this.imageURL } ));
   }
   this.ModelClass.prototype.imageBaseURL =  "/static/graphics/thisEquals/modelClasses/";
   this.ModelClass.prototype.getModelInstance = function(successFunction)
@@ -1842,10 +1843,10 @@ $('.hamburger').on('click', function(){
     $(this).toggleClass('is-active');
 
     if ( $(this).hasClass('is-active') ) {
-      $('body').append('<div class="open-meune"></div>').hide().fadeIn(300);
+      $('body').append('<div class="open-meune"></div>');
       $('.modelClasses').addClass('active');
     } else {
-      $('.open-meune').fadeOut(300).remove();
+      $('.open-meune').remove();
       $('.modelClasses').removeClass('active');
     }
 
