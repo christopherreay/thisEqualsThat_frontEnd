@@ -4,10 +4,10 @@ body {
     background: #EEEEEE;
     padding-bottom: 50px;
 }
-::-webkit-scrollbar {
+body::-webkit-scrollbar {
   display: none;
 }
-::scrollbar {
+body::scrollbar {
   display: none;
 }
 .open-meune{
@@ -226,10 +226,12 @@ div.modelSliders, div.modelOutputTest {
 }
 div.modelSvgOutput {
     position: absolute;
-    top: 0px;
+    top: 20px;
     right: 0;
-    width: 65%;
-    padding-right: 15px;    /*    clear: both;*/
+    width: 63%;
+    padding: 20px;
+    background: #fff;
+    border-radius: 3px;
 }
 div.inputFieldElement {
     display: block;
@@ -400,6 +402,7 @@ div.modelOutputValue {
 }
 div.svgOutput {
   width: 400px;
+  height: 400px;
   clear: both;
   margin: 0 auto;
 }
@@ -417,8 +420,8 @@ input.svgTextDescription {
     border-top: 0;
     border-right: 0;
     border-left: 0;
-    width: 70%;
-    margin-top: -9px;
+    width: 233px;
+    margin-top: 0;
     margin-bottom: 20px;
     text-align: left;
     font-family: Roboto;
@@ -451,9 +454,7 @@ div.customSVGList {
     width: 100%;
     float: right;
     clear: both;
-    padding-top: 10px;
     margin-bottom: 10px;
-    border-top: 1px solid #9E9E9E;
 }
 div.customSVGPaneTitle {
     float: left;
@@ -487,18 +488,22 @@ a.googleConnect_loginButton:hover {
 }
 .custom_svgNameInput {
     position: relative;
-    float: right;
+    float: left;
     background: transparent;
     padding: 5px;
-    padding-top: 0;
+    padding-top: 5px;
     border-top: 0;
     border-right: 0;
     border-left: 0;
-    width: 100%;
+    width: 233px;
     text-align: left;
     font-family: Roboto;
     font-size: 16px;
     border-bottom: 1px solid #9E9E9E;
+}
+.custom_svgNameInput::-webkit-file-upload-button {
+  visibility: hidden;
+  width: 0;
 }
 .googleConnect> input.spreadsheetURL {
     width: 90%;
@@ -509,13 +514,16 @@ a.googleConnect_loginButton:hover {
     padding: 4px;
 }
 .svgSaveLink {
-    width: 26%;
-    float: right;
-    margin: 0;
-    margin-top: -3px;
-    height: 36px;
-    text-align: center;
-    padding: 6px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  line-height: 48px;
+  float: right;
+  margin-top: 3px;
+  text-align: center;
+  padding: 0;
+  -webkit-box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
 }
 .svgSaveLink> a {
     text-decoration: none;
@@ -528,8 +536,8 @@ a.googleConnect_loginButton:hover {
     background: rgba(33, 150, 243, 1);
 }
 .ic-save_svg {
-  width: 23px;
-  height: 23px;
+  width: 20px;
+  height: 20px;
   opacity: .9;
   transition: all .3s;
 }
@@ -538,10 +546,12 @@ a.googleConnect_loginButton:hover {
 }
 div.customSVGPaneSubmitButton {
     position: absolute;
-    top: 10px;
+    top: -5px;
     right: 0px;
-    width: 25px;
-    height: 25px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    padding: 0;
     background: #FF5722;
     float: right;
     color: rgba(255, 255, 255, 0.84);
@@ -559,6 +569,7 @@ div.googleConnect.ui-draggable-dragging {
     box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 div.referenceSVGSelectListContainer {
+    margin-top: 45px;
     overflow-y: hidden;
     overflow-x: scroll;
     height: 100px;
@@ -597,25 +608,23 @@ div.toggleFeatures {
     display: block;
     float: right;
     width: 100%;
-    height: 39px;
+    padding-top: 3px;
+    padding-bottom: 12px;
+    /*height: 39px;*/
     margin-bottom: 10px;
     border-bottom: 1px solid #9E9E9E;
 }
 div.toggleFeatures> label {
     float: left;
     height: 30px;
-    padding: 2px 0;
+    padding: 0;
     width: 33.3%;
 }
 div.toggleFeatures> label:last-child {
     margin-right: 0px;
 }
 
-/*
-div.colorControl > *
-{  padding: 5px;
-}
-*/
+
 
 * {
     box-sizing: border-box;

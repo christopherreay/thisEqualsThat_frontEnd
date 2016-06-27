@@ -845,6 +845,7 @@ $(function(){
         display.customSVGTitle =
           $("<input />",
              { "class" : 'custom_svgNameInput',
+               "type"  : 'file',
                'placeholder' : 'Get SVG from File'
              }
             );
@@ -852,7 +853,7 @@ $(function(){
 
         display.customSVGPane.append(
           $("<div />",
-              { "class" : 'customSVGPaneSubmitButton'
+              { "class" : 'customSVGPaneSubmitButton btn'
             }
           ).on("click", function(event)
             {
