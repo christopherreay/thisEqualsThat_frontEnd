@@ -851,7 +851,7 @@ $(function(){
 
         display.customSVGPane.append(
           $("<div />",
-              { "class" : 'customSVGPaneSubmitButton btn'
+              { "class" : 'customSVGPaneSubmitButton'
             }
           ).on("click", function(event)
             {
@@ -887,7 +887,7 @@ $(function(){
         $("<div />",
           { "class": "customSVGPane googleConnect makeDraggable"
           }
-        ).draggable().css("position", "absolute").css("top", "55%").css("right", "-170%");
+        ).draggable().css("position", "absolute").css("top", "55%").css("right", "-150%");
         display.googleConnect.append(
           $("<div class='customSVGPaneTitle'>googleConnect</div>"));
         display.googleConnect_email=
@@ -1842,10 +1842,10 @@ $('.hamburger').on('click', function(){
     $(this).toggleClass('is-active');
 
     if ( $(this).hasClass('is-active') ) {
-      $('body').append('<div class="open-meune"></div>');
+      $('body').append('<div class="open-meune"></div>').hide().fadeIn(300);
       $('.modelClasses').addClass('active');
     } else {
-      $('.open-meune').remove();
+      $('.open-meune').fadeOut(300).remove();
       $('.modelClasses').removeClass('active');
     }
 
