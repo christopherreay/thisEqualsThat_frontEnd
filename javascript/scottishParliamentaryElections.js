@@ -2012,14 +2012,14 @@ $().ready(
     }
 
 
-    function camelCase(str) {
-    return str.replace(/[^A-Za-z0-9]/g, ' ').replace(/^\w|[A-Z]|\b\w|\s+/g, function (match, index) {
-        if (+match === 0 || match === '-' || match === '.' ) {
-            return ""; // or if (/\s+/.test(match)) for white spaces
-        }
-        return index === 0 ? match.toLowerCase() : match.toUpperCase();
-    });
-}
+    function camelCase(str) 
+    {  return str.replace(/[^A-Za-z0-9]/g, ' ').replace(/^\w|[A-Z]|\b\w|\s+/g, function (match, index) {
+            if (+match === 0 || match === '-' || match === '.' ) {
+                return ""; // or if (/\s+/.test(match)) for white spaces
+            }
+            return index === 0 ? match.toLowerCase() : match.toUpperCase();
+        });
+    }
 
     function output(inp) {
      var pre = document.createElement('pre');
@@ -2176,23 +2176,7 @@ $().ready(
           }
         };
 
-    displaySVG('parliament', "#parliamentContainer",
-        function()
-        { 
-          d3.selectAll("#parliamentContainer > svg >g >g")
-              .on("mouseover", function(){ 
-                    var tooltipText = this.getAttribute("class").split(" ")[0];
-                    tooltip.text(tooltipText); return tooltip.style("visibility", "visible"); } )
-              .on("mousemove", function()
-                  { return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
-                  })
-              .on("mouseout", function(){return tooltip.style("visibility", "hidden"); } )
-          ;
 
-
-          $(".vote").hide();
-        }
-    );
     
     displaySVG('regions', "#regions", 
         function() 
@@ -2230,32 +2214,32 @@ $().ready(
                 $("#constituencies > svg > g > g").attr("opacity", 0.5);
 
                 d3.selectAll("#constituencies >svg >g >g >*")
-                  .on("mouseover", function() 
-                      { d3this = d3.select(this);
-                        if (d3this.classed("activeRegion"))
-                        { d3this.classed("hoverConstituency", true);
-                          //d3this.style("fill", "red");
-                          // d3this.selectAll("*").classed("hoverConstituency", true);//("fill", "red");
-                          tooltip.text(this.getAttribute("class").split(" ")[0]+" "+this.getAttribute("id")); 
-                          return tooltip.style("visibility", "visible");
-                        }
-                      } 
-                  )
-                  .on("mousemove", function()
-                      { return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
-                      })
-                  .on("mouseout", function()
-                      { d3this = d3.select(this);
-                        d3this.classed("hoverConstituency", false);
-                        return tooltip.style("visibility", "hidden"); 
+                    .on("mouseover", function() 
+                        { d3this = d3.select(this);
+                          if (d3this.classed("activeRegion"))
+                          { d3this.classed("hoverConstituency", true);
+                            //d3this.style("fill", "red");
+                            // d3this.selectAll("*").classed("hoverConstituency", true);//("fill", "red");
+                            tooltip.text(this.getAttribute("class").split(" ")[0]+" "+this.getAttribute("id")); 
+                            return tooltip.style("visibility", "visible");
+                          }
+                        } 
+                    )
+                    .on("mousemove", function()
+                        { return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+                        })
+                    .on("mouseout", function()
+                        { d3this = d3.select(this);
+                          d3this.classed("hoverConstituency", false);
+                          return tooltip.style("visibility", "hidden"); 
 
-                      } )
-                  .on("click", 
-                    function(data, index)
-                    { console.log(data, index, d3.event);
-                    }
-                  )
-              ;
+                        } )
+                    .on("click", 
+                      function(data, index)
+                      { console.log(data, index, d3.event);
+                      }
+                    )
+                ;
 
 
                 var selectRegion = function(event)
@@ -2289,6 +2273,29 @@ $().ready(
 
                 scottishParliamentaryElections.constituenciesMenu = selectRegion;
                 $("#regions").on("click", ".region", function(event){return scottishParliamentaryElections.constituenciesMenu(event);});
+
+
+
+                displaySVG('parliament', "#parliamentContainer",
+                    function()
+                    { 
+                      d3.selectAll("#parliamentContainer > svg >g >g")
+                          .on("mouseover", function(){ 
+                                var tooltipText = this.getAttribute("class").split(" ")[0];
+                                tooltip.text(tooltipText); return tooltip.style("visibility", "visible"); } )
+                          .on("mousemove", function()
+                              { return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+                              })
+                          .on("mouseout", function(){return tooltip.style("visibility", "hidden"); } )
+                      ;
+
+
+                      $(".vote").hide();
+
+                      processSwingChange()
+                    }
+                );
+
               }
           );                
          
@@ -2392,7 +2399,7 @@ $().ready(
       $.ajax(ajaxOptions);
     }
     $("textarea").on("change", processSwingChange)
-    processSwingChange()
+    
     
     
 
