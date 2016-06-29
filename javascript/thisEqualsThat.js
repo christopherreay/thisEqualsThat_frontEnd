@@ -849,7 +849,8 @@ $(function(){
           $("<input />",
              { "class" : 'custom_svgNameInput',
                "type"  : 'file',
-               'placeholder' : 'Get SVG from File'
+               'placeholder' : 'Get SVG from File',
+               'accept' : 'image/svg+xml'
              }
             );
         display.customSVGPane.append(display.customSVGTitle);
@@ -859,7 +860,14 @@ $(function(){
               { "class" : 'customSVGPaneSubmitButton btn'
             }
           ).on("click", function(event)
-            {
+            { var svgFile = $('input.custom_svgNameInput').val();
+
+             if( svgFile === "" || svgFile === undefined){
+               alert('.svg file not uploaded!');
+             } else {
+               alert(svgFile + ' ' + 'uploaded');
+             }
+              console.log($('input.custom_svgNameInput').val());
             }
           )
         );
@@ -892,7 +900,7 @@ $(function(){
         $("<div />",
           { "class": "customSVGPane googleConnect makeDraggable"
           }
-        ).draggable().css("position", "absolute").css("top", "0").css("right", "-150%");
+        ).draggable().css("position", "absolute").css("top", "0%").css("right", "-150%");
         display.googleConnect.append(
           $("<div class='customSVGPaneTitle'>googleConnect</div>"));
         display.googleConnect_email=
@@ -1336,7 +1344,7 @@ $(function(){
                     + savableContainerSVG.get(0).outerHTML + "'"
                 + " title     ='svgRep.svg'"
                 + " download  ='" + This.display.modelOutputValue.text() + ".svg'"
-            + ">" + "<img class='ic-save_svg' src='/static/graphics/thisEquals/icons/save_svg.svg' alt=''>" + "</a>"
+            + ">" + "</a>"
           )
       );
     }
