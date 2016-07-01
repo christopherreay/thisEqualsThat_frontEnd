@@ -900,7 +900,12 @@ $(function(){
         $("<div />",
           { "class": "customSVGPane googleConnect makeDraggable"
           }
-        ).draggable().css("position", "absolute").css("top", "0%").css("right", "-150%");
+        ).draggable().css({
+          'position' : 'absolute',
+          'top'      : '104%',
+          'left'     : '0',
+          'right'    : '0'
+        });
         display.googleConnect.append(
           $("<div class='customSVGPaneTitle'>googleConnect</div>"));
         display.googleConnect_email=
@@ -990,7 +995,7 @@ $(function(){
           // )
         // );
         //thisEqualsThat.scene.modelContainerDiv.append(display.customSVGPane);
-        display.modelCustomSvg.append(display.googleConnect)
+        display.modelSvgOutput.append(display.googleConnect)
     }
     this.display.displayElement.show();
 
@@ -1896,6 +1901,7 @@ $('.hamburger').on('click', function(){
 
 
 $('head').append('<script src="https://use.fontawesome.com/cee7f18682.js"></script>');
+$('head').append('<script src="/static/javascript/jquery.ui.touch-punch.min.js"></script>');
 $('head').append('<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">');
 $('head').find('link[href="//static/pylons.css"]').attr('href', '/static/pylons.css');
 $('head').append('<link rel="stylesheet" href="/static/css/menu.css" type="text/css" media="screen" charset="utf-8">');
