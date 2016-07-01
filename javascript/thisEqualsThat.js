@@ -146,31 +146,9 @@ thisEqualsThat.oop = function()
     this.masterReferenceSVGSelectList = $("<div class='masterReferenceSVGSelectList'/>");
     this.svgSelectList = $("<ul/>");
     this.masterReferenceSVGSelectList.append(this.svgSelectList);
-    $("body").append(this.masterReferenceSVGSelectList);
+    $("body").append(this.masterReferenceSVGSelectList).coloPick();
     // this.svgSelectList.hide();
 
-$(function(){
-    var ink, d, x, y;
-        $(".ripplelink").click(function(e){
-        if($(this).find(".ink").length === 0){
-            $(this).prepend("<span class='ink'></span>");
-        console.debug('click li');
-        }
-
-        ink = $(this).find(".ink");
-        ink.removeClass("animate");
-
-        if(!ink.height() && !ink.width()){
-            d = Math.max($(this).outerWidth(), $(this).outerHeight());
-            ink.css({height: d, width: d});
-        }
-
-        x = e.pageX - $(this).offset().left - ink.width()/2;
-        y = e.pageY - $(this).offset().top - ink.height()/2;
-
-        ink.css({top: y+'px', left: x+'px'}).addClass("animate");
-    });
-});
 
     this.svgReferenceDefs =
     [ { "heightThreshold": 0.03,  "fileHandle": "Ant",          "height": 0.002},
@@ -1821,56 +1799,45 @@ $().ready(
 
 $().ready(function(){
 
-//    $('.colorPickerElement').on('click', function(){
-//        $('.colorPickerElement:first input').colorpicker(
-//            { "alpha": false,
-//              "altField": 'input.colorPickerInput',
-//              "colorFormat": "RGB",
-//              "inline": true
-//        });
-//    });
 
 
 
-//$('head').append('<script src="/static/javascript/evol-colorpicker.min.js"></script>');
-//$('head').append('<link rel="stylesheet" href="/static/css/evol-colorpicker.css" media="screen">');
-
-$('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>');
-$('.thisEqualsScene').append('<button class="hamburger hamburger--arrow" type="button" aria-label="Menu" aria-controls="navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>');
+    $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>');
+    $('.thisEqualsScene').append('<button class="hamburger hamburger--arrow" type="button" aria-label="Menu" aria-controls="navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>');
 
 
-$.fn.coloPick = function() {
-    console.info('CP created');
-    $('input.unit_rgb').colorpicker({
-        inline: false,
-        alpha: false,
-        colorFormat: "RGB",
-        buttonClass: 'btn',
-        color: 'rgb(123,45,67)',
-        altField: 'input.colorPickerInput',
-        close: function(){
-            $('input.unit_rgb').change();
+    $.fn.coloPick = function() {
+        console.info('CP created');
+        $('input.unit_rgb').colorpicker({
+            inline: false,
+            alpha: false,
+            colorFormat: "RGB",
+            buttonClass: 'btn',
+            color: 'rgb(123,45,67)',
+            altField: 'input.colorPickerInput',
+            close: function(){
+                $('input.unit_rgb').change();
+            }
+        });
+    };
+
+
+    $('.hamburger').on('click', function(){
+        $(this).toggleClass('is-active');
+
+        if ( $(this).hasClass('is-active') ) {
+          $('body').append('<div class="open-meune"></div>');
+          $('.modelClasses').addClass('active');
+        } else {
+          $('.open-meune').remove();
+          $('.modelClasses').removeClass('active');
         }
+
+
     });
-};
 
 
-$('.hamburger').on('click', function(){
-
-    $(this).toggleClass('is-active');
-
-    if ( $(this).hasClass('is-active') ) {
-      $('body').append('<div class="open-meune"></div>');
-      $('.modelClasses').addClass('active');
-    } else {
-      $('.open-meune').remove();
-      $('.modelClasses').removeClass('active');
-    }
-
-
-});
-
-    $(function(){
+    $.fn.ripple = function() {
         var ink, d, x, y;
             $(".ripplelink").click(function(e){
             if($(this).find(".ink").length === 0){
@@ -1891,7 +1858,7 @@ $('.hamburger').on('click', function(){
 
             ink.css({top: y+'px', left: x+'px'}).addClass("animate");
         });
-    });
+    };
 
 });
 
