@@ -591,6 +591,7 @@ thisEqualsThat.oop = function()
       display.modelOutputTest        = $("<div class='modelOutputTest' />");
 
       display.modelCustomSvg        = $("<div class='modelCustomSvg' />");
+
       display.modelOutputDisplay        = $("<div class='modelOutputContainer'><div class='containerLabel'></div></div>");
 
       display.modelOutputValue          = $("<div class='modelOutputValue'  />");
@@ -1851,30 +1852,36 @@ $().ready(function(){
           });
 
         if ( $(this).hasClass('is-active') ) {
-          $('body').append('<div class="open-meune"></div>');
-          $('.modelClasses').css('height', '100vh');
-          setTimeout(function(){
-              $('.modelClasses').addClass('active');
-              $('#modelClassUL').css({
-                  'visibility': 'visible',
-                  'opacity': '1'
-              });
-          }, 600);
+            $('body').append('<div class="open-meune"></div>');
+            $('.modelClasses').css('height', '100vh');
+            setTimeout(function(){
+                $('.modelClasses').addClass('active');
+                $('#modelClassUL').css({
+                    'visibility': 'visible',
+                    'opacity': '1'
+                });
+            }, 600);
 
+            $('.open-meune').on('click', function(){
+                $('.hamburger').removeClass('is-active');
+                setTimeout(function(){
+                  $('.open-meune').remove();
+                  $('.modelClasses').removeClass('active');
+                  $('.modelClasses').css('height', '90px');
+                }, 550);
+            });
         } else {
-
-
           setTimeout(function(){
             $('.open-meune').remove();
-
             $('.modelClasses').removeClass('active');
             $('.modelClasses').css('height', '90px');
           }, 550);
 
         }
 
-
     });
+
+
 
 
     $.fn.ripple = function() {
