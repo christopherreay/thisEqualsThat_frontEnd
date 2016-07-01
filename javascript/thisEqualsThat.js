@@ -1851,7 +1851,7 @@ $().ready(function(){
           });
 
         if ( $(this).hasClass('is-active') ) {
-          // $('body').append('<div class="open-meune"></div>');
+          $('body').append('<div class="open-meune"></div>');
           $('.modelClasses').css('height', '100vh');
           setTimeout(function(){
               $('.modelClasses').addClass('active');
@@ -1865,10 +1865,10 @@ $().ready(function(){
 
 
           setTimeout(function(){
-            // $('.open-meune').remove();
+            $('.open-meune').remove();
 
             $('.modelClasses').removeClass('active');
-            $('.modelClasses').css('height', '80px');
+            $('.modelClasses').css('height', '90px');
           }, 550);
 
         }
