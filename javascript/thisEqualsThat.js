@@ -1845,13 +1845,32 @@ $().ready(function(){
 
     $('.hamburger').on('click', function(){
         $(this).toggleClass('is-active');
+        $('#modelClassUL').css({
+            'visibility': 'hidden',
+            'opacity': '0'
+          });
 
         if ( $(this).hasClass('is-active') ) {
-          $('body').append('<div class="open-meune"></div>');
-          $('.modelClasses').addClass('active');
+          // $('body').append('<div class="open-meune"></div>');
+          $('.modelClasses').css('height', '100vh');
+          setTimeout(function(){
+              $('.modelClasses').addClass('active');
+              $('#modelClassUL').css({
+                  'visibility': 'visible',
+                  'opacity': '1'
+              });
+          }, 600);
+
         } else {
-          $('.open-meune').remove();
-          $('.modelClasses').removeClass('active');
+
+
+          setTimeout(function(){
+            // $('.open-meune').remove();
+
+            $('.modelClasses').removeClass('active');
+            $('.modelClasses').css('height', '80px');
+          }, 550);
+
         }
 
 

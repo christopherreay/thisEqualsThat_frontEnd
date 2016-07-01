@@ -201,26 +201,21 @@ div.copyrightContainer> p {
   height: 100%;
   padding: 0px;
   padding-top: 100px;
+  transition: all .3s ease-out;
 }
 div.modelClasses {
     position: fixed;
     top: 0;
     left: 0;
     width: 500px;
-    height: 100vh;
-    border-bottom: 1px solid #BDBDBD;
+    height: 80px;
     background: transparent;
     z-index: 999;
     overflow: hidden;
-    transition: all .3s ease;
-    z-index: -1;
 }
-div.modelClasses> #modelClassUL {
-    display: none;
-}
-div.modelClasses.active> #modelClassUL {
-    display: block;
-    z-index: 1;
+
+#modelClassUL {
+    visibility: hidden;
 }
 
 .modelClassLI {
