@@ -91,8 +91,29 @@ thisEqualsThat.oop = function()
           { var modelClass = $(event.currentTarget).data("modelClass");
             console.log(modelClass);
             modelClass.getModelInstance(thisEqualsThat.scene.setCurrentModel);
+
+            var ink, d, x, y;
+
+                if($(this).find(".ink").length === 0){
+                    $(this).prepend("<span class='ink'></span>");
+                console.debug('click li');
+                }
+
+                ink = $(this).find(".ink");
+                ink.removeClass("animate");
+
+                if(!ink.height() && !ink.width()){
+                    d = Math.max($(this).outerWidth(), $(this).outerHeight());
+                    ink.css({height: d, width: d});
+                }
+
+                x = event.pageX - $(this).offset().left - ink.width()/2;
+                y = event.pageY - $(this).offset().top - ink.height()/2;
+
+                ink.css({top: y+'px', left: x+'px'}).addClass("animate");
           }
         );
+
     $.each( this,
       function (modelClassName, modelClass)
       { modelClassList.append(modelClass.modelClassListLI);
@@ -146,7 +167,7 @@ thisEqualsThat.oop = function()
     this.masterReferenceSVGSelectList = $("<div class='masterReferenceSVGSelectList'/>");
     this.svgSelectList = $("<ul/>");
     this.masterReferenceSVGSelectList.append(this.svgSelectList);
-    $("body").append(this.masterReferenceSVGSelectList).coloPick();
+    $("body").append(this.masterReferenceSVGSelectList);
     // this.svgSelectList.hide();
 
 
@@ -1839,24 +1860,30 @@ $().ready(function(){
 
     $.fn.ripple = function() {
         var ink, d, x, y;
-            $(".ripplelink").click(function(e){
-            if($(this).find(".ink").length === 0){
+        $(".ripplelink").click(function(e) {
+            if ($(this).find(".ink").length === 0) {
                 $(this).prepend("<span class='ink'></span>");
-            console.debug('click li');
+                console.debug('click li');
             }
 
             ink = $(this).find(".ink");
             ink.removeClass("animate");
 
-            if(!ink.height() && !ink.width()){
+            if (!ink.height() && !ink.width()) {
                 d = Math.max($(this).outerWidth(), $(this).outerHeight());
-                ink.css({height: d, width: d});
+                ink.css({
+                    height: d,
+                    width: d
+                });
             }
 
-            x = e.pageX - $(this).offset().left - ink.width()/2;
-            y = e.pageY - $(this).offset().top - ink.height()/2;
+            x = e.pageX - $(this).offset().left - ink.width() / 2;
+            y = e.pageY - $(this).offset().top - ink.height() / 2;
 
-            ink.css({top: y+'px', left: x+'px'}).addClass("animate");
+            ink.css({
+                top: y + 'px',
+                left: x + 'px'
+            }).addClass("animate");
         });
     };
 

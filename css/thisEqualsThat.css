@@ -193,20 +193,20 @@ div.modelClasses:before {
     transform: scale(0);
 }
 .animate {
-    -webkit-animation: ripple 0.4s linear;
-    animation: ripple 0.4s linear;
+    -webkit-animation: ripple 0.6s ease-in-out;
+    animation: ripple 0.6s ease-in-out;
 }
 @-webkit-keyframes ripple {
     100% {
         opacity: 0;
-        -webkit-transform: scale(1.5);
+        -webkit-transform: scale(3);
     }
 }
 @keyframes ripple {
     100% {
         opacity: 0;
-        -webkit-transform: scale(1.5);
-        transform: scale(1.5);
+        -webkit-transform: scale(3);
+        transform: scale(3);
     }
 }
 
@@ -933,24 +933,24 @@ input.ui-colorpicker-hex-input {
 */
 
 @media screen and (max-width: 959px) {
-  #top{
-    height: 64px;
-  }
-  .top{
-    line-height: 65px;
-  }
-  #logo> img {
-    width: 180px;
-  }
-  .hamburger{
-    top: 5px;
-  }
-  div.modelSliders, div.modelOutputTest, div.modelCustomSvg{
-    width: 45%;
-  }
-  div.modelSvgOutput{
-    width: 53%;
-  }
+    #top{
+      height: 64px;
+    }
+    .top{
+      line-height: 65px;
+    }
+    #logo> img {
+      width: 180px;
+    }
+    .hamburger{
+      top: 5px;
+    }
+    div.modelSliders, div.modelOutputTest, div.modelCustomSvg{
+      width: 45%;
+    }
+    div.modelSvgOutput{
+      width: 53%;
+    }
 }
 
 .name_watts> .inputFieldLabel, .name_count> .inputFieldLabel, .name_time> .inputFieldLabel, .name_energy> .inputFieldLabel, .name_mass> .inputFieldLabel, .name_timeToBreathOut> .inputFieldLabel, .name_volume_100> .inputFieldLabel, .name_volume_inAir> .inputFieldLabel, .name_number> .inputFieldLabel, .name_density> .inputFieldLabel, .name_volume> .inputFieldLabel, .name_colours> .inputFieldLabel, .name_randomLayout> .inputFieldLabel, .name_numberOfClones> .inputFieldLabel, .name_ratios> .inputFieldLabel, .name_efficiency> .inputFieldLabel, .modelOutputContainer> .containerLabel, .visualisationOutputContainer> .containerLabel {
