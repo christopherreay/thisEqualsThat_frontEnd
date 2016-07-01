@@ -104,13 +104,6 @@ div.copyrightContainer> p {
     padding-left: 15px;
 }
 
-.hamburger{
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 1005;
-    padding: 15px 15px;
-}
 
 #modelClassUL {
   padding: 5px;
@@ -220,7 +213,10 @@ div.modelClasses.active> #modelClassUL {
     padding-top: 100px;
 }
 .modelClassLI {
-
+    display: table-cell;
+    width: 12.5%;
+    text-align: center;
+    vertical-align: middle;
 }
 .modelClassLI img {
     float: left;
@@ -236,7 +232,6 @@ div.modelClasses.active> #modelClassUL {
     color: #000;
     font-weight: 400;
     line-height: 40px;
-    float: left;
 }
 
 .masterReferenceSVGSelectList {
@@ -933,24 +928,7 @@ input.ui-colorpicker-hex-input {
 */
 
 @media screen and (max-width: 959px) {
-  #top{
-    height: 64px;
-  }
-  .top{
-    line-height: 65px;
-  }
-  #logo> img {
-    width: 180px;
-  }
-  .hamburger{
-    top: 5px;
-  }
-  div.modelSliders, div.modelOutputTest, div.modelCustomSvg{
-    width: 45%;
-  }
-  div.modelSvgOutput{
-    width: 53%;
-  }
+  
 }
 
 .name_watts> .inputFieldLabel, .name_count> .inputFieldLabel, .name_time> .inputFieldLabel, .name_energy> .inputFieldLabel, .name_mass> .inputFieldLabel, .name_timeToBreathOut> .inputFieldLabel, .name_volume_100> .inputFieldLabel, .name_volume_inAir> .inputFieldLabel, .name_number> .inputFieldLabel, .name_density> .inputFieldLabel, .name_volume> .inputFieldLabel, .name_colours> .inputFieldLabel, .name_randomLayout> .inputFieldLabel, .name_numberOfClones> .inputFieldLabel, .name_ratios> .inputFieldLabel, .name_efficiency> .inputFieldLabel, .modelOutputContainer> .containerLabel, .visualisationOutputContainer> .containerLabel {

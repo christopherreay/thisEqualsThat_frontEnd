@@ -213,18 +213,6 @@ a:hover
   width: 100%;
 }
 
-#top, #top-small, #bottom
-{
-  width: 100%;
-}
-
-#top
-{
-  color: #000;
-  height: 85px;
-  position: relative;
-}
-
 #top-small
 {
   color: #000;

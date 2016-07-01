@@ -1,9 +1,9 @@
 .hamburger {
-  position: fixed;
+  /*position: fixed;
   top: 15px;
   left: 15px;
   z-index: 1005;
-  padding: 15px 15px;
+  padding: 15px 15px;*/
   display: inline-block;
   cursor: pointer;
   transition-property: opacity, -webkit-filter;
