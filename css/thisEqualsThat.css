@@ -187,26 +187,35 @@ div.modelClasses:before {
 .ink {
     display: block;
     position: absolute;
-    background: rgba(255, 255, 255, 0.8);
+    background: #1A237E;
     border-radius: 100%;
     -webkit-transform: scale(0);
     transform: scale(0);
+    z-index: 105;
 }
 .animate {
-    -webkit-animation: ripple 0.6s ease-in-out;
-    animation: ripple 0.6s ease-in-out;
+    -webkit-animation: ripple 0.8s cubic-bezier(.4,0,.2,1);
+    animation: ripple 0.8s cubic-bezier(.4,0,.2,1);
 }
 @-webkit-keyframes ripple {
+    75% {
+        opacity: 1;
+        -webkit-transform: scale(2.2);
+    }
     100% {
-        opacity: 0;
-        -webkit-transform: scale(3);
+        opacity: 1;
+        -webkit-transform: scale(2.2);
     }
 }
 @keyframes ripple {
+    75% {
+        opacity: 1;
+        -webkit-transform: scale(2.2);
+    }
     100% {
-        opacity: 0;
-        -webkit-transform: scale(3);
-        transform: scale(3);
+        opacity: 1;
+        -webkit-transform: scale(2.2);
+        transform: scale(2.2);
     }
 }
 
@@ -228,8 +237,8 @@ div.modelClasses.active> #modelClassUL {
     margin-right: 20px;
     -webkit-transform: scale(1);
     transform: scale(1);
-    -webkit-transition: all .3s cubic-bezier(.8, -1, .7, 2);
-    transition: all .3s cubic-bezier(.8, -1, .7, 2);
+    -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
+    transition: all .3s cubic-bezier(.4,0,.2,1);
 }
 .modelClassLI h3 {
     font-family: Roboto;
