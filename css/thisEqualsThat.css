@@ -25,8 +25,6 @@ body::scrollbar {
 }
 div.bottomModelDiv {
     position: relative;
-    padding-top: 25px;
-    border-top: 1px solid #9E9E9E;
 }
 .btn {
     display: inline-block;
@@ -93,7 +91,7 @@ div.copyrightContainer {
     overflow: hidden;
 }
 div.copyrightContainer> p {
-    margin-left: 200px;
+    margin-left: 15px;
     line-height: 50px;
 }
 
@@ -308,10 +306,7 @@ div.modelClasses {
     left: -100px;
     top: -10000000px;
 }
-.referenceSVGSelectListItem {
-    height: 56px;
-    width: 56px;
-}
+
 .userSelectedReferenceSVG_selected {
     background-color: lightgrey;
 }
@@ -344,12 +339,7 @@ div.modelSliders, div.modelOutputTest, div.modelCustomSvg {
     width: 35%;
     margin-top: 20px;
 }
-div.modelSvgOutput {
-    position: absolute;
-    top: 20px;
-    right: 0;
-    width: 63%;
-}
+
 div.modelSliders, div.modelOutputTest, div.modelSvgOutput, div.modelCustomSvg {
     padding: 20px;
     background: #fff;
@@ -455,8 +445,7 @@ div.visualisationOutputContainer select {
     font-size: 15px;
     border-bottom: 0;
 }
-div.modelOutputContainer> select,
-div.visualisationOutputContainer select{
+div.modelOutputContainer> select, div.visualisationOutputContainer select{
   width: 80%;
 }
 div.bottomModelSelectDiv {
@@ -524,18 +513,11 @@ div.modelOutputValue {
     font-size: 12px;
     color: #757575;
 }
-div.svgOutput {
-  width: 400px;
-  height: 400px;
-  clear: both;
-  margin: 0 auto;
+
+input.svgTextDescription, input.custom_svgNameInput {
+  width: 233px;
 }
-div.svgModelRoot {
-    width: 100%;
-    height: 400px;
-    float: left;
-    position: relative;
-}
+
 input.svgTextDescription {
     float: left;
     background: transparent;
@@ -544,7 +526,6 @@ input.svgTextDescription {
     border-top: 0;
     border-right: 0;
     border-left: 0;
-    width: 233px;
     margin-top: 0;
     margin-bottom: 20px;
     text-align: left;
@@ -560,82 +541,6 @@ input.svgTextDescription:hover {
 input.svgTextDescription:focus {
     color: #0091EA;
     border-color: rgba(33, 150, 243, 1);
-}
-div.svgModelRoot svg {
-    position: absolute;
-}
-div.referenceSVG {
-    width: 50px;
-    height: 50px;
-    background-color: green;
-    position: absolute;
-    bottom: 0px;
-    right: 100px;
-}
-div.customSVGList {
-    position: relative;
-    overflow-y: hidden;
-    width: 100%;
-    float: right;
-    clear: both;
-    margin-bottom: 10px;
-}
-div.customSVGPaneTitle {
-    float: left;
-    padding-top: 4px;
-    font-size: 16px;
-    margin-bottom: 0px;
-}
-.googleConnect> .customSVGPaneTitle {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    color: #fff;
-    background: #2196F3;
-    padding: 5px 5px 5px 20px;
-}
-.googleConnect> .custom_svgNameInput {
-    margin: 3px 0;
-    padding: 5px;
-    width: 100%;
-}
-a.googleConnect_loginButton {
-    text-decoration: none;
-    color: rgba(255, 255, 255, 0.9);
-    background: rgba(33, 150, 243, .8);
-}
-a.googleConnect_loginButton:hover {
-    text-decoration: none;
-    color: rgba(255, 255, 255, 1);
-    background: rgba(33, 150, 243, 1);
-}
-.custom_svgNameInput {
-    position: relative;
-    float: left;
-    background: transparent;
-    padding: 5px;
-    padding-top: 5px;
-    border-top: 0;
-    border-right: 0;
-    border-left: 0;
-    width: 233px;
-    text-align: left;
-    font-family: Roboto;
-    font-size: 16px;
-    border-bottom: 1px solid #9E9E9E;
-}
-.custom_svgNameInput::-webkit-file-upload-button {
-  visibility: hidden;
-  width: 0;
-}
-.googleConnect> input.spreadsheetURL {
-    width: 90%;
-    float: left;
-}
-.googleConnect> select.spreadsheetURL {
-    width: 10%;
-    padding: 4px;
 }
 .svgSaveLink {
   border-radius: 50%;
@@ -663,14 +568,32 @@ a.googleConnect_loginButton:hover {
     color: rgba(255, 255, 255, 1);
     background: rgba(33, 150, 243, 1);
 }
-.ic-save_svg {
-  width: 20px;
-  height: 20px;
-  opacity: .9;
-  transition: all .3s;
+
+div.customSVGList {
+    position: relative;
+    overflow-y: hidden;
+    width: 100%;
+    float: right;
+    clear: both;
+    margin-bottom: 10px;
 }
-.ic-save_svg {
-  opacity: 1;
+.custom_svgNameInput {
+    position: relative;
+    float: left;
+    background: transparent;
+    padding: 5px;
+    padding-top: 5px;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    text-align: left;
+    font-family: Roboto;
+    font-size: 16px;
+    border-bottom: 1px solid #9E9E9E;
+}
+.custom_svgNameInput::-webkit-file-upload-button {
+  visibility: hidden;
+  width: 0;
 }
 div.customSVGPaneSubmitButton {
     position: absolute;
@@ -687,18 +610,6 @@ div.customSVGPaneSubmitButton {
     background-position: center 7px;
     -webkit-box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
     box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
-}
-div.customSVGPane.googleConnect {
-    width: 465px;
-    padding: 40px 60px 10px;
-    background-color: #fff;
-    border-radius: 3px;
-    border: 0;
-    overflow: hidden;
-    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
-}
-div.googleConnect.ui-draggable-dragging {
-    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 div.referenceSVGSelectListContainer {
     margin-top: 45px;
@@ -732,6 +643,91 @@ div.referenceSVGSelectListContainer> ul {
 div.referenceSVGSelectListContainer> ul> li {
     display: inline-block;
 }
+div.referenceSVGSelectListItem {
+    height: 56px;
+    width: 56px;
+}
+div.referenceSVG {
+    width: 50px;
+    height: 50px;
+    background-color: green;
+    position: absolute;
+    bottom: 0px;
+    right: 100px;
+}
+
+div.modelSvgOutput {
+    position: absolute;
+    top: 20px;
+    right: 0;
+    width: 63%;
+}
+div.svgOutput {
+  width: 400px;
+  height: 400px;
+  clear: both;
+  margin: 0 auto;
+}
+div.svgModelRoot {
+    width: 100%;
+    height: 400px;
+    float: left;
+    position: relative;
+}
+
+div.customSVGPaneTitle {
+    float: left;
+    padding-top: 4px;
+    font-size: 16px;
+    margin-bottom: 0px;
+}
+div.customSVGPane.googleConnect {
+    width: 465px;
+    padding: 40px 60px 10px;
+    background-color: #fff;
+    border-radius: 3px;
+    border: 0;
+    overflow: hidden;
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+}
+div.googleConnect.ui-draggable-dragging {
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.googleConnect> .customSVGPaneTitle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    color: #fff;
+    background: #2196F3;
+    padding: 5px 5px 5px 20px;
+}
+.googleConnect> .custom_svgNameInput {
+    margin: 3px 0;
+    padding: 5px;
+    width: 100%;
+}
+a.googleConnect_loginButton {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(33, 150, 243, .8);
+}
+a.googleConnect_loginButton:hover {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 1);
+    background: rgba(33, 150, 243, 1);
+}
+.googleConnect> input.spreadsheetURL {
+    width: 90%;
+    float: left;
+}
+.googleConnect> select.spreadsheetURL {
+    width: 10%;
+    padding: 4px;
+}
+
+
+
 div.colorControl {
     float: left;
     display: none;
@@ -761,6 +757,7 @@ div.toggleFeatures> label:last-child {
 * {
     box-sizing: border-box;
 }
+
 input.checkbox {
     opacity: 0;
     position: absolute;
@@ -991,32 +988,6 @@ input.ui-colorpicker-hex-input {
 
 
 
-/*
-    media for netbooks adn large tablets
-
-*/
-
-@media screen and (max-width: 959px) {
-    #top{
-      height: 64px;
-    }
-    .top{
-      line-height: 65px;
-    }
-    #logo> img {
-      width: 180px;
-    }
-    .hamburger{
-      top: 5px;
-    }
-    div.modelSliders, div.modelOutputTest, div.modelCustomSvg{
-      width: 45%;
-    }
-    div.modelSvgOutput{
-      width: 53%;
-    }
-}
-
 .name_watts> .inputFieldLabel, .name_count> .inputFieldLabel, .name_time> .inputFieldLabel, .name_energy> .inputFieldLabel, .name_mass> .inputFieldLabel, .name_timeToBreathOut> .inputFieldLabel, .name_volume_100> .inputFieldLabel, .name_volume_inAir> .inputFieldLabel, .name_number> .inputFieldLabel, .name_density> .inputFieldLabel, .name_volume> .inputFieldLabel, .name_colours> .inputFieldLabel, .name_randomLayout> .inputFieldLabel, .name_numberOfClones> .inputFieldLabel, .name_ratios> .inputFieldLabel, .name_efficiency> .inputFieldLabel, .modelOutputContainer> .containerLabel, .visualisationOutputContainer> .containerLabel {
     background-size: cover;
 }
@@ -1166,4 +1137,67 @@ input.ui-colorpicker-hex-input {
     background-image: url(/static/graphics/thisEquals/icons/visualisation.svg);
     width: 27px;
     height: 27px;
+}
+
+
+/*
+    media for netbooks adn large tablets
+
+*/
+
+@media screen and (max-width: 959px) {
+    #top{
+      height: 64px;
+    }
+    .top{
+      line-height: 65px;
+    }
+    #logo> img {
+      width: 180px;
+    }
+    .hamburger{
+      top: 5px;
+    }
+
+    div.modelSliders, div.modelOutputTest, div.modelCustomSvg{
+      width: 40%;
+    }
+    input.svgTextDescription, input.custom_svgNameInput {
+      width: 205px;
+    }
+    div.modelSvgOutput{
+      width: 57%;
+      height: 380px;
+      padding-top: 40px;
+    }
+    div.svgOutput {
+        width: 380px;
+        height: 300px;
+    }
+    div.svgModelRoot {
+      height: 300px;
+    }
+
+    #axis {
+      margin-right: 20px;
+    }
+    .ch_axis {
+        margin-left: 0;
+    }
+    #reference {
+      margin-right: 10px;
+    }
+    .ch_reference {
+      margin-left: 10px;
+    }
+    #text_description {
+      margin-right: 0;
+    }
+    .ch_description {
+      margin-left: 20px;
+    }
+
+    div.customSVGPane.googleConnect {
+      width: 100%;
+    }
 }
