@@ -1280,16 +1280,18 @@ input.ui-colorpicker-hex-input {
 
 @media screen and (max-width: 400px) {
     #modelClassUL{
-      padding-top: 0;
+      padding-top: 20px;
     }
     .ripplelink{
-      height: 56px;
+      height: 60px;
+      padding: 16px 0;
+      padding-left: 40px;
     }
     .modelClassLI img{
-      width: 25px;
+      width: 27px;
     }
     .modelClassLI h3{
-      line-height: 25px;
-      font-size: 16px;
+      line-height: 28px;
+      font-size: 17px;
     }
 }
