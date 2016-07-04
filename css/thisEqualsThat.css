@@ -197,6 +197,7 @@ div.copyrightContainer> p {
   margin: 0;
   padding: 0px;
   padding-top: 100px;
+  padding-bottom: 80px;
   overflow-y: scroll;
   overflow-x: hidden;
   transition: all .3s ease-out;
@@ -1144,7 +1145,7 @@ input.ui-colorpicker-hex-input {
 
 
 /*
-    media for netbooks adn large tablets
+    media for netbooks and large tablets
 
 */
 
@@ -1211,5 +1212,41 @@ input.ui-colorpicker-hex-input {
 
     div.customSVGPane.googleConnect {
       width: 100%;
+    }
+}
+
+@media screen and (max-width: 768px){
+
+    #modelClassUL{
+      padding-top: 40px;
+    }
+
+    div.modelSliders, div.modelOutputTest, div.modelCustomSvg {
+      width: 33.3%;
+      height: 50px;
+      clear: right;
+      overflow: hidden;
+    }
+    div.modelSvgOutput{
+      position: relative;
+      width: 100%;
+      margin-top: 20px;
+      float: left;
+      clear: both;
+    }
+    div.modelSliders {
+      width: 100%;
+      height: initial;
+    }
+    .modelSliders:after {
+        content: "";
+        background: rgba(0,0,0, .5);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform: scale(3);
+        z-index: -1;
     }
 }

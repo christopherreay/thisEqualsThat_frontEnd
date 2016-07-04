@@ -1854,6 +1854,7 @@ $().ready(function(){
         if ( $(this).hasClass('is-active') ) {
 
             $('body').append('<div class="open-meune"></div>');
+            $('body').css('overflow', 'hidden');
             $('.modelClasses').addClass('active');
             setTimeout(function(){
                 $('#modelClassUL').css({
@@ -1874,6 +1875,7 @@ $().ready(function(){
             });
 
         } else {
+          $('body').css('overflow', 'scroll');
           $('.hamburger').removeClass('is-active');
           setTimeout(function(){
             $('.modelClasses').removeClass('active');
