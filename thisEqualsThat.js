@@ -96,7 +96,6 @@ thisEqualsThat.oop = function()
 
                 if($(this).find(".ink").length === 0){
                     $(this).prepend("<span class='ink'></span>");
-                console.debug('click li');
                 }
 
                 ink = $(this).find(".ink");
@@ -111,6 +110,7 @@ thisEqualsThat.oop = function()
                 y = event.pageY - $(this).offset().top - ink.height()/2;
 
                 ink.css({top: y+'px', left: x+'px'}).addClass("animate");
+
           }
         );
 
@@ -583,14 +583,14 @@ thisEqualsThat.oop = function()
           }
         );
 
-      display.modelSliders          = $("<div class='modelSliders model_options'  />");
+      display.modelSliders              = $("<div class='modelSliders model_options'  />");
       display.modelSliders.append(this.getInputFields().inputFieldsSliders);
 
-      display.modelSvgOutput        = $("<div class='modelSvgOutput' />");
+      display.modelSvgOutput            = $("<div class='modelSvgOutput' />");
 
-      display.modelOutputTest        = $("<div class='modelOutputTest model_options' />");
+      display.modelOutputTest           = $("<div class='modelOutputTest model_options' />");
 
-      display.modelCustomSvg        = $("<div class='modelCustomSvg model_options' />");
+      display.modelCustomSvg            = $("<div class='modelCustomSvg model_options' />");
 
       display.modelOutputDisplay        = $("<div class='modelOutputContainer'><div class='containerLabel'></div></div>");
 
@@ -1003,6 +1003,12 @@ thisEqualsThat.oop = function()
   }
   this.ModelInstance.prototype.hide = function()
   { this.display.displayElement.hide();
+  }
+  this.ModelInstance.prototype.mobile = function()
+  { var modelOptionBox = modelInstance.display.modelSliders;
+        modelOptionBox.on('click', function () {
+          this.addClass('active');
+        });
   }
   this.ModelInstance.prototype.displayBottomModel = function()
   { console.log("displayBottomModel");
@@ -1889,11 +1895,6 @@ var openMenu = $('<div class="open-meune"></div>');
           }, 700);
 
         }
-
-        $('.model_options').on('click', function(){
-            var self = $(this);
-            self.addClass('active');
-        });
 
     });
 
