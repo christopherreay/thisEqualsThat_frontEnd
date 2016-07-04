@@ -96,7 +96,6 @@ thisEqualsThat.oop = function()
 
                 if($(this).find(".ink").length === 0){
                     $(this).prepend("<span class='ink'></span>");
-                console.debug('click li');
                 }
 
                 ink = $(this).find(".ink");
@@ -111,6 +110,7 @@ thisEqualsThat.oop = function()
                 y = event.pageY - $(this).offset().top - ink.height()/2;
 
                 ink.css({top: y+'px', left: x+'px'}).addClass("animate");
+
           }
         );
 
@@ -583,14 +583,24 @@ thisEqualsThat.oop = function()
           }
         );
 
-      display.modelSliders          = $("<div class='modelSliders model_options'  />");
+      display.modelSliders              = $("<div class='modelSliders model_options'  />");
       display.modelSliders.append(this.getInputFields().inputFieldsSliders);
+      display.modelSliders.on('click', function () {
+          $(this).toggleClass('active');
+          $(this).append('<div>close</div>');
+      });
 
-      display.modelSvgOutput        = $("<div class='modelSvgOutput' />");
+      display.modelOutputTest           = $("<div class='modelOutputTest model_options' />");
+      display.modelOutputTest.on('click', function () {
+          $(this).toggleClass('active');
+      });
 
-      display.modelOutputTest        = $("<div class='modelOutputTest model_options' />");
+      display.modelCustomSvg            = $("<div class='modelCustomSvg model_options' />");
+      display.modelCustomSvg.on('click', function () {
+          $(this).toggleClass('active');
+      });
 
-      display.modelCustomSvg        = $("<div class='modelCustomSvg model_options' />");
+      display.modelSvgOutput            = $("<div class='modelSvgOutput' />");
 
       display.modelOutputDisplay        = $("<div class='modelOutputContainer'><div class='containerLabel'></div></div>");
 
@@ -1823,7 +1833,6 @@ $().ready(function(){
 
 
 
-
     $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>');
     $('.modelClasses').append('<button class="hamburger hamburger--spin-r" type="button" aria-label="Menu" aria-controls="navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>');
 
@@ -1842,6 +1851,9 @@ $().ready(function(){
             }
         });
     };
+
+
+
 
 var openMenu = $('<div class="open-meune"></div>');
 
@@ -1870,6 +1882,7 @@ var openMenu = $('<div class="open-meune"></div>');
             }, 600);
 
             openMenu.on('click', function(){
+                $('body').removeClass('open');
                 $('.hamburger').removeClass('is-active');
                 $('#modelClassUL').css({
                     'visibility': 'hidden',
@@ -1891,6 +1904,7 @@ var openMenu = $('<div class="open-meune"></div>');
         }
 
     });
+
 
 
 

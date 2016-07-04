@@ -1219,12 +1219,21 @@ input.ui-colorpicker-hex-input {
     }
 }
 
+
 @media screen and (max-width: 768px){
 
     #modelClassUL{
       padding-top: 40px;
     }
-
+    .ripplelink {
+      height: 70px;
+    }
+    .modelClassLI img {
+      width: 30px;
+    }
+    .modelClassLI h3 {
+      line-height: 32px;
+    }
     div.model_options {
       width: 32%;
       height: 50px;
@@ -1260,5 +1269,27 @@ input.ui-colorpicker-hex-input {
         width: 100%;
         height: initial;
         z-index: 505;
+    }
+}
+
+@media screen and (max-width: 550px){
+    div.modelClasses.active {
+      width: 100%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    #modelClassUL{
+      padding-top: 0;
+    }
+    .ripplelink{
+      height: 56px;
+    }
+    .modelClassLI img{
+      width: 25px;
+    }
+    .modelClassLI h3{
+      line-height: 25px;
+      font-size: 16px;
     }
 }
