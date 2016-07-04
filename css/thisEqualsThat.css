@@ -345,6 +345,7 @@ div.modelSliders, div.modelOutputTest, div.modelCustomSvg {
 }
 
 div.modelSliders, div.modelOutputTest, div.modelSvgOutput, div.modelCustomSvg {
+    position: relative;
     padding: 20px;
     background: #fff;
     border-radius: 3px;
@@ -1222,31 +1223,37 @@ input.ui-colorpicker-hex-input {
     }
 
     div.modelSliders, div.modelOutputTest, div.modelCustomSvg {
-      width: 33.3%;
+      width: 32%;
       height: 50px;
       clear: right;
       overflow: hidden;
     }
+    div.modelOutputTest {
+      margin-left: 2%;
+      margin-right: 2%;
+    }
     div.modelSvgOutput{
       position: relative;
       width: 100%;
-      margin-top: 20px;
+      margin-top: 0px;
       float: left;
       clear: both;
     }
-    div.modelSliders {
-      width: 100%;
-      height: initial;
-    }
-    .modelSliders:after {
+    div.modelSliders::before, div.modelOutputTest::before, div.modelCustomSvg::before {
         content: "";
-        background: rgba(0,0,0, .5);
+        background: #fff;
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
-        transform: scale(3);
+        bottom: 0;
+        right: 0;
+        z-index: 9;
+    }
+    div.modelSliders.active::before , div.modelOutputTest.active::before, div.modelCustomSvg.active::before{
         z-index: -1;
+    }
+    div.modelSliders.active , div.modelOutputTest.active, div.modelCustomSvg.active{
+        width: 100%;
+        height: initial;
     }
 }
