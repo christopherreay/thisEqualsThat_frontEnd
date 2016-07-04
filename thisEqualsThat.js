@@ -1890,7 +1890,14 @@ var openMenu = $('<div class="open-meune"></div>');
 
         }
 
+        $('.model_options').on('click', function(){
+            var self = $(this);
+            self.addClass('active');
+        });
+
     });
+
+
 
 
 

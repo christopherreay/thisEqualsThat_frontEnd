@@ -4,6 +4,9 @@ body {
     background: #EEEEEE;
     padding-bottom: 50px;
 }
+body.open {
+    overflow: hidden;
+}
 body::-webkit-scrollbar {
   display: none;
 }
@@ -339,7 +342,7 @@ div.modelCustomSvg{
     float: left;
     clear: both;
 }
-div.modelSliders, div.modelOutputTest, div.modelCustomSvg {
+div.model_options {
     width: 35%;
     margin-top: 20px;
 }
@@ -1173,7 +1176,7 @@ input.ui-colorpicker-hex-input {
       left: initial;
     }
 
-    div.modelSliders, div.modelOutputTest, div.modelCustomSvg{
+    div.model_options{
       width: 40%;
     }
     input.svgTextDescription, input.custom_svgNameInput {
@@ -1222,7 +1225,7 @@ input.ui-colorpicker-hex-input {
       padding-top: 40px;
     }
 
-    div.modelSliders, div.modelOutputTest, div.modelCustomSvg {
+    div.model_options {
       width: 32%;
       height: 50px;
       clear: right;
@@ -1253,7 +1256,9 @@ input.ui-colorpicker-hex-input {
         z-index: -1;
     }
     div.modelSliders.active , div.modelOutputTest.active, div.modelCustomSvg.active{
+        margin: 0;
         width: 100%;
         height: initial;
+        z-index: 505;
     }
 }
