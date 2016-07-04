@@ -192,26 +192,29 @@ div.copyrightContainer> p {
 
 #modelClassUL {
   display: block;
-  margin: 0;
-  width: 100%;
-  height: 100vh;
   width: 100%;
   height: 100%;
+  margin: 0;
   padding: 0px;
   padding-top: 100px;
+  overflow-y: scroll;
+  overflow-x: hidden;
   transition: all .3s ease-out;
 }
 div.modelClasses {
     position: fixed;
     top: 0;
     left: 0;
-    width: 420px;
+    width: 90px;
     height: 90px;
     background: transparent;
     z-index: 999;
     overflow: hidden;
 }
-
+div.modelClasses.active{
+    height: 100vh;
+    width: 420px;
+}
 #modelClassUL {
     visibility: hidden;
 }
@@ -1155,8 +1158,17 @@ input.ui-colorpicker-hex-input {
     #logo> img {
       width: 180px;
     }
+    div.modelClasses {
+      bottom: 0;
+      right: 0;
+      top: initial;
+      left: initial;
+    }
     .hamburger{
-      top: 5px;
+      bottom: 5px;
+      right: 15px;
+      top: initial;
+      left: initial;
     }
 
     div.modelSliders, div.modelOutputTest, div.modelCustomSvg{

@@ -1852,10 +1852,10 @@ $().ready(function(){
           });
 
         if ( $(this).hasClass('is-active') ) {
+
             $('body').append('<div class="open-meune"></div>');
-            $('.modelClasses').css('height', '100vh');
+            $('.modelClasses').addClass('active');
             setTimeout(function(){
-                $('.modelClasses').addClass('active');
                 $('#modelClassUL').css({
                     'visibility': 'visible',
                     'opacity': '1'
@@ -1864,18 +1864,21 @@ $().ready(function(){
 
             $('.open-meune').on('click', function(){
                 $('.hamburger').removeClass('is-active');
+                $('#modelClassUL').css({
+                    'visibility': 'hidden',
+                    'opacity': '0'
+                  });
                 setTimeout(function(){
                   $('.open-meune').remove();
-                  $('.modelClasses').removeClass('active');
-                  $('.modelClasses').css('height', '90px');
-                }, 550);
+                }, 700);
             });
+
         } else {
+          $('.hamburger').removeClass('is-active');
           setTimeout(function(){
-            $('.open-meune').remove();
             $('.modelClasses').removeClass('active');
-            $('.modelClasses').css('height', '90px');
-          }, 550);
+            $('.open-meune').remove();
+          }, 700);
 
         }
 
