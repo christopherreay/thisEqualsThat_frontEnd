@@ -1253,6 +1253,9 @@ input.ui-colorpicker-hex-input {
       float: left;
       clear: both;
     }
+    div.svgOutput {
+      width: 330px;
+    }
     div.model_options::before {
         content: "";
         background: #fff;
@@ -1306,5 +1309,15 @@ input.ui-colorpicker-hex-input {
     .modelClassLI h3 {
       line-height: 28px;
       font-size: 17px;
+    }
+    div.modelSvgOutput {
+      height: 330px;
+    }
+    div.svgOutput {
+      width: 250px;
+      height: 250px;
+    }
+    div.svgModelRoot {
+      height: 250px;
     }
 }

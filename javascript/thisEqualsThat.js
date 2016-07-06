@@ -611,13 +611,11 @@ thisEqualsThat.oop = function()
 
                 openMenu.on('click', function () {
                     self.removeClass('active');
-                    setTimeout(function(){
-                      openMenu.css({
+                    openMenu.css({
                           'opacity': '0',
                           'visibility': 'hidden',
                           'z-index': '-1'
-                      });
-                    }, 700);
+                    });
                     $('body').removeClass('open');
                     $('.modelSvgOutput').css('z-index', '1')
                     $('.googleConnect').show();
@@ -626,13 +624,11 @@ thisEqualsThat.oop = function()
               } else {
                   console.debug(openMenu);
                   console.debug( $('.open-meune') );
-                  setTimeout(function(){
-                    openMenu.css({
+                  openMenu.css({
                         'opacity': '0',
                         'visibility': 'hidden',
                         'z-index': '-1'
-                    });
-                  }, 700);
+                  });
                   $('body').removeClass('open');
                   $('.modelSvgOutput').css('z-index', '1')
                   $('.googleConnect').show();
@@ -1948,13 +1944,11 @@ var openMenu = $('.open-menu');
                 $('#modelClassUL').css({
                     'visibility': 'hidden',
                     'opacity': '0'
-                  });
-                openMenu.animate({
-                            opacity: '0'
-                          }, 600);
+                });
                 setTimeout(function(){
                   menuWrap.removeClass('active');
                   openMenu.css({
+                      'opacity': '0',
                       'visibility': 'hidden',
                       'z-index': '-1'
                   });
@@ -1964,12 +1958,10 @@ var openMenu = $('.open-menu');
         } else {
           $('body').removeClass('open');
           $('.hamburger').removeClass('is-active');
-          openMenu.animate({
-                      opacity: '0'
-                    }, 600);
           setTimeout(function(){
             menuWrap.removeClass('active');
             openMenu.css({
+                'opacity': '0',
                 'visibility': 'hidden',
                 'z-index': '-1'
             });
