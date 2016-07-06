@@ -1872,7 +1872,8 @@ $().ready(function(){
 
 
 
-    $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>');
+    $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>')
+             .append('<div class="open-menu"></div>');
     $('.modelClasses').append('<button class="hamburger hamburger--spin-r" type="button" aria-label="Menu" aria-controls="navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>');
 
 
@@ -1894,7 +1895,7 @@ $().ready(function(){
 
 
 
-var openMenu = $('<div class="open-meune"></div>');
+var openMenu = $('.open-menu');
 
     $('.hamburger').on('click', function(){
 
@@ -1909,9 +1910,12 @@ var openMenu = $('<div class="open-meune"></div>');
           });
 
         if ( menuBtn.hasClass('is-active') ) {
-
-            $('body').append(openMenu)
-                     .addClass('open');
+            openMenu.animate({
+              opacity: '1',
+              visibility: 'visible'
+              z-index: 500
+            }, 600, 'easein');
+            $('body').addClass('open');
             menuWrap.addClass('active');
             setTimeout(function(){
                 menuItemList.css({
@@ -1929,8 +1933,8 @@ var openMenu = $('<div class="open-meune"></div>');
                   });
                 setTimeout(function(){
                   menuWrap.removeClass('active');
-                  openMenu.remove();
-                }, 700);
+                  openMenu.hide();
+                }, 600);
             });
 
         } else {
@@ -1938,8 +1942,8 @@ var openMenu = $('<div class="open-meune"></div>');
           $('.hamburger').removeClass('is-active');
           setTimeout(function(){
             menuWrap.removeClass('active');
-            openMenu.remove();
-          }, 700);
+            openMenu.hide();
+          }, 600);
 
         }
 
