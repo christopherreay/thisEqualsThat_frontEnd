@@ -1251,7 +1251,7 @@ input.ui-colorpicker-hex-input {
       float: left;
       clear: both;
     }
-    div.modelSliders::before, div.modelOutputTest::before, div.modelCustomSvg::before {
+    div.model_options::before {
         content: "";
         background: #fff;
         position: absolute;
@@ -1261,36 +1261,47 @@ input.ui-colorpicker-hex-input {
         right: 0;
         z-index: 9;
     }
-    div.modelSliders.active::before , div.modelOutputTest.active::before, div.modelCustomSvg.active::before{
+    div.model_options.active::before {
         z-index: -1;
     }
-    div.modelSliders.active , div.modelOutputTest.active, div.modelCustomSvg.active{
+    div.model_options.active {
         margin: 0;
         width: 100%;
         height: initial;
         z-index: 505;
+        overflow: visible;
+    }
+    .close_model {
+        position: absolute;
+        width: 98px;
+        margin-left: -49px;
+        left: 50%;
+        bottom: 250px;
+        color: #fff;
+        font-size: 200px;
+        z-index: 9999;
     }
 }
 
-@media screen and (max-width: 550px){
+@media screen and (max-width: 550px) {
     div.modelClasses.active {
       width: 100%;
     }
 }
 
 @media screen and (max-width: 400px) {
-    #modelClassUL{
+    #modelClassUL {
       padding-top: 20px;
     }
-    .ripplelink{
+    .ripplelink {
       height: 60px;
       padding: 16px 0;
       padding-left: 40px;
     }
-    .modelClassLI img{
+    .modelClassLI img {
       width: 27px;
     }
-    .modelClassLI h3{
+    .modelClassLI h3 {
       line-height: 28px;
       font-size: 17px;
     }

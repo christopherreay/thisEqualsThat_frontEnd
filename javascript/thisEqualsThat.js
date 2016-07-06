@@ -591,25 +591,42 @@ thisEqualsThat.oop = function()
               wWidth = $(window).outerWidth(),
               openMenu = $('<div class="open-meune"></div>');
 
-          if ( wWidth < 768 ) {
+          if ( wWidth <= 768 ) {
 
-            self.toggleClass('active');
+            self.addClass('active');
 
               if ( self.hasClass('active') ) {
 
-                  self.append('<div>close');
+                var selfHeight = self.outerHeight();
+
                   $('body').append(openMenu)
                            .addClass('open');
+                  $('.modelSvgOutput').css('z-index', '505')
+                  $('.googleConnect').hide();
+                console.debug( selfHeight );
+
+                $('.open-meune').on('click', function () {
+                    self.removeClass('active');
+                    $('.open-meune').remove();
+                    $('body').removeClass('open');
+                    $('.modelSvgOutput').css('z-index', '1')
+                    $('.googleConnect').show();
+                });
 
               } else {
-
+                  console.debug(openMenu);
+                  console.debug( $('.open-meune') );
+                  $('.open-meune').remove();
+                  $('body').removeClass('open');
+                  $('.modelSvgOutput').css('z-index', '1')
+                  $('.googleConnect').show();
               }
 
           }
 
 
           console.debug( $(window).outerWidth() );
-          console.debug( self.outerHeight() );
+
       });
 
       display.modelOutputTest           = $("<div class='modelOutputTest model_options' />");
