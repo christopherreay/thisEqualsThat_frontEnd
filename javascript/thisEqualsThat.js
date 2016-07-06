@@ -589,7 +589,7 @@ thisEqualsThat.oop = function()
 
           var self = $(this),
               wWidth = $(window).outerWidth(),
-              openMenu = $('<div class="open-meune"></div>');
+              openMenu = $('.open-menu');
 
           if ( wWidth <= 768 ) {
 
@@ -599,15 +599,25 @@ thisEqualsThat.oop = function()
 
                 var selfHeight = self.outerHeight();
 
-                  $('body').append(openMenu)
-                           .addClass('open');
+                openMenu.css({
+                            'opacity': '1',
+                            'visibility': 'visible',
+                            'z-index': '500'
+                        });
+                  $('body').addClass('open');
                   $('.modelSvgOutput').css('z-index', '505')
                   $('.googleConnect').hide();
                 console.debug( selfHeight );
 
-                $('.open-meune').on('click', function () {
+                openMenu.on('click', function () {
                     self.removeClass('active');
-                    $('.open-meune').remove();
+                    setTimeout(function(){
+                      openMenu.css({
+                          'opacity': '0',
+                          'visibility': 'hidden',
+                          'z-index': '-1'
+                      });
+                    }, 700);
                     $('body').removeClass('open');
                     $('.modelSvgOutput').css('z-index', '1')
                     $('.googleConnect').show();
@@ -616,7 +626,13 @@ thisEqualsThat.oop = function()
               } else {
                   console.debug(openMenu);
                   console.debug( $('.open-meune') );
-                  $('.open-meune').remove();
+                  setTimeout(function(){
+                    openMenu.css({
+                        'opacity': '0',
+                        'visibility': 'hidden',
+                        'z-index': '-1'
+                    });
+                  }, 700);
                   $('body').removeClass('open');
                   $('.modelSvgOutput').css('z-index', '1')
                   $('.googleConnect').show();
@@ -1911,10 +1927,12 @@ var openMenu = $('.open-menu');
 
         if ( menuBtn.hasClass('is-active') ) {
             openMenu.animate({
-              opacity: '1',
-              visibility: 'visible'
-              z-index: 500
-            }, 600, 'easein');
+                      opacity: '1'
+                    }, 600)
+                    .css({
+                        'visibility': 'visible',
+                        'z-index': '500'
+                    });
             $('body').addClass('open');
             menuWrap.addClass('active');
             setTimeout(function(){
@@ -1931,19 +1949,31 @@ var openMenu = $('.open-menu');
                     'visibility': 'hidden',
                     'opacity': '0'
                   });
+                openMenu.animate({
+                            opacity: '0'
+                          }, 600);
                 setTimeout(function(){
                   menuWrap.removeClass('active');
-                  openMenu.hide();
-                }, 600);
+                  openMenu.css({
+                      'visibility': 'hidden',
+                      'z-index': '-1'
+                  });
+                }, 700);
             });
 
         } else {
           $('body').removeClass('open');
           $('.hamburger').removeClass('is-active');
+          openMenu.animate({
+                      opacity: '0'
+                    }, 600);
           setTimeout(function(){
             menuWrap.removeClass('active');
-            openMenu.hide();
-          }, 600);
+            openMenu.css({
+                'visibility': 'hidden',
+                'z-index': '-1'
+            });
+          }, 700);
 
         }
 
