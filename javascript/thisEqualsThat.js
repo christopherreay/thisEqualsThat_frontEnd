@@ -586,8 +586,30 @@ thisEqualsThat.oop = function()
       display.modelSliders              = $("<div class='modelSliders model_options'  />");
       display.modelSliders.append(this.getInputFields().inputFieldsSliders);
       display.modelSliders.on('click', function () {
-          $(this).toggleClass('active');
-          $(this).append('<div>close</div>');
+
+          var self = $(this),
+              wWidth = $(window).outerWidth(),
+              openMenu = $('<div class="open-meune"></div>');
+
+          if ( wWidth < 768 ) {
+
+            self.toggleClass('active');
+
+              if ( self.hasClass('active') ) {
+
+                  self.append('<div>close');
+                  $('body').append(openMenu)
+                           .addClass('open');
+
+              } else {
+
+              }
+
+          }
+
+
+          console.debug( $(window).outerWidth() );
+          console.debug( self.outerHeight() );
       });
 
       display.modelOutputTest           = $("<div class='modelOutputTest model_options' />");
@@ -1889,6 +1911,7 @@ var openMenu = $('<div class="open-meune"></div>');
                     'opacity': '0'
                   });
                 setTimeout(function(){
+                  menuWrap.removeClass('active');
                   openMenu.remove();
                 }, 700);
             });
@@ -1897,8 +1920,8 @@ var openMenu = $('<div class="open-meune"></div>');
           $('body').removeClass('open');
           $('.hamburger').removeClass('is-active');
           setTimeout(function(){
-            $('.modelClasses').removeClass('active');
-            $('.open-meune').remove();
+            menuWrap.removeClass('active');
+            openMenu.remove();
           }, 700);
 
         }
@@ -1908,34 +1931,6 @@ var openMenu = $('<div class="open-meune"></div>');
 
 
 
-    $.fn.ripple = function() {
-        var ink, d, x, y;
-        $(".ripplelink").click(function(e) {
-            if ($(this).find(".ink").length === 0) {
-                $(this).prepend("<span class='ink'></span>");
-                console.debug('click li');
-            }
-
-            ink = $(this).find(".ink");
-            ink.removeClass("animate");
-
-            if (!ink.height() && !ink.width()) {
-                d = Math.max($(this).outerWidth(), $(this).outerHeight());
-                ink.css({
-                    height: d,
-                    width: d
-                });
-            }
-
-            x = e.pageX - $(this).offset().left - ink.width() / 2;
-            y = e.pageY - $(this).offset().top - ink.height() / 2;
-
-            ink.css({
-                top: y + 'px',
-                left: x + 'px'
-            }).addClass("animate");
-        });
-    };
 
 });
 
