@@ -585,70 +585,65 @@ thisEqualsThat.oop = function()
 
       display.modelSliders              = $("<div class='modelSliders model_options'  />");
       display.modelSliders.append(this.getInputFields().inputFieldsSliders);
-      display.modelSliders.on('click', function () {
-
-          var self = $(this),
-              wWidth = $(window).outerWidth(),
-              openMenu = $('.open-menu');
-
-          if ( wWidth <= 768 ) {
-
-            self.addClass('active');
-
-              if ( self.hasClass('active') ) {
-
-                var selfHeight = self.outerHeight();
-
-                openMenu.css({
-                            'opacity': '1',
-                            'visibility': 'visible',
-                            'z-index': '500'
-                        });
-                  $('body').addClass('open');
-                  $('.modelSvgOutput').css('z-index', '505')
-                  $('.googleConnect').hide();
-                console.debug( selfHeight );
-
-                openMenu.on('click', function () {
-                    self.removeClass('active');
-                    openMenu.css({
-                          'opacity': '0',
-                          'visibility': 'hidden',
-                          'z-index': '-1'
-                    });
-                    $('body').removeClass('open');
-                    $('.modelSvgOutput').css('z-index', '1')
-                    $('.googleConnect').show();
-                });
-
-              } else {
-                  console.debug(openMenu);
-                  console.debug( $('.open-meune') );
-                  openMenu.css({
-                        'opacity': '0',
-                        'visibility': 'hidden',
-                        'z-index': '-1'
-                  });
-                  $('body').removeClass('open');
-                  $('.modelSvgOutput').css('z-index', '1')
-                  $('.googleConnect').show();
-              }
-
-          }
-
-
-          console.debug( $(window).outerWidth() );
-
-      });
+      // display.modelSliders.on('click', function () {
+      //                         var self = $(this),
+      //                             wWidth = $(window).outerWidth(),
+      //                             body = $('body'),
+      //                             modelSvg = $('.modelSvgOutput'),
+      //                             googleConnect = $('.googleConnect'),
+      //                             openMenu = $('.open-menu');
+      //
+      //                               if ( wWidth <= 768 ) {
+      //                                 self.addClass('active');
+      //                                   if ( self.hasClass('active') ) {
+      //                                     var selfHeight = self.outerHeight();
+      //                                     openMenu.css({'opacity': '1', 'visibility': 'visible', 'z-index': '500'});
+      //                                     body.addClass('open');  modelSvg.css('z-index', '505');  googleConnect.hide();
+      //                                     openMenu.on('click', function () {
+      //                                         self.removeClass('active');
+      //                                         openMenu.css({'opacity': '0', 'visibility': 'hidden', 'z-index': '-1'});
+      //                                         body.removeClass('open');  modelSvg.css('z-index', '1');  googleConnect.show();
+      //                                     });
+      //                                     console.debug( selfHeight );
+      //                                   } else {
+      //                                     openMenu.css({'opacity': '0', 'visibility': 'hidden', 'z-index': '-1'});
+      //                                     body.removeClass('open');  modelSvg.css('z-index', '1');  googleConnect.show();
+      //                                   }
+      //                               }
+      //                           });
 
       display.modelOutputTest           = $("<div class='modelOutputTest model_options' />");
-      display.modelOutputTest.on('click', function () {
-          $(this).toggleClass('active');
-      });
 
       display.modelCustomSvg            = $("<div class='modelCustomSvg model_options' />");
-      display.modelCustomSvg.on('click', function () {
-          $(this).toggleClass('active');
+
+      var models = [ modelSliders, modelOutputTest, modelCustomSvg ];
+      $.each( models, function ( i, elem ) {
+            display.elem.on('click', function () {
+                                    var self = $(this),
+                                        wWidth = $(window).outerWidth(),
+                                        body = $('body'),
+                                        modelSvg = $('.modelSvgOutput'),
+                                        googleConnect = $('.googleConnect'),
+                                        openMenu = $('.open-menu');
+
+                                          if ( wWidth <= 768 ) {
+                                            self.addClass('active');
+                                              if ( self.hasClass('active') ) {
+                                                var selfHeight = self.outerHeight();
+                                                openMenu.css({'opacity': '1', 'visibility': 'visible', 'z-index': '500'});
+                                                body.addClass('open');  modelSvg.css('z-index', '505');  googleConnect.hide();
+                                                openMenu.on('click', function () {
+                                                    self.removeClass('active');
+                                                    openMenu.css({'opacity': '0', 'visibility': 'hidden', 'z-index': '-1'});
+                                                    body.removeClass('open');  modelSvg.css('z-index', '1');  googleConnect.show();
+                                                });
+                                                console.debug( selfHeight );
+                                              } else {
+                                                openMenu.css({'opacity': '0', 'visibility': 'hidden', 'z-index': '-1'});
+                                                body.removeClass('open');  modelSvg.css('z-index', '1');  googleConnect.show();
+                                              }
+                                          }
+                                      });
       });
 
       display.modelSvgOutput            = $("<div class='modelSvgOutput' />");

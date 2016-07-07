@@ -1292,12 +1292,36 @@ input.ui-colorpicker-hex-input {
     div.modelClasses.active {
       width: 100%;
     }
+    .hamburger {
+      bottom: 22px;
+      width: 55px;
+      height: 55px;
+      padding: 13px;
+      padding-top: 15px;
+    }
+    .hamburger::before {
+      width: 55px;
+      height: 55px;
+    }
+    .hamburger-box {
+      width: 30px;
+      height: 25px;
+    }
+    .hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+      width: 30px;
+    }
+    .hamburger-inner::before {
+      top: -8px;
+    }
+    .hamburger-inner::after {
+      bottom: -8px;
+    }
 }
 
 @media screen and (max-width: 400px) {
-    #modelClassUL {
+    /*#modelClassUL {
       padding-top: 20px;
-    }
+    }*/
     .ripplelink {
       height: 60px;
       padding: 16px 0;
@@ -1318,6 +1342,6 @@ input.ui-colorpicker-hex-input {
       height: 250px;
     }
     div.svgModelRoot {
-      h
+      height: 250px;
     }
 }
