@@ -5,6 +5,7 @@ thisEqualsThat.svg = {};
 thisEqualsThat.svgStore = {};
 
 
+
 window.attachFunc = function(parent, name, functionContent)
 { if (!(hasOwnProperty(parent.prototype, name)))
   { var This = parent;
