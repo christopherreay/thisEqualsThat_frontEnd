@@ -1260,10 +1260,10 @@ input.ui-colorpicker-hex-input {
         content: "";
         background: #fff;
         position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
+        top: -5px;
+        left: -5px;
+        bottom: -5px;
+        right: -5px;
         z-index: 9;
     }
     div.model_options.active::before {
@@ -1318,6 +1318,6 @@ input.ui-colorpicker-hex-input {
       height: 250px;
     }
     div.svgModelRoot {
-      height: 250px;
+      h
     }
 }
