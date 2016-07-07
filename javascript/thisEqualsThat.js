@@ -616,9 +616,9 @@ thisEqualsThat.oop = function()
 
       display.modelCustomSvg            = $("<div class='modelCustomSvg model_options' />");
 
-      var models = [ modelSliders, modelOutputTest, modelCustomSvg ];
+      var models = [ display.modelSliders, display.modelOutputTest, display.modelCustomSvg ];
       $.each( models, function ( i, elem ) {
-            display.elem.on('click', function () {
+            elem.on('click', function () {
                                     var self = $(this),
                                         wWidth = $(window).outerWidth(),
                                         body = $('body'),
