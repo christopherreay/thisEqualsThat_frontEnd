@@ -98,7 +98,8 @@ thisEqualsThat.oop = function()
     { url: "getModelClasses",
       dataType: "json",
       success: function(data, status, request)
-      { console.log(data, status, request);
+      { console.log("Yogi 1 ", data, status, request);
+	console.log("yogi 1.1",  request);
         $.each(data, function(index, value)
           { This[value] = new ThisEqualsThat.ModelClass(value);
           }
@@ -106,7 +107,9 @@ thisEqualsThat.oop = function()
         This.display(This.thisEqualsThatScene)
       },
     };
+console.log("yogi 2 ", ajaxOptions.url);
     $.ajax(ajaxOptions);
+	
   }
   this.ModelClasses.prototype.display = function(thisEqualsThatScene)
   { var modelClassesContainerDiv = thisEqualsThatScene.modelClassesContainerDiv;
