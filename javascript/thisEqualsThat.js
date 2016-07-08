@@ -50,6 +50,11 @@ function normalDistribution(mu, sigma, nsamples){
 
     return sigma*(run_total - nsamples/2)/(nsamples/2) + mu
 }
+// function normalDistribution() {
+//     var u = 1 - Math.random(); // Subtraction to flip [0, 1) to (0, 1].
+//     var v = 1 - Math.random();
+//     return Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
+// }
 
 thisEqualsThat.oop = function()
 { this.ThisEqualsThatScene = function(displayContainerDiv)
@@ -892,8 +897,12 @@ thisEqualsThat.oop = function()
           $("<input />",
              { "class" : 'custom_svgNameInput'
              }
-            );
+          )
+          .val(Cookies.get("TET.googleConnect.email"))
+          .on("change", function(){Cookies.set("TET.googleConnect.email", display.googleConnect_email.val(), {"expires": 9999})})
+          ;
         display.googleConnect.append(display.googleConnect_email);
+
           
         display.googleConnect_loginButton = 
             $("<a class='googleConnect_loginButton'>Login to Google</a>")
@@ -1266,34 +1275,6 @@ thisEqualsThat.oop = function()
                 
                 var referenceSVG3dConfiguration = $.extend(true, {}, This.svg3dDisplayJSON.svg3dConfiguration.translate3d);                
                 $.extend(referenceSVG3dConfiguration, {"x":referenceSVG3dConfiguration.x * multiplier, "y": referenceSVG3dConfiguration.y * multiplier});
-                This.display.svgReferenceG.animate(
-                { "svg3d":{"translate3d": referenceSVG3dConfiguration}
-                },
-                { queue: This.id,
-                  duration: 1000, 
-                  easing: "easeInCubic",
-                  progress: function(animation, progress, remainingMs) { //Animate Reference SVG
-                    This.progress_translate3d(animation, progress, remainingMs, This);                     
-                  },
-                  complete: function() 
-                  { This.disable_createSaveLink = true; 
-                    console.log(This.svg3dDisplayJSON.postProcessing);
-                    var postProcessing  = This.svg3dDisplayJSON.postProcessing;
-                    var postProcessingFunctions = {};
-                    for (var ccThing in postProcessing)
-                    { //var delay ssdasdsdsd        = 2000.0 / postProcessing[ccThing]
-                      var ccFunction = This.display[ccThing+"_function"];
-                      debugger;
-                      var mult = postProcessing[ccThing];
-                      if (mult != 0) ccFunction(mult);
-                      // var ccBuild = postProcessingFunctions[ccThing] = {};
-                      // ccBuild['counter']  = postProcessing[ccThing];
-
-                      // for (var counter = 0; counter < ccBuild['counter']; counter ++)
-                      // { ccThingButton.trigger("click");
-                      // }
-                    } 
-                    
 
                     if ("recolourClones" in This.svg3dDisplayJSON.svg3dConfiguration)
                     { //var clones                  = $(This.display.svgVisualisationG).find("> g:nth-child(n + 2)");
@@ -1368,6 +1349,36 @@ thisEqualsThat.oop = function()
                       }
                                             
                     }
+
+                This.display.svgReferenceG.animate(
+                { "svg3d":{"translate3d": referenceSVG3dConfiguration}
+                },
+                { queue: This.id,
+                  duration: 1000, 
+                  easing: "easeInCubic",
+                  progress: function(animation, progress, remainingMs) { //Animate Reference SVG
+                    This.progress_translate3d(animation, progress, remainingMs, This);                     
+                  },
+                  complete: function() 
+                  { This.disable_createSaveLink = true; 
+                    console.log(This.svg3dDisplayJSON.postProcessing);
+                    var postProcessing  = This.svg3dDisplayJSON.postProcessing;
+                    var postProcessingFunctions = {};
+                    for (var ccThing in postProcessing)
+                    { //var delay ssdasdsdsd        = 2000.0 / postProcessing[ccThing]
+                      var ccFunction = This.display[ccThing+"_function"];
+                      var mult = postProcessing[ccThing];
+                      if (mult != 0) ccFunction(mult);
+                      // var ccBuild = postProcessingFunctions[ccThing] = {};
+                      // ccBuild['counter']  = postProcessing[ccThing];
+
+                      // for (var counter = 0; counter < ccBuild['counter']; counter ++)
+                      // { ccThingButton.trigger("click");
+                      // }
+                    } 
+                    
+
+                    
                     This.disable_createSaveLink = false;
                     This.svg_createSaveLink(This);
                   }
