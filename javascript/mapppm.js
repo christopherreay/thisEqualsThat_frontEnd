@@ -59,6 +59,7 @@ ThisEqualsThat.mapppm.init = function()
               e.target.feature.properties.renderer.destroy();
           });
     layer.on('click', function(e) {
+document.getElementsByClassName("leaflet-popup-content-wrapper")[0].style.background="rgba(255,255,255,0.0)";
     //document.getElementsByClassName("leaflet-popup-content").style.width="200 px";
     container = document.getElementById(layer.feature.properties.canvasId);
     layer.feature.properties.renderer = new GRenderer();
