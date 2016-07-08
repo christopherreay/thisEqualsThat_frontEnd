@@ -120,6 +120,13 @@ thisEqualsThat.oop = function()
       }
     );
     modelClassesContainerDiv.append(modelClassList);
+    modelClassList.append('<div class="modelClassLI ripplelink cyan">' +
+              '<img src="/static/graphics/thisEquals/icons/map.svg">' +
+              '<h3>Map</h3>' +
+              '</div>'
+      ).on('click', function () {
+        console.debug('obj');
+      });
   }
   this.ModelClass = function(modelClassName)
   { this.name = modelClassName;
@@ -585,32 +592,6 @@ thisEqualsThat.oop = function()
 
       display.modelSliders              = $("<div class='modelSliders model_options'  />");
       display.modelSliders.append(this.getInputFields().inputFieldsSliders);
-      // display.modelSliders.on('click', function () {
-      //                         var self = $(this),
-      //                             wWidth = $(window).outerWidth(),
-      //                             body = $('body'),
-      //                             modelSvg = $('.modelSvgOutput'),
-      //                             googleConnect = $('.googleConnect'),
-      //                             openMenu = $('.open-menu');
-      //
-      //                               if ( wWidth <= 768 ) {
-      //                                 self.addClass('active');
-      //                                   if ( self.hasClass('active') ) {
-      //                                     var selfHeight = self.outerHeight();
-      //                                     openMenu.css({'opacity': '1', 'visibility': 'visible', 'z-index': '500'});
-      //                                     body.addClass('open');  modelSvg.css('z-index', '505');  googleConnect.hide();
-      //                                     openMenu.on('click', function () {
-      //                                         self.removeClass('active');
-      //                                         openMenu.css({'opacity': '0', 'visibility': 'hidden', 'z-index': '-1'});
-      //                                         body.removeClass('open');  modelSvg.css('z-index', '1');  googleConnect.show();
-      //                                     });
-      //                                     console.debug( selfHeight );
-      //                                   } else {
-      //                                     openMenu.css({'opacity': '0', 'visibility': 'hidden', 'z-index': '-1'});
-      //                                     body.removeClass('open');  modelSvg.css('z-index', '1');  googleConnect.show();
-      //                                   }
-      //                               }
-      //                           });
 
       display.modelOutputTest           = $("<div class='modelOutputTest model_options' />");
 
@@ -644,7 +625,7 @@ thisEqualsThat.oop = function()
                                               }
                                           }
                                       });
-      });
+                                    });
 
       display.modelSvgOutput            = $("<div class='modelSvgOutput' />");
 
