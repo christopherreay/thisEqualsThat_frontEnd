@@ -167,14 +167,6 @@ a:hover
   text-decoration: underline;
 }
 
-body h1, body h2, body h3, body h4, body h5, body h6
-{
-  font-family: NeutonRegular, "Lucida Grande", Lucida, Verdana, sans-serif;
-  font-weight: 400;
-  color: #373839;
-  font-style: normal;
-}
-
 #wrap
 {
   min-height: 100%;
@@ -229,8 +221,7 @@ body h1, body h2, body h3, body h4, body h5, body h6
 #top
 {
   color: #000;
-  height: 230px;
-  background: #fff url(headerbg.png) repeat-x 0 top;
+  height: 85px;
   position: relative;
 }
 
@@ -250,14 +241,8 @@ body h1, body h2, body h3, body h4, body h5, body h6
 
 .top, .top-small, .middle, .bottom
 {
-  width: 750px;
   margin-right: auto;
   margin-left: auto;
-}
-
-.top
-{
-  padding-top: 40px;
 }
 
 .top-small
