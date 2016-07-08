@@ -120,7 +120,7 @@ console.log("yogi 2 ", ajaxOptions.url);
       ).on("click", ".modelClassLI",
           function(event)
           { var modelClass = $(event.currentTarget).data("modelClass");
-            console.log(modelClass);
+            console.log("yogi 3 ",modelClass);
             modelClass.getModelInstance(thisEqualsThat.scene.setCurrentModel);
           }
         );
