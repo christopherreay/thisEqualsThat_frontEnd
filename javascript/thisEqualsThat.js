@@ -501,10 +501,10 @@ $(function(){
       var This = this;
       fieldChangeData	= $.extend({modelInstanceID: this.id}, fieldChangeData);
       var ajaxOptions =
-        { url: "inputFieldAltered",
-          dataType: "json",
-          data: fieldChangeData,
-          success: function (data, status, request)
+        { "url": "inputFieldAltered",
+          "dataType": "json",
+          "data": fieldChangeData,
+          "success": function (data, status, request)
           { console.log(data);
             This.lastAlteredOutputField.data.currentValue = data.newValue;
             This.lastAlteredVisualisationField.data.currentValue = data.svg3dDisplayJSON.svgFieldValue;
