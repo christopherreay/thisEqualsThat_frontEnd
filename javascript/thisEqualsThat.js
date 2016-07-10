@@ -397,14 +397,14 @@ $(function(){
     $modelField = $(modelField)
     if (modelField.hasOwnProperty("uiSlider"))
     { modelField.uiSlider.data("thisEquals.disableWriteToTextField", true);
-      modelField.uiSlider.slider("value", modelField.actualToSlider(modelField.uiValueText.val()));
+      modelField.uiSlider.slider("value", modelField.actualToSlider(modelField.uiValue_slider.val()));
     }
-    $modelField.data("thisEquals.oldValue", modelField.uiValueText.val());
+    $modelField.data("thisEquals.oldValue", modelField.uiValue_slider.val());
     console.log($(modelField).data("thisEquals.oldValue"));
 
     modelField.modelInstance.inputFieldAltered(
               { inputField: modelField.fullAddress,
-                newValue:   modelField.uiValueText.val()
+                newValue:   modelField.uiValue_slider.val()
               });
   }
   this.ModelInstance.prototype.getOutputFields = function()
@@ -495,8 +495,9 @@ $(function(){
   }
 
   this.ModelInstance.prototype.inputFieldAltered = function(fieldChangeData, successFunction, doNotUpdateUI)
-  { if (! disable_inputFieldAltered)
-    { This.disable_inputFieldAltered = true;
+  { debugger;
+    if (! this.disable_inputFieldAltered)
+    { this.disable_inputFieldAltered = true;
       if (!doNotUpdateUI) doNotUpdateUI = false;
       var This = this;
       fieldChangeData	= $.extend({modelInstanceID: this.id}, fieldChangeData);
@@ -506,8 +507,8 @@ $(function(){
           "data": fieldChangeData,
           "success": function (data, status, request)
           { console.log(data);
-            This.lastAlteredOutputField.data.currentValue = data.newValue;
-            This.lastAlteredVisualisationField.data.currentValue = data.svg3dDisplayJSON.svgFieldValue;
+            // This.lastAlteredOutputField.data.currentValue = data.newValue;
+            // This.lastAlteredVisualisationField.data.currentValue = data.svg3dDisplayJSON.svgFieldValue;
 
             // changed data. Now it has all the values of all the fields in it. Going to try to update the UI accordingly
             debugger;
@@ -533,8 +534,11 @@ $(function(){
               successFunction(data, status, request);
           },
           "always": function()
-              {  This.disable_inputFieldAltered = false;            
-              }
+          {  This.disable_inputFieldAltered = false;            
+          },
+          "complete": function()
+          {  This.disable_inputFieldAltered = false;            
+          },
         };
       console.log(ajaxOptions);
       $.ajax(ajaxOptions);
@@ -1581,7 +1585,7 @@ $(function(){
     }
     if (fieldType == "slider")
     { this.data.currentValue = newValue;
-      this.updateValueText(newValue);
+      this.updateValueSlider();
     }
   }
 
@@ -1701,7 +1705,7 @@ $(function(){
           }
         );
         // .append(this.data.displayFieldAddress);
-      var uiValueText =
+      var uiValue_slider =
         $("<input />",
           { "class": "inputFieldText",
             type: "text",
@@ -1714,14 +1718,14 @@ $(function(){
         ).slider(sliderOptions);
       uiSlider    .data("thisEquals.modelField", this);
 
-      uiValueText.val(fieldData.defaultValue);
-      uiValueText .data("thisEquals.modelField", this);
+      uiValue_slider.val(fieldData.defaultValue);
+      uiValue_slider .data("thisEquals.modelField", this);
 
-      this.uiValue_slider   = uiValueText;
+      this.uiValue_slider   = uiValue_slider;
       this.uiSlider         = uiSlider;
 
       this.uiElement.append(uiLabel);
-      this.uiElement.append(uiValue_slider);
+      this.uiElement.append(this.uiValue_slider);
       this.uiElement.append(uiSlider);
 
     return this.uiElement
@@ -1795,7 +1799,7 @@ $(function(){
     this.updateValueText();
   }
   this.ModelFieldInput.prototype.updateValueSlider = function()
-  { this.uiSlider.value(this.actualToSlider(this.currentValue));
+  { this.uiSlider.value(this.actualToSlider(this.data.currentValue));
   }
   this.ModelFieldInput.prototype.updateValueText = function(slideOrChange)
   { $this = $(this);
@@ -1803,12 +1807,12 @@ $(function(){
     if (this.uiSlider.data("thisEquals.disableWriteToTextField") == true)
       this.uiSlider.data("thisEquals.disableWriteToTextField", false);
     else
-    { $uiValue_slider.val(Number(this.currentValue).toPrecision(5));
+    { $uiValue_slider.val(Number(this.data.currentValue).toPrecision(5));
       if (slideOrChange == "change" || slideOrChange == "")
         $uiValue_slider.change();
     }
 
-    console.log(this.fullAddress, this.currentValue);
+    console.log(this.fullAddress, this.data.currentValue);
   }
 
   this.ModelFieldOutput = function(modelInstance, fieldData)
