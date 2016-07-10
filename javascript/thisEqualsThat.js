@@ -495,8 +495,7 @@ $(function(){
   }
 
   this.ModelInstance.prototype.inputFieldAltered = function(fieldChangeData, successFunction, doNotUpdateUI)
-  { debugger;
-    if (! this.disable_inputFieldAltered)
+  { if (! this.disable_inputFieldAltered)
     { this.disable_inputFieldAltered = true;
       if (!doNotUpdateUI) doNotUpdateUI = false;
       var This = this;
@@ -511,7 +510,6 @@ $(function(){
             // This.lastAlteredVisualisationField.data.currentValue = data.svg3dDisplayJSON.svgFieldValue;
 
             // changed data. Now it has all the values of all the fields in it. Going to try to update the UI accordingly
-            debugger;
             for (var fieldName in data.fieldValues)
             { var inputField = This.inputFields[fieldName];
               var newValue = data.fieldValues[fieldName];
@@ -1585,6 +1583,7 @@ $(function(){
     }
     if (fieldType == "slider")
     { this.data.currentValue = newValue;
+      this.updateValueText("slide");
       this.updateValueSlider();
     }
   }
@@ -1774,11 +1773,11 @@ $(function(){
         min: min,
         value: this.actualToSlider(fieldData.currentValue),
         slide: function(event, ui)
-          { This.currentValue = This.sliderToActual(ui.value);
+          { This.data.currentValue = This.sliderToActual(ui.value);
             This.updateValueText("slide");
           },
         change: function(event, ui)
-          { This.currentValue = This.sliderToActual(ui.value);
+          { This.data.currentValue = This.sliderToActual(ui.value);
             This.updateValueText("change");
           }
       };
@@ -1799,7 +1798,7 @@ $(function(){
     this.updateValueText();
   }
   this.ModelFieldInput.prototype.updateValueSlider = function()
-  { this.uiSlider.value(this.actualToSlider(this.data.currentValue));
+  { this.uiSlider.slider("option", "value", this.actualToSlider(this.data.currentValue));
   }
   this.ModelFieldInput.prototype.updateValueText = function(slideOrChange)
   { $this = $(this);
