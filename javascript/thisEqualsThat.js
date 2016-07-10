@@ -531,8 +531,10 @@ $(function(){
             }
             if (successFunction)
               successFunction(data, status, request);
-            This.disable_inputFieldAltered = false;
-          }
+          },
+          "always": function()
+              {  This.disable_inputFieldAltered = false;            
+              }
         };
       console.log(ajaxOptions);
       $.ajax(ajaxOptions);
