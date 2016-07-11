@@ -3,9 +3,9 @@
 <svg xmlns="http://www.w3.org/2000/svg"
  xmlns:xlink="http://www.w3.org/1999/xlink" 
  xmlns:z="http://debeissat.nicolas.free.fr/svg3d/svg3d.rng" 
-onload="svg3d.init(this)" z:xInfinite="300" z:yInfinite="200" z:zRatio="2">
+ z:xInfinite="300" z:yInfinite="200" z:zRatio="2">
 	<title>SVG animation - half pipe 3d</title>
-	<g id="g1" onclick="svg3d.toggleRotation()">
+	<g id="g1">
       <path id="faceBack"   class="face faceBack"   style="fill: rgba(213, 174, 174, 1.0);" d="M0,0,123.6 L200,0,123.6 L200,76.4,123.6 L0,76.4,123.6 Z" 
             z:threeD="true">
         </path>

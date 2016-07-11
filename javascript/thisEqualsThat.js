@@ -1,5 +1,5 @@
 window.thisEqualsThat = {};
-thisEqualsThat.graphicLoadVersion = "0.1.1.3.20151102.newReferenceSVGs.womanPainting3.0"
+thisEqualsThat.graphicLoadVersion = "0.1.1.3.20160711.1948"
 
 thisEqualsThat.svg = {};
 thisEqualsThat.svgStore = {};
@@ -154,7 +154,7 @@ console.log("yogi 2 ", ajaxOptions.url);
         data: { modelClassName: this.name},
         success: function(data, status, request)
         { console.log(data, status, request);
-          This.modelInstance = new ThisEqualsThat.ModelInstance(this, data[0]);
+          This.modelInstance = new ThisEqualsThat.ModelInstance(This, data[0]);
           This.modelInstance.modelPosition = "top";
           successFunction(This.modelInstance);
           This.modelInstance.inputFieldAltered(
@@ -511,12 +511,16 @@ $(function(){
 
             // changed data. Now it has all the values of all the fields in it. Going to try to update the UI accordingly
             for (var fieldName in data.fieldValues)
-            { var inputField = This.inputFields[fieldName];
-              var newValue = data.fieldValues[fieldName];
+            { try
+              { var inputField = This.inputFields[fieldName];
+                var newValue = data.fieldValues[fieldName];
 
-              if (newValue != inputField.data.currentValue)
-              { inputField.setValue(newValue);              
+                if (newValue != inputField.data.currentValue)
+                { inputField.setValue(newValue);              
+                }
               }
+              catch (e)
+              {}
             }
 
             This.svg3dDisplayJSON = data.svg3dDisplayJSON;
@@ -635,7 +639,7 @@ $(function(){
       //var outputsText = "outputs"
       display.displayElement =
         $("<div />",
-          { "id"    : "modelInstanceDiv."+this.modelClass+"."+this.id
+          { "id"    : "modelInstanceDiv_"+this.modelClass.name+"_"+this.id
           }
         );
 
@@ -1629,7 +1633,7 @@ $(function(){
     this.uiValue_select = select;
     
     this.uiElement.append(uiLabel);
-    this.uiElement.append(uiValue_select);
+    this.uiElement.append(this.uiValue_select);
 
     return this.uiElement;
   }
@@ -1657,18 +1661,18 @@ $(function(){
           }
         );
         //  .append(this.data.displayFieldAddress);
-      var uiValueText =
+      var uiValue_text =
         $("<input />",
           { "class": "inputFieldText",
             type: "text",
           }
         ).addClass("unit_"+this.data.unit);
 
-      uiValueText.val(fieldData.defaultValue);
-      uiValueText.data("thisEquals.modelField", this);
+      uiValue_text.val(fieldData.defaultValue);
+      uiValue_text.data("thisEquals.modelField", this);
 
-      uiValueText.on("change", this, this.inputField_text_changeFunction);
-      this.uiValue_text  = uiValueText;
+      uiValue_text.on("change", this, this.inputField_text_changeFunction);
+      this.uiValue_text  = uiValue_text;
 
       this.uiElement.append(uiLabel);
       this.uiElement.append(uiValue_text);
