@@ -1530,14 +1530,12 @@ $(function(){
           thisEqualsThat.svgStore[svgFileName]      = $(importedRootG);
           thisEqualsThat.svgDefsStore[svgFileName]  = $(importedDefs);
 
-          This.appendSVGToDisplay();
-          This.animateSVG();
+          This.displayCurrentOutput_2(This);
         }
       )
     }
     else
-    { This.appendSVGToDisplay();
-      This.animateSVG()
+    { this.displayCurrentOutput_2(this)
     }
 
     var gTET = thisEqualsThat;
@@ -1549,7 +1547,17 @@ $(function(){
     this.display.modelVisualisationValue.html
     ( visualisationField.data.displayFieldAddress.toString()+": "+visualisationField.data.unitPrefix+Number(visualisationField.data.currentValue).toPrecision(5)+visualisationField.data.unitSuffix
     );
+
+    // Add HUD interface
+
+
   }
+  this.ModelInstance.prototype.displayCurrentOutput_2 = function(This)
+  { This.appendSVGToDisplay();
+    This.animateSVG();
+    This.renderHUD()
+  }
+
   this.ModelInstance.prototype.appendSVGToDisplay = function()
   { this.display.svgClonableG = thisEqualsThat.svgStore[this.svg3dDisplayJSON.svgFile].clone();
     $(this.display.svgVisualisationG).html(this.display.svgClonableG);
@@ -1568,6 +1576,20 @@ $(function(){
 
     var tG = this.display.svgTranslatableG[0];
     $(tG).data("thisEqualsThat", {"modelInstance": this});
+  }
+
+  this.ModelInstance.prototype.renderHUD = function()
+  { var svg3dDisplayJSON = this.svg3dDisplayJSON;
+    var svgHUD = svg3dDisplayJSON.svgHUD;
+
+    this.display.colorPickers.html("");
+    for (colorPickerData of svgHUD.colorPickers)
+    { this.display.svgHUD.append(new thisEqualsThat.svgHUDColorPicker(colorPickerData));
+    }
+  }
+  this.svgHUDColorPicker = function(colorPickerData)
+  { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
+    //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
   }
 
   //SVG STORE
