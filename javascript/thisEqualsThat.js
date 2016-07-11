@@ -1,9 +1,9 @@
 window.thisEqualsThat = {};
-thisEqualsThat.graphicLoadVersion = "0.1.1.3.20160711.1948"
+thisEqualsThat.graphicLoadVersion = "0.1.1.3.20160711.2130"
 
-thisEqualsThat.svg = {};
-thisEqualsThat.svgStore = {};
-
+thisEqualsThat.svg          = {};
+thisEqualsThat.svgStore     = {};
+thisEqualsThat.svgDefsStore = {};
 
 
 window.attachFunc = function(parent, name, functionContent)
@@ -685,8 +685,10 @@ $(function(){
           .attr("z:yInfinite",  "100")
           .attr("z:zRatio",     "5");
 
+      display.svgDefs                = d3.select(containerSVG)     .append("defs").attr("id", "svgDefsG_"+this.id).node();
       var svgTextDescription          = d3.select(containerSVG)     .append("text").attr("id", "svgTextDescription_"+this.id).text("Enter Text Description").node();
       display.svgTextDescription      = svgTextDescription;
+
 
       //display.svgTextDescription.text("Hello World");
       var svgTranslatableG            = d3.select(containerSVG)     .append("g").attr("id", "svgTranslatableG_" +this.id) .node();
@@ -1518,12 +1520,15 @@ $(function(){
         function(xml)
         { var importedNode    = document.importNode(xml.documentElement, true);
           var importedRootG   = importedNode.getElementsByTagNameNS(d3.ns.prefix.svg, "g")[0];
+          var importedDefs    = importedNode.getElementsByTagNameNS(d3.ns.prefix.svg, "defs")[0];
+
           //var svgReferenceVisual  = $(thisEqualsThat.scene.referenceVisual.getSVGData(This.svg3dDisplayJSON.svgRelativeHighness)).clone();
           //svgReferenceVisual.appendTo(This.display.svgReferenceG);
           //$(svgReferenceVisual).attr("transform", "scale(0.2)");
 
           console.log("importSVG file", importedRootG);
-          thisEqualsThat.svgStore[svgFileName] = $(importedRootG);
+          thisEqualsThat.svgStore[svgFileName]      = $(importedRootG);
+          thisEqualsThat.svgDefsStore[svgFileName]  = $(importedDefs);
 
           This.appendSVGToDisplay();
           This.animateSVG();
@@ -1548,6 +1553,10 @@ $(function(){
   this.ModelInstance.prototype.appendSVGToDisplay = function()
   { this.display.svgClonableG = thisEqualsThat.svgStore[this.svg3dDisplayJSON.svgFile].clone();
     $(this.display.svgVisualisationG).html(this.display.svgClonableG);
+
+    this.display.svgDefsFromFile = thisEqualsThat.svgDefsStore[this.svg3dDisplayJSON.svgFile].clone();
+    $(this.display.svgDefs).html(this.display.svgDefsFromFile);    
+
     if (this.userSelectedReferenceSVG)
     { this.display.svgReferenceG = $(thisEqualsThat.scene.referenceVisual.getSVGDataByName(this.userSelectedReferenceSVG)).clone();
     }
@@ -1570,6 +1579,7 @@ $(function(){
     {
     }
   }
+  
 
   this.ModelFieldInput = function(modelInstance, data)
   { console.log(modelInstance, data);
