@@ -669,7 +669,12 @@ $(function(){
 
       display.svgOutput             = $("<div class='svgOutput'  />");
 
-      this.svgHUD = new ThisEqualsThat.SVGHUD(this, display.svgOutput);
+      if (! this.hasOwnProperty("svgHUD"))
+      { this.svgHUD = new ThisEqualsThat.SVGHUD(this, display.svgOutput);
+      }
+      else
+      { this.svgHUD.attach(display.svgOutput);        
+      }
 
       display.svgTextInput          = $("<input type='text' class='svgTextDescription' placeholder='Enter Text Description'/>");
       display.svgSaveLink           = $("<div class='svgSaveLink btn'   />");
@@ -1556,16 +1561,20 @@ $(function(){
   }
   this.ModelInstance.prototype.displayCurrentOutput_2 = function(This)
   { This.appendSVGToDisplay();
-    This.animateSVG();
+    
     This.svgHUD.renderHUD()
+    This.animateSVG();
   }
 
   this.ModelInstance.prototype.appendSVGToDisplay = function()
   { this.display.svgClonableG = thisEqualsThat.svgStore[this.svg3dDisplayJSON.svgFile].clone();
     $(this.display.svgVisualisationG).html(this.display.svgClonableG);
 
-    this.display.svgDefsFromFile = thisEqualsThat.svgDefsStore[this.svg3dDisplayJSON.svgFile].clone();
-    $(this.display.svgDefs).html(this.display.svgDefsFromFile);    
+    if (! this.display.addedSVGDefs)
+    { this.display.svgDefsFromFile = thisEqualsThat.svgDefsStore[this.svg3dDisplayJSON.svgFile].clone();
+      $(this.display.svgDefs).html(this.display.svgDefsFromFile);    
+      this.display.addedSVGDefs = true;
+    }
 
     if (this.userSelectedReferenceSVG)
     { this.display.svgReferenceG = $(thisEqualsThat.scene.referenceVisual.getSVGDataByName(this.userSelectedReferenceSVG)).clone();
@@ -1585,6 +1594,11 @@ $(function(){
     this.contextData  = {};
     
     this.modelInstance = modelInstance;
+    this.attach(wrapperForHUD);
+  }
+  this.SVGHUD.prototype.attach = function(wrapperForHUD)
+  { var modelInstance = this.modelInstance;
+
     this.divForHUD = modelInstance.display.svgHUD = $("<div class='svgHUD' />");
     wrapperForHUD.append(this.divForHUD);
     modelInstance.display.svgHUD = this.divForHUD;
@@ -1657,7 +1671,7 @@ $(function(){
       console.log(colorPickerSelector, colorPickerData);
 
       var colorPicker = $("<div class='colorPicker hudItem' />");
-      var icon = $("<img src=/static/graphics/thisEquals/svgHUD/colorPicker.png />");
+      var icon        = $("<img src=/static/graphics/thisEquals/svgHUD/colorPicker.png />");
 
       colorPicker.append(icon);
       this.context.colorPickersDiv.append(colorPicker);
@@ -1666,24 +1680,30 @@ $(function(){
       { this.context.currentColorString = colorPickerData.initialColorString;        
       }
 
+      var rep_onColorChange = function(colorString)
+      { var pickedColor = $.Color(colorString);
+        var toReturn = null;
+        eval (colorPickerData.onColorChange);
+        $(This.svgHUD.modelInstance.display.containerSVG).find("style#onColorChange").html(toReturn);
+
+        This.context.currentColorString = colorString;
+      }
+
+      rep_onColorChange(this.context.currentColorString);
+
       colorPicker.spectrum({
           "color":            this.context.currentColorString,
           "showAlpha":        true,
           "preferredFormat": "rgba",
           "show": function()
-          { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);         
+          { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);
+            colorPicker.spectrum("set", This.context.currentColorString);      
           },
           "hide": function()
           { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", false);                       
           },
           "move": function(spectrumOutput)
-          { debugger;
-            var pickedColor = $.Color(spectrumOutput.toRgbString());
-            
-            var toReturn = null;
-            eval (colorPickerData.onColorChange);
-            $(This.svgHUD.modelInstance.display.containerSVG).find("style#onColorChange").html(toReturn);
-            
+          { rep_onColorChange(spectrumOutput.toRgbString());
           },
       });
     }
