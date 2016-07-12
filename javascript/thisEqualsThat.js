@@ -1,5 +1,5 @@
 window.thisEqualsThat = {};
-thisEqualsThat.graphicLoadVersion = "0.1.1.3.20160711.2130"
+thisEqualsThat.graphicLoadVersion = "0.1.1.3.20160712.1727"
 
 thisEqualsThat.svg          = {};
 thisEqualsThat.svgStore     = {};
@@ -668,6 +668,8 @@ $(function(){
       display.visualisationOutputContainer.append(display.visualisationFieldsSelect);
 
       display.svgOutput             = $("<div class='svgOutput'  />");
+
+      this.svgHUD = new ThisEqualsThat.SVGHUD(this, display.svgOutput);
 
       display.svgTextInput          = $("<input type='text' class='svgTextDescription' placeholder='Enter Text Description'/>");
       display.svgSaveLink           = $("<div class='svgSaveLink btn'   />");
@@ -1555,7 +1557,7 @@ $(function(){
   this.ModelInstance.prototype.displayCurrentOutput_2 = function(This)
   { This.appendSVGToDisplay();
     This.animateSVG();
-    This.renderHUD()
+    This.svgHUD.renderHUD()
   }
 
   this.ModelInstance.prototype.appendSVGToDisplay = function()
@@ -1578,19 +1580,115 @@ $(function(){
     $(tG).data("thisEqualsThat", {"modelInstance": this});
   }
 
-  this.ModelInstance.prototype.renderHUD = function()
-  { var svg3dDisplayJSON = this.svg3dDisplayJSON;
-    var svgHUD = svg3dDisplayJSON.svgHUD;
+  this.SVGHUD = function(modelInstance, wrapperForHUD)
+  { this.plugins      = {};
+    this.contextData  = {};
+    
+    this.modelInstance = modelInstance;
+    this.divForHUD = modelInstance.display.svgHUD = $("<div class='svgHUD' />");
+    wrapperForHUD.append(this.divForHUD);
+    modelInstance.display.svgHUD = this.divForHUD;
+    modelInstance.svgHUD = this;
+  }
+  this.SVGHUD.prototype.renderHUD = function()
+  { var svg3dDisplayJSON  = this.modelInstance.svg3dDisplayJSON;
+    
+    this.divForHUD.html("");
 
-    this.display.colorPickers.html("");
-    for (colorPickerData of svgHUD.colorPickers)
-    { this.display.svgHUD.append(new thisEqualsThat.svgHUDColorPicker(colorPickerData));
+    for (hudComponent in svg3dDisplayJSON.svgHUD)
+    { if (! this.contextData[hudComponent])
+      { this.contextData[hudComponent] = {};
+        this.plugins[hudComponent] = new this[hudComponent](this, this.contextData[hudComponent]);
+      }
+      this.plugins[hudComponent].display(svg3dDisplayJSON.svgHUD[hudComponent]);
     }
   }
-  this.svgHUDColorPicker = function(colorPickerData)
+
+  this.SVGHUD.prototype.colorPickers = function(svgHUD, context)
+  { this.svgHUD     = svgHUD;
+    this.context    = context;
+  }
+  // this.SVGHUD.prototype.colorPickers.prototype.display =function(colorPickersList)
+  // { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
+  //   //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
+
+  //   this.context.colorPickersDiv = $("<div class='colorPickers hudCollection' />");
+  //   this.svgHUD.divForHUD.append(this.context.colorPickersDiv);
+
+  //   for (colorPickerData of colorPickersList)
+  //   { console.log(colorPickerData);
+  //     var colorPicker = $("<div class='colorPicker hudItem' />");
+  //     var icon = $("<img src=/static/graphics/thisEquals/svgHUD/colorPicker.png />");
+
+  //     colorPicker.append(icon);
+  //     this.context.colorPickersDiv.append(colorPicker);
+
+  //     icon.colorpicker({
+  //         "inline": false,
+  //         "alpha": true,
+  //         "colorFormat": "RGB",
+  //         "buttonClass": 'btn',
+  //         "color": this.context.currentColorRGB,
+  //         "altField": colorPicker,
+  //         "altOnChange": true,
+  //         //position:,
+  //         //"revert": true, //prefer Cancel Button????
+  //         "showNoneButton": true, 
+  //         "close": function()
+  //         {               
+  //         },
+  //         "select": function($event, colorpickerEvent)
+  //         {             
+  //         },
+  //     });
+  //   }
+  // }
+
+  this.SVGHUD.prototype.colorPickers.prototype.display =function(colorPickersDict)
   { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
+    var This = this;
+
+    this.context.colorPickersDiv = $("<div class='colorPickers hudCollection' />");
+    this.svgHUD.divForHUD.append(this.context.colorPickersDiv);
+
+    for (colorPickerSelector in colorPickersDict)
+    { var colorPickerData = colorPickersDict[colorPickerSelector];
+      console.log(colorPickerSelector, colorPickerData);
+
+      var colorPicker = $("<div class='colorPicker hudItem' />");
+      var icon = $("<img src=/static/graphics/thisEquals/svgHUD/colorPicker.png />");
+
+      colorPicker.append(icon);
+      this.context.colorPickersDiv.append(colorPicker);
+
+      if (! this.context.currentColorString)
+      { this.context.currentColorString = colorPickerData.initialColorString;        
+      }
+
+      colorPicker.spectrum({
+          "color":            this.context.currentColorString,
+          "showAlpha":        true,
+          "preferredFormat": "rgba",
+          "show": function()
+          { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);         
+          },
+          "hide": function()
+          { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", false);                       
+          },
+          "move": function(spectrumOutput)
+          { debugger;
+            var pickedColor = $.Color(spectrumOutput.toRgbString());
+            
+            var toReturn = null;
+            eval (colorPickerData.onColorChange);
+            $(This.svgHUD.modelInstance.display.containerSVG).find("style#onColorChange").html(toReturn);
+            
+          },
+      });
+    }
   }
+
 
   //SVG STORE
   this.SVGStore = function()

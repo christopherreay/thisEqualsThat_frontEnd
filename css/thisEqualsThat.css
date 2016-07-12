@@ -1236,3 +1236,33 @@ input.ui-colorpicker-hex-input {
         transform: scale(3.5);
     }
 }
+
+
+
+.svgHUD .icon
+{ height: 32px;    
+}
+.svgHUD .hudItem
+{ float: left;    
+}
+.svgHUD .hudCollection
+{ height: 32px;
+}
+.svgHUD .hudCollection *
+{ height: 32px;
+}
+
+@keyframes highlightSVGPath
+{  0% { stroke: "black";}
+  15% { stroke: "red";  }
+  30% { stroke: "green";}
+  45% { stroke: "blue"; }
+  60% { stroke: "white";}
+  75% { stroke: "grey"; }
+}
+
+path.highlight, .highlight path
+{ animation-name:             highlightSVGPath;
+  animation-duration:         8s;
+  animation-iteration-count:  infinite;
+}

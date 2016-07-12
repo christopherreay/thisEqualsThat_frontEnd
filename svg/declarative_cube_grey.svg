@@ -6,7 +6,7 @@
  z:xInfinite="300" z:yInfinite="200" z:zRatio="2">
 
   <defs>
-    <style type="text/css">
+    <style id="onColorChange" type="text/css">
         .face 
         { fill: rgba(35, 35, 35, 0.3);
         }
