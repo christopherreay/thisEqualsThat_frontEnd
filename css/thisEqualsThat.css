@@ -1266,3 +1266,7 @@ path.highlight, .highlight path
   animation-duration:         8s;
   animation-iteration-count:  infinite;
 }
+
+.spectrumAlphaOnly .sp-fill, .spectrumAlphaOnly .sp-top-inner, .spectrumAlphaOnly .sp-button-container 
+{ display: none;
+}

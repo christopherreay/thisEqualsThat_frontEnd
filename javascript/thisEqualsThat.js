@@ -1730,7 +1730,10 @@ $(function(){
             .find("path")
             .each(  
                 function()
-                { var colorRGB  = $(this).css("fill");
+                { if (! this.getAttribute("initial_fill") )
+                  { this.setAttribute("initial_fill", $(this).css("fill") );
+                  }
+                  var colorRGB = this.getAttribute("initial_fill");
                   if (colorRGB == null)
                     colorRGB = "rgb(50, 50, 50)";
                   if (colorRGB.indexOf("rgb") === 0)
