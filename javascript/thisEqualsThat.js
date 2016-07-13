@@ -1645,7 +1645,7 @@ $(function(){
 
     This.modelInstance.inputFieldAltered(
     { inputField: This.fullAddress,
-      newValue:   This.uiSelect.val()
+      newValue:   This.uiValue_select.val()
     });
   }
   this.ModelFieldInput.prototype.getTag_text = function()
@@ -1685,7 +1685,7 @@ $(function(){
 
     This.modelInstance.inputFieldAltered(
     { inputField: This.fullAddress,
-      newValue:   This.uiValueText.val()
+      newValue:   This.uiValue_text.val()
     });
   }
   this.ModelFieldInput.prototype.getTag_slider = function()
