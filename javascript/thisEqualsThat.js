@@ -773,133 +773,133 @@ $(function(){
       }
 
 
-      display.colorControl = $("<div id='colorControl_" + This.id + "' class='colorControl' />");
-      display.ccSelector   = $("<input id='ccSelector_" + This.id + "' type='text'      title='# for id, . for class'/>");
-      display.ccColor      = $("<input id='ccColor_"    + This.id + "' type='text'      title='yellow, red, or rgb(255,255,255) or rgba(255,255,255,1.0)'/>");
-      display.ccSubmit     = $("<input id='ccSubmit_"   + This.id + "' type='submit'    />");
-      display.ccSubmit.on("click",
-          function()
-          { $(containerSVG).find(display.ccSelector.val()).css("fill", display.ccColor.val())
-          }
-      );
-      display.ccRandomiseColors = $("<input id='ccRandomise_"   + This.id + "' type='button' value='Random'/>");
-      display.ccRandomiseColors_function = 
-          function(mult)
-          { $(svgVisualisationG).find("path")
-                .each(  function()
-                    { var colorRGB  = $(this).css("fill");
-                      if (colorRGB == null)
-                        colorRGB = "rgb(50, 50, 50)";
-                      if (colorRGB.indexOf("rgb") === 0)
-                      { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
-                        r = Number(rgb[1]);
-                        newR = Math.round(Math.max((((mult * normalDistribution() * 10.0) - 5) ) + r, 0));
-                        g = Number(rgb[2]);
-                        newG = Math.round(Math.max((((mult * normalDistribution()* 10.0) - 5) ) + g, 0));
-                        b = Number(rgb[3]);
-                        newB = Math.round(Math.max((((mult * normalDistribution()* 10.0) - 5) ) + b, 0));
-                        if (4 in rgb && rgb[4] != "")
-                          newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
-                        else
-                          newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
-                        //$(this).css("fill", newRGB);
-                        //newStyle = this.getAttribute("style");
-                        //if (newStyle)+newRGB;
-                        this.setAttribute("style", newRGB);
-                      }
-                    }
-                )
-            This.svg_createSaveLink(This);
-          };
-      display.ccRandomiseColors.on("click", display.ccRandomiseColors_function);
+      // display.colorControl = $("<div id='colorControl_" + This.id + "' class='colorControl' />");
+      // display.ccSelector   = $("<input id='ccSelector_" + This.id + "' type='text'      title='# for id, . for class'/>");
+      // display.ccColor      = $("<input id='ccColor_"    + This.id + "' type='text'      title='yellow, red, or rgb(255,255,255) or rgba(255,255,255,1.0)'/>");
+      // display.ccSubmit     = $("<input id='ccSubmit_"   + This.id + "' type='submit'    />");
+      // display.ccSubmit.on("click",
+      //     function()
+      //     { $(containerSVG).find(display.ccSelector.val()).css("fill", display.ccColor.val())
+      //     }
+      // );
+      // display.ccRandomiseColors = $("<input id='ccRandomise_"   + This.id + "' type='button' value='Random'/>");
+      // display.ccRandomiseColors_function = 
+      //     function(mult)
+      //     { $(svgVisualisationG).find("path")
+      //           .each(  function()
+      //               { var colorRGB  = $(this).css("fill");
+      //                 if (colorRGB == null)
+      //                   colorRGB = "rgb(50, 50, 50)";
+      //                 if (colorRGB.indexOf("rgb") === 0)
+      //                 { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
+      //                   r = Number(rgb[1]);
+      //                   newR = Math.round(Math.max((((mult * normalDistribution() * 10.0) - 5) ) + r, 0));
+      //                   g = Number(rgb[2]);
+      //                   newG = Math.round(Math.max((((mult * normalDistribution()* 10.0) - 5) ) + g, 0));
+      //                   b = Number(rgb[3]);
+      //                   newB = Math.round(Math.max((((mult * normalDistribution()* 10.0) - 5) ) + b, 0));
+      //                   if (4 in rgb && rgb[4] != "")
+      //                     newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
+      //                   else
+      //                     newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
+      //                   //$(this).css("fill", newRGB);
+      //                   //newStyle = this.getAttribute("style");
+      //                   //if (newStyle)+newRGB;
+      //                   this.setAttribute("style", newRGB);
+      //                 }
+      //               }
+      //           )
+      //       This.svg_createSaveLink(This);
+      //     };
+      // display.ccRandomiseColors.on("click", display.ccRandomiseColors_function);
 
-      display.ccRandomiseColorsByGroup = $("<input id='ccRandomiseGroup_"   + This.id + "' type='button' value='Random Group'/>");
-      display.ccRandomiseColorsByGroup_function = 
-          function(mult)
-          { $(svgVisualisationG).find("g")
-                .each(  function()
-                    { 
+      // display.ccRandomiseColorsByGroup = $("<input id='ccRandomiseGroup_"   + This.id + "' type='button' value='Random Group'/>");
+      // display.ccRandomiseColorsByGroup_function = 
+      //     function(mult)
+      //     { $(svgVisualisationG).find("g")
+      //           .each(  function()
+      //               { 
                         
-                        var changeR = Math.round( 5 *  mult * normalDistribution() );
-                        var changeG = Math.round( 5  * mult * normalDistribution() );
-                        var changeB = Math.round( 5  * mult * normalDistribution() );
+      //                   var changeR = Math.round( 5 *  mult * normalDistribution() );
+      //                   var changeG = Math.round( 5  * mult * normalDistribution() );
+      //                   var changeB = Math.round( 5  * mult * normalDistribution() );
                         
-                        //$(this).css("fill", newRGB);
-                        //newStyle = this.getAttribute("style");
-                        //if (newStyle)+newRGB;
-                        $(this).find("path").each(function()
-                        {   var colorRGB  = $(this).css("fill");
-                            if (colorRGB == null)
-                              colorRGB = "rgb(50, 50, 50)";
-                            if (colorRGB.indexOf("rgb") === 0)
-                            { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
-                              var r = Number(rgb[1]);
-                              var newR = Math.max(r + changeR, 0);
-                              var g = Number(rgb[2]);
-                              var newG = Math.max(g + changeG, 0);
-                              var b = Number(rgb[3]);
-                              var newB = Math.max(b + changeB, 0);
-                              if (4 in rgb && rgb[4] != "")
-                                var newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
-                              else
-                                var newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
-                              this.setAttribute("style", newRGB);
-                            }
-                        }
-                        )
-                    }
-                )
-            This.svg_createSaveLink(This);
-          };
-      display.ccRandomiseColorsByGroup.on("click", display.ccRandomiseColorsByGroup_function);
+      //                   //$(this).css("fill", newRGB);
+      //                   //newStyle = this.getAttribute("style");
+      //                   //if (newStyle)+newRGB;
+      //                   $(this).find("path").each(function()
+      //                   {   var colorRGB  = $(this).css("fill");
+      //                       if (colorRGB == null)
+      //                         colorRGB = "rgb(50, 50, 50)";
+      //                       if (colorRGB.indexOf("rgb") === 0)
+      //                       { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
+      //                         var r = Number(rgb[1]);
+      //                         var newR = Math.max(r + changeR, 0);
+      //                         var g = Number(rgb[2]);
+      //                         var newG = Math.max(g + changeG, 0);
+      //                         var b = Number(rgb[3]);
+      //                         var newB = Math.max(b + changeB, 0);
+      //                         if (4 in rgb && rgb[4] != "")
+      //                           var newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
+      //                         else
+      //                           var newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
+      //                         this.setAttribute("style", newRGB);
+      //                       }
+      //                   }
+      //                   )
+      //               }
+      //           )
+      //       This.svg_createSaveLink(This);
+      //     };
+      // display.ccRandomiseColorsByGroup.on("click", display.ccRandomiseColorsByGroup_function);
 
-      display.ccRandomisePosition = $("<input id='ccRandomisePosition_"   + This.id + "' type='button' value='Random Position'/>");
-      display.ccRandomisePosition_function = 
-          function(mult)
-          { $(svgVisualisationG).find("g")
-                .each(  function()
-                    { var gBBox = this.getBBox();
-                      var maxXChange = gBBox.width  / 80;
-                      var maxYChange = gBBox.height / 80;
+      // display.ccRandomisePosition = $("<input id='ccRandomisePosition_"   + This.id + "' type='button' value='Random Position'/>");
+      // display.ccRandomisePosition_function = 
+      //     function(mult)
+      //     { $(svgVisualisationG).find("g")
+      //           .each(  function()
+      //               { var gBBox = this.getBBox();
+      //                 var maxXChange = gBBox.width  / 80;
+      //                 var maxYChange = gBBox.height / 80;
 
-                      var changeX = ((normalDistribution()  * mult * maxXChange) );
-                      var changeY = ((normalDistribution()  * mult * maxYChange) );
+      //                 var changeX = ((normalDistribution()  * mult * maxXChange) );
+      //                 var changeY = ((normalDistribution()  * mult * maxYChange) );
 
-                      var transform = this.getAttribute("transform");
-                      if (transform === null)
-                      { transform = "translate(0 0)";
-                      }
-                      var translate = transform.match(/^translate\(([-]?\d+[.]?\d*)\s*([-]?\d+[.]?\d*)\)$/);
-                      var newX = Number(translate[1]) + changeX;
-                      var newY = Number(translate[2]) + changeY;
-                      var newTranslate = "translate("+newX+" "+newY+")";
-                      this.setAttribute("transform", newTranslate);
-                      //console.log(this, transform);
-                    }
-                )
-            This.svg_createSaveLink(This);
-          };
-      display.ccRandomisePosition.on("click", display.ccRandomisePosition_function);
+      //                 var transform = this.getAttribute("transform");
+      //                 if (transform === null)
+      //                 { transform = "translate(0 0)";
+      //                 }
+      //                 var translate = transform.match(/^translate\(([-]?\d+[.]?\d*)\s*([-]?\d+[.]?\d*)\)$/);
+      //                 var newX = Number(translate[1]) + changeX;
+      //                 var newY = Number(translate[2]) + changeY;
+      //                 var newTranslate = "translate("+newX+" "+newY+")";
+      //                 this.setAttribute("transform", newTranslate);
+      //                 //console.log(this, transform);
+      //               }
+      //           )
+      //       This.svg_createSaveLink(This);
+      //     };
+      // display.ccRandomisePosition.on("click", display.ccRandomisePosition_function);
 
-      $(display.ccColor).colorpicker(
-        { "alpha": true,
-          "colorFormat": "RGB",
-          "select": function()
-              { $(containerSVG).find(display.ccSelector.val()).css("fill", display.ccColor.val());
-                This.svg_createSaveLink(This);
-              },
-          //"parts": ["header", "map", "alpha", "bar"],
-          //"draggable": true,
-          //"position": $(display.ccColor).position({"my": "bottom right", "at": "bottom right", "of": $(window)})
-          "inline": true
-        });
+      // $(display.ccColor).colorpicker(
+      //   { "alpha": true,
+      //     "colorFormat": "RGB",
+      //     "select": function()
+      //         { $(containerSVG).find(display.ccSelector.val()).css("fill", display.ccColor.val());
+      //           This.svg_createSaveLink(This);
+      //         },
+      //     //"parts": ["header", "map", "alpha", "bar"],
+      //     //"draggable": true,
+      //     //"position": $(display.ccColor).position({"my": "bottom right", "at": "bottom right", "of": $(window)})
+      //     "inline": true
+      //   });
 
-      display.colorControl.append(display.ccSelector);
-      display.colorControl.append(display.ccColor);
-      display.colorControl.append(display.ccSubmit);
-      display.colorControl.append(display.ccRandomiseColors);
-      display.colorControl.append(display.ccRandomiseColorsByGroup);
-      display.colorControl.append(display.ccRandomisePosition);
+      // display.colorControl.append(display.ccSelector);
+      // display.colorControl.append(display.ccColor);
+      // display.colorControl.append(display.ccSubmit);
+      // display.colorControl.append(display.ccRandomiseColors);
+      // display.colorControl.append(display.ccRandomiseColorsByGroup);
+      // display.colorControl.append(display.ccRandomisePosition);
 
 
       display.bottomModelSelectDiv  = $("<div class='bottomModelSelectDiv bottomModelSelectDiv."+this.id+"' />");
@@ -1372,79 +1372,80 @@ $(function(){
                 var referenceSVG3dConfiguration = $.extend(true, {}, This.svg3dDisplayJSON.svg3dConfiguration.translate3d);
                 $.extend(referenceSVG3dConfiguration, {"x":referenceSVG3dConfiguration.x * multiplier, "y": referenceSVG3dConfiguration.y * multiplier});
 
-                    if ("recolourClones" in This.svg3dDisplayJSON.svg3dConfiguration)
-                    { //var clones                  = $(This.display.svgVisualisationG).find("> g:nth-child(n + 2)");
-                      var clones                  = $(This.display.svgVisualisationG).data("svg3dclones");
-                      var cloneCount              = clones.length;
-                      var clonesNotChosenCount    = cloneCount;
-                      var clonesNotChosenMemoise  = Array.apply(null, Array(cloneCount)).map(function (_, i) {return i;});
+                
+                if ("recolourClones" in This.svg3dDisplayJSON.svg3dConfiguration)
+                { //var clones                  = $(This.display.svgVisualisationG).find("> g:nth-child(n + 2)");
+                  var clones                  = $(This.display.svgVisualisationG).data("svg3dclones");
+                  var cloneCount              = clones.length;
+                  var clonesNotChosenCount    = cloneCount;
+                  var clonesNotChosenMemoise  = Array.apply(null, Array(cloneCount)).map(function (_, i) {return i;});
 
 
-                      var recolourClones = This.svg3dDisplayJSON.svg3dConfiguration.recolourClones;
+                  var recolourClones = This.svg3dDisplayJSON.svg3dConfiguration.recolourClones;
 
-                      var randomLayout   = recolourClones[0].randomLayout == "Yes";
-                      var ratios         = recolourClones[0].ratios;
-                      var colours        = recolourClones[0].colours;
-                      if (ratios.length != colours.length) debugger;
-                      ratioCount         = ratios.length;
-
-
-                      for (var ratioCounter = 0; ratioCounter < ratioCount; ratioCounter ++)
-                      { var clonesToChange  = [];
-
-                        var ratio           = ratios [ratioCounter];
-                        var changeColour    = colours[ratioCounter];
-
-                        var cloneToChangeCount = Math.round(ratio * cloneCount);
-
-                        while(cloneToChangeCount > 0 && clonesNotChosenCount > 0)
-                        { var changeThisClone;
-
-                          var indexOfChosenClone = 0;
-                          if (randomLayout)
-                          { indexOfChosenClone = Math.floor(Math.random() * clonesNotChosenCount);
-                          }
-
-                          changeThisClone = clonesNotChosenMemoise[indexOfChosenClone];
-                          clonesNotChosenMemoise.splice(indexOfChosenClone,1);
-                          clonesNotChosenCount--;
-                          cloneToChangeCount --;
-                          clonesToChange.push(clones[changeThisClone]);
-                        }
+                  var randomLayout   = recolourClones[0].randomLayout == "Yes";
+                  var ratios         = recolourClones[0].ratios;
+                  var colours        = recolourClones[0].colours;
+                  if (ratios.length != colours.length) debugger;
+                  ratioCount         = ratios.length;
 
 
-                        var changeRGB = changeColour.match(/^rgb[a]?\(([-]?\d+),\s*([-]?\d+),\s*([-]?\d+)[,]?\s*(\d*[.]?\d*)\)$/);
-                        var changeR   = Number(changeRGB[1]);
-                        var changeG   = Number(changeRGB[2]);
-                        var changeB   = Number(changeRGB[3]);
+                  for (var ratioCounter = 0; ratioCounter < ratioCount; ratioCounter ++)
+                  { var clonesToChange  = [];
 
-                        $.each( clonesToChange,
-                              function()
-                              { $(this).find("path").each(function()
-                                {   var colorRGB  = $(this).css("fill");
-                                    if (colorRGB == null)
-                                      colorRGB = "rgb(50, 50, 50)";
-                                    if (colorRGB.indexOf("rgb") === 0)
-                                    { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
-                                      var r = Number(rgb[1]);
-                                      var newR = Math.min(Math.max(r + changeR, 0), 255);
-                                      var g = Number(rgb[2]);
-                                      var newG = Math.min(Math.max(g + changeG, 0), 255);
-                                      var b = Number(rgb[3]);
-                                      var newB = Math.min(Math.max(b + changeB, 0), 255);
-                                      if (4 in changeRGB && changeRGB[4] != "")
-                                        var newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
-                                      else
-                                        var newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
-                                      this.setAttribute("style", newRGB);
-                                    }
-                                }
-                                )
-                              }
-                            );
+                    var ratio           = ratios [ratioCounter];
+                    var changeColour    = colours[ratioCounter];
+
+                    var cloneToChangeCount = Math.round(ratio * cloneCount);
+
+                    while(cloneToChangeCount > 0 && clonesNotChosenCount > 0)
+                    { var changeThisClone;
+
+                      var indexOfChosenClone = 0;
+                      if (randomLayout)
+                      { indexOfChosenClone = Math.floor(Math.random() * clonesNotChosenCount);
                       }
 
+                      changeThisClone = clonesNotChosenMemoise[indexOfChosenClone];
+                      clonesNotChosenMemoise.splice(indexOfChosenClone,1);
+                      clonesNotChosenCount--;
+                      cloneToChangeCount --;
+                      clonesToChange.push(clones[changeThisClone]);
                     }
+
+
+                    var changeRGB = changeColour.match(/^rgb[a]?\(([-]?\d+),\s*([-]?\d+),\s*([-]?\d+)[,]?\s*(\d*[.]?\d*)\)$/);
+                    var changeR   = Number(changeRGB[1]);
+                    var changeG   = Number(changeRGB[2]);
+                    var changeB   = Number(changeRGB[3]);
+
+                    $.each( clonesToChange,
+                          function()
+                          { $(this).find("path").each(function()
+                            {   var colorRGB  = $(this).css("fill");
+                                if (colorRGB == null)
+                                  colorRGB = "rgb(50, 50, 50)";
+                                if (colorRGB.indexOf("rgb") === 0)
+                                { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
+                                  var r = Number(rgb[1]);
+                                  var newR = Math.min(Math.max(r + changeR, 0), 255);
+                                  var g = Number(rgb[2]);
+                                  var newG = Math.min(Math.max(g + changeG, 0), 255);
+                                  var b = Number(rgb[3]);
+                                  var newB = Math.min(Math.max(b + changeB, 0), 255);
+                                  if (4 in changeRGB && changeRGB[4] != "")
+                                    var newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
+                                  else
+                                    var newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
+                                  this.setAttribute("style", newRGB);
+                                }
+                            }
+                            )
+                          }
+                        );
+                  }
+
+                }
 
                 This.display.svgReferenceG.animate(
                 { "svg3d":{"translate3d": referenceSVG3dConfiguration}
@@ -1456,27 +1457,30 @@ $(function(){
                     This.progress_translate3d(animation, progress, remainingMs, This);                     
                   },
                   complete: function() 
-                  { This.disable_createSaveLink = true; 
-                    console.log(This.svg3dDisplayJSON.postProcessing);
-                    var postProcessing  = This.svg3dDisplayJSON.postProcessing;
-                    var postProcessingFunctions = {};
-                    for (var ccThing in postProcessing)
-                    { //var delay ssdasdsdsd        = 2000.0 / postProcessing[ccThing]
-                      var ccFunction = This.display[ccThing+"_function"];
-                      var mult = postProcessing[ccThing];
-                      if (mult != 0) ccFunction(mult);
-                      // var ccBuild = postProcessingFunctions[ccThing] = {};
-                      // ccBuild['counter']  = postProcessing[ccThing];
+                  { 
+                  //This.disable_createSaveLink = true; 
+                  //   console.log(This.svg3dDisplayJSON.postProcessing);
+                  //   var postProcessing  = This.svg3dDisplayJSON.postProcessing;
+                  //   var postProcessingFunctions = {};
+                  //   for (var ccThing in postProcessing)
+                  //   { //var delay ssdasdsdsd        = 2000.0 / postProcessing[ccThing]
+                  //     var ccFunction = This.display[ccThing+"_function"];
+                  //     var mult = postProcessing[ccThing];
+                  //     if (mult != 0) ccFunction(mult);
+                  //     // var ccBuild = postProcessingFunctions[ccThing] = {};
+                  //     // ccBuild['counter']  = postProcessing[ccThing];
 
-                      // for (var counter = 0; counter < ccBuild['counter']; counter ++)
-                      // { ccThingButton.trigger("click");
-                      // }
-                    } 
+                  //     // for (var counter = 0; counter < ccBuild['counter']; counter ++)
+                  //     // { ccThingButton.trigger("click");
+                  //     // }
+                  //   } 
                     
 
                     
-                    This.disable_createSaveLink = false;
-                    This.svg_createSaveLink(This);
+                  //   This.disable_createSaveLink = false;
+                  //   This.svg_createSaveLink(This);
+
+                  This.svgHUD.display();
                   }
                 }
                 );
@@ -1588,7 +1592,7 @@ $(function(){
   this.ModelInstance.prototype.displayCurrentOutput_2 = function(This)
   { This.appendSVGToDisplay();
     
-    This.svgHUD.renderHUD()
+    This.svgHUD.renderHUD("beforeSVG");
     This.animateSVG();
   }
 
