@@ -1621,6 +1621,7 @@ $(function(){
   this.SVGHUD.prototype.colorPickers = function(svgHUD, context)
   { this.svgHUD     = svgHUD;
     this.context    = context;
+    this.context.byVisualisation = {};
   }
   // this.SVGHUD.prototype.colorPickers.prototype.display =function(colorPickersList)
   // { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
@@ -1676,8 +1677,10 @@ $(function(){
       colorPicker.append(icon);
       this.context.colorPickersDiv.append(colorPicker);
 
-      if (! this.context.currentColorString)
-      { this.context.currentColorString = colorPickerData.initialColorString;        
+      lastAlteredVisualisationField = this.svgHUD.modelInstance.lastAlteredVisualisationField.fullAddress;
+      if (! this.context.byVisualisation[lastAlteredVisualisationField])
+      { this.context.byVisualisation[lastAlteredVisualisationField] = {};
+        this.context.byVisualisation[lastAlteredVisualisationField].currentColorString = colorPickerData.initialColorString;        
       }
 
       var rep_onColorChange = function(colorString)
@@ -1686,18 +1689,18 @@ $(function(){
         eval (colorPickerData.onColorChange);
         $(This.svgHUD.modelInstance.display.containerSVG).find("style#onColorChange").html(toReturn);
 
-        This.context.currentColorString = colorString;
+        This.context.byVisualisation[lastAlteredVisualisationField].currentColorString = colorString;
       }
 
-      rep_onColorChange(this.context.currentColorString);
+      rep_onColorChange(this.context.byVisualisation[lastAlteredVisualisationField].currentColorString);
 
       colorPicker.spectrum({
-          "color":            this.context.currentColorString,
+          "color":            this.context.byVisualisation[lastAlteredVisualisationField].currentColorString,
           "showAlpha":        true,
           "preferredFormat": "rgba",
           "show": function()
           { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);
-            colorPicker.spectrum("set", This.context.currentColorString);      
+            colorPicker.spectrum("set", This.context.byVisualisation[lastAlteredVisualisationField].currentColorString);      
           },
           "hide": function()
           { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", false);                       
