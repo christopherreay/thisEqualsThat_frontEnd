@@ -1710,6 +1710,8 @@ $(function(){
   this.SVGHUD.prototype.RandomiseClones.prototype.display = function(randomiseClonesDict)
   { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
+    var processingOrder = ["randomisePosition", "randomiseColors", "randomiseColorsByGroup"];
+
     var This = this;
 
     this.context.collectionDiv = $("<div class='randomiseClones hudCollection' />");
@@ -1723,46 +1725,118 @@ $(function(){
 
 
     var randomiseFunctions = {};
-      randomiseFunctions.randomiseColors = function(degreeOfRandom)
-      { normalDistribution("randomiseColors", true);
+    randomiseFunctions.randomiseColors = function(degreeOfRandom, init=false)
+    { normalDistribution("randomiseColors", true);
 
-        $(This.svgHUD.modelInstance.display.svgVisualisationG)
-            .find("path")
+      $(This.svgHUD.modelInstance.display.svgVisualisationG)
+          .find("path")
+          .each(  
+              function()
+              { if (! this.getAttribute("initial_fill_path") )
+                { this.setAttribute("initial_fill_path", $(this).css("fill") );
+                }
+                var colorRGB = this.getAttribute("initial_fill_path");
+                if (colorRGB == null)
+                  colorRGB = "rgb(50, 50, 50)";
+                if (colorRGB.indexOf("rgb") === 0)
+                { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
+                  r = Number(rgb[1]);
+                  newR = Math.round(Math.max((((degreeOfRandom * normalDistribution("randomiseColors") * 10.0) - 5) ) + r, 0));
+                  g = Number(rgb[2]);
+                  newG = Math.round(Math.max((((degreeOfRandom * normalDistribution("randomiseColors") * 10.0) - 5) ) + g, 0));
+                  b = Number(rgb[3]);
+                  newB = Math.round(Math.max((((degreeOfRandom * normalDistribution("randomiseColors") * 10.0) - 5) ) + b, 0));
+                  if (4 in rgb && rgb[4] != "")
+                    newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
+                  else
+                    newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
+                  //$(this).css("fill", newRGB);
+                  //newStyle = this.getAttribute("style");
+                  //if (newStyle)+newRGB;
+                  this.setAttribute("style", newRGB);
+                  this.setAttribute("initial_fill_group", newRGB.substring(6).replace(";", ""));
+                }
+              }
+          );
+      contextByVisualisation.randomiseColors.degreeOfRandom = degreeOfRandom;
+
+      if (!init)
+      { randomiseFunctions.randomiseColorsByGroup(contextByVisualisation.randomiseColorsByGroup.degreeOfRandom, true);
+      }
+    }
+    randomiseFunctions.randomiseColorsByGroup = function(degreeOfRandom, init=false)
+    { normalDistribution("randomiseColorsByGroup", true);
+      { $(This.svgHUD.modelInstance.display.svgVisualisationG)
+            .find("g")
             .each(  
                 function()
-                { if (! this.getAttribute("initial_fill") )
-                  { this.setAttribute("initial_fill", $(this).css("fill") );
-                  }
-                  var colorRGB = this.getAttribute("initial_fill");
-                  if (colorRGB == null)
-                    colorRGB = "rgb(50, 50, 50)";
-                  if (colorRGB.indexOf("rgb") === 0)
-                  { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
-                    r = Number(rgb[1]);
-                    newR = Math.round(Math.max((((degreeOfRandom * normalDistribution("randomiseColors") * 10.0) - 5) ) + r, 0));
-                    g = Number(rgb[2]);
-                    newG = Math.round(Math.max((((degreeOfRandom * normalDistribution("randomiseColors") * 10.0) - 5) ) + g, 0));
-                    b = Number(rgb[3]);
-                    newB = Math.round(Math.max((((degreeOfRandom * normalDistribution("randomiseColors") * 10.0) - 5) ) + b, 0));
-                    if (4 in rgb && rgb[4] != "")
-                      newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
-                    else
-                      newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
+                { 
+                    
+                    var changeR = Math.round( 5 *  degreeOfRandom * normalDistribution("randomiseColorsByGroup") );
+                    var changeG = Math.round( 5 *  degreeOfRandom * normalDistribution("randomiseColorsByGroup") );
+                    var changeB = Math.round( 5 *  degreeOfRandom * normalDistribution("randomiseColorsByGroup") );
+                    
                     //$(this).css("fill", newRGB);
                     //newStyle = this.getAttribute("style");
                     //if (newStyle)+newRGB;
-                    this.setAttribute("style", newRGB);
-                  }
+                    $(this).find("path").each(function()
+                    {   var colorRGB = this.getAttribute("initial_fill_group");
+                        if (colorRGB == null)
+                          colorRGB = "rgb(50, 50, 50)";
+                        if (colorRGB.indexOf("rgb") === 0)
+                        { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
+                          var r = Number(rgb[1]);
+                          var newR = Math.max(r + changeR, 0);
+                          var g = Number(rgb[2]);
+                          var newG = Math.max(g + changeG, 0);
+                          var b = Number(rgb[3]);
+                          var newB = Math.max(b + changeB, 0);
+                          if (4 in rgb && rgb[4] != "")
+                            var newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
+                          else
+                            var newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
+                          this.setAttribute("style", newRGB);
+                        }
+                    }
+                    )
                 }
-            );
-        contextByVisualisation.randomiseColors.degreeOfRandom = degreeOfRandom;
-      }
-      randomiseFunctions.randomiseColorsByGroup = function(degreeOfRandom)
-      {
+            )
       };
-      randomiseFunctions.randomisePosition      = function(degreeOfRandom)
-      {
-      };
+      contextByVisualisation.randomiseColorsByGroup.degreeOfRandom = degreeOfRandom;
+    };
+    randomiseFunctions.randomisePosition      = function(degreeOfRandom)
+    { normalDistribution("randomisePosition", true);
+      $(This.svgHUD.modelInstance.display.svgVisualisationG)
+          .find("g") //cghange to children or correct selector for children
+          .each(  
+              function()
+              { var gBBox = this.getBBox();
+                var maxXChange = gBBox.width  / 80;
+                var maxYChange = gBBox.height / 80;
+
+                var changeX = ((normalDistribution("randomisePosition")  * degreeOfRandom * maxXChange) );
+                var changeY = ((normalDistribution("randomisePosition")  * degreeOfRandom * maxYChange) );
+
+                var transform = this.getAttribute("transform");
+                if (transform === null)
+                { transform = "translate(0 0)";
+                }
+
+                if (! this.getAttribute("initial_transform") )
+                { this.setAttribute("initial_transform", transform);
+                }
+
+                var translate = transform.match(/^translate\(([-]?\d+[.]?\d*)\s*([-]?\d+[.]?\d*)\)$/);
+                var newX = Number(translate[1]) + changeX;
+                var newY = Number(translate[2]) + changeY;
+                var newTranslate = "translate("+newX+" "+newY+")";
+                this.setAttribute("transform", newTranslate);
+                //console.log(this, transform);
+              }
+          )
+      contextByVisualisation.randomisePosition.degreeOfRandom = degreeOfRandom;
+    };
+
     var spectrumFunction = function(randomiseItem, itemContext, functionToCall)
     { randomiseItem.spectrum
       ( { "color":            `rgba(0,0,0, ${itemContext.degreeOfRandom / 32.0})`,
@@ -1783,8 +1857,14 @@ $(function(){
     }
 
 
-    for (randomiseProperty in randomiseClonesDict)
-    { var randomiseConfig = randomiseClonesDict[randomiseProperty];
+    for (randomiseProperty of processingOrder)
+    { var randomiseConfig;
+      if (!randomiseClonesDict.hasOwnProperty(randomiseProperty) )
+      { randomiseConfig = { "degreeOfRandom": 0 };
+      }
+      else
+      { randomiseConfig = randomiseClonesDict[randomiseProperty];
+      }
       console.log(randomiseProperty, randomiseConfig);
 
       var randomiseItem   = $("<div class='randomiseProperty hudItem' />");
@@ -1801,7 +1881,7 @@ $(function(){
       var itemContext = contextByVisualisation[randomiseProperty];
 
 
-      randomiseFunctions[randomiseProperty](itemContext.degreeOfRandom);
+      randomiseFunctions[randomiseProperty](itemContext.degreeOfRandom, true);
 
       var functionToCall = randomiseFunctions[randomiseProperty];
       
