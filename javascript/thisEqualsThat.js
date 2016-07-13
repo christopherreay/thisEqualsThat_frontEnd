@@ -4,6 +4,7 @@ thisEqualsThat.graphicLoadVersion = "0.1.1.3.20160712.1727"
 thisEqualsThat.svg          = {};
 thisEqualsThat.svgStore     = {};
 thisEqualsThat.svgDefsStore = {};
+thisEqualsThat.memoise_normalDistribution = {};
 
 
 window.attachFunc = function(parent, name, functionContent)
@@ -40,17 +41,41 @@ function hexToRgb(hex) {
         b: parseInt(result[3], 16)        
     } : null;
 }
-function normalDistribution(mu, sigma, nsamples){
-    if(!nsamples) nsamples = 6
-    if(!sigma) sigma = 1
-    if(!mu) mu=0
+function normalDistribution(namespace, reset=false)
+{   var context = thisEqualsThat.memoise_normalDistribution;
+
+    if (! context.hasOwnProperty(namespace) )
+    { context[namespace] = 
+      { "counter": 0,
+        "length":  0,
+        "numbers": [],        
+      };
+    }
+    subContext = context[namespace];
+    if (reset === true)
+    { subContext.counter = 0;
+      return;
+    }
+
+    if (subContext.counter < subContext.length)
+    { return subContext.numbers[subContext.counter++];
+    }
+
+    var nsamples = 6
+    var sigma = 1
+    var mu=0
 
     var run_total = 0
     for(var i=0 ; i<nsamples ; i++){
        run_total += Math.random()
     }
 
-    return sigma*(run_total - nsamples/2)/(nsamples/2) + mu
+    var toReturn = sigma*(run_total - nsamples/2)/(nsamples/2) + mu
+    subContext.numbers.push(toReturn);
+    subContext.length++;
+    subContext.counter++;
+
+    return toReturn;
 }
 // function normalDistribution() {
 //     var u = 1 - Math.random(); // Subtraction to flip [0, 1) to (0, 1].
@@ -746,6 +771,7 @@ $(function(){
         display.toggle[name].appendTo(display.toggle[name+".label"]);
         display.toggleFeatures.append(display.toggle[name+".label"]);
       }
+
 
       display.colorControl = $("<div id='colorControl_" + This.id + "' class='colorControl' />");
       display.ccSelector   = $("<input id='ccSelector_" + This.id + "' type='text'      title='# for id, . for class'/>");
@@ -1623,42 +1649,6 @@ $(function(){
     this.context    = context;
     this.context.byVisualisation = {};
   }
-  // this.SVGHUD.prototype.colorPickers.prototype.display =function(colorPickersList)
-  // { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
-  //   //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
-
-  //   this.context.colorPickersDiv = $("<div class='colorPickers hudCollection' />");
-  //   this.svgHUD.divForHUD.append(this.context.colorPickersDiv);
-
-  //   for (colorPickerData of colorPickersList)
-  //   { console.log(colorPickerData);
-  //     var colorPicker = $("<div class='colorPicker hudItem' />");
-  //     var icon = $("<img src=/static/graphics/thisEquals/svgHUD/colorPicker.png />");
-
-  //     colorPicker.append(icon);
-  //     this.context.colorPickersDiv.append(colorPicker);
-
-  //     icon.colorpicker({
-  //         "inline": false,
-  //         "alpha": true,
-  //         "colorFormat": "RGB",
-  //         "buttonClass": 'btn',
-  //         "color": this.context.currentColorRGB,
-  //         "altField": colorPicker,
-  //         "altOnChange": true,
-  //         //position:,
-  //         //"revert": true, //prefer Cancel Button????
-  //         "showNoneButton": true, 
-  //         "close": function()
-  //         {               
-  //         },
-  //         "select": function($event, colorpickerEvent)
-  //         {             
-  //         },
-  //     });
-  //   }
-  // }
-
   this.SVGHUD.prototype.colorPickers.prototype.display =function(colorPickersDict)
   { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
@@ -1672,7 +1662,7 @@ $(function(){
       console.log(colorPickerSelector, colorPickerData);
 
       var colorPicker = $("<div class='colorPicker hudItem' />");
-      var icon        = $("<img src=/static/graphics/thisEquals/svgHUD/colorPicker.png />");
+      var icon        = $("<img src='/static/graphics/thisEquals/svgHUD/colorPicker.png' />");
 
       colorPicker.append(icon);
       this.context.colorPickersDiv.append(colorPicker);
@@ -1712,6 +1702,104 @@ $(function(){
     }
   }
 
+  this.SVGHUD.prototype.RandomiseClones= function(svgHUD, context)
+  { this.svgHUD     = svgHUD;
+    this.context    = context;
+    this.context.byVisualisation = {};
+  }
+  this.SVGHUD.prototype.RandomiseClones.prototype.display = function(randomiseClonesDict)
+  { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
+    //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
+    var This = this;
+
+    this.context.collectionDiv = $("<div class='randomiseClones hudCollection' />");
+    this.svgHUD.divForHUD.append(this.context.collectionDiv);
+
+    lastAlteredVisualisationField = this.svgHUD.modelInstance.lastAlteredVisualisationField.fullAddress;
+    if (! this.context.byVisualisation[lastAlteredVisualisationField] )
+    { this.context.byVisualisation[lastAlteredVisualisationField] = {};
+    }
+    contextByVisualisation = this.context.byVisualisation[lastAlteredVisualisationField];
+
+    for (randomiseProperty in randomiseClonesDict)
+    { var randomiseConfig = randomiseClonesDict[randomiseProperty];
+      console.log(randomiseProperty, randomiseConfig);
+
+      var randomiseItem   = $("<div class='randomiseProperty hudItem' />");
+      var icon            = $(`<img src='/static/graphics/thisEquals/svgHUD/${randomiseProperty}.png' />`);
+
+      randomiseItem.append(icon);
+      this.context.collectionDiv.append(randomiseItem);
+      
+      if (!contextByVisualisation[randomiseProperty] )
+      { contextByVisualisation[randomiseProperty] =  
+            { "degreeOfRandom":     randomiseConfig.degreeOfRandom,
+            };
+      }
+      
+      var subContext = this.context.byVisualisation[lastAlteredVisualisationField][randomiseProperty];
+            
+
+      var randomiseFunctions = {};
+      randomiseFunctions.randomiseColors = function(degreeOfRandom)
+      { normalDistribution("randomiseColors", true);
+
+        $(This.svgHUD.modelInstance.display.svgVisualisationG)
+            .find("path")
+            .each(  
+                function()
+                { var colorRGB  = $(this).css("fill");
+                  if (colorRGB == null)
+                    colorRGB = "rgb(50, 50, 50)";
+                  if (colorRGB.indexOf("rgb") === 0)
+                  { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
+                    r = Number(rgb[1]);
+                    newR = Math.round(Math.max((((degreeOfRandom * normalDistribution("randomiseColors") * 10.0) - 5) ) + r, 0));
+                    g = Number(rgb[2]);
+                    newG = Math.round(Math.max((((degreeOfRandom * normalDistribution("randomiseColors") * 10.0) - 5) ) + g, 0));
+                    b = Number(rgb[3]);
+                    newB = Math.round(Math.max((((degreeOfRandom * normalDistribution("randomiseColors") * 10.0) - 5) ) + b, 0));
+                    if (4 in rgb && rgb[4] != "")
+                      newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
+                    else
+                      newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
+                    //$(this).css("fill", newRGB);
+                    //newStyle = this.getAttribute("style");
+                    //if (newStyle)+newRGB;
+                    this.setAttribute("style", newRGB);
+                  }
+                }
+            );
+        This.svgHUD.modelInstance.svg_createSaveLink(This.svgHUD.modelInstance);
+      }
+      randomiseFunctions.randomiseColorsByGroup = function(degreeOfRandom)
+      {
+      };
+      randomiseFunctions.randomisePosition      = function(degreeOfRandom)
+      {
+      };
+
+      randomiseFunctions[randomiseProperty](subContext.degreeOfRandom);
+
+      randomiseItem.spectrum
+      ( { "color":            `rgba(0,0,0, ${subContext.degreeOfRandom / 32.0})`,
+          "containerClassName": "spectrumAlphaOnly",
+          "showAlpha":        true,
+          "preferredFormat": "rgba",
+          "show": function()
+          { //$(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);
+            randomiseItem.spectrum("set", `rgba(0,0,0, ${subContext.degreeOfRandom / 32.0})`);      
+          },
+          "hide": function()
+          { //$(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", false);                       
+          },
+          "move": function(spectrumOutput)
+          { randomiseFunctions[randomiseProperty](spectrumOutput.getAlpha() * 32);
+          },
+      });
+    }
+  };
+  
 
   //SVG STORE
   this.SVGStore = function()
