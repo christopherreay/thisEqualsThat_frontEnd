@@ -1721,26 +1721,8 @@ $(function(){
     }
     contextByVisualisation = this.context.byVisualisation[lastAlteredVisualisationField];
 
-    for (randomiseProperty in randomiseClonesDict)
-    { var randomiseConfig = randomiseClonesDict[randomiseProperty];
-      console.log(randomiseProperty, randomiseConfig);
 
-      var randomiseItem   = $("<div class='randomiseProperty hudItem' />");
-      var icon            = $(`<img src='/static/graphics/thisEquals/svgHUD/${randomiseProperty}.png' />`);
-
-      randomiseItem.append(icon);
-      this.context.collectionDiv.append(randomiseItem);
-      
-      if (!contextByVisualisation[randomiseProperty] )
-      { contextByVisualisation[randomiseProperty] =  
-            { "degreeOfRandom":     randomiseConfig.degreeOfRandom,
-            };
-      }
-      
-      var subContext = this.context.byVisualisation[lastAlteredVisualisationField][randomiseProperty];
-            
-
-      var randomiseFunctions = {};
+    var randomiseFunctions = {};
       randomiseFunctions.randomiseColors = function(degreeOfRandom)
       { normalDistribution("randomiseColors", true);
 
@@ -1770,7 +1752,7 @@ $(function(){
                   }
                 }
             );
-        This.svgHUD.modelInstance.svg_createSaveLink(This.svgHUD.modelInstance);
+        contextByVisualisation.randomiseColors.degreeOfRandom = degreeOfRandom;
       }
       randomiseFunctions.randomiseColorsByGroup = function(degreeOfRandom)
       {
@@ -1778,26 +1760,52 @@ $(function(){
       randomiseFunctions.randomisePosition      = function(degreeOfRandom)
       {
       };
-
-      randomiseFunctions[randomiseProperty](subContext.degreeOfRandom);
-
-      randomiseItem.spectrum
-      ( { "color":            `rgba(0,0,0, ${subContext.degreeOfRandom / 32.0})`,
+    var spectrumFunction = function(randomiseItem, itemContext, functionToCall)
+    { randomiseItem.spectrum
+      ( { "color":            `rgba(0,0,0, ${itemContext.degreeOfRandom / 32.0})`,
           "containerClassName": "spectrumAlphaOnly",
           "showAlpha":        true,
           "preferredFormat": "rgba",
           "show": function()
           { //$(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);
-            randomiseItem.spectrum("set", `rgba(0,0,0, ${subContext.degreeOfRandom / 32.0})`);      
+            randomiseItem.spectrum("set", `rgba(0,0,0, ${itemContext.degreeOfRandom / 32.0})`);      
           },
           "hide": function()
           { //$(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", false);                       
           },
           "move": function(spectrumOutput)
-          { randomiseFunctions[randomiseProperty](spectrumOutput.getAlpha() * 32);
+          { functionToCall(spectrumOutput.getAlpha() * 32);
           },
       });
     }
+
+
+    for (randomiseProperty in randomiseClonesDict)
+    { var randomiseConfig = randomiseClonesDict[randomiseProperty];
+      console.log(randomiseProperty, randomiseConfig);
+
+      var randomiseItem   = $("<div class='randomiseProperty hudItem' />");
+      var icon            = $(`<img src='/static/graphics/thisEquals/svgHUD/${randomiseProperty}.png' />`);
+
+      randomiseItem.append(icon);
+      this.context.collectionDiv.append(randomiseItem);
+      
+      if (!contextByVisualisation[randomiseProperty] )
+      { contextByVisualisation[randomiseProperty] =  
+            { "degreeOfRandom":     randomiseConfig.degreeOfRandom,
+            };
+      }
+      var itemContext = contextByVisualisation[randomiseProperty];
+
+
+      randomiseFunctions[randomiseProperty](itemContext.degreeOfRandom);
+
+      var functionToCall = randomiseFunctions[randomiseProperty];
+      
+      spectrumFunction(randomiseItem, itemContext, functionToCall);
+    }
+
+    This.svgHUD.modelInstance.svg_createSaveLink(This.svgHUD.modelInstance);
   };
   
 
