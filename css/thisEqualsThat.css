@@ -195,8 +195,7 @@ div.copyrightContainer> p {
 }
 
 #modelClassUL {
-  display: none;
-  width: 100%;
+  width: 0;
   height: 100%;
   margin: 0;
   padding: 0px;
@@ -204,7 +203,6 @@ div.copyrightContainer> p {
   padding-bottom: 80px;
   overflow-y: scroll;
   overflow-x: hidden;
-  transition: all .3s ease-out;
 }
 div.modelClasses {
     position: fixed;

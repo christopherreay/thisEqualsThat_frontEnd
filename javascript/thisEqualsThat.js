@@ -611,16 +611,16 @@ thisEqualsThat.oop = function()
                                             self.addClass('active');
                                               if ( self.hasClass('active') ) {
                                                 var selfHeight = self.outerHeight();
-                                                openMenu.css({'opacity': '1', 'visibility': 'visible', 'z-index': '500'});
+                                                openMenu.show();
                                                 body.addClass('open');  modelSvg.css('z-index', '505');  googleConnect.hide();
                                                 openMenu.on('click', function () {
                                                     self.removeClass('active');
-                                                    openMenu.css({'opacity': '0', 'visibility': 'hidden', 'z-index': '-1'});
+                                                    openMenu.hide();
                                                     body.removeClass('open');  modelSvg.css('z-index', '1');  googleConnect.show();
                                                 });
                                                 console.debug( selfHeight );
                                               } else {
-                                                openMenu.css({'opacity': '0', 'visibility': 'hidden', 'z-index': '-1'});
+                                                openMenu.hide();
                                                 body.removeClass('open');  modelSvg.css('z-index', '1');  googleConnect.show();
                                               }
                                           }
@@ -1898,13 +1898,13 @@ $().ready(function(){
               body.addClass('open');
               menuWrap.addClass('active');
               setTimeout(function(){
-                menuItemList.show();
+                menuItemList.css('width', '100%');
               }, 600);
 
               openMenu.on('click', function(){
+                  menuItemList.css('width', '0');
                   body.removeClass('open');
                   $('.hamburger').removeClass('is-active');
-                  menuItemList.hide(300);
                   setTimeout(function(){
                     menuWrap.removeClass('active');
                     openMenu.hide();
@@ -1914,7 +1914,7 @@ $().ready(function(){
           } else {
             body.removeClass('open');
             $('.hamburger').removeClass('is-active');
-            menuItemList.hide(300);
+            menuItemList.css('width', '0');
             setTimeout(function(){
               menuWrap.removeClass('active');
               openMenu.hide();
