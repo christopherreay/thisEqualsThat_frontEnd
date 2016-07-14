@@ -1235,10 +1235,7 @@ input.ui-colorpicker-hex-input {
       height: 50px;
       clear: right;
       overflow: hidden;
-    }
-    div.modelOutputTest {
-      margin-left: 2%;
-      margin-right: 2%;
+      margin: 20px 2px;
     }
     div.modelSvgOutput{
       position: relative;
@@ -1264,11 +1261,13 @@ input.ui-colorpicker-hex-input {
         z-index: -1;
     }
     div.model_options.active {
+        position: absolute;
+        top: 90px;
         margin: 0;
         width: 100%;
         height: initial;
         z-index: 505;
-        overflow: visible;
+        overflow: hidden;
     }
     .close_model {
         position: absolute;
