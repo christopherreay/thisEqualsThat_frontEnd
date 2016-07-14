@@ -1889,58 +1889,37 @@ var openMenu = $('.open-menu');
 
       var menuBtn = $(this),
           menuWrap = $('.modelClasses'),
-          menuItemList = $('#modelClassUL');
+          menuItemList = $('#modelClassUL'),
+          body = $('body');
 
         menuBtn.toggleClass('is-active');
-        menuItemList.css({
-            'visibility': 'hidden',
-            'opacity': '0'
-          });
+        menuItemList.hide();
 
         if ( menuBtn.hasClass('is-active') ) {
-            openMenu.animate({
-                      opacity: '1'
-                    }, 600)
-                    .css({
-                        'visibility': 'visible',
-                        'z-index': '500'
-                    });
-            $('body').addClass('open');
+            openMenu.show();
+
+            body.addClass('open');
             menuWrap.addClass('active');
             setTimeout(function(){
-                menuItemList.css({
-                    'visibility': 'visible',
-                    'opacity': '1'
-                });
+                menuItemList.show();
             }, 600);
 
             openMenu.on('click', function(){
-                $('body').removeClass('open');
+                body.removeClass('open');
                 $('.hamburger').removeClass('is-active');
-                $('#modelClassUL').css({
-                    'visibility': 'hidden',
-                    'opacity': '0'
-                });
+                $('#modelClassUL').hide();
                 setTimeout(function(){
                   menuWrap.removeClass('active');
-                  openMenu.css({
-                      'opacity': '0',
-                      'visibility': 'hidden',
-                      'z-index': '-1'
-                  });
+                  openMenu.hide();
                 }, 700);
             });
 
         } else {
-          $('body').removeClass('open');
+          body.removeClass('open');
           $('.hamburger').removeClass('is-active');
           setTimeout(function(){
             menuWrap.removeClass('active');
-            openMenu.css({
-                'opacity': '0',
-                'visibility': 'hidden',
-                'z-index': '-1'
-            });
+            openMenu.hide();
           }, 700);
 
         }

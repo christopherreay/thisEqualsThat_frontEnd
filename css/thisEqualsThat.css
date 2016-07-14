@@ -21,9 +21,7 @@ body::scrollbar {
   bottom: 0;
   overflow: hidden;
   background: rgba(0,0,0, .5);
-  opacity: 0;
-  visibility: hidden;
-  z-index: -1;
+  display: none;
 }
 #wrap {
     overflow-x: hidden;
