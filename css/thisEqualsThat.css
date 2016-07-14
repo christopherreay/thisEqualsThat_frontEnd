@@ -194,7 +194,7 @@ div.copyrightContainer> p {
 }
 
 #modelClassUL {
-  display: block;
+  display: none;
   width: 100%;
   height: 100%;
   margin: 0;
@@ -218,9 +218,6 @@ div.modelClasses {
 div.modelClasses.active{
     height: 100vh;
     width: 420px;
-}
-#modelClassUL {
-    visibility: hidden;
 }
 
 .modelClassLI {

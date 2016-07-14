@@ -1883,25 +1883,24 @@ $().ready(function(){
 
 
 
-var openMenu = $('.open-menu');
+var openMenu = $('.open-menu'),
+    menuWrap = $('.modelClasses'),
+    menuItemList = $('#modelClassUL'),
+    body = $('body');
 
     $('.hamburger').on('click', function(){
 
-      var menuBtn = $(this),
-          menuWrap = $('.modelClasses'),
-          menuItemList = $('#modelClassUL'),
-          body = $('body');
+          var menuBtn = $(this);
 
-        menuBtn.toggleClass('is-active');
-        menuItemList.hide();
+          menuBtn.toggleClass('is-active');
 
         if ( menuBtn.hasClass('is-active') ) {
             openMenu.show();
-
             body.addClass('open');
             menuWrap.addClass('active');
             setTimeout(function(){
-                menuItemList.show();
+                $('#modelClassUL').show();
+                console.debug('menu list gebug');
             }, 600);
 
             openMenu.on('click', function(){
@@ -1911,22 +1910,25 @@ var openMenu = $('.open-menu');
                 setTimeout(function(){
                   menuWrap.removeClass('active');
                   openMenu.hide();
-                }, 700);
+                }, 600);
             });
 
         } else {
           body.removeClass('open');
           $('.hamburger').removeClass('is-active');
+          $('#modelClassUL').hide();
           setTimeout(function(){
             menuWrap.removeClass('active');
             openMenu.hide();
-          }, 700);
+          }, 600);
 
         }
 
     });
 
+function openMenu (e) {
 
+}
 
 
 
