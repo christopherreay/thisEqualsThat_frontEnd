@@ -21,6 +21,7 @@ body::scrollbar {
   bottom: 0;
   overflow: hidden;
   background: rgba(0,0,0, .5);
+  z-index: 500;
   display: none;
 }
 #wrap {

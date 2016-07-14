@@ -1882,15 +1882,14 @@ $().ready(function(){
 
 
 
-var openMenu = $('.open-menu'),
-    menuWrap = $('.modelClasses'),
-    menuItemList = $('#modelClassUL'),
-    body = $('body');
+    $('.hamburger').on('click', function(){
 
+          var menuBtn = $(this),
+              openMenu = $('.open-menu'),
+              menuWrap = $('.modelClasses'),
+              menuItemList = $('#modelClassUL'),
+              body = $('body');
 
-    $('.hamburger').on('click', function(e){
-
-          var menuBtn = $(this);
           menuBtn.toggleClass('is-active');
 
           if ( menuBtn.hasClass('is-active') ) {
@@ -1899,13 +1898,13 @@ var openMenu = $('.open-menu'),
               body.addClass('open');
               menuWrap.addClass('active');
               setTimeout(function(){
-                $('#modelClassUL').show();
+                menuItemList.show();
               }, 600);
 
               openMenu.on('click', function(){
                   body.removeClass('open');
                   $('.hamburger').removeClass('is-active');
-                  $('#modelClassUL').hide();
+                  menuItemList.hide(300);
                   setTimeout(function(){
                     menuWrap.removeClass('active');
                     openMenu.hide();
@@ -1915,7 +1914,7 @@ var openMenu = $('.open-menu'),
           } else {
             body.removeClass('open');
             $('.hamburger').removeClass('is-active');
-            $('#modelClassUL').hide();
+            menuItemList.hide(300);
             setTimeout(function(){
               menuWrap.removeClass('active');
               openMenu.hide();
