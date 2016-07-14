@@ -1864,7 +1864,6 @@ $().ready(function(){
              .append('<div class="open-menu"></div>');
     $('.modelClasses').append('<button class="hamburger hamburger--spin-r" type="button" aria-label="Menu" aria-controls="navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>');
 
-
     $.fn.coloPick = function() {
         console.info('CP created');
         $('input.unit_rgb').colorpicker({
@@ -1888,52 +1887,46 @@ var openMenu = $('.open-menu'),
     menuItemList = $('#modelClassUL'),
     body = $('body');
 
-    $('.hamburger').on('click', function(){
+
+    $('.hamburger').on('click', function(e){
 
           var menuBtn = $(this);
-
           menuBtn.toggleClass('is-active');
 
-        if ( menuBtn.hasClass('is-active') ) {
-            openMenu.show();
-            body.addClass('open');
-            menuWrap.addClass('active');
-            setTimeout(function(){
+          if ( menuBtn.hasClass('is-active') ) {
+
+              openMenu.show();
+              body.addClass('open');
+              menuWrap.addClass('active');
+              setTimeout(function(){
                 $('#modelClassUL').show();
-                console.debug('menu list gebug');
+              }, 600);
+
+              openMenu.on('click', function(){
+                  body.removeClass('open');
+                  $('.hamburger').removeClass('is-active');
+                  $('#modelClassUL').hide();
+                  setTimeout(function(){
+                    menuWrap.removeClass('active');
+                    openMenu.hide();
+                  }, 600);
+              });
+
+          } else {
+            body.removeClass('open');
+            $('.hamburger').removeClass('is-active');
+            $('#modelClassUL').hide();
+            setTimeout(function(){
+              menuWrap.removeClass('active');
+              openMenu.hide();
             }, 600);
 
-            openMenu.on('click', function(){
-                body.removeClass('open');
-                $('.hamburger').removeClass('is-active');
-                $('#modelClassUL').hide();
-                setTimeout(function(){
-                  menuWrap.removeClass('active');
-                  openMenu.hide();
-                }, 600);
-            });
-
-        } else {
-          body.removeClass('open');
-          $('.hamburger').removeClass('is-active');
-          $('#modelClassUL').hide();
-          setTimeout(function(){
-            menuWrap.removeClass('active');
-            openMenu.hide();
-          }, 600);
-
-        }
+          }
 
     });
 
-function openMenu (e) {
-
-}
-
-
 
 });
-
 
 
 
