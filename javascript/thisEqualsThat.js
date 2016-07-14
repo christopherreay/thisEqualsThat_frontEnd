@@ -1748,7 +1748,11 @@ $(function(){
 
     var randomiseFunctions = {};
     randomiseFunctions.randomisePosition      = function(degreeOfRandom)
-    { normalDistribution("randomisePosition", true);
+    { if (degreeOfRandom == 0)
+      { return;
+      }
+
+      normalDistribution("randomisePosition", true);
       $(This.svgHUD.modelInstance.display.svgVisualisationG)
           .find("g") //cghange to children or correct selector for children
           .each(  
@@ -1784,7 +1788,11 @@ $(function(){
       contextByVisualisation.randomisePosition.degreeOfRandom = degreeOfRandom;
     };
     randomiseFunctions.randomiseColors = function(degreeOfRandom, init=false)
-    { normalDistribution("randomiseColors", true);
+    { if (degreeOfRandom == 0)
+      { return;
+      }
+
+      normalDistribution("randomiseColors", true);
 
       $(This.svgHUD.modelInstance.display.svgVisualisationG)
           .find("path")
@@ -1828,7 +1836,11 @@ $(function(){
       }
     }
     randomiseFunctions.randomiseColorsByGroup = function(degreeOfRandom, init=false)
-    { normalDistribution("randomiseColorsByGroup", true);
+    { if (degreeOfRandom == 0)
+      { return;
+      }
+
+      normalDistribution("randomiseColorsByGroup", true);
       { $(This.svgHUD.modelInstance.display.svgVisualisationG)
             .find("g")
             .each(  
