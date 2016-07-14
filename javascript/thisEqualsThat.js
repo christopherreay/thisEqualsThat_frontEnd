@@ -1243,6 +1243,8 @@ $(function(){
     var svgClonableG = $(this.display.svgClonableG);
     svg3d.sortAlgo = svg3d.ONE_TO_ALL;
 
+    This.svgHUD.renderHUD("preClone");
+
     svgClonableG.animate(
         { "svg3d":
              {"clone3d": this.svg3dDisplayJSON.svg3dConfiguration.clone3d}
@@ -1252,7 +1254,7 @@ $(function(){
           "easing"    : "easeInCubic",
           //"progress"  : This.progressCounter,
           "complete"  : function()
-              {
+              { This.svgHUD.renderHUD("postClone");
 
                 //Add the Scale Axis to the right hand side of the clone group
                 //  hopefully this should deal with position and that by itself
@@ -1372,7 +1374,8 @@ $(function(){
                 var referenceSVG3dConfiguration = $.extend(true, {}, This.svg3dDisplayJSON.svg3dConfiguration.translate3d);
                 $.extend(referenceSVG3dConfiguration, {"x":referenceSVG3dConfiguration.x * multiplier, "y": referenceSVG3dConfiguration.y * multiplier});
 
-                
+                This.svgHUD.renderHUD("preColor");
+
                 if ("recolourClones" in This.svg3dDisplayJSON.svg3dConfiguration)
                 { //var clones                  = $(This.display.svgVisualisationG).find("> g:nth-child(n + 2)");
                   var clones                  = $(This.display.svgVisualisationG).data("svg3dclones");
@@ -1438,6 +1441,8 @@ $(function(){
                                   else
                                     var newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
                                   this.setAttribute("style", newRGB);
+
+                                  this.setAttribute("svgHUD_protectedColor", true);
                                 }
                             }
                             )
@@ -1480,7 +1485,7 @@ $(function(){
                   //   This.disable_createSaveLink = false;
                   //   This.svg_createSaveLink(This);
 
-                  This.svgHUD.display();
+                  This.svgHUD.renderHUD("postColor");
                   }
                 }
                 );
@@ -1590,9 +1595,9 @@ $(function(){
 
   }
   this.ModelInstance.prototype.displayCurrentOutput_2 = function(This)
-  { This.appendSVGToDisplay();
-    
-    This.svgHUD.renderHUD("beforeSVG");
+  { This.svgHUD.renderHUD("init");
+
+    This.appendSVGToDisplay();
     This.animateSVG();
   }
 
@@ -1634,17 +1639,30 @@ $(function(){
     modelInstance.display.svgHUD = this.divForHUD;
     modelInstance.svgHUD = this;
   }
-  this.SVGHUD.prototype.renderHUD = function()
+  this.SVGHUD.prototype.memoiseAttribute = function(hudPlugin, element, key, value=null)
+  { if (value == null)
+    { return element.getAttribute(key);
+    }
+  }
+
+  this.SVGHUD.prototype.renderHUD = function(tagHook)
   { var svg3dDisplayJSON  = this.modelInstance.svg3dDisplayJSON;
     
     this.divForHUD.html("");
 
-    for (hudComponent in svg3dDisplayJSON.svgHUD)
-    { if (! this.contextData[hudComponent])
-      { this.contextData[hudComponent] = {};
-        this.plugins[hudComponent] = new this[hudComponent](this, this.contextData[hudComponent]);
+    for (hudDescriptor in svg3dDisplayJSON.svgHUD)
+    { var hudAddress    = hudDescriptor.split(".");
+      var hudComponent  = hudAddress[0];
+      var hudTagHooks   = $(hudAddress).slice(1);
+      if (tagHook == "init")
+      { if (! this.contextData[hudComponent])
+        { this.contextData[hudComponent] = {};
+          this.plugins[hudComponent] = new this[hudComponent](this, this.contextData[hudComponent], tagHook);
+        }
       }
-      this.plugins[hudComponent].display(svg3dDisplayJSON.svgHUD[hudComponent]);
+      if ($.inArray(tagHook, hudTagHooks) )
+      { this.plugins[hudComponent].display(svg3dDisplayJSON.svgHUD[hudDescriptor], tagHook)
+      }
     }
   }
 
@@ -1729,6 +1747,42 @@ $(function(){
 
 
     var randomiseFunctions = {};
+    randomiseFunctions.randomisePosition      = function(degreeOfRandom)
+    { normalDistribution("randomisePosition", true);
+      $(This.svgHUD.modelInstance.display.svgVisualisationG)
+          .find("g") //cghange to children or correct selector for children
+          .each(  
+              function()
+              { var gBBox = this.getBBox();
+                var maxXChange = gBBox.width  / 80;
+                var maxYChange = gBBox.height / 80;
+
+                var changeX = ((normalDistribution("randomisePosition")  * degreeOfRandom * maxXChange) );
+                var changeY = ((normalDistribution("randomisePosition")  * degreeOfRandom * maxYChange) );
+
+                var transform;
+
+                if (! this.getAttribute("svgHUD_initial_transform") )
+                { transform = this.getAttribute("transform");
+                  if (transform === null)
+                  { transform = "translate(0 0)";
+                  }
+                  this.setAttribute("svgHUD_initial_transform", transform);
+                }
+                else
+                { transform = this.getAttribute("svgHUD_initial_transform");
+                }
+
+                var translate = transform.match(/^translate\(([-]?\d+[.]?\d*)\s*([-]?\d+[.]?\d*)\)$/);
+                var newX = Number(translate[1]) + changeX;
+                var newY = Number(translate[2]) + changeY;
+                var newTranslate = "translate("+newX+" "+newY+")";
+                this.setAttribute("transform", newTranslate);
+                //console.log(this, transform);
+              }
+          )
+      contextByVisualisation.randomisePosition.degreeOfRandom = degreeOfRandom;
+    };
     randomiseFunctions.randomiseColors = function(degreeOfRandom, init=false)
     { normalDistribution("randomiseColors", true);
 
@@ -1736,7 +1790,12 @@ $(function(){
           .find("path")
           .each(  
               function()
-              { if (! this.getAttribute("initial_fill_path") )
+              { if (this.getAttribute("svgHUD_protectedColor") )
+                { return;
+                }
+
+
+                if (! this.getAttribute("initial_fill_path") )
                 { this.setAttribute("initial_fill_path", $(this).css("fill") );
                 }
                 var colorRGB = this.getAttribute("initial_fill_path");
@@ -1783,64 +1842,39 @@ $(function(){
                     //$(this).css("fill", newRGB);
                     //newStyle = this.getAttribute("style");
                     //if (newStyle)+newRGB;
-                    $(this).find("path").each(function()
-                    {   var colorRGB = this.getAttribute("initial_fill_group");
-                        if (colorRGB == null)
-                          colorRGB = "rgb(50, 50, 50)";
-                        if (colorRGB.indexOf("rgb") === 0)
-                        { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
-                          var r = Number(rgb[1]);
-                          var newR = Math.max(r + changeR, 0);
-                          var g = Number(rgb[2]);
-                          var newG = Math.max(g + changeG, 0);
-                          var b = Number(rgb[3]);
-                          var newB = Math.max(b + changeB, 0);
-                          if (4 in rgb && rgb[4] != "")
-                            var newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
-                          else
-                            var newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
-                          this.setAttribute("style", newRGB);
-                        }
-                    }
-                    )
+                    $(this)
+                        .find("path")
+                        .each(
+                            function()
+                            { if (this.getAttribute("svgHUD_protectedColor") )
+                              { return;
+                              }
+
+                              var colorRGB = this.getAttribute("initial_fill_group");
+                              if (colorRGB == null)
+                                colorRGB = "rgb(50, 50, 50)";
+                              if (colorRGB.indexOf("rgb") === 0)
+                              { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
+                                var r = Number(rgb[1]);
+                                var newR = Math.max(r + changeR, 0);
+                                var g = Number(rgb[2]);
+                                var newG = Math.max(g + changeG, 0);
+                                var b = Number(rgb[3]);
+                                var newB = Math.max(b + changeB, 0);
+                                if (4 in rgb && rgb[4] != "")
+                                  var newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
+                                else
+                                  var newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
+                                this.setAttribute("style", newRGB);
+                              }
+                            }
+                        );
                 }
             )
       };
       contextByVisualisation.randomiseColorsByGroup.degreeOfRandom = degreeOfRandom;
     };
-    randomiseFunctions.randomisePosition      = function(degreeOfRandom)
-    { normalDistribution("randomisePosition", true);
-      $(This.svgHUD.modelInstance.display.svgVisualisationG)
-          .find("g") //cghange to children or correct selector for children
-          .each(  
-              function()
-              { var gBBox = this.getBBox();
-                var maxXChange = gBBox.width  / 80;
-                var maxYChange = gBBox.height / 80;
-
-                var changeX = ((normalDistribution("randomisePosition")  * degreeOfRandom * maxXChange) );
-                var changeY = ((normalDistribution("randomisePosition")  * degreeOfRandom * maxYChange) );
-
-                var transform = this.getAttribute("transform");
-                if (transform === null)
-                { transform = "translate(0 0)";
-                }
-
-                if (! this.getAttribute("initial_transform") )
-                { this.setAttribute("initial_transform", transform);
-                }
-
-                var translate = transform.match(/^translate\(([-]?\d+[.]?\d*)\s*([-]?\d+[.]?\d*)\)$/);
-                var newX = Number(translate[1]) + changeX;
-                var newY = Number(translate[2]) + changeY;
-                var newTranslate = "translate("+newX+" "+newY+")";
-                this.setAttribute("transform", newTranslate);
-                //console.log(this, transform);
-              }
-          )
-      contextByVisualisation.randomisePosition.degreeOfRandom = degreeOfRandom;
-    };
-
+    
     var spectrumFunction = function(randomiseItem, itemContext, functionToCall)
     { randomiseItem.spectrum
       ( { "color":            `rgba(0,0,0, ${itemContext.degreeOfRandom / 32.0})`,
