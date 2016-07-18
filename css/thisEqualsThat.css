@@ -1288,7 +1288,7 @@ input.ui-colorpicker-hex-input {
     }
     div.modelOutputTest.active::before {
       left: 50%;
-      margin-left: -16.5%;
+      margin-left: -16%;
     }
     div.modelCustomSvg.active::before {
       right: 0;

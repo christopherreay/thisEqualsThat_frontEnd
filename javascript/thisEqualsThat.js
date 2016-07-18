@@ -600,7 +600,7 @@ thisEqualsThat.oop = function()
       var models = [ display.modelSliders, display.modelOutputTest, display.modelCustomSvg ];
       $.each( models, function ( i, elem ) {
             elem.on('click', function () {
-
+              console.debug(i);
                                     var self = $(this),
                                         wWidth = $(window).outerWidth(),
                                         body = $('body'),
@@ -609,20 +609,13 @@ thisEqualsThat.oop = function()
                                         openMenu = $('.open-menu');
 
                                           if ( wWidth <= 768 ) {
-                                            self.addClass('active');
+                                            self.toggleClass('active');
                                               if ( self.hasClass('active') ) {
                                                 var selfHeight = self.outerHeight();
-                                                openMenu.show();
-                                                body.addClass('open');  modelSvg.css({'z-index': '505', 'top': selfHeight + 100});  googleConnect.hide();
-                                                openMenu.on('click', function () {
-                                                    self.removeClass('active');
-                                                    openMenu.hide();
-                                                    body.removeClass('open');  modelSvg.css({'z-index': '1', 'top': '90px'});  googleConnect.show();
-                                                });
+                                                modelSvg.css({'top': selfHeight + 100});  googleConnect.hide();
                                                 console.debug( selfHeight );
                                               } else {
-                                                openMenu.hide();
-                                                body.removeClass('open');  modelSvg.css({'z-index': '1', 'top': '90px'});  googleConnect.show();
+                                                modelSvg.css({'z-index': '1', 'top': '90px'});  googleConnect.show();
                                               }
                                           }
                                       });
