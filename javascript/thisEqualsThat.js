@@ -613,7 +613,7 @@ thisEqualsThat.oop = function()
                                               if ( self.hasClass('active') ) {
                                                 var selfHeight = self.outerHeight();
                                                 openMenu.show();
-                                                body.addClass('open');  modelSvg.css({'z-index': '505', 'top': selfHeight + 60});  googleConnect.hide();
+                                                body.addClass('open');  modelSvg.css({'z-index': '505', 'top': selfHeight + 40});  googleConnect.hide();
                                                 openMenu.on('click', function () {
                                                     self.removeClass('active');
                                                     openMenu.hide();

@@ -1232,10 +1232,20 @@ input.ui-colorpicker-hex-input {
     }
     div.model_options {
       width: 32%;
-      height: 50px;
+      height: 60px;
       clear: right;
       overflow: hidden;
-      margin: 20px 2px;
+      margin: 20px 0;
+    }
+    div.modelSliders {
+      float: left;
+    }
+    div.modelOutputTest {
+      margin-left: 2%;
+      margin-right: 2%;
+    }
+    div.modelCustomSvg {
+      float: right;
     }
     div.modelSvgOutput{
       position: relative;
@@ -1249,7 +1259,10 @@ input.ui-colorpicker-hex-input {
     }
     div.model_options::before {
         content: "";
-        background: #fff;
+        background-color: #fff;
+        background-size: 33px;
+        background-repeat: no-repeat;
+        background-position: center;
         position: absolute;
         top: -5px;
         left: -5px;
@@ -1257,8 +1270,32 @@ input.ui-colorpicker-hex-input {
         right: -5px;
         z-index: 9;
     }
+    div.modelSliders::before{
+        background-image: url(/static/graphics/thisEquals/icons/box_sliders.svg);
+    }
+    div.modelOutputTest::before{
+        background-image: url(/static/graphics/thisEquals/icons/box_visual.svg);
+    }
+    div.modelCustomSvg::before{
+        background-image: url(/static/graphics/thisEquals/icons/box_custom.svg);
+    }
     div.model_options.active::before {
-        z-index: -1;
+        z-index: 759;
+        top: -70px;
+        width: 33%;
+        height: 60px;
+        border-radius: 3px;
+    }
+    div.modelSliders.active::before {
+      left: 0;
+    }
+    div.modelOutputTest.active::before {
+      left: 50%;
+      margin-left: -16.5%;
+    }
+    div.modelCustomSvg.active::before {
+      right: 0;
+      left: initial;
     }
     div.model_options.active {
         position: absolute;
@@ -1267,7 +1304,7 @@ input.ui-colorpicker-hex-input {
         width: 100%;
         height: initial;
         z-index: 505;
-        overflow: hidden;
+        overflow: visible;
     }
     .close_model {
         position: absolute;
