@@ -1231,28 +1231,25 @@ input.ui-colorpicker-hex-input {
       line-height: 32px;
     }
     div.model_options {
+      position: absolute;
       width: 32%;
       height: 60px;
-      clear: right;
       overflow: hidden;
-      margin: 20px 0;
     }
     div.modelSliders {
-      float: left;
+      left: 0;
     }
     div.modelOutputTest {
-      margin-left: 2%;
-      margin-right: 2%;
+      left: 50%;
+      margin-left: -16%;
     }
     div.modelCustomSvg {
-      float: right;
+      right: 0;
     }
     div.modelSvgOutput{
       position: relative;
       width: 100%;
-      margin-top: 0px;
-      float: left;
-      clear: both;
+      top: 90px;
     }
     div.svgOutput {
       width: 330px;
@@ -1282,7 +1279,7 @@ input.ui-colorpicker-hex-input {
     div.model_options.active::before {
         z-index: 759;
         top: -70px;
-        width: 33%;
+        width: 32%;
         height: 60px;
         border-radius: 3px;
     }
@@ -1300,6 +1297,8 @@ input.ui-colorpicker-hex-input {
     div.model_options.active {
         position: absolute;
         top: 90px;
+        left: 0;
+        right: 0;
         margin: 0;
         width: 100%;
         height: initial;

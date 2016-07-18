@@ -613,16 +613,16 @@ thisEqualsThat.oop = function()
                                               if ( self.hasClass('active') ) {
                                                 var selfHeight = self.outerHeight();
                                                 openMenu.show();
-                                                body.addClass('open');  modelSvg.css({'z-index': '505', 'top': selfHeight + 40});  googleConnect.hide();
+                                                body.addClass('open');  modelSvg.css({'z-index': '505', 'top': selfHeight + 100});  googleConnect.hide();
                                                 openMenu.on('click', function () {
                                                     self.removeClass('active');
                                                     openMenu.hide();
-                                                    body.removeClass('open');  modelSvg.css({'z-index': '1', 'top': '20px'});  googleConnect.show();
+                                                    body.removeClass('open');  modelSvg.css({'z-index': '1', 'top': '90px'});  googleConnect.show();
                                                 });
                                                 console.debug( selfHeight );
                                               } else {
                                                 openMenu.hide();
-                                                body.removeClass('open');  modelSvg.css({'z-index': '1', 'top': '20px'});  googleConnect.show();
+                                                body.removeClass('open');  modelSvg.css({'z-index': '1', 'top': '90px'});  googleConnect.show();
                                               }
                                           }
                                       });
