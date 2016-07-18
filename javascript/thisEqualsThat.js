@@ -385,6 +385,10 @@ $(function(){
 
     this.disable_createSaveLink = false;
     this.disable_inputFieldAltered = false;
+
+`   this.inputFieldHUD  = new thisEqualsThat.InputFieldHUD(this);
+    this.svgHUD         = new ThisEqualsThat.SVGHUD(this);
+      
   }
   this.ModelInstance.prototype.getFieldData = function(fieldAddress)
   { console.log("ModelInstance.getFieldData", fieldAddress);
@@ -693,13 +697,6 @@ $(function(){
       display.visualisationOutputContainer.append(display.visualisationFieldsSelect);
 
       display.svgOutput             = $("<div class='svgOutput'  />");
-
-      if (! this.hasOwnProperty("svgHUD"))
-      { this.svgHUD = new ThisEqualsThat.SVGHUD(this, display.svgOutput);
-      }
-      else
-      { this.svgHUD.attach(display.svgOutput);        
-      }
 
       display.svgTextInput          = $("<input type='text' class='svgTextDescription' placeholder='Enter Text Description'/>");
       display.svgSaveLink           = $("<div class='svgSaveLink btn'   />");
@@ -1624,29 +1621,66 @@ $(function(){
     $(tG).data("thisEqualsThat", {"modelInstance": this});
   }
 
-  this.SVGHUD = function(modelInstance, wrapperForHUD)
-  { this.plugins      = {};
-    this.contextData  = {};
+  this.InputFieldHUD = function(modelInstance)
+  { this.plugins          = {};
+    this.contextData      = {};
     
-    this.modelInstance = modelInstance;
-    this.attach(wrapperForHUD);
+    this.modelInstance            = modelInstance;
+    modelInstance.inputFieldHUD   = this;
   }
-  this.SVGHUD.prototype.attach = function(wrapperForHUD)
+  this.InputFieldHUD.prototype.display = function()
   { var modelInstance = this.modelInstance;
 
-    this.divForHUD = modelInstance.display.svgHUD = $("<div class='svgHUD' />");
-    wrapperForHUD.append(this.divForHUD);
-    modelInstance.display.svgHUD = this.divForHUD;
-    modelInstance.svgHUD = this;
+    this.display                  = modelInstance.display.modelSliders
   }
-  this.SVGHUD.prototype.memoiseAttribute = function(hudPlugin, element, key, value=null)
-  { if (value == null)
-    { return element.getAttribute(key);
+  this.InputFieldHUD.prototype.renderHUD = function(tagHook)
+  { if (! this.hasOwnProperty("display")
+    { this.display();
+    }
+
+    var svg3dDisplayJSON  = this.modelInstance.svg3dDisplayJSON;
+    
+    this.divForHUD.html("");
+
+    for (hudDescriptor in svg3dDisplayJSON.svgHUD)
+    { var hudAddress    = hudDescriptor.split(".");
+      var hudComponent  = hudAddress[0];
+      var hudTagHooks   = $(hudAddress).slice(1);
+      if (tagHook == "init")
+      { if (! this.contextData[hudComponent])
+        { this.contextData[hudComponent] = {};
+          this.plugins[hudComponent] = new this[hudComponent](this, this.contextData[hudComponent], tagHook);
+        }
+      }
+      if ($.inArray(tagHook, hudTagHooks) )
+      { this.plugins[hudComponent].display(svg3dDisplayJSON.inputFieldHUD[hudDescriptor], tagHook)
+      }
     }
   }
 
+
+
+  this.SVGHUD = function(modelInstance)
+  { this.plugins          = {};
+    this.contextData      = {};
+    
+    this.modelInstance    = modelInstance;
+    modelInstance.svgHUD  = this;
+  }
+  this.SVGHUD.prototype.display = function()
+  { var modelInstance = this.modelInstance;
+
+    this.divForHUD                = modelInstance.display.svgHUD = $("<div class='svgHUD' />");
+    this.display                  = this.divForHUD;
+    modelInstance.display.svgOutput.append(this.divForHUD);
+    modelInstance.display.svgHUD  = this.divForHUD;
+  }
   this.SVGHUD.prototype.renderHUD = function(tagHook)
-  { var svg3dDisplayJSON  = this.modelInstance.svg3dDisplayJSON;
+  { if (! this.hasOwnProperty("display")
+    { this.display();
+    }
+
+    var svg3dDisplayJSON  = this.modelInstance.svg3dDisplayJSON;
     
     this.divForHUD.html("");
 
