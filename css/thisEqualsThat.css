@@ -1250,6 +1250,7 @@ input.ui-colorpicker-hex-input {
       position: relative;
       width: 100%;
       top: 90px;
+      transition: all .3s ease-in;
     }
     div.svgOutput {
       width: 330px;
