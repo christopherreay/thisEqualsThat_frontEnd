@@ -612,6 +612,20 @@ thisEqualsThat.oop = function()
 
                                             self.toggleClass('active');
 
+                                            switch (i) {
+                                              case 0:
+                                                    display.modelOutputTest.removeClass('active');
+                                                    display.modelCustomSvg.removeClass('active');
+                                                break;
+                                              case 1:
+                                                    display.modelSliders.removeClass('active');
+                                                    display.modelCustomSvg.removeClass('active');
+                                                break;
+                                              case 2:
+                                                    display.modelOutputTest.removeClass('active');
+                                                    display.modelSliders.removeClass('active');
+                                                break;
+                                            }
                                                           console.debug(i);
                                               if ( self.hasClass('active') ) {
                                                 var selfHeight = self.outerHeight();
