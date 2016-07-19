@@ -607,37 +607,32 @@ thisEqualsThat.oop = function()
               console.debug( $('.model_options') );
                                     var self = $(this),
                                         wWidth = $(window).outerWidth(),
-                                        body = $('body'),
-                                        modelSvg = $('.modelSvgOutput'),
-                                        googleConnect = $('.googleConnect'),
-                                        openMenu = $('.open-menu');
+                                        googleConnect = $('.googleConnect');
 
                                           if ( wWidth <= 768 ) {
 
-                                            self.toggleClass('active');
-
                                             switch (i) {
                                               case 0:
+                                                    display.modelSliders.toggleClass('active');
                                                     display.modelOutputCtrl.removeClass('active');
                                                     display.modelCustomSvg.removeClass('active');
                                                 break;
                                               case 1:
+                                                    display.modelOutputCtrl.toggleClass('active');
                                                     display.modelSliders.removeClass('active');
                                                     display.modelCustomSvg.removeClass('active');
                                                 break;
                                               case 2:
+                                                    display.modelCustomSvg.toggleClass('active');
                                                     display.modelOutputCtrl.removeClass('active');
                                                     display.modelSliders.removeClass('active');
                                                 break;
                                             }
                                                           console.debug(i);
                                               if ( self.hasClass('active') ) {
-                                                var selfHeight = self.outerHeight();
-                                                modelSvg.css({'top': selfHeight + 100});  googleConnect.hide();
-                                                console.debug( selfHeight );
-
+                                                googleConnect.hide();
                                               } else {
-                                                modelSvg.css({'z-index': '1', 'top': '90px'});  googleConnect.show();
+                                                googleConnect.show();
                                               }
                                           }
                                       });

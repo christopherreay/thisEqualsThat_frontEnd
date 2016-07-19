@@ -1235,6 +1235,7 @@ input.ui-colorpicker-hex-input {
       height: 60px;
       width: 32%;
       float: left;
+      margin-bottom: 10px;
       background-color: #fff;
       background-size: 33px;
       background-repeat: no-repeat;
@@ -1260,10 +1261,12 @@ input.ui-colorpicker-hex-input {
         z-index: 1;
         height: 0;
         padding: 0;
+        margin: 0;
         overflow: hidden;
     }
     div.modelSvgOutput{
       position: relative;
+      top: 10px;
       width: 100%;
       float: left;
       transition: top .3s ease-in;
