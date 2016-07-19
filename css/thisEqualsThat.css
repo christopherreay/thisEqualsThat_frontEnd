@@ -328,7 +328,7 @@ div.modelSliders {
     width: 30%;
     float: left;
 }
-div.modelOutputTest {
+div.modelOutputCtrl {
     position: relative;
     float: left;
     clear: both;
@@ -343,7 +343,7 @@ div.model_options {
     margin-top: 20px;
 }
 
-div.modelSliders, div.modelOutputTest, div.modelSvgOutput, div.modelCustomSvg {
+div.modelSliders, div.modelOutputCtrl, div.modelSvgOutput, div.modelCustomSvg {
     position: relative;
     padding: 20px;
     background: #fff;
@@ -1239,7 +1239,7 @@ input.ui-colorpicker-hex-input {
     div.modelSliders {
       left: 0;
     }
-    div.modelOutputTest {
+    div.modelOutputCtrl {
       left: 50%;
       margin-left: -16%;
     }
@@ -1271,7 +1271,7 @@ input.ui-colorpicker-hex-input {
     div.modelSliders::before{
         background-image: url(/static/graphics/thisEquals/icons/box_sliders.svg);
     }
-    div.modelOutputTest::before{
+    div.modelOutputCtrl::before{
         background-image: url(/static/graphics/thisEquals/icons/box_visual.svg);
     }
     div.modelCustomSvg::before{
@@ -1289,7 +1289,7 @@ input.ui-colorpicker-hex-input {
     div.modelSliders.active::before {
       left: 0;
     }
-    div.modelOutputTest.active::before {
+    div.modelOutputCtrl.active::before {
       left: 50%;
       margin-left: -16%;
     }
