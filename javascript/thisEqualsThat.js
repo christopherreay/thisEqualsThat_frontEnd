@@ -600,7 +600,7 @@ thisEqualsThat.oop = function()
       var models = [ display.modelSliders, display.modelOutputTest, display.modelCustomSvg ];
       $.each( models, function ( i, elem ) {
             elem.on('click', function () {
-
+              console.debug(".model_options");
                                     var self = $(this),
                                         wWidth = $(window).outerWidth(),
                                         body = $('body'),
@@ -1921,16 +1921,15 @@ $().ready(function(){
 
           if ( wWidth <= 768 ) {
 
-            modelClassLI.on('click', function () {
-                body.removeClass('open');
-                $('.hamburger').removeClass('is-active');
-                menuItemList.css('width', '0');
-                setTimeout(function(){
-                  menuWrap.removeClass('active');
-                  openMenu.hide();
-                }, 600);
-
-            });
+              modelClassLI.on('click', function () {
+                  body.removeClass('open');
+                  $('.hamburger').removeClass('is-active');
+                  menuItemList.css('width', '0');
+                  setTimeout(function(){
+                    menuWrap.removeClass('active');
+                    openMenu.hide();
+                  }, 600);
+              });
 
           }
 
