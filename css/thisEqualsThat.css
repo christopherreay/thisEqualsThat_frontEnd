@@ -1243,6 +1243,11 @@ input.ui-colorpicker-hex-input {
       border-radius: 3px;
       -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
       box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+      -webkit-transition: all .6s cubic-bezier(0.95, -0.09, .35, .95);
+      transition: all .6s cubic-bezier(0.95, -0.09, .35, .95);
+    }
+    div.model_box_ctrl:hover {
+      background-size: 40px;
     }
     div.boxSliders{
         background-image: url(/static/graphics/thisEquals/icons/box_sliders.svg);
@@ -1259,10 +1264,12 @@ input.ui-colorpicker-hex-input {
         position: relative;
         width: 100%;
         z-index: 1;
-        height: 0;
+        max-height: 0;
         padding: 0;
         margin: 0;
         overflow: hidden;
+        -webkit-transition: all .6s cubic-bezier(0.95, -0.09, .35, .95);
+        transition: all .6s cubic-bezier(0.95, -0.09, .35, .95);
     }
     div.modelSvgOutput{
       position: relative;
@@ -1277,6 +1284,7 @@ input.ui-colorpicker-hex-input {
     div.model_options.active {
         height: inherit;
         padding: 20px;
+        max-height: 600px;
     }
     .close_model {
         position: absolute;
