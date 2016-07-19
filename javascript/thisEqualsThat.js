@@ -1,6 +1,10 @@
-$(window).load( function () {
-    alert('msg');
+$().ready(function(){
+  // $('body').append('<div class="greeting" />');
+  $(window).load( function () {
+      alert('page load');
+  });
 });
+
 
 window.thisEqualsThat = {};
 thisEqualsThat.graphicLoadVersion = "0.1.1.3.20151102.newReferenceSVGs.womanPainting3.0"
@@ -1982,36 +1986,6 @@ $().ready(function(){
 
 });
 
-
-(function($){
-
-  $.event.special.doubletap = {
-    bindType: 'touchend',
-    delegateType: 'touchend',
-
-    handle: function(event) {
-      var handleObj   = event.handleObj,
-          targetData  = jQuery.data(event.target),
-          now         = new Date().getTime(),
-          delta       = targetData.lastTouch ? now - targetData.lastTouch : 0,
-          delay       = delay == null ? 300 : delay;
-
-      if (delta < delay && delta > 30) {
-        targetData.lastTouch = null;
-        event.type = handleObj.origType;
-        ['clientX', 'clientY', 'pageX', 'pageY'].forEach(function(property) {
-          event[property] = event.originalEvent.changedTouches[0][property];
-        })
-
-        // let jQuery handle the triggering of "doubletap" event handlers
-        handleObj.handler.apply(this, arguments);
-      } else {
-        targetData.lastTouch = now;
-      }
-    }
-  };
-
-})(jQuery);
 
 
 $('head').append('<script src="https://use.fontawesome.com/cee7f18682.js"></script>');

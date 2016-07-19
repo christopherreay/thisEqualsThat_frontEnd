@@ -13,6 +13,14 @@ body::-webkit-scrollbar {
 body::scrollbar {
   display: none;
 }
+.greeting {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #888;
+}
 .open-menu{
   position: fixed;
   top: 0;
@@ -77,8 +85,10 @@ div.bottomModelDiv {
     text-align: center;
 }
 #top {
-    background: url(/static/graphics/hd_bg_1.png);
-    color: #000;
+    -webkit-box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+    color: #37474F;
+    background-color: #37474F;
     height: 80px;
     position: relative;
 }
@@ -1291,6 +1301,9 @@ input.ui-colorpicker-hex-input {
         -webkit-transition: all .6s cubic-bezier(0.95, -0.09, .35, .95);
         transition: all .6s cubic-bezier(0.95, -0.09, .35, .95);
     }
+    input.svgTextDescription, input.custom_svgNameInput {
+        width: 90%;
+    }
     div.modelSvgOutput{
       position: relative;
       top: 10px;
@@ -1322,16 +1335,19 @@ input.ui-colorpicker-hex-input {
     div.modelClasses.active {
       width: 100%;
     }
+    input.svgTextDescription, input.custom_svgNameInput {
+        width: 85%;
+    }
     .hamburger {
       bottom: 22px;
-      width: 55px;
-      height: 55px;
+      width: 58px;
+      height: 58px;
       padding: 13px;
-      padding-top: 15px;
+      padding-top: 16px;
     }
     .hamburger::before {
-      width: 55px;
-      height: 55px;
+      width: 58px;
+      height: 58px;
     }
     .hamburger-box {
       width: 30px;
