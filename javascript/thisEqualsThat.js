@@ -386,7 +386,7 @@ $(function(){
     this.disable_createSaveLink = false;
     this.disable_inputFieldAltered = false;
 
-`   this.inputFieldHUD  = new thisEqualsThat.InputFieldHUD(this);
+    this.inputFieldHUD  = new ThisEqualsThat.InputFieldHUD(this);
     this.svgHUD         = new ThisEqualsThat.SVGHUD(this);
       
   }
@@ -926,6 +926,7 @@ $(function(){
 
 
       targetContainer.append(this.display.displayElement).coloPick();
+
       //display.bottomModelDiv = sceneContainer;
 
       //display.displayElement.append(display.textOutputLabel);
@@ -1592,7 +1593,10 @@ $(function(){
 
   }
   this.ModelInstance.prototype.displayCurrentOutput_2 = function(This)
-  { This.svgHUD.renderHUD("init");
+  { this.inputFieldHUD.renderHUD("init");
+    This.inputFieldHUD.renderHUD("onLoad_allFieldsOnDOM"); 
+
+    This.svgHUD.renderHUD("init");
 
     This.appendSVGToDisplay();
     This.animateSVG();
@@ -1634,27 +1638,60 @@ $(function(){
     this.display                  = modelInstance.display.modelSliders
   }
   this.InputFieldHUD.prototype.renderHUD = function(tagHook)
-  { if (! this.hasOwnProperty("display")
+  { if (! this.hasOwnProperty("display") )
     { this.display();
     }
 
     var svg3dDisplayJSON  = this.modelInstance.svg3dDisplayJSON;
     
-    this.divForHUD.html("");
-
-    for (hudDescriptor in svg3dDisplayJSON.svgHUD)
+    for (hudDescriptor in svg3dDisplayJSON.inputFieldHUD)
     { var hudAddress    = hudDescriptor.split(".");
       var hudComponent  = hudAddress[0];
-      var hudTagHooks   = $(hudAddress).slice(1);
+      var hudTagHooks   = $(hudAddress).slice(1).get();
       if (tagHook == "init")
       { if (! this.contextData[hudComponent])
         { this.contextData[hudComponent] = {};
           this.plugins[hudComponent] = new this[hudComponent](this, this.contextData[hudComponent], tagHook);
         }
       }
-      if ($.inArray(tagHook, hudTagHooks) )
+      if ($.inArray(tagHook, hudTagHooks) >= 0)
       { this.plugins[hudComponent].display(svg3dDisplayJSON.inputFieldHUD[hudDescriptor], tagHook)
       }
+    }
+  }
+
+  this.InputFieldHUD.prototype.Replace = function(inputFieldHUD, context)
+  { this.inputFieldHUD            = inputFieldHUD;
+    this.context                  = context;
+    // this.context.byVisualisation  = {};
+  }
+  this.InputFieldHUD.prototype.Replace.prototype.display =function(replaceDict)
+  { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
+    //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
+    var This = this;
+
+    for (replaceConfigName in replaceDict)
+    { var replaceConfig = replaceDict[replaceConfigName];
+      console.log(replaceConfig, replaceConfigName);
+
+      if (! This.context.hasOwnProperty(replaceConfigName) )
+      { This.context[replaceConfigName] = 
+            { "fields": {},
+            };
+      }
+      var localContext = this.context[replaceConfigName];
+
+      for (fieldToHide of ( replaceConfig.fieldsToHide || [] ) )
+      { if (! localContext.hasOwnProperty(fieldToHide) )
+        { localContext.fields[fieldToHide] = {};
+        }
+
+        This.inputFieldHUD.modelInstance.inputFields[fieldToHide].uiElement.toggleClass("displayNone", true);
+        localContext.fields[fieldToHide].hidden = true;
+      }
+
+      toReturn = null;
+      eval(replaceConfig.addFieldsExec || "toReturn = {'status': 'fail', 'message': 'noCodeToExecute'}");
     }
   }
 
@@ -1672,11 +1709,11 @@ $(function(){
 
     this.divForHUD                = modelInstance.display.svgHUD = $("<div class='svgHUD' />");
     this.display                  = this.divForHUD;
-    modelInstance.display.svgOutput.append(this.divForHUD);
+    modelInstance.display.svgOutput.prepend(this.divForHUD);
     modelInstance.display.svgHUD  = this.divForHUD;
   }
   this.SVGHUD.prototype.renderHUD = function(tagHook)
-  { if (! this.hasOwnProperty("display")
+  { if (! this.hasOwnProperty("display") )
     { this.display();
     }
 
@@ -2013,10 +2050,11 @@ $(function(){
   this.ModelFieldInput.prototype.getTag = function()
   { if (! this.hasOwnProperty("uiElement"))
     { this["getTag_"+this.data.fieldType]()
-     .addClass("modelClass_"+this.data.displayFieldAddress.split(":")[0])
-     .addClass("type_"+this.data.fieldType)
-     .addClass("name_"+this.data.name)
-     .addClass("unit_"+this.data.unit);
+     .addClass("modelClass_"  + this.data.displayFieldAddress.split(":")[0])
+     .addClass("fullAddress_" + this.fullAddress)
+     .addClass("type_"        + this.data.fieldType)
+     .addClass("name_"        + this.data.name)
+     .addClass("unit_"        + this.data.unit);
     }
     return this.uiElement;
   }
