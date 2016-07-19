@@ -1230,82 +1230,50 @@ input.ui-colorpicker-hex-input {
     .modelClassLI h3 {
       line-height: 32px;
     }
-    div.model_options {
-      position: absolute;
-      width: 32%;
+    div.model_box_ctrl {
+      position: relative;
       height: 60px;
-      overflow: hidden;
+      width: 32%;
+      float: left;
+      background-color: #fff;
+      background-size: 33px;
+      background-repeat: no-repeat;
+      background-position: center;
+      border-radius: 3px;
+      -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+      box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
     }
-    div.modelSliders {
-      left: 0;
+    div.boxSliders{
+        background-image: url(/static/graphics/thisEquals/icons/box_sliders.svg);
     }
-    div.modelOutputCtrl {
-      left: 50%;
-      margin-left: -16%;
+    div.boxOutputCtrl{
+        margin-left: 2%;
+        margin-right: 2%;
+        background-image: url(/static/graphics/thisEquals/icons/box_visual.svg);
     }
-    div.modelCustomSvg {
-      right: 0;
+    div.boxCustomSvg{
+        background-image: url(/static/graphics/thisEquals/icons/box_custom.svg);
+    }
+    div.model_options {
+        position: relative;
+        width: 100%;
+        z-index: 1;
+        height: 0;
+        padding: 0;
+        overflow: hidden;
     }
     div.modelSvgOutput{
       position: relative;
       width: 100%;
-      top: 90px;
+      float: left;
       transition: top .3s ease-in;
     }
     div.svgOutput {
       width: 330px;
     }
-    div.model_options::before {
-        content: "";
-        background-color: #fff;
-        background-size: 33px;
-        background-repeat: no-repeat;
-        background-position: center;
-        position: absolute;
-        top: -5px;
-        left: -5px;
-        bottom: -5px;
-        right: -5px;
-        z-index: 9;
-    }
-    div.modelSliders::before{
-        background-image: url(/static/graphics/thisEquals/icons/box_sliders.svg);
-    }
-    div.modelOutputCtrl::before{
-        background-image: url(/static/graphics/thisEquals/icons/box_visual.svg);
-    }
-    div.modelCustomSvg::before{
-        background-image: url(/static/graphics/thisEquals/icons/box_custom.svg);
-    }
-    div.model_options.active::before {
-        top: -70px;
-        width: 32%;
-        height: 60px;
-        border-radius: 3px;
-        background-size: 40px;
-        -webkit-box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.12), 0 4px 6px 0 rgba(0, 0, 0, 0.12);
-        box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.12), 0 4px 6px 0 rgba(0, 0, 0, 0.12);
-    }
-    div.modelSliders.active::before {
-      left: 0;
-    }
-    div.modelOutputCtrl.active::before {
-      left: 50%;
-      margin-left: -16%;
-    }
-    div.modelCustomSvg.active::before {
-      right: 0;
-      left: initial;
-    }
     div.model_options.active {
-        position: absolute;
-        top: 90px;
-        left: 0;
-        right: 0;
-        margin: 0;
-        width: 100%;
-        height: initial;
-        overflow: visible;
+        height: inherit;
+        padding: 20px;
     }
     .close_model {
         position: absolute;

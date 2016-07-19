@@ -593,15 +593,15 @@ thisEqualsThat.oop = function()
       display.modelSliders              = $("<div class='modelSliders model_options'  />");
       display.modelSliders.append(this.getInputFields().inputFieldsSliders);
 
-      display.boxSliders = $('<div class="modelSliders model_options" />');
-      display.boxSliders = $('<div class="modelSliders model_options" />');
-      display.boxSliders = $('<div class="modelSliders model_options" />');
+      display.boxSliders    = $('<div class="model_box_ctrl boxSliders" />');
+      display.boxOutputCtrl = $('<div class="model_box_ctrl boxOutputCtrl" />');
+      display.boxCustomSvg  = $('<div class="model_box_ctrl boxCustomSvg" />');
 
       display.modelOutputCtrl           = $("<div class='modelOutputCtrl model_options' />");
 
       display.modelCustomSvg            = $("<div class='modelCustomSvg model_options' />");
 
-      var models = [ display.modelSliders, display.modelOutputCtrl, display.modelCustomSvg ];
+      var models = [ display.boxSliders, display.boxOutputCtrl, display.boxCustomSvg ];
       $.each( models, function ( i, elem ) {
             elem.on('click', function () {
               console.debug( $('.model_options') );
@@ -869,6 +869,8 @@ thisEqualsThat.oop = function()
       display.topModelDiv = $("<div class='modelInstance topModelDiv modelInstance'"+this.modelPosition+" />");
 
       display.topModelDiv.append(display.boxSliders);
+      display.topModelDiv.append(display.boxOutputCtrl);
+      display.topModelDiv.append(display.boxCustomSvg);
       display.topModelDiv.append(display.modelSliders);
       display.topModelDiv.append(display.modelOutputCtrl);
       display.topModelDiv.append(display.modelCustomSvg);
