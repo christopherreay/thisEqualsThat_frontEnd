@@ -1900,9 +1900,23 @@ $().ready(function(){
               openMenu = $('.open-menu'),
               menuWrap = $('.modelClasses'),
               menuItemList = $('#modelClassUL'),
+              modelClassLI = $('.modelClassLI'),
               body = $('body');
 
           menuBtn.toggleClass('is-active');
+
+          modelClassLI.on('dblclick', function () {
+            console.debug('double click');
+
+              body.removeClass('open');
+              $('.hamburger').removeClass('is-active');
+              menuItemList.css('width', '0');
+              setTimeout(function(){
+                menuWrap.removeClass('active');
+                openMenu.hide();
+              }, 600);
+              
+          });
 
           if ( menuBtn.hasClass('is-active') ) {
 
@@ -1924,6 +1938,7 @@ $().ready(function(){
               });
 
           } else {
+
             body.removeClass('open');
             $('.hamburger').removeClass('is-active');
             menuItemList.css('width', '0');
