@@ -1278,7 +1278,6 @@ input.ui-colorpicker-hex-input {
         background-image: url(/static/graphics/thisEquals/icons/box_custom.svg);
     }
     div.model_options.active::before {
-        z-index: 759;
         top: -70px;
         width: 32%;
         height: 60px;
@@ -1306,7 +1305,6 @@ input.ui-colorpicker-hex-input {
         margin: 0;
         width: 100%;
         height: initial;
-        z-index: 505;
         overflow: visible;
     }
     .close_model {
