@@ -1,3 +1,7 @@
+$(window).load( function () {
+    alert('msg');
+});
+
 window.thisEqualsThat = {};
 thisEqualsThat.graphicLoadVersion = "0.1.1.3.20151102.newReferenceSVGs.womanPainting3.0"
 
