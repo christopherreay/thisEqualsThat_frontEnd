@@ -602,41 +602,47 @@ thisEqualsThat.oop = function()
       display.modelCustomSvg            = $("<div class='modelCustomSvg model_options' />");
 
       var models = [ display.boxSliders, display.boxOutputCtrl, display.boxCustomSvg ];
-      $.each( models, function ( i, elem ) {
-            elem.on('click', function () {
-              console.debug( $('.model_options') );
-                                    var self = $(this),
-                                        wWidth = $(window).outerWidth(),
-                                        googleConnect = $('.googleConnect');
+        $.each( models, function ( i, elem )
+        {
+          elem.on('click', function ()
+          {
+            var wWidth = $(window).outerWidth();
 
-                                          if ( wWidth <= 768 ) {
+                if ( wWidth <= 768 )
+                {
+                    switch (i)
+                    {
+                      case 0:
+                            display.modelSliders.toggleClass('active');
+                            display.modelOutputCtrl.removeClass('active');
+                            display.modelCustomSvg.removeClass('active');
 
-                                            switch (i) {
-                                              case 0:
-                                                    display.modelSliders.toggleClass('active');
-                                                    display.modelOutputCtrl.removeClass('active');
-                                                    display.modelCustomSvg.removeClass('active');
-                                                break;
-                                              case 1:
-                                                    display.modelOutputCtrl.toggleClass('active');
-                                                    display.modelSliders.removeClass('active');
-                                                    display.modelCustomSvg.removeClass('active');
-                                                break;
-                                              case 2:
-                                                    display.modelCustomSvg.toggleClass('active');
-                                                    display.modelOutputCtrl.removeClass('active');
-                                                    display.modelSliders.removeClass('active');
-                                                break;
-                                            }
-                                                          console.debug(i);
-                                              if ( self.hasClass('active') ) {
-                                                googleConnect.hide();
-                                              } else {
-                                                googleConnect.show();
-                                              }
-                                          }
-                                      });
-                                    });
+                            display.boxSliders.toggleClass('active').removeClass('shadow');
+                            display.boxOutputCtrl.removeClass('active').addClass('shadow');
+                            display.boxCustomSvg.removeClass('active').addClass('shadow');
+                        break;
+                      case 1:
+                            display.modelOutputCtrl.toggleClass('active');
+                            display.modelSliders.removeClass('active');
+                            display.modelCustomSvg.removeClass('active');
+
+                            display.boxOutputCtrl.toggleClass('active').removeClass('shadow');
+                            display.boxSliders.removeClass('active').addClass('shadow');
+                            display.boxCustomSvg.removeClass('active').addClass('shadow');
+                        break;
+                      case 2:
+                            display.modelCustomSvg.toggleClass('active');
+                            display.modelOutputCtrl.removeClass('active');
+                            display.modelSliders.removeClass('active');
+
+                            display.boxCustomSvg.toggleClass('active').removeClass('shadow');
+                            display.boxSliders.removeClass('active').addClass('shadow');
+                            display.boxOutputCtrl.removeClass('active').addClass('shadow');
+                        break;
+                    }
+                }
+            });
+        });
 
       display.modelSvgOutput            = $("<div class='modelSvgOutput' />");
 
