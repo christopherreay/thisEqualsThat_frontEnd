@@ -1011,7 +1011,10 @@ thisEqualsThat.oop = function()
                                  'opacity': '1',
                                  'filter' : 'Alpha(Opacity=100)'
                                });
-        } else {
+          display.topModelDiv.append(display.googleConnect);
+        }
+        else
+        {
           display.modelSvgOutput.append(display.googleConnect);
         }
 

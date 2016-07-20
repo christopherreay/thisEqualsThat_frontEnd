@@ -170,12 +170,12 @@ div.copyrightContainer> p {
 
 .hamburger {
     position: absolute;
-    top: 5px;
+    top: 10px;
     left: 15px;
-    width: 62px;
-    height: 62px;
+    width: 60px;
+    height: 60px;
     padding: 13px;
-    padding-top: 19px;
+    padding-top: 20px;
     background: transparent;
     border-radius: 50%;
     display: inline-block;
@@ -195,33 +195,40 @@ div.copyrightContainer> p {
     margin: 0;
     overflow: visible;
 }
-.hamburger::before{
+.hamburger::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
-    width: 62px;
-    height: 62px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    background: #fff;
+    background: rgba(255, 255, 255, .8);
     z-index: -1;
-    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.4);
     transition: all .6s cubic-bezier(0.95, -0.09, .35, .95);
     transform: scale(1);
 }
-.hamburger.is-active.hamburger::before{
-    transform: scale(30);
+.hamburger:hover::before {
+    -webkit-box-shadow: 0 5px 6px rgba(0,0,0,0.4);
+    box-shadow: 0 5px 6px rgba(0,0,0,0.4);
+    background: rgba(255, 255, 255, 1);
 }
-
-.hamburger:active.hamburger::before{
-    transform: scale(.9);
+.hamburger:hover .hamburger-inner::before {
+    top: -6px;
 }
-
+.hamburger:hover .hamburger-inner::after {
+    bottom: -6px;
+}
+.hamburger.is-active.hamburger::before {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(40);
+}
 
 .hamburger-box {
     width: 34px;
-    height: 24px;
+    height: 20px;
     display: inline-block;
     position: relative;
 }
@@ -250,10 +257,10 @@ div.copyrightContainer> p {
     display: block;
 }
 .hamburger-inner::before {
-    top: -9px;
+    top: -8.5px;
 }
 .hamburger-inner::after {
-    bottom: -9px;
+    bottom: -8.5px;
 }
 
 #modelClassUL {
@@ -1392,27 +1399,27 @@ input.ui-colorpicker-hex-input {
     }
     .hamburger {
       bottom: 22px;
-      width: 58px;
-      height: 58px;
+      width: 56px;
+      height: 56px;
       padding: 13px;
-      padding-top: 16px;
+      padding-top: 20px;
     }
     .hamburger::before {
-      width: 58px;
-      height: 58px;
+      width: 56px;
+      height: 56px;
     }
     .hamburger-box {
       width: 30px;
-      height: 25px;
+      height: 18px;
     }
     .hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
       width: 30px;
     }
     .hamburger-inner::before {
-      top: -8px;
+      top: -7.5px;
     }
     .hamburger-inner::after {
-      bottom: -8px;
+      bottom: -7.5px;
     }
 }
 
