@@ -15,12 +15,32 @@ body::scrollbar {
 }
 .greeting {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #888;
+  top: -50px;
+  left: -50px;
+  right: -50px;
+  bottom: -50px;
+  background: linear-gradient(285deg, #2095f2, #fe9700, #0d47a1, #f50057, #4a148c, #ff1744, #ff3d00);
+  background-size: 1400% 1400%;
+
+  -webkit-animation: greet 45s ease infinite;
+  animation: greet 45s ease infinite;
+  -webkit-filter: blur(10px);
+  filter: blur(10px);
+  z-index: 9999;
 }
+
+
+@-webkit-keyframes greet {
+    0%{background-position:0% 13%}
+    50%{background-position:100% 88%}
+    100%{background-position:0% 13%}
+}
+@keyframes greet {
+    0%{background-position:0% 13%}
+    50%{background-position:100% 88%}
+    100%{background-position:0% 13%}
+}
+
 .open-menu{
   position: fixed;
   top: 0;

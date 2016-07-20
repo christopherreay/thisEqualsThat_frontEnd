@@ -1,5 +1,11 @@
 $().ready(function(){
-  // $('body').append('<div class="greeting" />');
+  $('body').append(
+       '<div class="greeting">'
+     + '<img class="greet_img" src="/static/graphics/thisEquals/this-equals-that.png" alt="Visual Tools">'
+     + '</div>'
+   );
+
+
   $(window).load( function () {
       alert('page load');
   });
