@@ -138,8 +138,8 @@ div.bottomModelDiv {
 #top {
     -webkit-box-shadow: 0 2px 5px rgba(0,0,0,0.26);
     box-shadow: 0 2px 5px rgba(0,0,0,0.26);
-    color: #37474F;
-    background-color: #37474F;
+    color: transparent;
+    background: url(/static/graphics/hd_bg_1.png);
     height: 80px;
     position: relative;
 }

@@ -1,37 +1,33 @@
-$().ready(function(){
-
-  var greetBg        = $('<div class="greeting" />'),
-      greetContainer = $('<div class="greet_container">'
-                         + '<img class="greet_img" src="/static/graphics/thisEquals/this-equals-that.png" alt="Visual Tools">'
-                         + '<h1 class="greet_text" />'
-                         + '</div>'
-                       );
-
-  $('body').append(greetBg)
-           .append(greetContainer);
-
-                  greetContainer.fadeIn(800);
-                  setTimeout( function () {
-                    var txt = 'Welcome to "thisEqualsThat", Enjoy',
-                        tot = txt.length,
-                        ch  = 0;
-
-                    (function typeIt() {
-                      if(ch > tot) return;
-                      $('.greet_text').text( txt.substring(0, ch++));
-                      setTimeout(typeIt, ~~(Math.random()*(150-70+1)+60));
-                    }());
-                  }, 1000);
-
-                  setTimeout( function () {
-                    $('.greet_container').fadeOut(300);
-                    $('.greeting').fadeOut(600);
-                  }, 6000);
-
-  $(window).load( function () {
-      // alert('page load');
-  });
-});
+// $().ready(function() {
+//
+//     var greetBg = $('<div class="greeting" />'),
+//         greetContainer = $('<div class="greet_container">' +
+//             '<img class="greet_img" src="/static/graphics/thisEquals/this-equals-that.png" alt="Visual Tools">' +
+//             '<h1 class="greet_text" />' +
+//             '</div>'
+//         );
+//
+//       $('body').append(greetBg)
+//                .append(greetContainer);
+//
+//       greetContainer.fadeIn(800);
+//       setTimeout(function() {
+//           var txt = 'Welcome to "thisEqualsThat", Enjoy',
+//               tot = txt.length,
+//               ch = 0;
+//
+//           (function typeIt() {
+//               if (ch > tot) return;
+//               $('.greet_text').text(txt.substring(0, ch++));
+//               setTimeout(typeIt, ~~(Math.random() * (150 - 70 + 1) + 60));
+//           }());
+//       }, 1000);
+//
+//       setTimeout(function() {
+//           $('.greet_container').fadeOut(300);
+//           $('.greeting').fadeOut(600);
+//       }, 6000);
+// });
 
 
 window.thisEqualsThat = {};
@@ -1954,7 +1950,7 @@ $().ready(function(){
             console.debug('double click');
 
               body.removeClass('open');
-              $('.hamburger').removeClass('is-active');
+              menuBtn.removeClass('is-active');
               menuItemList.css('width', '0');
               setTimeout(function(){
                 menuWrap.removeClass('active');
@@ -1966,13 +1962,16 @@ $().ready(function(){
           if ( wWidth <= 768 ) {
 
               modelClassLI.on('click', function () {
-                  body.removeClass('open');
-                  $('.hamburger').removeClass('is-active');
-                  menuItemList.css('width', '0');
-                  setTimeout(function(){
-                    menuWrap.removeClass('active');
-                    openMenu.hide();
-                  }, 600);
+                  setTimeout(function () {
+                    body.removeClass('open');
+                    menuBtn.removeClass('is-active');
+                    menuItemList.css('width', '0');
+                    setTimeout(function(){
+                      menuWrap.removeClass('active');
+                      openMenu.hide();
+                    }, 600);
+                  }, 400);
+
               });
 
           }
