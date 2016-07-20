@@ -152,13 +152,14 @@ thisEqualsThat.oop = function()
       }
     );
     modelClassesContainerDiv.append(modelClassList);
-    modelClassList.append('<div class="modelClassLI ripplelink cyan">' +
-              '<img src="/static/graphics/thisEquals/icons/map.svg">' +
-              '<h3>Map</h3>' +
-              '</div>'
-      ).on('click', function () {
-        console.debug('obj');
-      });
+    // MAP
+    // modelClassList.append('<div class="modelClassLI ripplelink cyan">' +
+    //           '<img src="/static/graphics/thisEquals/icons/map.svg">' +
+    //           '<h3>Map</h3>' +
+    //           '</div>'
+    //   ).on('click', function () {
+    //     console.debug('clicked on map');
+    //   });
   }
   this.ModelClass = function(modelClassName)
   { this.name = modelClassName;
@@ -168,8 +169,10 @@ thisEqualsThat.oop = function()
         { "class": "modelClassLI ripplelink cyan"
         }
        ).data("modelClass", this)
-       .append($("<img />", { src: this.imageURL } ))
-       .append($("<h3 />", { text: this.name } ));
+      //  .append('<div class="ripplelink cyan" />')
+       .append( $("<img />", { src: this.imageURL } ))
+      //  .append( $("<div class='item_description' />", { text: this.name } ))
+       .append( $("<h3 />", { text: this.name } ));
   }
   this.ModelClass.prototype.imageBaseURL =  "/static/graphics/thisEquals/modelClasses/";
   this.ModelClass.prototype.getModelInstance = function(successFunction)

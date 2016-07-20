@@ -215,12 +215,6 @@ div.copyrightContainer> p {
     box-shadow: 0 5px 6px rgba(0,0,0,0.4);
     background: rgba(255, 255, 255, 1);
 }
-.hamburger:hover .hamburger-inner::before {
-    top: -6px;
-}
-.hamburger:hover .hamburger-inner::after {
-    bottom: -6px;
-}
 .hamburger.is-active.hamburger::before {
     background: rgba(255, 255, 255, 1);
     transform: scale(40);
@@ -285,7 +279,7 @@ div.modelClasses {
 }
 div.modelClasses.active{
     height: 100vh;
-    width: 420px;
+    width: 350px;
 }
 
 .modelClassLI {
@@ -317,6 +311,7 @@ div.modelClasses.active{
     -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
 }
 .ripplelink:hover > img {
+    opacity: 1;
     -webkit-transform: scale(1.15);
     transform: scale(1.15);
 }
@@ -357,9 +352,10 @@ div.modelClasses.active{
 
 
 .modelClassLI img {
-    float: left;
+    float: right;
     width: 40px;
     margin-right: 30px;
+    opacity: 0;
     -webkit-transform: scale(1);
     transform: scale(1);
     -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
@@ -1392,7 +1388,16 @@ input.ui-colorpicker-hex-input {
 
 @media screen and (max-width: 550px) {
     div.modelClasses.active {
-      width: 100%;
+      width: 250px;
+    }
+    .modelClassLI img {
+      opacity: 1;
+      width: 27px;
+      margin-right: 20px;
+    }
+    .modelClassLI h3 {
+      line-height: 28px;
+      font-size: 17px;
     }
     input.svgTextDescription, input.custom_svgNameInput {
         width: 85%;
@@ -1430,14 +1435,7 @@ input.ui-colorpicker-hex-input {
     .ripplelink {
       height: 60px;
       padding: 16px 0;
-      padding-left: 40px;
-    }
-    .modelClassLI img {
-      width: 27px;
-    }
-    .modelClassLI h3 {
-      line-height: 28px;
-      font-size: 17px;
+      padding-left: 30px;
     }
     div.modelSvgOutput {
       height: 330px;
