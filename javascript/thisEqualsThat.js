@@ -1002,6 +1002,19 @@ thisEqualsThat.oop = function()
           'left'     : '0',
           'right'    : '0'
         });
+
+        var wWidth = $(window).outerWidth();
+        if ( wWidth <= 768 )
+        {
+          display.googleConnect.draggable('disable')
+                               .css({
+                                 'opacity': '1',
+                                 'filter' : 'Alpha(Opacity=100)'
+                               });
+        } else {
+          display.modelSvgOutput.append(display.googleConnect);
+        }
+
         display.googleConnect.append(
           $("<div class='customSVGPaneTitle'>googleConnect</div>"));
         display.googleConnect_email=
@@ -1091,7 +1104,7 @@ thisEqualsThat.oop = function()
           // )
         // );
         //thisEqualsThat.scene.modelContainerDiv.append(display.customSVGPane);
-        display.modelSvgOutput.append(display.googleConnect)
+
     }
     this.display.displayElement.show();
 
