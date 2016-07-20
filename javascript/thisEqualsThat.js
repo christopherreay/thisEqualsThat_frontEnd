@@ -638,7 +638,8 @@ thisEqualsThat.oop = function()
         {
           elem.on('click', function ()
           {
-            var wWidth = $(window).outerWidth();
+            var   self   = $(this),
+                  wWidth = $(window).outerWidth();
 
                 if ( wWidth <= 768 )
                 {
@@ -671,6 +672,12 @@ thisEqualsThat.oop = function()
                             display.boxSliders.removeClass('active').addClass('shadow');
                             display.boxOutputCtrl.removeClass('active').addClass('shadow');
                         break;
+                    }
+                    if (! self.hasClass('active') )
+                    {
+                        display.boxCustomSvg.removeClass('shadow');
+                        display.boxSliders.removeClass('shadow');
+                        display.boxOutputCtrl.removeClass('shadow');
                     }
                 }
             });
@@ -1947,15 +1954,16 @@ $().ready(function(){
           menuBtn.toggleClass('is-active');
 
           modelClassLI.on('dblclick', function () {
-            console.debug('double click');
 
-              body.removeClass('open');
-              menuBtn.removeClass('is-active');
-              menuItemList.css('width', '0');
-              setTimeout(function(){
-                menuWrap.removeClass('active');
-                openMenu.hide();
-              }, 600);
+              setTimeout(function () {
+                body.removeClass('open');
+                menuBtn.removeClass('is-active');
+                menuItemList.css('width', '0');
+                setTimeout(function(){
+                  menuWrap.removeClass('active');
+                  openMenu.hide();
+                }, 600);
+              }, 400);
 
           });
 
