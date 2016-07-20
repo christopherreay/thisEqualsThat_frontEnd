@@ -1,13 +1,35 @@
 $().ready(function(){
-  $('body').append(
-       '<div class="greeting">'
-     + '<img class="greet_img" src="/static/graphics/thisEquals/this-equals-that.png" alt="Visual Tools">'
-     + '</div>'
-   );
 
+  var greetBg        = $('<div class="greeting" />'),
+      greetContainer = $('<div class="greet_container">'
+                         + '<img class="greet_img" src="/static/graphics/thisEquals/this-equals-that.png" alt="Visual Tools">'
+                         + '<h1 class="greet_text" />'
+                         + '</div>'
+                       );
+
+  $('body').append(greetBg)
+           .append(greetContainer);
+
+                  greetContainer.fadeIn(800);
+                  setTimeout( function () {
+                    var txt = 'Welcome to "thisEqualsThat", Enjoy',
+                        tot = txt.length,
+                        ch  = 0;
+
+                    (function typeIt() {
+                      if(ch > tot) return;
+                      $('.greet_text').text( txt.substring(0, ch++));
+                      setTimeout(typeIt, ~~(Math.random()*(150-70+1)+60));
+                    }());
+                  }, 1000);
+
+                  setTimeout( function () {
+                    $('.greet_container').fadeOut(300);
+                    $('.greeting').fadeOut(600);
+                  }, 6000);
 
   $(window).load( function () {
-      alert('page load');
+      // alert('page load');
   });
 });
 

@@ -4,29 +4,90 @@ body {
     background: #EEEEEE;
     padding-bottom: 50px;
 }
+body.open {
+    overflow: hidden;
+}
 body::-webkit-scrollbar {
   display: none;
 }
 body::scrollbar {
   display: none;
 }
-.open-meune{
+.greeting {
+  position: fixed;
+  top: -50px;
+  left: -50px;
+  right: -50px;
+  bottom: -50px;
+  background: linear-gradient(285deg, #2095f2, #fe9700, #0d47a1, #f50057, #4a148c, #ff1744, #ff3d00);
+  background-size: 1400% 1400%;
+
+  -webkit-animation: greet 45s ease infinite;
+  animation: greet 45s ease infinite;
+  -webkit-filter: blur(10px);
+  filter: blur(10px);
+  z-index: 9999;
+}
+@-webkit-keyframes greet {
+    0%{background-position:0% 13%}
+    50%{background-position:100% 88%}
+    100%{background-position:0% 13%}
+}
+@keyframes greet {
+    0%{background-position:0% 13%}
+    50%{background-position:100% 88%}
+    100%{background-position:0% 13%}
+}
+
+.greet_container {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  line-height: 100vh;
+  text-align: center;
+  z-index: 9999;
+}
+.greet_img {
+  vertical-align: middle;
+  width: 400px;
+  opacity: .7;
+  transition: all .3s ease-in;
+}
+.greet_text {
+  vertical-align: middle;
+  display: inline-block;
+  font-size: 39px;
+  font-family: Roboto;
+  line-height: 0;
+  margin-left: 50px;
+  margin-top: -18px;
+  opacity: .7;
+  transition: all .3s ease-in;
+}
+.greet_text, .greet_img:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.open-menu{
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 500;
   overflow: hidden;
   background: rgba(0,0,0, .5);
+  z-index: 500;
+  display: none;
 }
 #wrap {
     overflow-x: hidden;
 }
 div.bottomModelDiv {
     position: relative;
-    padding-top: 25px;
-    border-top: 1px solid #9E9E9E;
 }
 .btn {
     display: inline-block;
@@ -75,9 +136,11 @@ div.bottomModelDiv {
     text-align: center;
 }
 #top {
-    background: url(/static/graphics/hd_bg_1.png);
-    color: #000;
-    height: 85px;
+    -webkit-box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+    color: #37474F;
+    background-color: #37474F;
+    height: 80px;
     position: relative;
 }
 #logo> img {
@@ -93,7 +156,7 @@ div.copyrightContainer {
     overflow: hidden;
 }
 div.copyrightContainer> p {
-    margin-left: 200px;
+    margin-left: 15px;
     line-height: 50px;
 }
 
@@ -105,50 +168,122 @@ div.copyrightContainer> p {
 }
 
 
-#modelClassUL {
-  padding: 5px;
-  padding-top: 150px;
-  display: block;
-  margin: 0;
-  width: 100%;
-  height: 100vh;
+.hamburger {
+    position: absolute;
+    top: 5px;
+    left: 15px;
+    width: 70px;
+    height: 70px;
+    padding: 17px;
+    background: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    transition-property: opacity, -webkit-filter;
+    -webkit-transition-property: opacity, -webkit-filter;
+    transition-property: opacity, filter;
+    transition-property: opacity, filter, -webkit-filter;
+    -webkit-transition-duration: 0.15s;
+    transition-duration: 0.15s;
+    -webkit-transition-timing-function: linear;
+    transition-timing-function: linear;
+    font: inherit;
+    color: inherit;
+    text-transform: none;
+    border: 0;
+    margin: 0;
+    overflow: visible;
+}
+.hamburger::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #fff;
+    z-index: -1;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+    transition: all .6s cubic-bezier(0.95, -0.09, .35, .95);
+    transform: scale(1);
+}
+.hamburger.is-active.hamburger::before{
+    transform: scale(30);
 }
 
+.hamburger:active.hamburger::before{
+    transform: scale(.9);
+}
+
+
+.hamburger-box {
+    width: 36px;
+    height: 36px;
+    display: inline-block;
+    position: relative;
+}
+.hamburger-inner {
+    display: block;
+    top: 50%;
+    margin-top: -2px;
+}
+.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+    width: 36px;
+    height: 4px;
+    background-color: #000;
+    border-radius: 4px;
+    position: absolute;
+    transition-property: -webkit-transform;
+    -webkit-transition-property: -webkit-transform;
+    transition-property: transform;
+    transition-property: transform, -webkit-transform;
+    -webkit-transition-duration: 0.15s;
+    transition-duration: 0.15s;
+    -webkit-transition-timing-function: ease;
+    transition-timing-function: ease;
+}
+.hamburger-inner::before, .hamburger-inner::after {
+    content: "";
+    display: block;
+}
+.hamburger-inner::before {
+    top: -10px;
+}
+.hamburger-inner::after {
+    bottom: -10px;
+}
+
+#modelClassUL {
+  width: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0px;
+  padding-top: 100px;
+  padding-bottom: 80px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
 div.modelClasses {
     position: fixed;
     top: 0;
-    left: -400px;
-    width: 400px;
-    height: 100vh;
-    z-index: 999;
-    border-bottom: 1px solid #BDBDBD;
-    background: #eee;
+    left: 0;
+    width: 90px;
+    height: 90px;
+    background: transparent;
     z-index: 999;
     overflow: hidden;
-    transition: all .3s ease;
-    box-shadow: 2px 0px 15px rgba(0, 0, 0, 0.35);
-    -webkit-box-shadow: 2px 0px 15px rgba(0, 0, 0, 0.35);
 }
-div.modelClasses:after {
-    position: absolute;
-    content: '';
-    bottom: -1px;
-    left: -100%;
-    width: 100%;
-    height: 100px;
-    background: #eee;
-    border-bottom: 1px solid #BDBDBD;
+div.modelClasses.active{
+    height: 100vh;
+    width: 420px;
 }
-div.modelClasses:before {
-    position: absolute;
-    content: '';
-    bottom: -1px;
-    left: 100%;
-    width: 100%;
-    height: 100px;
-    background: #eee;
-    border-bottom: 1px solid #BDBDBD;
+
+.modelClassLI {
+
 }
+
 .ripplelink {
     cursor: pointer;
     float: left;
@@ -156,7 +291,7 @@ div.modelClasses:before {
     height: 80px;
     line-height: 80px;
     padding: 20px 0;
-    padding-left: 30px;
+    padding-left: 40px;
     text-align: left;
     color: #fff;
     text-decoration: none;
@@ -169,7 +304,7 @@ div.modelClasses:before {
 
 .ripplelink:hover {
     z-index: 1000;
-    background: #E0E0E0;
+    background: rgba(158, 158, 158, .5);
     /*box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
 }
@@ -180,58 +315,54 @@ div.modelClasses:before {
 .ink {
     display: block;
     position: absolute;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(0, 0, 0, .2);
     border-radius: 100%;
     -webkit-transform: scale(0);
     transform: scale(0);
+    z-index: 105;
 }
 .animate {
-    -webkit-animation: ripple 0.4s linear;
-    animation: ripple 0.4s linear;
+    -webkit-animation: ripple 0.8s cubic-bezier(.4,0,.2,1);
+    animation: ripple 0.8s cubic-bezier(.4,0,.2,1);
 }
 @-webkit-keyframes ripple {
+    75% {
+        opacity: 1;
+        -webkit-transform: scale(2.2);
+    }
     100% {
-        opacity: 0;
-        -webkit-transform: scale(1.5);
+        opacity: 1;
+        -webkit-transform: scale(2.2);
     }
 }
 @keyframes ripple {
+    75% {
+        opacity: 1;
+        -webkit-transform: scale(2.2);
+    }
     100% {
-        opacity: 0;
-        -webkit-transform: scale(1.5);
-        transform: scale(1.5);
+        opacity: 1;
+        -webkit-transform: scale(2.2);
+        transform: scale(2.2);
     }
 }
 
-div.modelClasses.active {
-    left: 0;
-}
-div.modelClasses.active> #modelClassUL {
-    width: 100%;
-    height: 100%;
-    padding: 0px;
-    padding-top: 100px;
-}
-.modelClassLI {
-    display: table-cell;
-    width: 12.5%;
-    text-align: center;
-    vertical-align: middle;
-}
+
 .modelClassLI img {
     float: left;
     width: 40px;
-    margin-right: 20px;
+    margin-right: 30px;
     -webkit-transform: scale(1);
     transform: scale(1);
-    -webkit-transition: all .3s cubic-bezier(.8, -1, .7, 2);
-    transition: all .3s cubic-bezier(.8, -1, .7, 2);
+    -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
+    transition: all .3s cubic-bezier(.4,0,.2,1);
 }
 .modelClassLI h3 {
     font-family: Roboto;
     color: #000;
     font-weight: 400;
     line-height: 40px;
+    float: left;
 }
 
 .masterReferenceSVGSelectList {
@@ -239,10 +370,7 @@ div.modelClasses.active> #modelClassUL {
     left: -100px;
     top: -10000000px;
 }
-.referenceSVGSelectListItem {
-    height: 56px;
-    width: 56px;
-}
+
 .userSelectedReferenceSVG_selected {
     background-color: lightgrey;
 }
@@ -261,7 +389,7 @@ div.modelSliders {
     width: 30%;
     float: left;
 }
-div.modelOutputTest {
+div.modelOutputCtrl {
     position: relative;
     float: left;
     clear: both;
@@ -271,17 +399,13 @@ div.modelCustomSvg{
     float: left;
     clear: both;
 }
-div.modelSliders, div.modelOutputTest, div.modelCustomSvg {
+div.model_options {
     width: 35%;
     margin-top: 20px;
 }
-div.modelSvgOutput {
-    position: absolute;
-    top: 20px;
-    right: 0;
-    width: 63%;
-}
-div.modelSliders, div.modelOutputTest, div.modelSvgOutput, div.modelCustomSvg {
+
+div.modelSliders, div.modelOutputCtrl, div.modelSvgOutput, div.modelCustomSvg {
+    position: relative;
     padding: 20px;
     background: #fff;
     border-radius: 3px;
@@ -386,8 +510,7 @@ div.visualisationOutputContainer select {
     font-size: 15px;
     border-bottom: 0;
 }
-div.modelOutputContainer> select,
-div.visualisationOutputContainer select{
+div.modelOutputContainer> select, div.visualisationOutputContainer select{
   width: 80%;
 }
 div.bottomModelSelectDiv {
@@ -455,18 +578,11 @@ div.modelOutputValue {
     font-size: 12px;
     color: #757575;
 }
-div.svgOutput {
-  width: 400px;
-  height: 400px;
-  clear: both;
-  margin: 0 auto;
+
+input.svgTextDescription, input.custom_svgNameInput {
+  width: 233px;
 }
-div.svgModelRoot {
-    width: 100%;
-    height: 400px;
-    float: left;
-    position: relative;
-}
+
 input.svgTextDescription {
     float: left;
     background: transparent;
@@ -475,7 +591,6 @@ input.svgTextDescription {
     border-top: 0;
     border-right: 0;
     border-left: 0;
-    width: 233px;
     margin-top: 0;
     margin-bottom: 20px;
     text-align: left;
@@ -491,82 +606,6 @@ input.svgTextDescription:hover {
 input.svgTextDescription:focus {
     color: #0091EA;
     border-color: rgba(33, 150, 243, 1);
-}
-div.svgModelRoot svg {
-    position: absolute;
-}
-div.referenceSVG {
-    width: 50px;
-    height: 50px;
-    background-color: green;
-    position: absolute;
-    bottom: 0px;
-    right: 100px;
-}
-div.customSVGList {
-    position: relative;
-    overflow-y: hidden;
-    width: 100%;
-    float: right;
-    clear: both;
-    margin-bottom: 10px;
-}
-div.customSVGPaneTitle {
-    float: left;
-    padding-top: 4px;
-    font-size: 16px;
-    margin-bottom: 0px;
-}
-.googleConnect> .customSVGPaneTitle {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    color: #fff;
-    background: #2196F3;
-    padding: 5px 5px 5px 20px;
-}
-.googleConnect> .custom_svgNameInput {
-    margin: 3px 0;
-    padding: 5px;
-    width: 100%;
-}
-a.googleConnect_loginButton {
-    text-decoration: none;
-    color: rgba(255, 255, 255, 0.9);
-    background: rgba(33, 150, 243, .8);
-}
-a.googleConnect_loginButton:hover {
-    text-decoration: none;
-    color: rgba(255, 255, 255, 1);
-    background: rgba(33, 150, 243, 1);
-}
-.custom_svgNameInput {
-    position: relative;
-    float: left;
-    background: transparent;
-    padding: 5px;
-    padding-top: 5px;
-    border-top: 0;
-    border-right: 0;
-    border-left: 0;
-    width: 233px;
-    text-align: left;
-    font-family: Roboto;
-    font-size: 16px;
-    border-bottom: 1px solid #9E9E9E;
-}
-.custom_svgNameInput::-webkit-file-upload-button {
-  visibility: hidden;
-  width: 0;
-}
-.googleConnect> input.spreadsheetURL {
-    width: 90%;
-    float: left;
-}
-.googleConnect> select.spreadsheetURL {
-    width: 10%;
-    padding: 4px;
 }
 .svgSaveLink {
   border-radius: 50%;
@@ -594,14 +633,32 @@ a.googleConnect_loginButton:hover {
     color: rgba(255, 255, 255, 1);
     background: rgba(33, 150, 243, 1);
 }
-.ic-save_svg {
-  width: 20px;
-  height: 20px;
-  opacity: .9;
-  transition: all .3s;
+
+div.customSVGList {
+    position: relative;
+    overflow-y: hidden;
+    width: 100%;
+    float: right;
+    clear: both;
+    margin-bottom: 10px;
 }
-.ic-save_svg {
-  opacity: 1;
+.custom_svgNameInput {
+    position: relative;
+    float: left;
+    background: transparent;
+    padding: 5px;
+    padding-top: 5px;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    text-align: left;
+    font-family: Roboto;
+    font-size: 16px;
+    border-bottom: 1px solid #9E9E9E;
+}
+.custom_svgNameInput::-webkit-file-upload-button {
+  visibility: hidden;
+  width: 0;
 }
 div.customSVGPaneSubmitButton {
     position: absolute;
@@ -618,18 +675,6 @@ div.customSVGPaneSubmitButton {
     background-position: center 7px;
     -webkit-box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
     box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
-}
-div.customSVGPane.googleConnect {
-    width: 465px;
-    padding: 40px 60px 10px;
-    background-color: #fff;
-    border-radius: 3px;
-    border: 0;
-    overflow: hidden;
-    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
-}
-div.googleConnect.ui-draggable-dragging {
-    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 div.referenceSVGSelectListContainer {
     margin-top: 45px;
@@ -663,6 +708,91 @@ div.referenceSVGSelectListContainer> ul {
 div.referenceSVGSelectListContainer> ul> li {
     display: inline-block;
 }
+div.referenceSVGSelectListItem {
+    height: 56px;
+    width: 56px;
+}
+div.referenceSVG {
+    width: 50px;
+    height: 50px;
+    background-color: green;
+    position: absolute;
+    bottom: 0px;
+    right: 100px;
+}
+
+div.modelSvgOutput {
+    position: absolute;
+    top: 20px;
+    right: 0;
+    width: 63%;
+}
+div.svgOutput {
+  width: 400px;
+  height: 400px;
+  clear: both;
+  margin: 0 auto;
+}
+div.svgModelRoot {
+    width: 100%;
+    height: 400px;
+    float: left;
+    position: relative;
+}
+
+div.customSVGPaneTitle {
+    float: left;
+    padding-top: 4px;
+    font-size: 16px;
+    margin-bottom: 0px;
+}
+div.customSVGPane.googleConnect {
+    width: 465px;
+    padding: 40px 60px 10px;
+    background-color: #fff;
+    border-radius: 3px;
+    border: 0;
+    overflow: hidden;
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+}
+div.googleConnect.ui-draggable-dragging {
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.googleConnect> .customSVGPaneTitle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    color: #fff;
+    background: #2196F3;
+    padding: 5px 5px 5px 20px;
+}
+.googleConnect> .custom_svgNameInput {
+    margin: 3px 0;
+    padding: 5px;
+    width: 100%;
+}
+a.googleConnect_loginButton {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(33, 150, 243, .8);
+}
+a.googleConnect_loginButton:hover {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 1);
+    background: rgba(33, 150, 243, 1);
+}
+.googleConnect> input.spreadsheetURL {
+    width: 90%;
+    float: left;
+}
+.googleConnect> select.spreadsheetURL {
+    width: 10%;
+    padding: 4px;
+}
+
+
+
 div.colorControl {
     float: left;
     display: none;
@@ -692,6 +822,7 @@ div.toggleFeatures> label:last-child {
 * {
     box-sizing: border-box;
 }
+
 input.checkbox {
     opacity: 0;
     position: absolute;
@@ -922,15 +1053,6 @@ input.ui-colorpicker-hex-input {
 
 
 
-/*
-    media for netbooks adn large tablets
-
-*/
-
-@media screen and (max-width: 959px) {
-  
-}
-
 .name_watts> .inputFieldLabel, .name_count> .inputFieldLabel, .name_time> .inputFieldLabel, .name_energy> .inputFieldLabel, .name_mass> .inputFieldLabel, .name_timeToBreathOut> .inputFieldLabel, .name_volume_100> .inputFieldLabel, .name_volume_inAir> .inputFieldLabel, .name_number> .inputFieldLabel, .name_density> .inputFieldLabel, .name_volume> .inputFieldLabel, .name_colours> .inputFieldLabel, .name_randomLayout> .inputFieldLabel, .name_numberOfClones> .inputFieldLabel, .name_ratios> .inputFieldLabel, .name_efficiency> .inputFieldLabel, .modelOutputContainer> .containerLabel, .visualisationOutputContainer> .containerLabel {
     background-size: cover;
 }
@@ -1080,4 +1202,243 @@ input.ui-colorpicker-hex-input {
     background-image: url(/static/graphics/thisEquals/icons/visualisation.svg);
     width: 27px;
     height: 27px;
+}
+
+
+/*
+    media for netbooks and large tablets
+
+*/
+
+@media screen and (max-width: 959px) {
+    #top{
+      height: 64px;
+    }
+    .top{
+      line-height: 65px;
+    }
+    #logo> img {
+      width: 180px;
+    }
+    div.modelClasses {
+      bottom: 0;
+      right: 0;
+      top: initial;
+      left: initial;
+    }
+    .hamburger{
+      bottom: 5px;
+      right: 15px;
+      top: initial;
+      left: initial;
+    }
+
+    div.model_options{
+      width: 40%;
+    }
+    input.svgTextDescription, input.custom_svgNameInput {
+      width: 205px;
+    }
+    div.modelSvgOutput{
+      width: 57%;
+      height: 380px;
+      padding-top: 40px;
+    }
+    div.svgOutput {
+        width: 380px;
+        height: 300px;
+    }
+    div.svgModelRoot {
+      height: 300px;
+    }
+
+    #axis {
+      margin-right: 20px;
+    }
+    .ch_axis {
+        margin-left: 0;
+    }
+    #reference {
+      margin-right: 10px;
+    }
+    .ch_reference {
+      margin-left: 10px;
+    }
+    #text_description {
+      margin-right: 0;
+    }
+    .ch_description {
+      margin-left: 20px;
+    }
+
+    div.customSVGPane.googleConnect {
+      width: 100%;
+    }
+}
+
+
+@media screen and (max-width: 768px){
+
+    #modelClassUL{
+      padding-top: 40px;
+    }
+    .ripplelink {
+      height: 70px;
+    }
+    .modelClassLI img {
+      width: 30px;
+    }
+    .modelClassLI h3 {
+      line-height: 32px;
+    }
+    div.model_box_ctrl {
+      position: relative;
+      height: 60px;
+      width: 32%;
+      float: left;
+      margin-bottom: 10px;
+      background-color: #fff;
+      background-size: 33px;
+      background-repeat: no-repeat;
+      background-position: center;
+      border-radius: 3px;
+      -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+      box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+      -webkit-transition: all .3s cubic-bezier(0.95, -0.09, .35, .95);
+      transition: all .3s cubic-bezier(0.95, -0.09, .35, .95);
+      overflow: hidden;
+    }
+    div.model_box_ctrl::before {
+      content: '';
+      position: absolute;
+      background: rgba(0, 0, 0, 0);
+      -webkit-transition: all .3s cubic-bezier(0.95, -0.09, .35, .95);
+      transition: all .3s cubic-bezier(0.95, -0.09, .35, .95);
+    }
+    div.model_box_ctrl.active {
+      background-size: 40px;
+      -webkit-box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.12);
+      box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.12);
+    }
+    div.model_box_ctrl.shadow::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, .5);
+      border-radius: 3px;
+    }
+    div.boxSliders{
+        background-image: url(/static/graphics/thisEquals/icons/box_sliders.svg);
+    }
+    div.boxOutputCtrl{
+        margin-left: 2%;
+        margin-right: 2%;
+        background-image: url(/static/graphics/thisEquals/icons/box_visual.svg);
+    }
+    div.boxCustomSvg{
+        background-image: url(/static/graphics/thisEquals/icons/box_custom.svg);
+    }
+    div.model_options {
+        position: relative;
+        width: 100%;
+        z-index: 1;
+        max-height: 0;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        -webkit-transition: all .6s cubic-bezier(0.95, -0.09, .35, .95);
+        transition: all .6s cubic-bezier(0.95, -0.09, .35, .95);
+    }
+    input.svgTextDescription, input.custom_svgNameInput {
+        width: 90%;
+    }
+    div.modelSvgOutput{
+      position: relative;
+      top: 10px;
+      width: 100%;
+      float: left;
+      transition: top .3s ease-in;
+    }
+    div.svgOutput {
+      width: 330px;
+    }
+    div.model_options.active {
+        height: inherit;
+        padding: 20px;
+        max-height: 600px;
+    }
+    .close_model {
+        position: absolute;
+        width: 98px;
+        margin-left: -49px;
+        left: 50%;
+        bottom: 250px;
+        color: #fff;
+        font-size: 200px;
+        z-index: 9999;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    div.modelClasses.active {
+      width: 100%;
+    }
+    input.svgTextDescription, input.custom_svgNameInput {
+        width: 85%;
+    }
+    .hamburger {
+      bottom: 22px;
+      width: 58px;
+      height: 58px;
+      padding: 13px;
+      padding-top: 16px;
+    }
+    .hamburger::before {
+      width: 58px;
+      height: 58px;
+    }
+    .hamburger-box {
+      width: 30px;
+      height: 25px;
+    }
+    .hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+      width: 30px;
+    }
+    .hamburger-inner::before {
+      top: -8px;
+    }
+    .hamburger-inner::after {
+      bottom: -8px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    #modelClassUL {
+      padding-top: 60px;
+    }
+    .ripplelink {
+      height: 60px;
+      padding: 16px 0;
+      padding-left: 40px;
+    }
+    .modelClassLI img {
+      width: 27px;
+    }
+    .modelClassLI h3 {
+      line-height: 28px;
+      font-size: 17px;
+    }
+    div.modelSvgOutput {
+      height: 330px;
+    }
+    div.svgOutput {
+      width: 250px;
+      height: 250px;
+    }
+    div.svgModelRoot {
+      height: 250px;
+    }
 }

@@ -28,8 +28,6 @@ body::scrollbar {
   filter: blur(10px);
   z-index: 9999;
 }
-
-
 @-webkit-keyframes greet {
     0%{background-position:0% 13%}
     50%{background-position:100% 88%}
@@ -39,6 +37,39 @@ body::scrollbar {
     0%{background-position:0% 13%}
     50%{background-position:100% 88%}
     100%{background-position:0% 13%}
+}
+
+.greet_container {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  line-height: 100vh;
+  text-align: center;
+  z-index: 9999;
+}
+.greet_img {
+  vertical-align: middle;
+  width: 400px;
+  opacity: .7;
+  transition: all .3s ease-in;
+}
+.greet_text {
+  vertical-align: middle;
+  display: inline-block;
+  font-size: 39px;
+  font-family: Roboto;
+  line-height: 0;
+  margin-left: 50px;
+  margin-top: -18px;
+  opacity: .7;
+  transition: all .3s ease-in;
+}
+.greet_text, .greet_img:hover {
+  opacity: 1;
+  cursor: pointer;
 }
 
 .open-menu{
