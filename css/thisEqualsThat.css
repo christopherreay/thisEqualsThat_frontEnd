@@ -172,9 +172,10 @@ div.copyrightContainer> p {
     position: absolute;
     top: 5px;
     left: 15px;
-    width: 70px;
-    height: 70px;
-    padding: 17px;
+    width: 62px;
+    height: 62px;
+    padding: 13px;
+    padding-top: 19px;
     background: transparent;
     border-radius: 50%;
     display: inline-block;
@@ -199,8 +200,8 @@ div.copyrightContainer> p {
     position: absolute;
     top: 0;
     left: 0;
-    width: 70px;
-    height: 70px;
+    width: 62px;
+    height: 62px;
     border-radius: 50%;
     background: #fff;
     z-index: -1;
@@ -219,8 +220,8 @@ div.copyrightContainer> p {
 
 
 .hamburger-box {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 24px;
     display: inline-block;
     position: relative;
 }
@@ -230,8 +231,8 @@ div.copyrightContainer> p {
     margin-top: -2px;
 }
 .hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
-    width: 36px;
-    height: 4px;
+    width: 34px;
+    height: 3px;
     background-color: #000;
     border-radius: 4px;
     position: absolute;
@@ -249,10 +250,10 @@ div.copyrightContainer> p {
     display: block;
 }
 .hamburger-inner::before {
-    top: -10px;
+    top: -9px;
 }
 .hamburger-inner::after {
-    bottom: -10px;
+    bottom: -9px;
 }
 
 #modelClassUL {
