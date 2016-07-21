@@ -127,24 +127,24 @@ thisEqualsThat.oop = function()
             $(this).addClass('active');
             $(this).siblings().removeClass('active');
 
-            var ink, d, x, y;
-
-                if($(this).find(".ink").length === 0){
-                    $(this).prepend("<span class='ink'></span>");
-                }
-
-                ink = $(this).find(".ink");
-                ink.removeClass("animate");
-
-                if(!ink.height() && !ink.width()){
-                    d = Math.max($(this).outerWidth(), $(this).outerHeight());
-                    ink.css({height: d, width: d});
-                }
-
-                x = event.pageX - $(this).offset().left - ink.width()/2;
-                y = event.pageY - $(this).offset().top - ink.height()/2;
-
-                ink.css({top: y+'px', left: x+'px'}).addClass("animate");
+            // var ink, d, x, y;
+            //
+            //     if($(this).find(".ink").length === 0){
+            //         $(this).prepend("<span class='ink'></span>");
+            //     }
+            //
+            //     ink = $(this).find(".ink");
+            //     ink.removeClass("animate");
+            //
+            //     if(!ink.height() && !ink.width()){
+            //         d = Math.max($(this).outerWidth(), $(this).outerHeight());
+            //         ink.css({height: d, width: d});
+            //     }
+            //
+            //     x = event.pageX - $(this).offset().left - ink.width()/2;
+            //     y = event.pageY - $(this).offset().top - ink.height()/2;
+            //
+            //     ink.css({top: y+'px', left: x+'px'}).addClass("animate");
 
           }
         );
@@ -172,8 +172,8 @@ thisEqualsThat.oop = function()
         { "class": "modelClassLI ripplelink cyan",
         }
       ).data("modelClass", this)
-       .append( $('<h3>' + this.name + '</h3>' ) )
-       .append( $("<img />", { src: this.imageURL } ));
+       .append( $('<h3>' + this.name + '</h3>' ).addClass('modelDesc') )
+       .append( $("<img />", { src: this.imageURL } ).addClass('modelImg') );
 
   }
   this.ModelClass.prototype.imageBaseURL =  "/static/graphics/thisEquals/modelClasses/";

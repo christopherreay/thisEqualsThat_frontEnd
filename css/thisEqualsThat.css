@@ -269,7 +269,7 @@ div.copyrightContainer> p {
   height: 100%;
   margin: 0;
   padding: 0px;
-  padding-top: 70px;
+  padding-top: 120px;
   padding-bottom: 80px;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -303,12 +303,13 @@ div.modelClasses.active{
     cursor: pointer;
     float: left;
     width: 100%;
-    height: 100px;
+    height: 60px;
     text-align: center;
+    padding: 5px 0;
+    margin-bottom: 25px;
     color: #fff;
     text-decoration: none;
     position: relative;
-    overflow: hidden;
     -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
     transition: all .3s cubic-bezier(.4,0,.2,1);
     z-index: 0;
@@ -367,22 +368,22 @@ div.modelClasses.active{
     right: 0;
 }*/
 .modelClassLI > img {
-    width: 45px;
+    width: 50px;
     -webkit-transform: scale(1);
     transform: scale(1);
     -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
     transition: all .3s cubic-bezier(.4,0,.2,1);
 }
 .modelClassLI > h3 {
-    display: block;
-    width: 175px;
-    margin: 0 auto;
-    margin-bottom: 10px;
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    margin-left: -90px;
+    width: 180px;
     background: #eee;
     padding: 5px 20px;
     border-radius: 3px;
     opacity: 0;
-    font-family: Roboto;
     color: #000;
     font-size: 18px;
     font-weight: 400;
