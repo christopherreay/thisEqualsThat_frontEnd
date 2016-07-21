@@ -355,10 +355,23 @@ div.modelClasses.active{
     }
 }
 
+.modelClassLI::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: -100%;
+    bottom: 0;
+    border-bottom: 2px solid #757575;
+    -webkit-transition: all .5s cubic-bezier(.4,0,.2,1);
+    transition: all .5s cubic-bezier(.4,0,.2,1);
+}
+.modelClassLI:hover::after {
+    right: 0;
+}
 .modelClassLI > img {
     float: left;
     width: 40px;
-    margin-right: 155px;
     -webkit-transform: scale(1);
     transform: scale(1);
     -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
@@ -371,9 +384,9 @@ div.modelClasses.active{
     font-weight: 400;
     line-height: 40px;
     float: left;
-    margin-right: -100%;
-    -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
-    transition: all .3s cubic-bezier(.4,0,.2,1);
+    margin-left: 100%;
+    -webkit-transition: all .4s cubic-bezier(0.51, 0.49, 0.22, 1.29);
+    transition: all .4s cubic-bezier(0.51, 0.49, 0.22, 1.29);
 }
 .modelClassLI.active,
 .modelClassLI:hover {
@@ -382,13 +395,13 @@ div.modelClasses.active{
 }
 .modelClassLI.active > img,
 .modelClassLI:hover > img {
-    margin-right: 50px;
     -webkit-transform: scale(1.15);
     transform: scale(1.15);
 }
 .modelClassLI.active > h3,
 .modelClassLI:hover > h3 {
     opacity: 1;
+    margin-left: 35px;
 }
 
 .masterReferenceSVGSelectList {
