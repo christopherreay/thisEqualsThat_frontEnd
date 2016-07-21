@@ -124,6 +124,9 @@ thisEqualsThat.oop = function()
             console.log(modelClass);
             modelClass.getModelInstance(thisEqualsThat.scene.setCurrentModel);
 
+            $(this).addClass('active');
+            $(this).siblings().removeClass('active');
+
             var ink, d, x, y;
 
                 if($(this).find(".ink").length === 0){
@@ -169,9 +172,7 @@ thisEqualsThat.oop = function()
         { "class": "modelClassLI ripplelink cyan"
         }
        ).data("modelClass", this)
-      //  .append('<div class="ripplelink cyan" />')
        .append( $("<img />", { src: this.imageURL } ))
-      //  .append( $("<div class='item_description' />", { text: this.name } ))
        .append( $("<h3 />", { text: this.name } ));
   }
   this.ModelClass.prototype.imageBaseURL =  "/static/graphics/thisEquals/modelClasses/";

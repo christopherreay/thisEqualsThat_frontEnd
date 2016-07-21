@@ -267,6 +267,12 @@ div.copyrightContainer> p {
   overflow-y: scroll;
   overflow-x: hidden;
 }
+#modelClassUL::-webkit-scrollbar {
+  display: none;
+}
+#modelClassUL::scrollbar {
+  display: none;
+}
 div.modelClasses {
     position: fixed;
     top: 0;
@@ -293,7 +299,7 @@ div.modelClasses.active{
     height: 80px;
     line-height: 80px;
     padding: 20px 0;
-    padding-left: 40px;
+    padding-left: 50px;
     text-align: left;
     color: #fff;
     text-decoration: none;
@@ -303,17 +309,9 @@ div.modelClasses.active{
     transition: all 0.2s ease;
     z-index: 0;
 }
-
 .ripplelink:hover {
-    z-index: 1000;
-    background: rgba(158, 158, 158, .5);
     /*box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
-}
-.ripplelink:hover > img {
-    opacity: 1;
-    -webkit-transform: scale(1.15);
-    transform: scale(1.15);
 }
 .ink {
     display: block;
@@ -350,23 +348,41 @@ div.modelClasses.active{
     }
 }
 
-
-.modelClassLI img {
+.modelClassLI > img {
     float: right;
     width: 40px;
-    margin-right: 30px;
-    opacity: 0;
+    margin-right: 155px;
     -webkit-transform: scale(1);
     transform: scale(1);
     -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
     transition: all .3s cubic-bezier(.4,0,.2,1);
 }
-.modelClassLI h3 {
+.modelClassLI > h3 {
+    opacity: 0;
     font-family: Roboto;
     color: #000;
     font-weight: 400;
     line-height: 40px;
     float: left;
+    margin-left: -100%;
+    -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
+    transition: all .3s cubic-bezier(.4,0,.2,1);
+}
+.modelClassLI.active,
+.modelClassLI:hover {
+    z-index: 1000;
+    background: rgba(158, 158, 158, .5);
+}
+.modelClassLI.active > img,
+.modelClassLI:hover > img {
+    margin-right: 50px;
+    -webkit-transform: scale(1.15);
+    transform: scale(1.15);
+}
+.modelClassLI.active > h3,
+.modelClassLI:hover > h3 {
+    margin-left: 0;
+    opacity: 1;
 }
 
 .masterReferenceSVGSelectList {
