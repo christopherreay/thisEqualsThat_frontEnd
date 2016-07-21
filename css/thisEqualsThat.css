@@ -1,8 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+html, body {
+    height: 100%;
+}
 body {
     font-family: Roboto;
     background: #EEEEEE;
-    min-height: 100%;
+    padding-bottom: 50px;
 }
 body.open {
     overflow: hidden;
@@ -309,8 +312,8 @@ div.modelClasses.active{
     text-decoration: none;
     position: relative;
     overflow: hidden;
-    -webkit-transition: all 0.2s ease;
-    transition: all 0.2s ease;
+    -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
+    transition: all .3s cubic-bezier(.4,0,.2,1);
     z-index: 0;
 }
 .ripplelink:hover {
@@ -353,7 +356,7 @@ div.modelClasses.active{
 }
 
 .modelClassLI > img {
-    float: right;
+    float: left;
     width: 40px;
     margin-right: 155px;
     -webkit-transform: scale(1);
@@ -368,7 +371,7 @@ div.modelClasses.active{
     font-weight: 400;
     line-height: 40px;
     float: left;
-    margin-left: -100%;
+    margin-right: -100%;
     -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
     transition: all .3s cubic-bezier(.4,0,.2,1);
 }
@@ -385,7 +388,6 @@ div.modelClasses.active{
 }
 .modelClassLI.active > h3,
 .modelClassLI:hover > h3 {
-    margin-left: 0;
     opacity: 1;
 }
 
