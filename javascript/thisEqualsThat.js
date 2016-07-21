@@ -169,9 +169,9 @@ thisEqualsThat.oop = function()
     this.imageURL = this.imageBaseURL+modelClassName+".svg";
     this.modelClassListLI =
       $("<li />",
-        { "class": "modelClassLI ripplelink cyan"
+        { "class": "modelClassLI ripplelink cyan",
         }
-       ).data("modelClass", this)
+      ).data("modelClass", this)
        .append( $("<img />", { src: this.imageURL } ))
        .append( $("<h3 />", { text: this.name } ));
   }
