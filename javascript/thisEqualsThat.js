@@ -172,8 +172,9 @@ thisEqualsThat.oop = function()
         { "class": "modelClassLI ripplelink cyan",
         }
       ).data("modelClass", this)
-       .append( $("<img />", { src: this.imageURL } ))
-       .append( $("<h3 />", { text: this.name } ));
+       .append( $('<h3>' + this.name + '</h3>' ) )
+       .append( $("<img />", { src: this.imageURL } ));
+
   }
   this.ModelClass.prototype.imageBaseURL =  "/static/graphics/thisEquals/modelClasses/";
   this.ModelClass.prototype.getModelInstance = function(successFunction)
