@@ -2,7 +2,7 @@
 body {
     font-family: Roboto;
     background: #EEEEEE;
-    padding-bottom: 50px;
+    min-height: 100%;
 }
 body.open {
     overflow: hidden;
@@ -132,8 +132,7 @@ div.bottomModelDiv {
 }
 .top {
     max-width: 960px;
-    line-height: 85px;
-    text-align: center;
+    line-height: 80px;
 }
 #top {
     -webkit-box-shadow: 0 2px 5px rgba(0,0,0,0.26);
@@ -144,8 +143,13 @@ div.bottomModelDiv {
     position: relative;
 }
 #logo> img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -26px;
+    margin-left: -110px;
     width: 220px;
-    vertical-align: middle;
+    height: 52px;
 }
 div.copyrightContainer {
     bottom: 0;
@@ -398,7 +402,7 @@ div.modelClasses.active{
 
 div.model {
     position: relative;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 div.modelInstance {
     width: 100%;
@@ -1231,14 +1235,17 @@ input.ui-colorpicker-hex-input {
 */
 
 @media screen and (max-width: 959px) {
-    #top{
-      height: 64px;
+    #top {
+      height: 60px;
     }
-    .top{
-      line-height: 65px;
+    .top {
+      line-height: 60px;
     }
-    #logo> img {
-      width: 180px;
+    #logo > img {
+      margin-top: -21px;
+      margin-left: -89px;
+      width: 178px;
+      height: 42px;
     }
     div.modelClasses {
       bottom: 0;
@@ -1246,20 +1253,22 @@ input.ui-colorpicker-hex-input {
       top: initial;
       left: initial;
     }
-    .hamburger{
+    .hamburger {
       bottom: 5px;
       right: 15px;
       top: initial;
       left: initial;
     }
-
-    div.model_options{
+    .hamburger:before {
+      background: rgba(255, 255, 255, 1);
+    }
+    div.model_options {
       width: 40%;
     }
     input.svgTextDescription, input.custom_svgNameInput {
       width: 205px;
     }
-    div.modelSvgOutput{
+    div.modelSvgOutput {
       width: 57%;
       height: 380px;
       padding-top: 40px;
@@ -1290,7 +1299,6 @@ input.ui-colorpicker-hex-input {
     .ch_description {
       margin-left: 20px;
     }
-
     div.customSVGPane.googleConnect {
       width: 100%;
     }
@@ -1298,7 +1306,18 @@ input.ui-colorpicker-hex-input {
 
 
 @media screen and (max-width: 768px){
-
+    #top {
+      height: 46px;
+    }
+    .top {
+      line-height: 46px;
+    }
+    #logo > img {
+      margin-top: -16px;
+      margin-left: -67px;
+      width: 134px;
+      height: 32px;
+    }
     #modelClassUL{
       padding-top: 40px;
     }
@@ -1399,6 +1418,9 @@ input.ui-colorpicker-hex-input {
         color: #fff;
         font-size: 200px;
         z-index: 9999;
+    }
+    div.customSVGPane.googleConnect {
+      display: none;
     }
 }
 
