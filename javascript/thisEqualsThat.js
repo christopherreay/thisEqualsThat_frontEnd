@@ -1,40 +1,11 @@
-// $().ready(function() {
-//
-//     var greetBg = $('<div class="greeting" />'),
-//         greetContainer = $('<div class="greet_container">' +
-//             '<img class="greet_img" src="/static/graphics/thisEquals/this-equals-that.png" alt="Visual Tools">' +
-//             '<h1 class="greet_text" />' +
-//             '</div>'
-//         );
-//
-//       $('body').append(greetBg)
-//                .append(greetContainer);
-//
-//       greetContainer.fadeIn(800);
-//       setTimeout(function() {
-//           var txt = 'Welcome to "thisEqualsThat", Enjoy',
-//               tot = txt.length,
-//               ch = 0;
-//
-//           (function typeIt() {
-//               if (ch > tot) return;
-//               $('.greet_text').text(txt.substring(0, ch++));
-//               setTimeout(typeIt, ~~(Math.random() * (150 - 70 + 1) + 60));
-//           }());
-//       }, 1000);
-//
-//       setTimeout(function() {
-//           $('.greet_container').fadeOut(300);
-//           $('.greeting').fadeOut(600);
-//       }, 6000);
-// });
-
-
 window.thisEqualsThat = {};
-thisEqualsThat.graphicLoadVersion = "0.1.1.3.20151102.newReferenceSVGs.womanPainting3.0"
+thisEqualsThat.graphicLoadVersion = "0.1.1.3.20160712.1727"
 
-thisEqualsThat.svg = {};
-thisEqualsThat.svgStore = {};
+
+thisEqualsThat.svg          = {};
+thisEqualsThat.svgStore     = {};
+thisEqualsThat.svgDefsStore = {};
+thisEqualsThat.memoise_normalDistribution = {};
 
 
 window.attachFunc = function(parent, name, functionContent)
@@ -46,11 +17,11 @@ window.attachFunc = function(parent, name, functionContent)
 }
 function PopupCenter(url, title, w, h)
 { // Fixes dual-screen position                         Most browsers      Firefox
-  var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
-  var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+  var dualScreenLeft  = window.screenLeft != undefined ? window.screenLeft : screen.left;
+  var dualScreenTop   = window.screenTop  != undefined ? window.screenTop : screen.top;
 
-  var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
-  var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+  var width   = window.innerWidth   ? window.innerWidth   : document.documentElement.clientWidth  ? document.documentElement.clientWidth  : screen.width;
+  var height  = window.innerHeight  ? window.innerHeight  : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
 
   var left = ((width / 2) - (w / 2)) + dualScreenLeft;
   var top = ((height / 2) - (h / 2)) + dualScreenTop;
@@ -62,6 +33,57 @@ function PopupCenter(url, title, w, h)
   }
   return newWindow;
 }
+
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)        
+    } : null;
+}
+function normalDistribution(namespace, reset=false)
+{   var context = thisEqualsThat.memoise_normalDistribution;
+
+    if (! context.hasOwnProperty(namespace) )
+    { context[namespace] = 
+      { "counter": 0,
+        "length":  0,
+        "numbers": [],        
+      };
+    }
+    subContext = context[namespace];
+    if (reset === true)
+    { subContext.counter = 0;
+      return;
+    }
+
+    if (subContext.counter < subContext.length)
+    { return subContext.numbers[subContext.counter++];
+    }
+
+    var nsamples = 6
+    var sigma = 1
+    var mu=0
+
+    var run_total = 0
+    for(var i=0 ; i<nsamples ; i++){
+       run_total += Math.random()
+    }
+
+    var toReturn = sigma*(run_total - nsamples/2)/(nsamples/2) + mu
+    subContext.numbers.push(toReturn);
+    subContext.length++;
+    subContext.counter++;
+
+    return toReturn;
+}
+// function normalDistribution() {
+//     var u = 1 - Math.random(); // Subtraction to flip [0, 1) to (0, 1].
+//     var v = 1 - Math.random();
+//     return Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
+// }
+
 thisEqualsThat.oop = function()
 { this.ThisEqualsThatScene = function(displayContainerDiv)
   { this.displayContainerDiv = displayContainerDiv;
@@ -102,7 +124,8 @@ thisEqualsThat.oop = function()
     { url: "getModelClasses",
       dataType: "json",
       success: function(data, status, request)
-      { console.log(data, status, request);
+      { console.log("Yogi 1 ", data, status, request);
+	console.log("yogi 1.1",  request);
         $.each(data, function(index, value)
           { This[value] = new ThisEqualsThat.ModelClass(value);
           }
@@ -110,7 +133,9 @@ thisEqualsThat.oop = function()
         This.display(This.thisEqualsThatScene)
       },
     };
+console.log("yogi 2 ", ajaxOptions.url);
     $.ajax(ajaxOptions);
+	
   }
   this.ModelClasses.prototype.display = function(thisEqualsThatScene)
   { var modelClassesContainerDiv = thisEqualsThatScene.modelClassesContainerDiv;
@@ -121,7 +146,7 @@ thisEqualsThat.oop = function()
       ).on("click", ".modelClassLI",
           function(event)
           { var modelClass = $(event.currentTarget).data("modelClass");
-            console.log(modelClass);
+            console.log("yogi 3 ",modelClass);
             modelClass.getModelInstance(thisEqualsThat.scene.setCurrentModel);
 
             $(this).addClass('active');
@@ -188,7 +213,7 @@ thisEqualsThat.oop = function()
         data: { modelClassName: this.name},
         success: function(data, status, request)
         { console.log(data, status, request);
-          This.modelInstance = new ThisEqualsThat.ModelInstance(this, data[0]);
+          This.modelInstance = new ThisEqualsThat.ModelInstance(This, data[0]);
           This.modelInstance.modelPosition = "top";
           successFunction(This.modelInstance);
           This.modelInstance.inputFieldAltered(
@@ -332,9 +357,9 @@ thisEqualsThat.oop = function()
               var referenceSVGSelectListItemDiv = $("<div class='referenceSVGSelectListItem' />").attr("thisEquals_fileHandle", referenceSVGData.fileHandle);
               var referenceSVGSelectListItemLI  = $("<li />");
               var referenceSVGSelectListItemSVG = $(document.createElementNS(d3.ns.prefix.svg, "svg"))
-                  .attr("xmlns",        "http://www.w3.org/2000/svg")
-                  .attr("xmlns:xlink",  "http://www.w3.org/1999/xlink")
-                  .attr("xmlns:z",      "http://debeissat.nicolas.free.fr/svg3d/svg3d.rng")
+                  .attr("xmlns",        "//www.w3.org/2000/svg")
+                  .attr("xmlns:xlink",  "//www.w3.org/1999/xlink")
+                  .attr("xmlns:z",      "//debeissat.nicolas.free.fr/svg3d/svg3d.rng")
                   .attr("width",        "100%")
                   .attr("height",       "100%")
               var clonedG = referenceRootG.clone().appendTo(referenceSVGSelectListItemSVG);
@@ -371,6 +396,7 @@ thisEqualsThat.oop = function()
     this.bottomModelHistory   = {};
 
     this.disable_createSaveLink = false;
+    this.disable_inputFieldAltered = false;
   }
   this.ModelInstance.prototype.getFieldData = function(fieldAddress)
   { console.log("ModelInstance.getFieldData", fieldAddress);
@@ -406,14 +432,16 @@ thisEqualsThat.oop = function()
   { $this = $(this);
     var modelField = $(this).data("thisEquals.modelField");
     $modelField = $(modelField)
-    modelField.uiSlider.data("thisEquals.disableWriteToTextField", true);
-    modelField.uiSlider.slider("value", modelField.actualToSlider(modelField.uiValueText.val()));
-    $modelField.data("thisEquals.oldValue", modelField.uiValueText.val());
+    if (modelField.hasOwnProperty("uiSlider"))
+    { modelField.uiSlider.data("thisEquals.disableWriteToTextField", true);
+      modelField.uiSlider.slider("value", modelField.actualToSlider(modelField.uiValue_slider.val()));
+    }
+    $modelField.data("thisEquals.oldValue", modelField.uiValue_slider.val());
     console.log($(modelField).data("thisEquals.oldValue"));
 
     modelField.modelInstance.inputFieldAltered(
               { inputField: modelField.fullAddress,
-                newValue:   modelField.uiValueText.val()
+                newValue:   modelField.uiValue_slider.val()
               });
   }
   this.ModelInstance.prototype.getOutputFields = function()
@@ -503,32 +531,57 @@ thisEqualsThat.oop = function()
     return this;
   }
 
-  this.ModelInstance.prototype.inputFieldAltered = function(fieldChangeData, successFunction)
-  { var This = this;
-    fieldChangeData	= $.extend({modelInstanceID: this.id}, fieldChangeData);
-    var ajaxOptions =
-      { url: "inputFieldAltered",
-        dataType: "json",
-        data: fieldChangeData,
-        success: function (data, status, request)
-        { console.log(data);
-          This.lastAlteredOutputField.data.currentValue = data.newValue;
-          This.lastAlteredVisualisationField.data.currentValue = data.svg3dDisplayJSON.svgFieldValue;
-          This.svg3dDisplayJSON = data.svg3dDisplayJSON;
-          This.displayCurrentOutput()
-          if (    This.bottomModelInstance && data.bottomModelData
-              &&  This.bottomModelInstance.lastAlteredOutputField && This.bottomModelInstance.lastAlteredOutputField.data)
-          { This.bottomModelInstance.lastAlteredOutputField.data.currentValue = data.bottomModelData.newValue
-            This.bottomModelInstance.lastAlteredVisualisationField.data.currentValue = data.bottomModelData.svg3dDisplayJSON.svgFieldValue;
-            This.bottomModelInstance.svg3dDisplayJSON = data.bottomModelData.svg3dDisplayJSON
-            This.bottomModelInstance.displayCurrentOutput()
-          }
-          if (successFunction)
-            successFunction(data, status, request);
-        }
-      };
-    console.log(ajaxOptions);
-    $.ajax(ajaxOptions);
+  this.ModelInstance.prototype.inputFieldAltered = function(fieldChangeData, successFunction, doNotUpdateUI)
+  { if (! this.disable_inputFieldAltered)
+    { this.disable_inputFieldAltered = true;
+      if (!doNotUpdateUI) doNotUpdateUI = false;
+      var This = this;
+      fieldChangeData	= $.extend({modelInstanceID: this.id}, fieldChangeData);
+      var ajaxOptions =
+        { "url": "inputFieldAltered",
+          "dataType": "json",
+          "data": fieldChangeData,
+          "success": function (data, status, request)
+          { console.log(data);
+            // This.lastAlteredOutputField.data.currentValue = data.newValue;
+            // This.lastAlteredVisualisationField.data.currentValue = data.svg3dDisplayJSON.svgFieldValue;
+
+            // changed data. Now it has all the values of all the fields in it. Going to try to update the UI accordingly
+            for (var fieldName in data.fieldValues)
+            { try
+              { var inputField = This.inputFields[fieldName];
+                var newValue = data.fieldValues[fieldName];
+
+                if (newValue != inputField.data.currentValue)
+                { inputField.setValue(newValue);              
+                }
+              }
+              catch (e)
+              {}
+            }
+
+            This.svg3dDisplayJSON = data.svg3dDisplayJSON;
+            if (!doNotUpdateUI) This.displayCurrentOutput()
+            if (    This.bottomModelInstance && data.bottomModelData 
+                &&  This.bottomModelInstance.lastAlteredOutputField && This.bottomModelInstance.lastAlteredOutputField.data)
+            { This.bottomModelInstance.lastAlteredOutputField.data.currentValue = data.bottomModelData.newValue
+              This.bottomModelInstance.lastAlteredVisualisationField.data.currentValue = data.bottomModelData.svg3dDisplayJSON.svgFieldValue;
+              This.bottomModelInstance.svg3dDisplayJSON = data.bottomModelData.svg3dDisplayJSON
+              if (! doNotUpdateUI) This.bottomModelInstance.displayCurrentOutput()
+            }
+            if (successFunction)
+              successFunction(data, status, request);
+          },
+          "always": function()
+          {  This.disable_inputFieldAltered = false;            
+          },
+          "complete": function()
+          {  This.disable_inputFieldAltered = false;            
+          },
+        };
+      console.log(ajaxOptions);
+      $.ajax(ajaxOptions);
+    }
   }
   this.ModelInstance.prototype.processInputFieldAlteredResponse = function(data)
   { this.lastAlteredOutputField.data.currentValue = data.newValue;
@@ -623,7 +676,7 @@ thisEqualsThat.oop = function()
       //var outputsText = "outputs"
       display.displayElement =
         $("<div />",
-          { "id"    : "modelInstanceDiv."+this.modelClass+"."+this.id
+          { "id"    : "modelInstanceDiv_"+this.modelClass.name+"_"+this.id
           }
         );
 
@@ -708,15 +761,22 @@ thisEqualsThat.oop = function()
 
       display.svgOutput             = $("<div class='svgOutput'  />");
 
+      if (! this.hasOwnProperty("svgHUD"))
+      { this.svgHUD = new ThisEqualsThat.SVGHUD(this, display.svgOutput);
+      }
+      else
+      { this.svgHUD.attach(display.svgOutput);        
+      }
+
       display.svgTextInput          = $("<input type='text' class='svgTextDescription' placeholder='Enter Text Description'/>");
       display.svgSaveLink           = $("<div class='svgSaveLink btn'   />");
       display.svgModelRoot          = $("<div class='svgModelRoot'  />");
       display.referenceSVG          = $("<div class='referenceSVG'  />");
       var containerSVG        = document.createElementNS(d3.ns.prefix.svg, "svg");
       $(containerSVG)
-          .attr("xmlns",        "http://www.w3.org/2000/svg")
-          .attr("xmlns:xlink",  "http://www.w3.org/1999/xlink")
-          .attr("xmlns:z",      "http://debeissat.nicolas.free.fr/svg3d/svg3d.rng")
+          .attr("xmlns",        "//www.w3.org/2000/svg")
+          .attr("xmlns:xlink",  "//www.w3.org/1999/xlink")
+          .attr("xmlns:z",      "//debeissat.nicolas.free.fr/svg3d/svg3d.rng")
           .attr("id",           "svgHTMLElement_"+this.id)
           .attr("width",        "100%")
           .attr("height",       "100%")
@@ -724,8 +784,10 @@ thisEqualsThat.oop = function()
           .attr("z:yInfinite",  "100")
           .attr("z:zRatio",     "5");
 
+      display.svgDefs                = d3.select(containerSVG)     .append("defs").attr("id", "svgDefsG_"+this.id).node();
       var svgTextDescription          = d3.select(containerSVG)     .append("text").attr("id", "svgTextDescription_"+this.id).text("Enter Text Description").node();
       display.svgTextDescription      = svgTextDescription;
+
 
       //display.svgTextDescription.text("Hello World");
       var svgTranslatableG            = d3.select(containerSVG)     .append("g").attr("id", "svgTranslatableG_" +this.id) .node();
@@ -777,131 +839,134 @@ thisEqualsThat.oop = function()
         display.toggleFeatures.append(display.toggle[name+".label"]);
       }
 
-      display.colorControl = $("<div id='colorControl_" + This.id + "' class='colorControl' />");
-      display.ccSelector   = $("<input id='ccSelector_" + This.id + "' type='text'      title='# for id, . for class'/>");
-      display.ccColor      = $("<input id='ccColor_"    + This.id + "' type='text'      title='yellow, red, or rgb(255,255,255) or rgba(255,255,255,1.0)'/>");
-      display.ccSubmit     = $("<input id='ccSubmit_"   + This.id + "' type='submit'    />");
-      display.ccSubmit.on("click",
-          function()
-          { $(containerSVG).find(display.ccSelector.val()).css("fill", display.ccColor.val())
-          }
-      );
-      display.ccRandomiseColors = $("<input id='ccRandomise_"   + This.id + "' type='button' value='Random'/>");
-      display.ccRandomiseColors.on("click",
-          function()
-          { $(svgVisualisationG).find("path")
-                .each(  function()
-                    { var colorRGB  = $(this).css("fill");
-                      if (colorRGB == null)
-                        colorRGB = "rgb(50, 50, 50)";
-                      if (colorRGB.indexOf("rgb") === 0)
-                      { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
-                        r = Number(rgb[1]);
-                        newR = Math.round(Math.max((((Math.random()* 10.0) - 5) ) + r, 0));
-                        g = Number(rgb[2]);
-                        newG = Math.round(Math.max((((Math.random()* 10.0) - 5) ) + g, 0));
-                        b = Number(rgb[3]);
-                        newB = Math.round(Math.max((((Math.random()* 10.0) - 5) ) + b, 0));
-                        if (4 in rgb && rgb[4] != "")
-                          newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
-                        else
-                          newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
-                        //$(this).css("fill", newRGB);
-                        //newStyle = this.getAttribute("style");
-                        //if (newStyle)+newRGB;
-                        this.setAttribute("style", newRGB);
-                      }
-                    }
-                )
-            This.svg_createSaveLink(This);
-          }
-      );
-      display.ccRandomiseColorsByGroup = $("<input id='ccRandomiseGroup_"   + This.id + "' type='button' value='Random Group'/>");
-      display.ccRandomiseColorsByGroup.on("click",
-          function()
-          { $(svgVisualisationG).find("g")
-                .each(  function()
-                    {
 
-                        var changeR = Math.round((((Math.random()* 10.0) - 5) ));
-                        var changeG = Math.round((((Math.random()* 10.0) - 5) ));
-                        var changeB = Math.round((((Math.random()* 10.0) - 5) ));
+      // display.colorControl = $("<div id='colorControl_" + This.id + "' class='colorControl' />");
+      // display.ccSelector   = $("<input id='ccSelector_" + This.id + "' type='text'      title='# for id, . for class'/>");
+      // display.ccColor      = $("<input id='ccColor_"    + This.id + "' type='text'      title='yellow, red, or rgb(255,255,255) or rgba(255,255,255,1.0)'/>");
+      // display.ccSubmit     = $("<input id='ccSubmit_"   + This.id + "' type='submit'    />");
+      // display.ccSubmit.on("click",
+      //     function()
+      //     { $(containerSVG).find(display.ccSelector.val()).css("fill", display.ccColor.val())
+      //     }
+      // );
+      // display.ccRandomiseColors = $("<input id='ccRandomise_"   + This.id + "' type='button' value='Random'/>");
+      // display.ccRandomiseColors_function = 
+      //     function(mult)
+      //     { $(svgVisualisationG).find("path")
+      //           .each(  function()
+      //               { var colorRGB  = $(this).css("fill");
+      //                 if (colorRGB == null)
+      //                   colorRGB = "rgb(50, 50, 50)";
+      //                 if (colorRGB.indexOf("rgb") === 0)
+      //                 { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
+      //                   r = Number(rgb[1]);
+      //                   newR = Math.round(Math.max((((mult * normalDistribution() * 10.0) - 5) ) + r, 0));
+      //                   g = Number(rgb[2]);
+      //                   newG = Math.round(Math.max((((mult * normalDistribution()* 10.0) - 5) ) + g, 0));
+      //                   b = Number(rgb[3]);
+      //                   newB = Math.round(Math.max((((mult * normalDistribution()* 10.0) - 5) ) + b, 0));
+      //                   if (4 in rgb && rgb[4] != "")
+      //                     newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
+      //                   else
+      //                     newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
+      //                   //$(this).css("fill", newRGB);
+      //                   //newStyle = this.getAttribute("style");
+      //                   //if (newStyle)+newRGB;
+      //                   this.setAttribute("style", newRGB);
+      //                 }
+      //               }
+      //           )
+      //       This.svg_createSaveLink(This);
+      //     };
+      // display.ccRandomiseColors.on("click", display.ccRandomiseColors_function);
 
-                        //$(this).css("fill", newRGB);
-                        //newStyle = this.getAttribute("style");
-                        //if (newStyle)+newRGB;
-                        $(this).find("path").each(function()
-                        {   var colorRGB  = $(this).css("fill");
-                            if (colorRGB == null)
-                              colorRGB = "rgb(50, 50, 50)";
-                            if (colorRGB.indexOf("rgb") === 0)
-                            { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
-                              var r = Number(rgb[1]);
-                              var newR = Math.max(r + changeR, 0);
-                              var g = Number(rgb[2]);
-                              var newG = Math.max(g + changeG, 0);
-                              var b = Number(rgb[3]);
-                              var newB = Math.max(b + changeB, 0);
-                              if (4 in rgb && rgb[4] != "")
-                                var newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
-                              else
-                                var newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
-                              this.setAttribute("style", newRGB);
-                            }
-                        }
-                        )
-                    }
-                )
-            This.svg_createSaveLink(This);
-          }
-      );
-      display.ccRandomisePosition = $("<input id='ccRandomisePosition_"   + This.id + "' type='button' value='Random Position'/>");
-      display.ccRandomisePosition.on("click",
-          function()
-          { $(svgVisualisationG).find("g")
-                .each(  function()
-                    { var gBBox = this.getBBox();
-                      var maxXChange = gBBox.width  / 80;
-                      var maxYChange = gBBox.height / 80;
+      // display.ccRandomiseColorsByGroup = $("<input id='ccRandomiseGroup_"   + This.id + "' type='button' value='Random Group'/>");
+      // display.ccRandomiseColorsByGroup_function = 
+      //     function(mult)
+      //     { $(svgVisualisationG).find("g")
+      //           .each(  function()
+      //               { 
+                        
+      //                   var changeR = Math.round( 5 *  mult * normalDistribution() );
+      //                   var changeG = Math.round( 5  * mult * normalDistribution() );
+      //                   var changeB = Math.round( 5  * mult * normalDistribution() );
+                        
+      //                   //$(this).css("fill", newRGB);
+      //                   //newStyle = this.getAttribute("style");
+      //                   //if (newStyle)+newRGB;
+      //                   $(this).find("path").each(function()
+      //                   {   var colorRGB  = $(this).css("fill");
+      //                       if (colorRGB == null)
+      //                         colorRGB = "rgb(50, 50, 50)";
+      //                       if (colorRGB.indexOf("rgb") === 0)
+      //                       { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
+      //                         var r = Number(rgb[1]);
+      //                         var newR = Math.max(r + changeR, 0);
+      //                         var g = Number(rgb[2]);
+      //                         var newG = Math.max(g + changeG, 0);
+      //                         var b = Number(rgb[3]);
+      //                         var newB = Math.max(b + changeB, 0);
+      //                         if (4 in rgb && rgb[4] != "")
+      //                           var newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
+      //                         else
+      //                           var newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
+      //                         this.setAttribute("style", newRGB);
+      //                       }
+      //                   }
+      //                   )
+      //               }
+      //           )
+      //       This.svg_createSaveLink(This);
+      //     };
+      // display.ccRandomiseColorsByGroup.on("click", display.ccRandomiseColorsByGroup_function);
 
-                      var changeX = (((Math.random()* maxXChange * 2) - maxXChange) );
-                      var changeY = (((Math.random()* maxYChange * 2) - maxYChange) );
+      // display.ccRandomisePosition = $("<input id='ccRandomisePosition_"   + This.id + "' type='button' value='Random Position'/>");
+      // display.ccRandomisePosition_function = 
+      //     function(mult)
+      //     { $(svgVisualisationG).find("g")
+      //           .each(  function()
+      //               { var gBBox = this.getBBox();
+      //                 var maxXChange = gBBox.width  / 80;
+      //                 var maxYChange = gBBox.height / 80;
 
-                      var transform = this.getAttribute("transform");
-                      if (transform === null)
-                      { transform = "translate(0 0)";
-                      }
-                      var translate = transform.match(/^translate\(([-]?\d+[.]?\d*)\s*([-]?\d+[.]?\d*)\)$/);
-                      var newX = Number(translate[1]) + changeX;
-                      var newY = Number(translate[2]) + changeY;
-                      var newTranslate = "translate("+newX+" "+newY+")";
-                      this.setAttribute("transform", newTranslate);
-                      //console.log(this, transform);
-                    }
-                )
-            This.svg_createSaveLink(This);
-          }
-      );
+      //                 var changeX = ((normalDistribution()  * mult * maxXChange) );
+      //                 var changeY = ((normalDistribution()  * mult * maxYChange) );
 
-      $(display.ccColor).colorpicker(
-        { "alpha": true,
-          "colorFormat": "RGB",
-          "select": function()
-              { $(containerSVG).find(display.ccSelector.val()).css("fill", display.ccColor.val());
-                This.svg_createSaveLink(This);
-              },
-          //"parts": ["header", "map", "alpha", "bar"],
-          //"draggable": true,
-          //"position": $(display.ccColor).position({"my": "bottom right", "at": "bottom right", "of": $(window)})
-          "inline": true
-        });
+      //                 var transform = this.getAttribute("transform");
+      //                 if (transform === null)
+      //                 { transform = "translate(0 0)";
+      //                 }
+      //                 var translate = transform.match(/^translate\(([-]?\d+[.]?\d*)\s*([-]?\d+[.]?\d*)\)$/);
+      //                 var newX = Number(translate[1]) + changeX;
+      //                 var newY = Number(translate[2]) + changeY;
+      //                 var newTranslate = "translate("+newX+" "+newY+")";
+      //                 this.setAttribute("transform", newTranslate);
+      //                 //console.log(this, transform);
+      //               }
+      //           )
+      //       This.svg_createSaveLink(This);
+      //     };
+      // display.ccRandomisePosition.on("click", display.ccRandomisePosition_function);
 
-      display.colorControl.append(display.ccSelector);
-      display.colorControl.append(display.ccColor);
-      display.colorControl.append(display.ccSubmit);
-      display.colorControl.append(display.ccRandomiseColors);
-      display.colorControl.append(display.ccRandomiseColorsByGroup);
-      display.colorControl.append(display.ccRandomisePosition);
+      // $(display.ccColor).colorpicker(
+      //   { "alpha": true,
+      //     "colorFormat": "RGB",
+      //     "select": function()
+      //         { $(containerSVG).find(display.ccSelector.val()).css("fill", display.ccColor.val());
+      //           This.svg_createSaveLink(This);
+      //         },
+      //     //"parts": ["header", "map", "alpha", "bar"],
+      //     //"draggable": true,
+      //     //"position": $(display.ccColor).position({"my": "bottom right", "at": "bottom right", "of": $(window)})
+      //     "inline": true
+      //   });
+
+      // display.colorControl.append(display.ccSelector);
+      // display.colorControl.append(display.ccColor);
+      // display.colorControl.append(display.ccSubmit);
+      // display.colorControl.append(display.ccRandomiseColors);
+      // display.colorControl.append(display.ccRandomiseColorsByGroup);
+      // display.colorControl.append(display.ccRandomisePosition);
 
 
       display.bottomModelSelectDiv  = $("<div class='bottomModelSelectDiv bottomModelSelectDiv."+this.id+"' />");
@@ -1030,63 +1095,38 @@ thisEqualsThat.oop = function()
              { "class" : 'custom_svgNameInput',
                "placeholder" : 'Placeholder text'
              }
-            );
+          )
+          .val(Cookies.get("TET.googleConnect.email"))
+          .on("change", function(){Cookies.set("TET.googleConnect.email", display.googleConnect_email.val(), {"expires": 9999})})
+          ;
         display.googleConnect.append(display.googleConnect_email);
 
-
-        display.googleConnect_spreadsheetURL=
-            $("<input />",
-             { "class" : 'googleConnect spreadsheetURL custom_svgNameInput',
-               "placeholder" : 'Placeholder text'
-             }
-            )
-            .on("change",
+        display.googleConnect_loginButton = 
+            $("<a class='googleConnect_loginButton'>Login to Google</a>")
+            .on("click", 
                 function()
-                { var ajaxOptions =
-                      { "url":  "/googleConnect/getSheets",
-                        "type": "POST",
-                        "data": { "emailAddress":   display.googleConnect_email.val(),
-                                  "spreadsheetURL": display.googleConnect_spreadsheetURL.val(),
-                                },
-                        "success" : function(data){alert(data);},
-                        "dataType": "json",
-                      }
-                  $.ajax(ajaxOptions);
-                }
-            );
-        display.googleConnect.append(display.googleConnect_spreadsheetURL);
-
-        display.googleConnect_sheetSelect =
-            $("<select />",
-             { "class" : 'googleConnect spreadsheetURL custom_svgNameInput'
-             }
-            );
-        display.googleConnect.append(display.googleConnect_sheetSelect);
-
-        display.googleConnect_loginButton =
-            $("<a class='googleConnect_loginButton btn'>Login to Google</a>")
-            .on("click",
-                function()
-                { var pollingComplete = false;
+                { var pollingComplete       = false;
+                  var googleConnect_window  = false;
                   var emailAddress = display.googleConnect_email.val();
-                  var googleConnect_window = PopupCenter("googleConnect/login?emailAddress="+display.googleConnect_email.val()+"", "googleConnect", 200,200);
-                  (function poll()
+                  (function poll() 
                       { $.ajax(
                         { "url": "/googleConnect/gotCredentials",
                           "type": "POST",
                           "data": {"emailAddress": emailAddress},
-                          "success": function(data)
-                          { debugger;
-                            console.log("polling", data);
-                            if (data.gotCredentials == true)
-                            { googleConnect_window.close();
+
+                          "success": function(data) 
+                          { console.log("polling", data);
+                            if (googleConnect_window == false)
+                            { googleConnect_window = PopupCenter("googleConnect/login?emailAddress="+display.googleConnect_email.val()+"", "googleConnect", 400,200);
+                            }
+                            else if (data.gotCredentials == true)
+                            { googleConnect_window.close(); 
                               pollingComplete = true;
-                              alert("install stuff");
                             }
                           },
                           "error": function(jqXHR ,textStatus, errorThrown){debugger;},
                           "dataType": "json",
-                          "complete": function(){if (!pollingComplete) setTimeout(poll, 2000)},
+                          "complete": function(){console.log("polling status: ", pollingComplete); if (!pollingComplete) setTimeout(poll, 2000)},
                           "timeout": 2000,
                         });
                       }
@@ -1095,6 +1135,114 @@ thisEqualsThat.oop = function()
              );
 
         display.googleConnect.append(display.googleConnect_loginButton);
+
+        display.googleConnect_spreadsheetURL= 
+            $("<input />",
+             { "class" : 'googleConnect spreadsheetURL'
+             }
+            )
+            .on("change", 
+                function()
+                { alert("change spreadsheetURL");
+                  var ajaxOptions = 
+                      { "url":  "/googleConnect/getSheets",
+                        "type": "POST",
+                        "data": { "emailAddress":   display.googleConnect_email.val(),
+                                  "spreadsheetURL": display.googleConnect_spreadsheetURL.val(),
+                                },
+                        "success" : 
+                            function(data)
+                            { console.log(data);
+                              display.googleConnect_sheetSelect.empty()
+                              display.googleConnect_sheetSelect.append($("<option value='Select Sheet'>Select Sheet</option>"));
+                              $.each
+                              ( data.sheetNames, 
+                                function(index)
+                                { display.googleConnect_sheetSelect.append($("<option value='"+index+"'>"+this+"</option>"));
+                                }    
+                              )
+                            },
+                        "dataType": "json",
+                      }    
+                  $.ajax(ajaxOptions);
+                }
+            );
+        display.googleConnect.append(display.googleConnect_spreadsheetURL);
+
+        display.googleConnect_sheetSelect = 
+            $("<select />",
+             { "class" : 'googleConnect spreadsheetURL'
+             }
+            );
+        display.googleConnect.append(display.googleConnect_sheetSelect);
+
+        display.googleConnect_cellRange = 
+            $("<input />",
+              { "class": 'googleConnect cellRange',
+              }
+            )
+        display.googleConnect.append(display.googleConnect_cellRange);
+
+        display.googleConnect_requestRangeData = 
+            $("<a />",
+              { "class": "googleConnect requestRangeData"
+              }
+            ).text("Request Range Data")
+            .on
+            ( "click",
+              function()
+              { alert("request range data");
+                  var ajaxOptions = 
+                      { "url":  "/googleConnect/getCellRange",
+                        "type": "POST",
+                        "data": { "emailAddress":   display.googleConnect_email.val(),
+                                  "spreadsheetURL": display.googleConnect_spreadsheetURL.val(),
+                                  "sheetName":      display.googleConnect_sheetSelect.val(),
+                                  "cellRange":      display.googleConnect_cellRange.val(),
+                                },
+                        "success" : 
+                            function(data)
+                            { console.log(data);
+                              // debugger;
+
+                              var dataRow     = data.cellRangeData.values[0];
+                              var colorRow    = data.cellRangeData.backgrounds[0];
+                              var columnCount = dataRow.length;
+                              ratioString     = dataRow.join("|");
+                              colorChangeString = 
+                                  $.map
+                                  ( colorRow, 
+                                    function(hex, i)
+                                    { rgb = hexToRgb(hex);
+                                      return "rgb("+(rgb.r-125)+","+(rgb.g-125)+","+(rgb.b-125)+")";
+                                    }
+                                  );
+                              colorChangeString = colorChangeString.join("|");
+                              This.inputFields['["colours"]'].uiValueText.val(colorChangeString);
+                              This.inputFields[ '["ratios"]'].uiValueText.val(ratioString)      ;
+
+                              var alterField = This.inputFields['["colours"]'];  
+                              This.inputFieldAltered(
+                              { inputField: alterField.fullAddress, 
+                                newValue:   alterField.uiValueText.val()
+                              }, 
+                              function()
+                              { var alterField = This.inputFields['["ratios"]'];  
+                                This.inputFieldAltered(
+                                    { inputField: alterField.fullAddress, 
+                                      newValue:   alterField.uiValueText.val()
+                                    }
+                                )
+                              },
+                              true
+                              );
+                            },
+                        "dataType": "json",
+                      }    
+                  $.ajax(ajaxOptions);
+              }
+            );
+        display.googleConnect.append(display.googleConnect_requestRangeData)
 
           // on("click", function(event)
           //   { var ajaxOptions =
@@ -1194,6 +1342,8 @@ thisEqualsThat.oop = function()
     var svgClonableG = $(this.display.svgClonableG);
     svg3d.sortAlgo = svg3d.ONE_TO_ALL;
 
+    This.svgHUD.renderHUD("preClone");
+
     svgClonableG.animate(
         { "svg3d":
              {"clone3d": this.svg3dDisplayJSON.svg3dConfiguration.clone3d}
@@ -1203,7 +1353,7 @@ thisEqualsThat.oop = function()
           "easing"    : "easeInCubic",
           //"progress"  : This.progressCounter,
           "complete"  : function()
-              {
+              { This.svgHUD.renderHUD("postClone");
 
                 //Add the Scale Axis to the right hand side of the clone group
                 //  hopefully this should deal with position and that by itself
@@ -1221,7 +1371,7 @@ thisEqualsThat.oop = function()
                 var xAxisD = "m0,0 "+ "l"+axisBBox.width+",0";
                 //This.display.svgMeasureAxisY.setAttribute("transform", "translate("+(axisBBox.x + axisBBox.width + 10)+ " "+(axisBBox.y)+")");
                 //This.display.svgMeasureAxisX.setAttribute("transform", "translate("+(axisBBox.x)+                       " "+(axisBBox.y + axisBBox.height + 10)+")");
-                /*This.display.svgMeasureY = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                /*This.display.svgMeasureY = document.createElementNS("//www.w3.org/2000/svg", "path");
                 This.display.svgMeasureY.setAttribute("id", "svgMeasureY_"+This.id);
                 This.display.svgMeasureY.setAttribute("d", yAxisD);
                 This.display.svgMeasureY.setAttribute("stroke", "black");
@@ -1322,108 +1472,119 @@ thisEqualsThat.oop = function()
 
                 var referenceSVG3dConfiguration = $.extend(true, {}, This.svg3dDisplayJSON.svg3dConfiguration.translate3d);
                 $.extend(referenceSVG3dConfiguration, {"x":referenceSVG3dConfiguration.x * multiplier, "y": referenceSVG3dConfiguration.y * multiplier});
+
+                This.svgHUD.renderHUD("preColor");
+
+                if ("recolourClones" in This.svg3dDisplayJSON.svg3dConfiguration)
+                { //var clones                  = $(This.display.svgVisualisationG).find("> g:nth-child(n + 2)");
+                  var clones                  = $(This.display.svgVisualisationG).data("svg3dclones");
+                  var cloneCount              = clones.length;
+                  var clonesNotChosenCount    = cloneCount;
+                  var clonesNotChosenMemoise  = Array.apply(null, Array(cloneCount)).map(function (_, i) {return i;});
+
+
+                  var recolourClones = This.svg3dDisplayJSON.svg3dConfiguration.recolourClones;
+
+                  var randomLayout   = recolourClones[0].randomLayout == "Yes";
+                  var ratios         = recolourClones[0].ratios;
+                  var colours        = recolourClones[0].colours;
+                  if (ratios.length != colours.length) debugger;
+                  ratioCount         = ratios.length;
+
+
+                  for (var ratioCounter = 0; ratioCounter < ratioCount; ratioCounter ++)
+                  { var clonesToChange  = [];
+
+                    var ratio           = ratios [ratioCounter];
+                    var changeColour    = colours[ratioCounter];
+
+                    var cloneToChangeCount = Math.round(ratio * cloneCount);
+
+                    while(cloneToChangeCount > 0 && clonesNotChosenCount > 0)
+                    { var changeThisClone;
+
+                      var indexOfChosenClone = 0;
+                      if (randomLayout)
+                      { indexOfChosenClone = Math.floor(Math.random() * clonesNotChosenCount);
+                      }
+
+                      changeThisClone = clonesNotChosenMemoise[indexOfChosenClone];
+                      clonesNotChosenMemoise.splice(indexOfChosenClone,1);
+                      clonesNotChosenCount--;
+                      cloneToChangeCount --;
+                      clonesToChange.push(clones[changeThisClone]);
+                    }
+
+
+                    var changeRGB = changeColour.match(/^rgb[a]?\(([-]?\d+),\s*([-]?\d+),\s*([-]?\d+)[,]?\s*(\d*[.]?\d*)\)$/);
+                    var changeR   = Number(changeRGB[1]);
+                    var changeG   = Number(changeRGB[2]);
+                    var changeB   = Number(changeRGB[3]);
+
+                    $.each( clonesToChange,
+                          function()
+                          { $(this).find("path").each(function()
+                            {   var colorRGB  = $(this).css("fill");
+                                if (colorRGB == null)
+                                  colorRGB = "rgb(50, 50, 50)";
+                                if (colorRGB.indexOf("rgb") === 0)
+                                { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
+                                  var r = Number(rgb[1]);
+                                  var newR = Math.min(Math.max(r + changeR, 0), 255);
+                                  var g = Number(rgb[2]);
+                                  var newG = Math.min(Math.max(g + changeG, 0), 255);
+                                  var b = Number(rgb[3]);
+                                  var newB = Math.min(Math.max(b + changeB, 0), 255);
+                                  if (4 in changeRGB && changeRGB[4] != "")
+                                    var newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
+                                  else
+                                    var newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
+                                  this.setAttribute("style", newRGB);
+
+                                  this.setAttribute("svgHUD_protectedColor", true);
+                                }
+                            }
+                            )
+                          }
+                        );
+                  }
+
+                }
+
                 This.display.svgReferenceG.animate(
                 { "svg3d":{"translate3d": referenceSVG3dConfiguration}
                 },
                 { queue: This.id,
-                  duration: 1000,
+                  duration: 1000, 
                   easing: "easeInCubic",
                   progress: function(animation, progress, remainingMs) { //Animate Reference SVG
-                    This.progress_translate3d(animation, progress, remainingMs, This);
+                    This.progress_translate3d(animation, progress, remainingMs, This);                     
                   },
-                  complete: function()
-                  { This.disable_createSaveLink = true;
-                    console.log(This.svg3dDisplayJSON.postProcessing);
-                    var postProcessing  = This.svg3dDisplayJSON.postProcessing;
-                    var postProcessingFunctions = {};
-                    for (var ccThing in postProcessing)
-                    { //var delay         = 2000.0 / postProcessing[ccThing]
-                      var ccThingButton = This.display[ccThing];
+                  complete: function() 
+                  { 
+                  //This.disable_createSaveLink = true; 
+                  //   console.log(This.svg3dDisplayJSON.postProcessing);
+                  //   var postProcessing  = This.svg3dDisplayJSON.postProcessing;
+                  //   var postProcessingFunctions = {};
+                  //   for (var ccThing in postProcessing)
+                  //   { //var delay ssdasdsdsd        = 2000.0 / postProcessing[ccThing]
+                  //     var ccFunction = This.display[ccThing+"_function"];
+                  //     var mult = postProcessing[ccThing];
+                  //     if (mult != 0) ccFunction(mult);
+                  //     // var ccBuild = postProcessingFunctions[ccThing] = {};
+                  //     // ccBuild['counter']  = postProcessing[ccThing];
 
-                      var ccBuild = postProcessingFunctions[ccThing] = {};
-                      ccBuild['counter']  = postProcessing[ccThing];
+                  //     // for (var counter = 0; counter < ccBuild['counter']; counter ++)
+                  //     // { ccThingButton.trigger("click");
+                  //     // }
+                  //   } 
+                    
 
-                      for (var counter = 0; counter < ccBuild['counter']; counter ++)
-                      { ccThingButton.trigger("click");
-                      }
-                    }
+                    
+                  //   This.disable_createSaveLink = false;
+                  //   This.svg_createSaveLink(This);
 
-
-                    if ("recolourClones" in This.svg3dDisplayJSON.svg3dConfiguration)
-                    { //var clones                  = $(This.display.svgVisualisationG).find("> g:nth-child(n + 2)");
-                      var clones                  = $(This.display.svgVisualisationG).data("svg3dclones");
-                      var cloneCount              = clones.length;
-                      var clonesNotChosenCount    = cloneCount;
-                      var clonesNotChosenMemoise  = Array.apply(null, Array(cloneCount)).map(function (_, i) {return i;});
-
-
-                      var recolourClones = This.svg3dDisplayJSON.svg3dConfiguration.recolourClones;
-
-                      var randomLayout   = recolourClones[0].randomLayout == "Yes";
-                      var ratios         = recolourClones[0].ratios;
-                      var colours        = recolourClones[0].colours;
-                      if (ratios.length != colours.length) debugger;
-                      ratioCount         = ratios.length;
-
-
-                      for (var ratioCounter = 0; ratioCounter < ratioCount; ratioCounter ++)
-                      { var clonesToChange  = [];
-
-                        var ratio           = ratios [ratioCounter];
-                        var changeColour    = colours[ratioCounter];
-
-                        var cloneToChangeCount = Math.round(ratio * cloneCount);
-
-                        while(cloneToChangeCount > 0 && clonesNotChosenCount > 0)
-                        { var changeThisClone;
-
-                          var indexOfChosenClone = 0;
-                          if (randomLayout)
-                          { indexOfChosenClone = Math.floor(Math.random() * clonesNotChosenCount);
-                          }
-
-                          changeThisClone = clonesNotChosenMemoise[indexOfChosenClone];
-                          clonesNotChosenMemoise.splice(indexOfChosenClone,1);
-                          clonesNotChosenCount--;
-                          cloneToChangeCount --;
-                          clonesToChange.push(clones[changeThisClone]);
-                        }
-
-
-                        var changeRGB = changeColour.match(/^rgb[a]?\(([-]?\d+),\s*([-]?\d+),\s*([-]?\d+)[,]?\s*(\d*[.]?\d*)\)$/);
-                        var changeR   = Number(changeRGB[1]);
-                        var changeG   = Number(changeRGB[2]);
-                        var changeB   = Number(changeRGB[3]);
-
-                        $.each( clonesToChange,
-                              function()
-                              { $(this).find("path").each(function()
-                                {   var colorRGB  = $(this).css("fill");
-                                    if (colorRGB == null)
-                                      colorRGB = "rgb(50, 50, 50)";
-                                    if (colorRGB.indexOf("rgb") === 0)
-                                    { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
-                                      var r = Number(rgb[1]);
-                                      var newR = Math.min(Math.max(r + changeR, 0), 255);
-                                      var g = Number(rgb[2]);
-                                      var newG = Math.min(Math.max(g + changeG, 0), 255);
-                                      var b = Number(rgb[3]);
-                                      var newB = Math.min(Math.max(b + changeB, 0), 255);
-                                      if (4 in changeRGB && changeRGB[4] != "")
-                                        var newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
-                                      else
-                                        var newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
-                                      this.setAttribute("style", newRGB);
-                                    }
-                                }
-                                )
-                              }
-                            );
-                      }
-
-                    }
-                    This.disable_createSaveLink = false;
-                    This.svg_createSaveLink(This);
+                  This.svgHUD.renderHUD("postColor");
                   }
                 }
                 );
@@ -1500,21 +1661,22 @@ thisEqualsThat.oop = function()
         function(xml)
         { var importedNode    = document.importNode(xml.documentElement, true);
           var importedRootG   = importedNode.getElementsByTagNameNS(d3.ns.prefix.svg, "g")[0];
+          var importedDefs    = importedNode.getElementsByTagNameNS(d3.ns.prefix.svg, "defs")[0];
+
           //var svgReferenceVisual  = $(thisEqualsThat.scene.referenceVisual.getSVGData(This.svg3dDisplayJSON.svgRelativeHighness)).clone();
           //svgReferenceVisual.appendTo(This.display.svgReferenceG);
           //$(svgReferenceVisual).attr("transform", "scale(0.2)");
 
           console.log("importSVG file", importedRootG);
-          thisEqualsThat.svgStore[svgFileName] = $(importedRootG);
+          thisEqualsThat.svgStore[svgFileName]      = $(importedRootG);
+          thisEqualsThat.svgDefsStore[svgFileName]  = $(importedDefs);
 
-          This.appendSVGToDisplay();
-          This.animateSVG();
+          This.displayCurrentOutput_2(This);
         }
       )
     }
     else
-    { This.appendSVGToDisplay();
-      This.animateSVG()
+    { this.displayCurrentOutput_2(this)
     }
 
     var gTET = thisEqualsThat;
@@ -1526,10 +1688,28 @@ thisEqualsThat.oop = function()
     this.display.modelVisualisationValue.html
     ( visualisationField.data.displayFieldAddress.toString()+": "+visualisationField.data.unitPrefix+Number(visualisationField.data.currentValue).toPrecision(5)+visualisationField.data.unitSuffix
     );
+
+    // Add HUD interface
+
+
   }
+  this.ModelInstance.prototype.displayCurrentOutput_2 = function(This)
+  { This.svgHUD.renderHUD("init");
+
+    This.appendSVGToDisplay();
+    This.animateSVG();
+  }
+
   this.ModelInstance.prototype.appendSVGToDisplay = function()
   { this.display.svgClonableG = thisEqualsThat.svgStore[this.svg3dDisplayJSON.svgFile].clone();
     $(this.display.svgVisualisationG).html(this.display.svgClonableG);
+
+    if (! this.display.addedSVGDefs)
+    { this.display.svgDefsFromFile = thisEqualsThat.svgDefsStore[this.svg3dDisplayJSON.svgFile].clone();
+      $(this.display.svgDefs).html(this.display.svgDefsFromFile);    
+      this.display.addedSVGDefs = true;
+    }
+
     if (this.userSelectedReferenceSVG)
     { this.display.svgReferenceG = $(thisEqualsThat.scene.referenceVisual.getSVGDataByName(this.userSelectedReferenceSVG)).clone();
     }
@@ -1543,6 +1723,326 @@ thisEqualsThat.oop = function()
     $(tG).data("thisEqualsThat", {"modelInstance": this});
   }
 
+  this.SVGHUD = function(modelInstance, wrapperForHUD)
+  { this.plugins      = {};
+    this.contextData  = {};
+    
+    this.modelInstance = modelInstance;
+    this.attach(wrapperForHUD);
+  }
+  this.SVGHUD.prototype.attach = function(wrapperForHUD)
+  { var modelInstance = this.modelInstance;
+
+    this.divForHUD = modelInstance.display.svgHUD = $("<div class='svgHUD' />");
+    wrapperForHUD.append(this.divForHUD);
+    modelInstance.display.svgHUD = this.divForHUD;
+    modelInstance.svgHUD = this;
+  }
+  this.SVGHUD.prototype.memoiseAttribute = function(hudPlugin, element, key, value=null)
+  { if (value == null)
+    { return element.getAttribute(key);
+    }
+  }
+
+  this.SVGHUD.prototype.renderHUD = function(tagHook)
+  { var svg3dDisplayJSON  = this.modelInstance.svg3dDisplayJSON;
+    
+    this.divForHUD.html("");
+
+    for (hudDescriptor in svg3dDisplayJSON.svgHUD)
+    { var hudAddress    = hudDescriptor.split(".");
+      var hudComponent  = hudAddress[0];
+      var hudTagHooks   = $(hudAddress).slice(1);
+      if (tagHook == "init")
+      { if (! this.contextData[hudComponent])
+        { this.contextData[hudComponent] = {};
+          this.plugins[hudComponent] = new this[hudComponent](this, this.contextData[hudComponent], tagHook);
+        }
+      }
+      if ($.inArray(tagHook, hudTagHooks) )
+      { this.plugins[hudComponent].display(svg3dDisplayJSON.svgHUD[hudDescriptor], tagHook)
+      }
+    }
+  }
+
+  this.SVGHUD.prototype.colorPickers = function(svgHUD, context)
+  { this.svgHUD     = svgHUD;
+    this.context    = context;
+    this.context.byVisualisation = {};
+  }
+  this.SVGHUD.prototype.colorPickers.prototype.display =function(colorPickersDict)
+  { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
+    //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
+    var This = this;
+
+    this.context.colorPickersDiv = $("<div class='colorPickers hudCollection' />");
+    this.svgHUD.divForHUD.append(this.context.colorPickersDiv);
+
+    for (colorPickerSelector in colorPickersDict)
+    { var colorPickerData = colorPickersDict[colorPickerSelector];
+      console.log(colorPickerSelector, colorPickerData);
+
+      var colorPicker = $("<div class='colorPicker hudItem' />");
+      var icon        = $("<img src='/static/graphics/thisEquals/svgHUD/colorPicker.png' />");
+
+      colorPicker.append(icon);
+      this.context.colorPickersDiv.append(colorPicker);
+
+      lastAlteredVisualisationField = this.svgHUD.modelInstance.lastAlteredVisualisationField.fullAddress;
+      if (! this.context.byVisualisation[lastAlteredVisualisationField])
+      { this.context.byVisualisation[lastAlteredVisualisationField] = {};
+        this.context.byVisualisation[lastAlteredVisualisationField].currentColorString = colorPickerData.initialColorString;        
+      }
+
+      var rep_onColorChange = function(colorString)
+      { var pickedColor = $.Color(colorString);
+        var toReturn = null;
+        eval (colorPickerData.onColorChange);
+        $(This.svgHUD.modelInstance.display.containerSVG).find("style#onColorChange").html(toReturn);
+
+        This.context.byVisualisation[lastAlteredVisualisationField].currentColorString = colorString;
+      }
+
+      rep_onColorChange(this.context.byVisualisation[lastAlteredVisualisationField].currentColorString);
+
+      colorPicker.spectrum({
+          "color":            this.context.byVisualisation[lastAlteredVisualisationField].currentColorString,
+          "showAlpha":        true,
+          "preferredFormat": "rgba",
+          "show": function()
+          { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);
+            colorPicker.spectrum("set", This.context.byVisualisation[lastAlteredVisualisationField].currentColorString);      
+          },
+          "hide": function()
+          { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", false);                       
+          },
+          "move": function(spectrumOutput)
+          { rep_onColorChange(spectrumOutput.toRgbString());
+          },
+      });
+    }
+  }
+
+  this.SVGHUD.prototype.RandomiseClones= function(svgHUD, context)
+  { this.svgHUD     = svgHUD;
+    this.context    = context;
+    this.context.byVisualisation = {};
+  }
+  this.SVGHUD.prototype.RandomiseClones.prototype.display = function(randomiseClonesDict)
+  { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
+    //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
+    var processingOrder = ["randomisePosition", "randomiseColors", "randomiseColorsByGroup"];
+
+    var This = this;
+
+    this.context.collectionDiv = $("<div class='randomiseClones hudCollection' />");
+    this.svgHUD.divForHUD.append(this.context.collectionDiv);
+
+    lastAlteredVisualisationField = this.svgHUD.modelInstance.lastAlteredVisualisationField.fullAddress;
+    if (! this.context.byVisualisation[lastAlteredVisualisationField] )
+    { this.context.byVisualisation[lastAlteredVisualisationField] = {};
+    }
+    contextByVisualisation = this.context.byVisualisation[lastAlteredVisualisationField];
+
+
+    var randomiseFunctions = {};
+    randomiseFunctions.randomisePosition      = function(degreeOfRandom)
+    { if (degreeOfRandom != 0)
+      { normalDistribution("randomisePosition", true);
+        $(This.svgHUD.modelInstance.display.svgVisualisationG)
+            .find("g") //cghange to children or correct selector for children
+            .each(  
+                function()
+                { var gBBox = this.getBBox();
+                  var maxXChange = gBBox.width  / 80;
+                  var maxYChange = gBBox.height / 80;
+
+                  var changeX = ((normalDistribution("randomisePosition")  * degreeOfRandom * maxXChange) );
+                  var changeY = ((normalDistribution("randomisePosition")  * degreeOfRandom * maxYChange) );
+
+                  var transform;
+
+                  if (! this.getAttribute("svgHUD_initial_transform") )
+                  { transform = this.getAttribute("transform");
+                    if (transform === null)
+                    { transform = "translate(0 0)";
+                    }
+                    this.setAttribute("svgHUD_initial_transform", transform);
+                  }
+                  else
+                  { transform = this.getAttribute("svgHUD_initial_transform");
+                  }
+
+                  var translate = transform.match(/^translate\(([-]?\d+[.]?\d*)\s*([-]?\d+[.]?\d*)\)$/);
+                  var newX = Number(translate[1]) + changeX;
+                  var newY = Number(translate[2]) + changeY;
+                  var newTranslate = "translate("+newX+" "+newY+")";
+                  this.setAttribute("transform", newTranslate);
+                  //console.log(this, transform);
+                }
+            );
+      }
+      contextByVisualisation.randomisePosition.degreeOfRandom = degreeOfRandom;
+    };
+    randomiseFunctions.randomiseColors = function(degreeOfRandom, init=false)
+    { if (degreeOfRandom != 0)
+      { normalDistribution("randomiseColors", true);
+
+        $(This.svgHUD.modelInstance.display.svgVisualisationG)
+            .find("path")
+            .each(  
+                function()
+                { if (this.getAttribute("svgHUD_protectedColor") )
+                  { return;
+                  }
+
+
+                  if (! this.getAttribute("initial_fill_path") )
+                  { this.setAttribute("initial_fill_path", $(this).css("fill") );
+                  }
+                  var colorRGB = this.getAttribute("initial_fill_path");
+                  if (colorRGB == null)
+                    colorRGB = "rgb(50, 50, 50)";
+                  if (colorRGB.indexOf("rgb") === 0)
+                  { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
+                    r = Number(rgb[1]);
+                    newR = Math.round(Math.max((((degreeOfRandom * normalDistribution("randomiseColors") * 10.0) - 5) ) + r, 0));
+                    g = Number(rgb[2]);
+                    newG = Math.round(Math.max((((degreeOfRandom * normalDistribution("randomiseColors") * 10.0) - 5) ) + g, 0));
+                    b = Number(rgb[3]);
+                    newB = Math.round(Math.max((((degreeOfRandom * normalDistribution("randomiseColors") * 10.0) - 5) ) + b, 0));
+                    if (4 in rgb && rgb[4] != "")
+                      newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
+                    else
+                      newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
+                    //$(this).css("fill", newRGB);
+                    //newStyle = this.getAttribute("style");
+                    //if (newStyle)+newRGB;
+                    this.setAttribute("style", newRGB);
+                    this.setAttribute("initial_fill_group", newRGB.substring(6).replace(";", ""));
+                  }
+                }
+            );
+      }
+      
+      contextByVisualisation.randomiseColors.degreeOfRandom = degreeOfRandom;
+
+      if (!init)
+      { randomiseFunctions.randomiseColorsByGroup(contextByVisualisation.randomiseColorsByGroup.degreeOfRandom, true);
+      }
+    }
+    randomiseFunctions.randomiseColorsByGroup = function(degreeOfRandom, init=false)
+    { 
+      if (degreeOfRandom != 0)
+      { normalDistribution("randomiseColorsByGroup", true);
+        { $(This.svgHUD.modelInstance.display.svgVisualisationG)
+              .find("g")
+              .each(  
+                  function()
+                  { 
+                      
+                      var changeR = Math.round( 5 *  degreeOfRandom * normalDistribution("randomiseColorsByGroup") );
+                      var changeG = Math.round( 5 *  degreeOfRandom * normalDistribution("randomiseColorsByGroup") );
+                      var changeB = Math.round( 5 *  degreeOfRandom * normalDistribution("randomiseColorsByGroup") );
+                      
+                      //$(this).css("fill", newRGB);
+                      //newStyle = this.getAttribute("style");
+                      //if (newStyle)+newRGB;
+                      $(this)
+                          .find("path")
+                          .each(
+                              function()
+                              { if (this.getAttribute("svgHUD_protectedColor") )
+                                { return;
+                                }
+
+                                if (! this.getAttribute("initial_fill_group") )
+                                { this.setAttribute("initial_fill_group", $(this).css("fill"));
+                                }
+                                var colorRGB = this.getAttribute("initial_fill_group");
+                                
+                                if (colorRGB == null)
+                                  colorRGB = "rgb(50, 50, 50)";
+                                if (colorRGB.indexOf("rgb") === 0)
+                                { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
+                                  var r = Number(rgb[1]);
+                                  var newR = Math.max(r + changeR, 0);
+                                  var g = Number(rgb[2]);
+                                  var newG = Math.max(g + changeG, 0);
+                                  var b = Number(rgb[3]);
+                                  var newB = Math.max(b + changeB, 0);
+                                  if (4 in rgb && rgb[4] != "")
+                                    var newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
+                                  else
+                                    var newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
+                                  this.setAttribute("style", newRGB);
+                                }
+                              }
+                          );
+                  }
+              );
+        }
+
+        contextByVisualisation.randomiseColorsByGroup.degreeOfRandom = degreeOfRandom;
+      };
+      
+    };
+    
+    var spectrumFunction = function(randomiseItem, itemContext, functionToCall)
+    { randomiseItem.spectrum
+      ( { "color":            `rgba(0,0,0, ${itemContext.degreeOfRandom / 32.0})`,
+          "containerClassName": "spectrumAlphaOnly",
+          "showAlpha":        true,
+          "preferredFormat": "rgba",
+          "show": function()
+          { //$(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);
+            randomiseItem.spectrum("set", `rgba(0,0,0, ${itemContext.degreeOfRandom / 32.0})`);      
+          },
+          "hide": function()
+          { //$(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", false);                       
+          },
+          "move": function(spectrumOutput)
+          { functionToCall(spectrumOutput.getAlpha() * 32);
+          },
+      });
+    }
+
+
+    for (randomiseProperty of processingOrder)
+    { var randomiseConfig;
+      if (!randomiseClonesDict.hasOwnProperty(randomiseProperty) )
+      { randomiseConfig = { "degreeOfRandom": 0 };
+      }
+      else
+      { randomiseConfig = randomiseClonesDict[randomiseProperty];
+      }
+      console.log(randomiseProperty, randomiseConfig);
+
+      var randomiseItem   = $("<div class='randomiseProperty hudItem' />");
+      var icon            = $(`<img src='/static/graphics/thisEquals/svgHUD/${randomiseProperty}.png' />`);
+
+      randomiseItem.append(icon);
+      this.context.collectionDiv.append(randomiseItem);
+      
+      if (!contextByVisualisation[randomiseProperty] )
+      { contextByVisualisation[randomiseProperty] =  
+            { "degreeOfRandom":     randomiseConfig.degreeOfRandom,
+            };
+      }
+      var itemContext = contextByVisualisation[randomiseProperty];
+
+
+      randomiseFunctions[randomiseProperty](itemContext.degreeOfRandom, true);
+
+      var functionToCall = randomiseFunctions[randomiseProperty];
+      
+      spectrumFunction(randomiseItem, itemContext, functionToCall);
+    }
+
+    This.svgHUD.modelInstance.svg_createSaveLink(This.svgHUD.modelInstance);
+  };
+  
+
   //SVG STORE
   this.SVGStore = function()
   { this.svgStore = {};
@@ -1552,6 +2052,7 @@ thisEqualsThat.oop = function()
     {
     }
   }
+  
 
   this.ModelFieldInput = function(modelInstance, data)
   { console.log(modelInstance, data);
@@ -1559,6 +2060,19 @@ thisEqualsThat.oop = function()
     this.fullAddress    = data.fullAddress;
     this.data           = data;
     modelInstance.inputFields[data.fullAddress] = this;
+  }
+
+  this.ModelFieldInput.prototype.setValue = function(newValue)
+  { fieldType = this.data.fieldType;
+    if (fieldType == "select" || fieldType == "text")
+    { this.data.currentValue = newValue;
+      this["uiValue_" + this.fieldType].val(newValue);
+    }
+    if (fieldType == "slider")
+    { this.data.currentValue = newValue;
+      this.updateValueText("slide");
+      this.updateValueSlider();
+    }
   }
 
   this.ModelFieldInput.prototype.getTag = function()
@@ -1599,10 +2113,10 @@ thisEqualsThat.oop = function()
                 }
           )
 
-    this.uiSelect = select;
+    this.uiValue_select = select;
+    
     this.uiElement.append(uiLabel);
-
-    this.uiElement.append(select);
+    this.uiElement.append(this.uiValue_select);
 
     return this.uiElement;
   }
@@ -1614,7 +2128,7 @@ thisEqualsThat.oop = function()
 
     This.modelInstance.inputFieldAltered(
     { inputField: This.fullAddress,
-      newValue:   This.uiSelect.val()
+      newValue:   This.uiValue_select.val()
     });
   }
   this.ModelFieldInput.prototype.getTag_text = function()
@@ -1630,21 +2144,21 @@ thisEqualsThat.oop = function()
           }
         );
         //  .append(this.data.displayFieldAddress);
-      var uiValueText =
+      var uiValue_text =
         $("<input />",
           { "class": "inputFieldText",
             type: "text",
           }
         ).addClass("unit_"+this.data.unit);
 
-      uiValueText.val(fieldData.defaultValue);
-      uiValueText .data("thisEquals.modelField", this);
+      uiValue_text.val(fieldData.defaultValue);
+      uiValue_text.data("thisEquals.modelField", this);
 
-      uiValueText.on("change", this, this.inputField_text_changeFunction);
-      this.uiValueText  = uiValueText;
+      uiValue_text.on("change", this, this.inputField_text_changeFunction);
+      this.uiValue_text  = uiValue_text;
 
       this.uiElement.append(uiLabel);
-      this.uiElement.append(uiValueText);
+      this.uiElement.append(uiValue_text);
 
     return this.uiElement
   }
@@ -1654,7 +2168,7 @@ thisEqualsThat.oop = function()
 
     This.modelInstance.inputFieldAltered(
     { inputField: This.fullAddress,
-      newValue:   This.uiValueText.val()
+      newValue:   This.uiValue_text.val()
     });
   }
   this.ModelFieldInput.prototype.getTag_slider = function()
@@ -1677,7 +2191,7 @@ thisEqualsThat.oop = function()
           }
         );
         // .append(this.data.displayFieldAddress);
-      var uiValueText =
+      var uiValue_slider =
         $("<input />",
           { "class": "inputFieldText",
             type: "text",
@@ -1690,14 +2204,14 @@ thisEqualsThat.oop = function()
         ).slider(sliderOptions);
       uiSlider    .data("thisEquals.modelField", this);
 
-      uiValueText.val(fieldData.defaultValue);
-      uiValueText .data("thisEquals.modelField", this);
+      uiValue_slider.val(fieldData.defaultValue);
+      uiValue_slider .data("thisEquals.modelField", this);
 
-      this.uiValueText  = uiValueText;
-      this.uiSlider     = uiSlider;
+      this.uiValue_slider   = uiValue_slider;
+      this.uiSlider         = uiSlider;
 
       this.uiElement.append(uiLabel);
-      this.uiElement.append(uiValueText);
+      this.uiElement.append(this.uiValue_slider);
       this.uiElement.append(uiSlider);
 
     return this.uiElement
@@ -1714,11 +2228,11 @@ thisEqualsThat.oop = function()
         slide: function(event, ui)
           {
             This.currentValue = ui.value;
-            This.updateValueText();
+            This.updateValueText("slide");
         },
         change: function(event, ui)
           { This.currentValue = ui.value;
-            This.updateValueText();
+            This.updateValueText("change");
 
         }
       };
@@ -1746,11 +2260,11 @@ thisEqualsThat.oop = function()
         min: min,
         value: this.actualToSlider(fieldData.currentValue),
         slide: function(event, ui)
-          { This.currentValue = This.sliderToActual(ui.value);
-            This.updateValueText(slideOrChange="slide");
+          { This.data.currentValue = This.sliderToActual(ui.value);
+            This.updateValueText("slide");
           },
         change: function(event, ui)
-          { This.currentValue = This.sliderToActual(ui.value);
+          { This.data.currentValue = This.sliderToActual(ui.value);
             This.updateValueText("change");
           }
       };
@@ -1771,20 +2285,20 @@ thisEqualsThat.oop = function()
     this.updateValueText();
   }
   this.ModelFieldInput.prototype.updateValueSlider = function()
-  { this.uiSlider.value(this.actualToSlider(currentValue));
+  { this.uiSlider.slider("option", "value", this.actualToSlider(this.data.currentValue));
   }
   this.ModelFieldInput.prototype.updateValueText = function(slideOrChange)
   { $this = $(this);
-    $uiValueText = $(this.uiValueText);
+    $uiValue_slider = $(this.uiValue_slider);
     if (this.uiSlider.data("thisEquals.disableWriteToTextField") == true)
       this.uiSlider.data("thisEquals.disableWriteToTextField", false);
     else
-    { $uiValueText.val(Number(this.currentValue).toPrecision(5));
+    { $uiValue_slider.val(Number(this.data.currentValue).toPrecision(5));
       if (slideOrChange == "change" || slideOrChange == "")
-        $uiValueText.change();
+        $uiValue_slider.change();
     }
 
-    console.log(this.fullAddress, this.currentValue);
+    console.log(this.fullAddress, this.data.currentValue);
   }
 
   this.ModelFieldOutput = function(modelInstance, fieldData)
