@@ -1962,86 +1962,57 @@ $().ready(function(){
 
 
 
-    $('.hamburger').on('click', function(){
+    $('.hamburger').on('click', function() {
 
-          var menuBtn = $(this),
-              wWidth = $(window).outerWidth(),
-              openMenu = $('.open-menu'),
-              menuWrap = $('.modelClasses'),
-              menuItemList = $('#modelClassUL'),
-              modelClassLI = $('.modelClassLI'),
-              body = $('body');
+        var menuBtn = $(this),
+            wWidth = $(window).outerWidth(),
+            openMenu = $('.open-menu'),
+            menuWrap = $('.modelClasses'),
+            menuItemList = $('#modelClassUL'),
+            modelClassLI = $('.modelClassLI'),
+            body = $('body');
 
-          menuBtn.toggleClass('is-active');
+        menuBtn.toggleClass('is-active');
 
-          modelClassLI.on('dblclick', function () {
+        modelClassLI.on('dblclick', function() {
+            closeMenu(body, menuBtn, menuWrap, openMenu);
+        });
 
-              setTimeout(function () {
-                body.removeClass('open');
-                menuBtn.removeClass('is-active');
-                menuItemList.css('width', '0');
-                setTimeout(function(){
-                  menuWrap.removeClass('active');
-                  openMenu.hide();
-                }, 600);
-              }, 400);
+        if (wWidth <= 768) {
+            modelClassLI.on('click', function() {
+                closeMenu(body, menuBtn, menuWrap, openMenu);
+            });
+        }
 
-          });
+        if (menuBtn.hasClass('is-active')) {
 
-          if ( wWidth <= 768 ) {
+            showMenu(body, menuWrap, openMenu);
 
-              modelClassLI.on('click', function () {
-                  setTimeout(function () {
-                    body.removeClass('open');
-                    menuBtn.removeClass('is-active');
-                    menuItemList.css('width', '0');
-                    setTimeout(function(){
-                      menuWrap.removeClass('active');
-                      openMenu.hide();
-                    }, 600);
-                  }, 400);
+            openMenu.on('click', function() {
+                closeMenu(body, menuBtn, menuWrap, openMenu);
+            });
 
-              });
-
-          }
-
-
-          if ( menuBtn.hasClass('is-active') ) {
-
-              openMenu.show();
-              body.addClass('open');
-              menuWrap.addClass('active');
-              setTimeout(function(){
-                menuItemList.css('width', '100%');
-              }, 600);
-
-              openMenu.on('click', function(){
-                  menuItemList.css('width', '0');
-                  body.removeClass('open');
-                  $('.hamburger').removeClass('is-active');
-                  setTimeout(function(){
-                    menuWrap.removeClass('active');
-                    openMenu.hide();
-                  }, 600);
-              });
-
-          } else {
-
-            body.removeClass('open');
-            $('.hamburger').removeClass('is-active');
-            menuItemList.css('width', '0');
-            setTimeout(function(){
-              menuWrap.removeClass('active');
-              openMenu.hide();
-            }, 600);
-
-          }
+        } else {
+            closeMenu(body, menuBtn, menuWrap, openMenu);
+        }
 
     });
 
 
 });
 
+
+function closeMenu(b, m, w, o) {
+  b.removeClass('open');
+  m.removeClass('is-active');
+  w.removeClass('active');
+  o.hide();
+}
+function showMenu(b, w, o) {
+  b.addClass('open');
+  w.addClass('active');
+  o.show();
+}
 
 
 $('head').append('<script src="https://use.fontawesome.com/cee7f18682.js"></script>');

@@ -203,6 +203,9 @@ div.copyrightContainer> p {
     overflow: visible;
     z-index: 805;
 }
+.hamburger.is-active {
+    left: 40px;
+}
 .hamburger-box {
     width: 34px;
     height: 20px;
@@ -241,7 +244,6 @@ div.copyrightContainer> p {
 }
 
 #modelClassUL {
-  width: 0;
   height: 100%;
   margin: 0;
   padding: 0px;
@@ -262,9 +264,10 @@ div.modelClasses {
     left: -140px;
     width: 140px;
     height: 100vh;
-    background: transparent;
+    background: #fff;
     z-index: 800;
-    overflow: hidden;
+    -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
+    transition: all .3s cubic-bezier(.4,0,.2,1);
 }
 div.modelClasses.active{
     left: 0;
