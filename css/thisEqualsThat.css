@@ -201,32 +201,8 @@ div.copyrightContainer> p {
     border: 0;
     margin: 0;
     overflow: visible;
+    z-index: 805;
 }
-.hamburger::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, .8);
-    z-index: -1;
-    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.4);
-    box-shadow: 0 3px 6px rgba(0,0,0,0.4);
-    transition: all .6s cubic-bezier(0.95, -0.09, .35, .95);
-    transform: scale(1);
-}
-.hamburger:hover::before {
-    -webkit-box-shadow: 0 5px 6px rgba(0,0,0,0.4);
-    box-shadow: 0 5px 6px rgba(0,0,0,0.4);
-    background: rgba(255, 255, 255, 1);
-}
-.hamburger.is-active.hamburger::before {
-    background: rgba(255, 255, 255, 1);
-    transform: scale(40);
-}
-
 .hamburger-box {
     width: 34px;
     height: 20px;
@@ -283,16 +259,15 @@ div.copyrightContainer> p {
 div.modelClasses {
     position: fixed;
     top: 0;
-    left: 0;
-    width: 90px;
-    height: 90px;
+    left: -140px;
+    width: 140px;
+    height: 100vh;
     background: transparent;
-    z-index: 999;
+    z-index: 800;
     overflow: hidden;
 }
 div.modelClasses.active{
-    height: 100vh;
-    width: 140px;
+    left: 0;
 }
 
 .modelClassLI {
