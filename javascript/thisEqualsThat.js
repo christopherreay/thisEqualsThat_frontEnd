@@ -2006,12 +2006,13 @@ function closeMenu(b, m, w, o) {
   b.removeClass('open');
   m.removeClass('is-active');
   w.removeClass('active');
-  o.hide();
+  o.removeClass('active');
 }
+
 function showMenu(b, w, o) {
   b.addClass('open');
   w.addClass('active');
-  o.show();
+  o.addClass('active');
 }
 
 

@@ -75,7 +75,7 @@ body::scrollbar {
   cursor: pointer;
 }
 
-.open-menu{
+.open-menu {
   position: fixed;
   top: 0;
   left: 0;
@@ -83,8 +83,16 @@ body::scrollbar {
   bottom: 0;
   overflow: hidden;
   background: rgba(0,0,0, .5);
+  z-index: -1;
+  opacity: 0;
+  -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
+  transition: all .3s cubic-bezier(.4,0,.2,1);
+  -webkit-box-shadow: 0 5px 12px rgba(0,0,0, .5);
+  box-shadow: 0 5px 12px rgba(0,0,0, .5);
+}
+.open-menu.active {
   z-index: 500;
-  display: none;
+  opacity: 1;
 }
 #wrap {
     overflow-x: hidden;
@@ -184,17 +192,8 @@ div.copyrightContainer> p {
     padding: 13px;
     padding-top: 20px;
     background: transparent;
-    border-radius: 50%;
     display: inline-block;
     cursor: pointer;
-    transition-property: opacity, -webkit-filter;
-    -webkit-transition-property: opacity, -webkit-filter;
-    transition-property: opacity, filter;
-    transition-property: opacity, filter, -webkit-filter;
-    -webkit-transition-duration: 0.15s;
-    transition-duration: 0.15s;
-    -webkit-transition-timing-function: linear;
-    transition-timing-function: linear;
     font: inherit;
     color: inherit;
     text-transform: none;
@@ -202,6 +201,8 @@ div.copyrightContainer> p {
     margin: 0;
     overflow: visible;
     z-index: 805;
+    -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
+    transition: all .3s cubic-bezier(.4,0,.2,1);
 }
 .hamburger.is-active {
     left: 40px;
