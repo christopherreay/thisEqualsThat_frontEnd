@@ -250,8 +250,6 @@ div.copyrightContainer> p {
   padding: 0px;
   padding-top: 120px;
   padding-bottom: 80px;
-  overflow-y: scroll;
-  overflow-x: hidden;
 }
 #modelClassUL::-webkit-scrollbar {
   display: none;
@@ -269,9 +267,11 @@ div.modelClasses {
     z-index: 800;
     -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
     transition: all .3s cubic-bezier(.4,0,.2,1);
+    overflow: hidden;
 }
 div.modelClasses.active{
     left: 0;
+    overflow: visible;
 }
 
 .modelClassLI {
@@ -355,17 +355,16 @@ div.modelClasses.active{
 }
 .modelClassLI > h3 {
     position: absolute;
-    top: -50px;
-    left: 50%;
-    margin-left: -90px;
-    width: 180px;
-    background: #eee;
+    top: 15px;
+    left: 130%;
+    background: #37474F;
     padding: 5px 20px;
     border-radius: 3px;
     opacity: 0;
-    color: #000;
+    color: rgba(255,255,255,0.87);
     font-size: 18px;
     font-weight: 400;
+    visibility: hidden;
     -webkit-box-shadow: 0 2px 5px rgba(0,0,0,0.26);
     box-shadow: 0 2px 5px rgba(0,0,0,0.26);
     -webkit-transition: all .4s cubic-bezier(0.51, 0.49, 0.22, 1.29);
@@ -381,9 +380,10 @@ div.modelClasses.active{
     -webkit-transform: scale(1.15);
     transform: scale(1.15);
 }
-.modelClassLI.active > h3,
 .modelClassLI:hover > h3 {
     opacity: 1;
+    left: 90%;
+    visibility: visible;
 }
 
 .masterReferenceSVGSelectList {
