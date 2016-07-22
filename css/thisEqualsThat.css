@@ -1244,20 +1244,8 @@ input.ui-colorpicker-hex-input {
       width: 178px;
       height: 42px;
     }
-    div.modelClasses {
-      bottom: 0;
-      right: 0;
-      top: initial;
-      left: initial;
-    }
     .hamburger {
-      bottom: 5px;
-      right: 15px;
-      top: initial;
-      left: initial;
-    }
-    .hamburger:before {
-      background: rgba(255, 255, 255, 1);
+      top: 1px;
     }
     div.model_options {
       width: 40%;
@@ -1315,17 +1303,26 @@ input.ui-colorpicker-hex-input {
       width: 134px;
       height: 32px;
     }
+    .hamburger {
+      top: 0;
+      width: 50px;
+      height: 50px;
+      padding: 0;
+    }
+    .hamburger.is-active {
+      left: 45px;
+      top: 20px;
+    }
     #modelClassUL{
-      padding-top: 40px;
+      padding-top: 80px;
     }
     .ripplelink {
-      height: 70px;
+      height: 80px;
+      margin: 0;
+      padding: 20px 0;
     }
     .modelClassLI img {
-      width: 30px;
-    }
-    .modelClassLI h3 {
-      line-height: 32px;
+      width: 40px;
     }
     div.model_box_ctrl {
       position: relative;
@@ -1423,30 +1420,20 @@ input.ui-colorpicker-hex-input {
 
 @media screen and (max-width: 550px) {
     div.modelClasses.active {
-      width: 250px;
+      width: 100px;
     }
     .modelClassLI img {
-      opacity: 1;
       width: 27px;
-      margin-right: 20px;
     }
     .modelClassLI h3 {
-      line-height: 28px;
-      font-size: 17px;
+      top: 14px;
+      left: 85%;
     }
     input.svgTextDescription, input.custom_svgNameInput {
         width: 85%;
     }
-    .hamburger {
-      bottom: 22px;
-      width: 56px;
-      height: 56px;
-      padding: 13px;
-      padding-top: 20px;
-    }
-    .hamburger::before {
-      width: 56px;
-      height: 56px;
+    .hamburger.is-active {
+      left: 25px;
     }
     .hamburger-box {
       width: 30px;
