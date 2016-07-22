@@ -351,8 +351,8 @@ div.modelClasses.active{
     position: absolute;
     top: 20px;
     left: 130%;
-    background: #37474F;
-    padding: 7px 20px;
+    background: #004D40;
+    padding: 7px 40px;
     border-radius: 3px;
     opacity: 0;
     color: rgba(255,255,255,0.87);
