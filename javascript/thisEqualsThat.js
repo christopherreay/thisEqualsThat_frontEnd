@@ -1664,8 +1664,9 @@ $(function(){
   { this.inputFieldHUD            = inputFieldHUD;
     this.context                  = context;
     // this.context.byVisualisation  = {};
+
   }
-  this.InputFieldHUD.prototype.Replace.prototype.display =function(replaceDict)
+  this.InputFieldHUD.prototype.Replace.prototype.display =function(replaceDict, tagHook)
   { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
     var This = this;
@@ -1678,11 +1679,12 @@ $(function(){
       { This.context[replaceConfigName] = 
             { "fields": {},
             };
+        This[replaceConfigName](This.context[replaceConfigName]);
       }
       var localContext = this.context[replaceConfigName];
 
       for (fieldToHide of ( replaceConfig.fieldsToHide || [] ) )
-      { if (! localContext.hasOwnProperty(fieldToHide) )
+      { if (! localContext.fields.hasOwnProperty(fieldToHide) )
         { localContext.fields[fieldToHide] = {};
         }
 
@@ -1691,10 +1693,77 @@ $(function(){
       }
 
       toReturn = null;
-      eval(replaceConfig.addFieldsExec || "toReturn = {'status': 'fail', 'message': 'noCodeToExecute'}");
+      // eval(replaceConfig.addFieldsExec || "toReturn = {'status': 'fail', 'message': 'noCodeToExecute'}");
+
     }
   }
 
+  this.InputFieldHUD.prototype.Replace.prototype.ratioColor = function(inputFieldHUD, localContext)
+  {
+    localContext.initContainer = function(inputFieldHUD)
+    { var container = 
+          $(` <div class='ratioColorTotal'>
+                <div class='ratioColor'     />
+                <div class='addRatio'       />
+                <div class='total'          />
+                <div class='submitCancel'>
+                  <div class='submit'         />
+                  <div class='cancel'         />
+                </div>
+              </div>
+            `);
+      localContext.container = container;
+      inputFieldHUD.modelInstance.display.modelSliders.prepend(container);
+
+      container.on("click", ".addRatio",
+          function(event)
+          { localContext.createRatioInput();
+          }
+      );
+      container.on("click", ".closeBox",
+          function(event)
+          { debugger;
+            //get the target and find the hud_position and the $ of the original element.
+            //localContext.destroyRatioInput(event.target);
+          }
+      );
+      container.on("change",
+          function(event)
+          { debugger;
+          }
+      );
+    };
+    localContext.createRatioInput = 
+        function()
+        { if (! localContext.hasOwnProperty("ratioInputFieldCount") )
+          { localContext.ratioInputFieldCount = 0;
+            localContext.ratioInputFields     = [];
+          }
+          var toReturn = 
+                $(` <div class='inputFieldElement'>
+                      <input class='percentageSpinner' type='number' min='0' max='100' step='0.1' value ='0' />
+                      <div class='hudItem colorPicker'>
+                        <img src='/static/graphics/thisEquals/svgHUD/colorPicker.png' />
+                      </div>
+                      <div class="closeBox">x</div>
+                    </div>
+                `)
+                .data("hud_position", localContext.ratioInputFieldCount++);
+
+          localContext.container.append(toReturn);
+          localContext.markDirty();
+        };
+    localContext.destroyRatioInput =
+        function(hud_position, inputFieldElement)
+        { delete localContext.ratioInputFields[hud_position];
+
+          inputFieldElement.parent().removeChild(inputFieldElement);
+          localContext.markDirty();
+        };
+
+
+    localContext.initContainer(inputFieldHUD);
+  }
 
 
   this.SVGHUD = function(modelInstance)

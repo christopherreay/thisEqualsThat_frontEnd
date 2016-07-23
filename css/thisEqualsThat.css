@@ -1256,6 +1256,10 @@ input.ui-colorpicker-hex-input {
 { height: 32px;
 }
 
+..hudItem.colorPicker
+{ background-image: url('/static/graphics/thisEquals/svgHUD/colorPicker.png');
+}
+
 @keyframes highlightSVGPath
 {  0% { stroke: "black";}
   15% { stroke: "red";  }
