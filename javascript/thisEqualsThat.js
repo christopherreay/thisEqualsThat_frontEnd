@@ -2018,6 +2018,8 @@ function showMenu(b, w, o) {
 
 $('head').append('<script src="https://use.fontawesome.com/cee7f18682.js"></script>');
 $('head').append('<script src="/static/javascript/jquery.ui.touch-punch.min.js"></script>');
+$('head').append('<script src="/static/javascript/jquery.mCustomScrollbar.concat.min.js"></script>');
 $('head').append('<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">');
 $('head').find('link[href="//static/pylons.css"]').attr('href', '/static/pylons.css');
 $('head').append('<link rel="stylesheet" href="/static/css/menu.css" type="text/css" media="screen" charset="utf-8">');
+$('head').append('<link rel="stylesheet" href="/static/css/jquery.mCustomScrollbar.min.css" type="text/css" media="screen" charset="utf-8">');
