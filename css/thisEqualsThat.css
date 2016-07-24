@@ -1481,21 +1481,19 @@ input.ui-colorpicker-hex-input {
 
 
 
-.svgHUD .icon
-{ height: 32px;    
+.hudItem
+{ display: inline-block;
+  min-width: 32px;
 }
-.svgHUD .hudItem
-{ float: left;    
-}
-.svgHUD .hudCollection
-{ height: 32px;
-}
-.svgHUD .hudCollection *
+.hudCollection
 { height: 32px;
 }
 
-..hudItem.colorPicker
-{ background-image: url('/static/graphics/thisEquals/svgHUD/colorPicker.png');
+.hudItem.colorPicker
+{ height:32px;
+  background-image: url('/static/graphics/thisEquals/svgHUD/colorPicker.png');
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 @keyframes highlightSVGPath
@@ -1515,4 +1513,22 @@ path.highlight, .highlight path
 
 .spectrumAlphaOnly .sp-fill, .spectrumAlphaOnly .sp-top-inner, .spectrumAlphaOnly .sp-button-container 
 { display: none;
+}
+
+
+/* inputFieldHUD */
+
+
+/* ratioColorTotal */
+.ratioColorTotal > div:hover
+{ background: lightgrey;
+}
+
+.ratioColor
+{ height: 32px;
+}
+.ratioColor > .closeBox
+{ height: 10px;
+  width: 10px;
+  float: right;
 }

@@ -1778,7 +1778,7 @@ console.log("yogi 2 ", ajaxOptions.url);
       { This.context[replaceConfigName] = 
             { "fields": {},
             };
-        This[replaceConfigName](This.context[replaceConfigName]);
+        This[replaceConfigName](This.inputFieldHUD, This.context[replaceConfigName]);
       }
       var localContext = this.context[replaceConfigName];
 
@@ -1802,17 +1802,21 @@ console.log("yogi 2 ", ajaxOptions.url);
     localContext.initContainer = function(inputFieldHUD)
     { var container = 
           $(` <div class='ratioColorTotal'>
-                <div class='ratioColor'     />
-                <div class='addRatio'       />
-                <div class='total'          />
-                <div class='submitCancel'>
-                  <div class='submit'         />
-                  <div class='cancel'         />
+                <div class='ratioColorList'     />
+                <div class='addRatio hudItem fa fa-plus-circle'       />
+                <div class='total hudCollection'          />
+                <div class='submitCancel hudCollection'>
+                  <div class='submit hudItem fa fa-check'         />
+                  <div class='cancel hudItem fa fa-ban'         />
                 </div>
               </div>
             `);
-      localContext.container = container;
       inputFieldHUD.modelInstance.display.modelSliders.prepend(container);
+
+      localContext.container      = container;
+      localContext.ratioColorList = container.find(".ratioColorList");
+
+      inputFieldHUD.modelInstance.inputFields['[\"numberOfClones\"]'].uiElement.appendTo(container.find('.total') );
 
       container.on("click", ".addRatio",
           function(event)
@@ -1823,7 +1827,7 @@ console.log("yogi 2 ", ajaxOptions.url);
           function(event)
           { debugger;
             //get the target and find the hud_position and the $ of the original element.
-            //localContext.destroyRatioInput(event.target);
+            localContext.destroyRatioInput($(this).parent(".ratioColor"));
           }
       );
       container.on("change",
@@ -1839,27 +1843,29 @@ console.log("yogi 2 ", ajaxOptions.url);
             localContext.ratioInputFields     = [];
           }
           var toReturn = 
-                $(` <div class='inputFieldElement'>
-                      <input class='percentageSpinner' type='number' min='0' max='100' step='0.1' value ='0' />
-                      <div class='hudItem colorPicker'>
-                        <img src='/static/graphics/thisEquals/svgHUD/colorPicker.png' />
-                      </div>
-                      <div class="closeBox">x</div>
+                $(` <div class='ratioColor'>
+                      <input  class='hudItem percentageSpinner' type='number' min='0' max='100' step='0.1' value ='0' />
+                      <span    class='hudItem colorPicker' />
+                      <span    class="hudItem closeBox    fa fa-times-circle" />
                     </div>
-                `)
-                .data("hud_position", localContext.ratioInputFieldCount++);
+                `);
+          toReturn.data("hud_position", localContext.ratioInputFieldCount++);
 
-          localContext.container.append(toReturn);
+          debugger;
+          localContext.ratioColorList.append(toReturn);
           localContext.markDirty();
         };
     localContext.destroyRatioInput =
-        function(hud_position, inputFieldElement)
-        { delete localContext.ratioInputFields[hud_position];
+        function(inputFieldElement)
+        { delete localContext.ratioInputFields[inputFieldElement.data("hud_position")];
 
-          inputFieldElement.parent().removeChild(inputFieldElement);
+          inputFieldElement.remove();
           localContext.markDirty();
         };
-
+    localContext.markDirty = 
+        function()
+        {
+        }
 
     localContext.initContainer(inputFieldHUD);
   }
