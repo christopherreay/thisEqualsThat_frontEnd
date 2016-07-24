@@ -1340,7 +1340,8 @@ console.log("yogi 2 ", ajaxOptions.url);
     var svgClonableG = $(this.display.svgClonableG);
     svg3d.sortAlgo = svg3d.ONE_TO_ALL;
 
-    This.svgHUD.renderHUD("preClone");
+    This.inputFieldHUD.renderHUD("preClone");
+    This.svgHUD       .renderHUD("preClone");
 
     svgClonableG.animate(
         { "svg3d":
@@ -1351,7 +1352,8 @@ console.log("yogi 2 ", ajaxOptions.url);
           "easing"    : "easeInCubic",
           //"progress"  : This.progressCounter,
           "complete"  : function()
-              { This.svgHUD.renderHUD("postClone");
+              { This.svgHUD.inputFieldHUD("postClone");
+                This.svgHUD.    renderHUD("postClone");
 
                 //Add the Scale Axis to the right hand side of the clone group
                 //  hopefully this should deal with position and that by itself
@@ -1509,7 +1511,7 @@ console.log("yogi 2 ", ajaxOptions.url);
                       changeThisClone = clonesNotChosenMemoise[indexOfChosenClone];
                       clonesNotChosenMemoise.splice(indexOfChosenClone,1);
                       clonesNotChosenCount--;
-                      cloneToChangeCount --;
+                      cloneToChangeCount  --;
                       clonesToChange.push(clones[changeThisClone]);
                     }
 
@@ -1787,8 +1789,8 @@ console.log("yogi 2 ", ajaxOptions.url);
         { localContext.fields[fieldToHide] = {};
         }
 
-        This.inputFieldHUD.modelInstance.inputFields[fieldToHide].uiElement.toggleClass("displayNone", true);
-        localContext.fields[fieldToHide].hidden = true;
+        // This.inputFieldHUD.modelInstance.inputFields[fieldToHide].uiElement.toggleClass("displayNone", true);
+        // localContext.fields[fieldToHide].hidden = true;
       }
 
       toReturn = null;
@@ -1832,7 +1834,7 @@ console.log("yogi 2 ", ajaxOptions.url);
       );
       container.on("change",
           function(event)
-          { debugger;
+          { localContext.writeChanges();
           }
       );
     };
@@ -1845,14 +1847,21 @@ console.log("yogi 2 ", ajaxOptions.url);
           var toReturn = 
                 $(` <div class='ratioColor'>
                       <input  class='hudItem percentageSpinner' type='number' min='0' max='100' step='0.1' value ='0' />
-                      <span    class='hudItem colorPicker' />
+                      <input  class='hudItem spectrumColorPickerInput' />
                       <span    class="hudItem closeBox    fa fa-times-circle" />
                     </div>
                 `);
           toReturn.data("hud_position", localContext.ratioInputFieldCount++);
 
-          debugger;
           localContext.ratioColorList.append(toReturn);
+          toReturn
+              .find(".spectrumColorPickerInput")
+              .spectrum
+              ( { "showPalette"     : true,
+                  "preferredFormat" : "rgb",
+                }
+              );
+
           localContext.markDirty();
         };
     localContext.destroyRatioInput =
@@ -1865,6 +1874,22 @@ console.log("yogi 2 ", ajaxOptions.url);
     localContext.markDirty = 
         function()
         {
+        }
+    localContext.writeChanges =
+        function()
+        { var newRatiosValArray = [];
+          var newColorsValArray = [];
+          localContext.ratioColorList
+                        .children()
+                        .each
+                        ( function()
+                          { newRatiosValArray.push($(this).find(".percentageSpinner"        ).val() );
+                            newColorsValArray.push($(this).find(".spectrumColorPickerInput" ).val() );
+                          }
+                        );
+
+          inputFieldHUD.modelInstance.inputFields[`["ratios"]`  ].setValue(newRatiosValArray.join("|") );
+          inputFieldHUD.modelInstance.inputFields[`["colours"]` ].setValue(newColorsValArray.join("|") );
         }
 
     localContext.initContainer(inputFieldHUD);
@@ -2212,7 +2237,7 @@ console.log("yogi 2 ", ajaxOptions.url);
   { fieldType = this.data.fieldType;
     if (fieldType == "select" || fieldType == "text")
     { this.data.currentValue = newValue;
-      this["uiValue_" + this.fieldType].val(newValue);
+      this["uiValue_" + fieldType].val(newValue);
     }
     if (fieldType == "slider")
     { this.data.currentValue = newValue;
