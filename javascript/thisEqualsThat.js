@@ -1,6 +1,7 @@
 window.thisEqualsThat = {};
 thisEqualsThat.graphicLoadVersion = "0.1.1.3.20160712.1727"
 
+
 thisEqualsThat.svg          = {};
 thisEqualsThat.svgStore     = {};
 thisEqualsThat.svgDefsStore = {};
@@ -147,25 +148,58 @@ console.log("yogi 2 ", ajaxOptions.url);
           { var modelClass = $(event.currentTarget).data("modelClass");
             console.log("yogi 3 ",modelClass);
             modelClass.getModelInstance(thisEqualsThat.scene.setCurrentModel);
+
+            $(this).addClass('active');
+            $(this).siblings().removeClass('active');
+
+            // var ink, d, x, y;
+            //
+            //     if($(this).find(".ink").length === 0){
+            //         $(this).prepend("<span class='ink'></span>");
+            //     }
+            //
+            //     ink = $(this).find(".ink");
+            //     ink.removeClass("animate");
+            //
+            //     if(!ink.height() && !ink.width()){
+            //         d = Math.max($(this).outerWidth(), $(this).outerHeight());
+            //         ink.css({height: d, width: d});
+            //     }
+            //
+            //     x = event.pageX - $(this).offset().left - ink.width()/2;
+            //     y = event.pageY - $(this).offset().top - ink.height()/2;
+            //
+            //     ink.css({top: y+'px', left: x+'px'}).addClass("animate");
+
           }
         );
+
     $.each( this,
       function (modelClassName, modelClass)
       { modelClassList.append(modelClass.modelClassListLI);
       }
     );
     modelClassesContainerDiv.append(modelClassList);
+    // MAP
+    // modelClassList.append('<div class="modelClassLI ripplelink cyan">' +
+    //           '<img src="/static/graphics/thisEquals/icons/map.svg">' +
+    //           '<h3>Map</h3>' +
+    //           '</div>'
+    //   ).on('click', function () {
+    //     console.debug('clicked on map');
+    //   });
   }
   this.ModelClass = function(modelClassName)
   { this.name = modelClassName;
     this.imageURL = this.imageBaseURL+modelClassName+".svg";
     this.modelClassListLI =
       $("<li />",
-        { "class": "modelClassLI ripplelink cyan"
+        { "class": "modelClassLI ripplelink cyan",
         }
-       ).data("modelClass", this)
-       .append($("<img />", { src: this.imageURL } ))
-       .append($("<h3 />", { text: this.name } ));
+      ).data("modelClass", this)
+       .append( $('<h3>' + this.name + '</h3>' ).addClass('modelDesc') )
+       .append( $("<img />", { src: this.imageURL } ).addClass('modelImg') );
+
   }
   this.ModelClass.prototype.imageBaseURL =  "/static/graphics/thisEquals/modelClasses/";
   this.ModelClass.prototype.getModelInstance = function(successFunction)
@@ -205,28 +239,6 @@ console.log("yogi 2 ", ajaxOptions.url);
     $("body").append(this.masterReferenceSVGSelectList);
     // this.svgSelectList.hide();
 
-$(function(){
-    var ink, d, x, y;
-        $(".ripplelink").click(function(e){
-        if($(this).find(".ink").length === 0){
-            $(this).prepend("<span class='ink'></span>");
-        console.debug('click li');
-        }
-
-        ink = $(this).find(".ink");
-        ink.removeClass("animate");
-
-        if(!ink.height() && !ink.width()){
-            d = Math.max($(this).outerWidth(), $(this).outerHeight());
-            ink.css({height: d, width: d});
-        }
-
-        x = e.pageX - $(this).offset().left - ink.width()/2;
-        y = e.pageY - $(this).offset().top - ink.height()/2;
-
-        ink.css({top: y+'px', left: x+'px'}).addClass("animate");
-    });
-});
 
     this.svgReferenceDefs =
     [ { "heightThreshold": 0.03,  "fileHandle": "Ant",          "height": 0.002},
@@ -672,14 +684,69 @@ $(function(){
           }
         );
 
-      display.modelSliders          = $("<div class='modelSliders'      />");
+      display.modelSliders              = $("<div class='modelSliders model_options'  />");
       display.modelSliders.append(this.getInputFields().inputFieldsSliders);
 
-      display.modelSvgOutput        = $("<div class='modelSvgOutput' />");
+      display.boxSliders    = $('<div class="model_box_ctrl boxSliders" />');
+      display.boxOutputCtrl = $('<div class="model_box_ctrl boxOutputCtrl" />');
+      display.boxCustomSvg  = $('<div class="model_box_ctrl boxCustomSvg" />');
 
-      display.modelOutputTest        = $("<div class='modelOutputTest' />");
+      display.modelOutputCtrl           = $("<div class='modelOutputCtrl model_options' />");
 
-      display.modelCustomSvg        = $("<div class='modelCustomSvg' />");
+      display.modelCustomSvg            = $("<div class='modelCustomSvg model_options' />");
+
+      var models = [ display.boxSliders, display.boxOutputCtrl, display.boxCustomSvg ];
+        $.each( models, function ( i, elem )
+        {
+          elem.on('click', function ()
+          {
+            var   self   = $(this),
+                  wWidth = $(window).outerWidth();
+
+                if ( wWidth <= 768 )
+                {
+                    switch (i)
+                    {
+                      case 0:
+                            display.modelSliders.toggleClass('active');
+                            display.modelOutputCtrl.removeClass('active');
+                            display.modelCustomSvg.removeClass('active');
+
+                            display.boxSliders.toggleClass('active').removeClass('shadow');
+                            display.boxOutputCtrl.removeClass('active').addClass('shadow');
+                            display.boxCustomSvg.removeClass('active').addClass('shadow');
+                        break;
+                      case 1:
+                            display.modelOutputCtrl.toggleClass('active');
+                            display.modelSliders.removeClass('active');
+                            display.modelCustomSvg.removeClass('active');
+
+                            display.boxOutputCtrl.toggleClass('active').removeClass('shadow');
+                            display.boxSliders.removeClass('active').addClass('shadow');
+                            display.boxCustomSvg.removeClass('active').addClass('shadow');
+                        break;
+                      case 2:
+                            display.modelCustomSvg.toggleClass('active');
+                            display.modelOutputCtrl.removeClass('active');
+                            display.modelSliders.removeClass('active');
+
+                            display.boxCustomSvg.toggleClass('active').removeClass('shadow');
+                            display.boxSliders.removeClass('active').addClass('shadow');
+                            display.boxOutputCtrl.removeClass('active').addClass('shadow');
+                        break;
+                    }
+                    if (! self.hasClass('active') )
+                    {
+                        display.boxCustomSvg.removeClass('shadow');
+                        display.boxSliders.removeClass('shadow');
+                        display.boxOutputCtrl.removeClass('shadow');
+                    }
+                }
+            });
+        });
+
+      display.modelSvgOutput            = $("<div class='modelSvgOutput' />");
+
       display.modelOutputDisplay        = $("<div class='modelOutputContainer'><div class='containerLabel'></div></div>");
 
       display.modelOutputValue          = $("<div class='modelOutputValue'  />");
@@ -908,15 +975,18 @@ $(function(){
 
       display.topModelDiv = $("<div class='modelInstance topModelDiv modelInstance'"+this.modelPosition+" />");
 
+      display.topModelDiv.append(display.boxSliders);
+      display.topModelDiv.append(display.boxOutputCtrl);
+      display.topModelDiv.append(display.boxCustomSvg);
       display.topModelDiv.append(display.modelSliders);
-      display.topModelDiv.append(display.modelOutputTest);
+      display.topModelDiv.append(display.modelOutputCtrl);
       display.topModelDiv.append(display.modelCustomSvg);
       display.topModelDiv.append(display.modelSvgOutput);
       display.modelSvgOutput.append(display.svgOutput);
-      display.modelOutputTest.append(display.modelOutputDisplay);
-      display.modelOutputTest.append(display.visualisationOutputContainer);
-      display.modelOutputTest.append(display.toggleFeatures);
-      display.modelOutputTest.append(display.colorControl);
+      display.modelOutputCtrl.append(display.modelOutputDisplay);
+      display.modelOutputCtrl.append(display.visualisationOutputContainer);
+      display.modelOutputCtrl.append(display.toggleFeatures);
+      display.modelOutputCtrl.append(display.colorControl);
       display.modelCustomSvg.append(display.svgSaveLink);
       display.modelCustomSvg.append(display.svgTextInput);
 
@@ -943,7 +1013,8 @@ $(function(){
           $("<input />",
              { "class" : 'custom_svgNameInput',
                "type"  : 'file',
-               'placeholder' : 'Get SVG from File'
+               'placeholder' : 'Get SVG from File',
+               'accept' : 'image/svg+xml'
              }
             );
         display.customSVGPane.append(display.customSVGTitle);
@@ -953,7 +1024,14 @@ $(function(){
               { "class" : 'customSVGPaneSubmitButton btn'
             }
           ).on("click", function(event)
-            {
+            { var svgFile = $('input.custom_svgNameInput').val();
+
+             if( svgFile === "" || svgFile === undefined){
+               alert('.svg file not uploaded!');
+             } else {
+               alert(svgFile + ' ' + 'uploaded');
+             }
+              console.log($('input.custom_svgNameInput').val());
             }
           )
         );
@@ -980,13 +1058,34 @@ $(function(){
         );
 
         display.modelCustomSvg.append(display.customSVGPane);
-        display.modelOutputTest.append(display.bottomModelSelectDiv);
+        display.modelOutputCtrl.append(display.bottomModelSelectDiv);
 
         display.googleConnect =
         $("<div />",
           { "class": "customSVGPane googleConnect makeDraggable"
           }
-        ).draggable().css("position", "absolute").css("top", "0").css("right", "-150%");
+        ).draggable().css({
+          'position' : 'absolute',
+          'top'      : '104%',
+          'left'     : '0',
+          'right'    : '0'
+        });
+
+        var wWidth = $(window).outerWidth();
+        if ( wWidth <= 768 )
+        {
+          display.googleConnect.draggable('disable')
+                               .css({
+                                 'opacity': '1',
+                                 'filter' : 'Alpha(Opacity=100)'
+                               });
+          display.topModelDiv.append(display.googleConnect);
+        }
+        else
+        {
+          display.modelSvgOutput.append(display.googleConnect);
+        }
+
         display.googleConnect.append(
           $("<div class='customSVGPaneTitle'>googleConnect</div>"));
         display.googleConnect_email=
@@ -1159,7 +1258,7 @@ $(function(){
           // )
         // );
         //thisEqualsThat.scene.modelContainerDiv.append(display.customSVGPane);
-        display.modelCustomSvg.append(display.googleConnect)
+
     }
     this.display.displayElement.show();
 
@@ -1526,7 +1625,7 @@ $(function(){
                     + savableContainerSVG.get(0).outerHTML + "'"
                 + " title     ='svgRep.svg'"
                 + " download  ='" + This.display.modelOutputValue.text() + ".svg'"
-            + ">" + "<img class='ic-save_svg' src='/static/graphics/thisEquals/icons/save_svg.svg' alt=''>" + "</a>"
+            + ">" + "</a>"
           )
       );
     }
@@ -2494,86 +2593,86 @@ $().ready(
 
 $().ready(function(){
 
-//    $('.colorPickerElement').on('click', function(){
-//        $('.colorPickerElement:first input').colorpicker(
-//            { "alpha": false,
-//              "altField": 'input.colorPickerInput',
-//              "colorFormat": "RGB",
-//              "inline": true
-//        });
-//    });
 
 
+    $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>')
+             .append('<div class="open-menu"></div>');
+    $('body').append('<button class="hamburger hamburger--spin-r" type="button" aria-label="Menu" aria-controls="navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>');
 
-//$('head').append('<script src="/static/javascript/evol-colorpicker.min.js"></script>');
-//$('head').append('<link rel="stylesheet" href="/static/css/evol-colorpicker.css" media="screen">');
-
-$('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>');
-$('.thisEqualsScene').append('<button class="hamburger hamburger--arrow" type="button" aria-label="Menu" aria-controls="navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>');
-
-
-$.fn.coloPick = function() {
-    console.info('CP created');
-    $('input.unit_rgb').colorpicker({
-        inline: false,
-        alpha: false,
-        colorFormat: "RGB",
-        buttonClass: 'btn',
-        color: 'rgb(123,45,67)',
-        altField: 'input.colorPickerInput',
-        close: function(){
-            $('input.unit_rgb').change();
-        }
-    });
-};
-
-
-$('.hamburger').on('click', function(){
-
-    $(this).toggleClass('is-active');
-
-    if ( $(this).hasClass('is-active') ) {
-      $('body').append('<div class="open-meune"></div>');
-      $('.modelClasses').addClass('active');
-    } else {
-      $('.open-meune').remove();
-      $('.modelClasses').removeClass('active');
-    }
-
-
-});
-
-    $(function(){
-        var ink, d, x, y;
-            $(".ripplelink").click(function(e){
-            if($(this).find(".ink").length === 0){
-                $(this).prepend("<span class='ink'></span>");
-            console.debug('click li');
+    $.fn.coloPick = function() {
+        console.info('CP created');
+        $('input.unit_rgb').colorpicker({
+            inline: false,
+            alpha: false,
+            colorFormat: "RGB",
+            buttonClass: 'btn',
+            color: 'rgb(123,45,67)',
+            altField: 'input.colorPickerInput',
+            close: function(){
+                $('input.unit_rgb').change();
             }
-
-            ink = $(this).find(".ink");
-            ink.removeClass("animate");
-
-            if(!ink.height() && !ink.width()){
-                d = Math.max($(this).outerWidth(), $(this).outerHeight());
-                ink.css({height: d, width: d});
-            }
-
-            x = e.pageX - $(this).offset().left - ink.width()/2;
-            y = e.pageY - $(this).offset().top - ink.height()/2;
-
-            ink.css({top: y+'px', left: x+'px'}).addClass("animate");
         });
+    };
+
+
+
+
+    $('.hamburger').on('click', function() {
+
+        var menuBtn = $(this),
+            wWidth = $(window).outerWidth(),
+            openMenu = $('.open-menu'),
+            menuWrap = $('.modelClasses'),
+            menuItemList = $('#modelClassUL'),
+            modelClassLI = $('.modelClassLI'),
+            body = $('body');
+
+        menuBtn.toggleClass('is-active');
+
+        modelClassLI.on('dblclick', function() {
+            closeMenu(body, menuBtn, menuWrap, openMenu);
+        });
+
+        if (wWidth <= 768) {
+            modelClassLI.on('click', function() {
+                closeMenu(body, menuBtn, menuWrap, openMenu);
+            });
+        }
+
+        if (menuBtn.hasClass('is-active')) {
+
+            showMenu(body, menuWrap, openMenu);
+
+            openMenu.on('click', function() {
+                closeMenu(body, menuBtn, menuWrap, openMenu);
+            });
+
+        } else {
+            closeMenu(body, menuBtn, menuWrap, openMenu);
+        }
+
     });
+
 
 });
 
 
+function closeMenu(b, m, w, o) {
+  b.removeClass('open');
+  m.removeClass('is-active');
+  w.removeClass('active');
+  o.removeClass('active');
+}
 
-
+function showMenu(b, w, o) {
+  b.addClass('open');
+  w.addClass('active');
+  o.addClass('active');
+}
 
 
 $('head').append('<script src="https://use.fontawesome.com/cee7f18682.js"></script>');
+$('head').append('<script src="/static/javascript/jquery.ui.touch-punch.min.js"></script>');
 $('head').append('<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">');
 $('head').find('link[href="//static/pylons.css"]').attr('href', '/static/pylons.css');
 $('head').append('<link rel="stylesheet" href="/static/css/menu.css" type="text/css" media="screen" charset="utf-8">');
