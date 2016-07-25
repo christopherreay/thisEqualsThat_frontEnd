@@ -78,6 +78,38 @@ function normalDistribution(namespace, reset=false)
 
     return toReturn;
 }
+
+function recolorPaths(paths, changeTinyColor, mixAmount, changedBy)
+{ paths.each
+  ( function()
+    { var originalColor = null;
+      var originalAlpha = null;
+      
+      if (! this.getAttribute("original_fill_color") )
+      { var colorRGB  = $(this).css("fill");
+        if (colorRGB == null)
+          colorRGB = "rgb(128, 128, 128)";
+        originalColor = tinycolor(colorRGB);
+        this.setAttribute("original_fill_color",  originalColor );
+        originalAlpha = originalColor.getAlpha();
+        this.setAttribute("original_fill_alpha",  originalAlpha );
+      }
+      else
+      { originalColor = this.getAttribute("original_fill_color");
+        originalAlpha = this.getAttribute("original_fill_alpha");
+      }
+
+      
+      changeTinyColor.setAlpha(originalAlpha);
+      newColor = tinycolor.mix(originalColor, changeTinyColor, mixAmount );
+
+      this.setAttribute("style", `fill(${newColor.toString("rgb")})`);
+
+      this.setAttribute(changedBy+"_protectedColor", true);
+    }
+  );
+}
+
 // function normalDistribution() {
 //     var u = 1 - Math.random(); // Subtraction to flip [0, 1) to (0, 1].
 //     var v = 1 - Math.random();
@@ -1352,8 +1384,8 @@ console.log("yogi 2 ", ajaxOptions.url);
           "easing"    : "easeInCubic",
           //"progress"  : This.progressCounter,
           "complete"  : function()
-              { This.svgHUD.inputFieldHUD("postClone");
-                This.svgHUD.    renderHUD("postClone");
+              { This.inputFieldHUD.renderHUD("postClone");
+                This.svgHUD       .renderHUD("postClone");
 
                 //Add the Scale Axis to the right hand side of the clone group
                 //  hopefully this should deal with position and that by itself
@@ -1477,6 +1509,14 @@ console.log("yogi 2 ", ajaxOptions.url);
 
                 if ("recolourClones" in This.svg3dDisplayJSON.svg3dConfiguration)
                 { //var clones                  = $(This.display.svgVisualisationG).find("> g:nth-child(n + 2)");
+                  if (!This.hasOwnProperty("recolourClones") )
+                  { This.recolourClones = 
+                        { "messages": [],
+                          "changeTinyColors": [],
+                          "mixAmount": [],
+                        };
+                  }
+
                   var clones                  = $(This.display.svgVisualisationG).data("svg3dclones");
                   var cloneCount              = clones.length;
                   var clonesNotChosenCount    = cloneCount;
@@ -1488,8 +1528,16 @@ console.log("yogi 2 ", ajaxOptions.url);
                   var randomLayout   = recolourClones[0].randomLayout == "Yes";
                   var ratios         = recolourClones[0].ratios;
                   var colours        = recolourClones[0].colours;
-                  if (ratios.length != colours.length) debugger;
+
+                  This.recolourClones.ratios = ratios;
+                  This.recolourClones.colors = colours;
+
+                  if (ratios.length != colours.length) 
+                  { debugger;
+                    This.recolourClones.messages.append({"warning": `ratios length: ${ratios.length}, colours length: ${colours.length}`});
+                  }
                   ratioCount         = ratios.length;
+
 
 
                   for (var ratioCounter = 0; ratioCounter < ratioCount; ratioCounter ++)
@@ -1516,37 +1564,21 @@ console.log("yogi 2 ", ajaxOptions.url);
                     }
 
 
-                    var changeRGB = changeColour.match(/^rgb[a]?\(([-]?\d+),\s*([-]?\d+),\s*([-]?\d+)[,]?\s*(\d*[.]?\d*)\)$/);
-                    var changeR   = Number(changeRGB[1]);
-                    var changeG   = Number(changeRGB[2]);
-                    var changeB   = Number(changeRGB[3]);
+                    var changeTinyColor =  tinycolor(changeColour);
+                    var mixAmount       =  changeTinyColor.getAlpha() * 100;
+                    changeTinyColor.setAlpha(1.0);
 
-                    $.each( clonesToChange,
-                          function()
-                          { $(this).find("path").each(function()
-                            {   var colorRGB  = $(this).css("fill");
-                                if (colorRGB == null)
-                                  colorRGB = "rgb(50, 50, 50)";
-                                if (colorRGB.indexOf("rgb") === 0)
-                                { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
-                                  var r = Number(rgb[1]);
-                                  var newR = Math.min(Math.max(r + changeR, 0), 255);
-                                  var g = Number(rgb[2]);
-                                  var newG = Math.min(Math.max(g + changeG, 0), 255);
-                                  var b = Number(rgb[3]);
-                                  var newB = Math.min(Math.max(b + changeB, 0), 255);
-                                  if (4 in changeRGB && changeRGB[4] != "")
-                                    var newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
-                                  else
-                                    var newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
-                                  this.setAttribute("style", newRGB);
+                    This.recolourClones.changeTinyColors.push(changeTinyColor);
+                    This.recolourClones.mixAmount       .push(mixAmount);
 
-                                  this.setAttribute("svgHUD_protectedColor", true);
-                                }
-                            }
-                            )
-                          }
-                        );
+                    // var changeRGB = changeColour.match(/^rgb[a]?\(([-]?\d+),\s*([-]?\d+),\s*([-]?\d+)[,]?\s*(\d*[.]?\d*)\)$/);
+                    // var changeR   = Number(changeRGB[1]);
+                    // var changeG   = Number(changeRGB[2]);
+                    // var changeB   = Number(changeRGB[3]);
+
+                    paths = $(clonesToChange).find("path");
+                    recolorPaths(paths, changeTinyColor, mixAmount, "recolorClones");
+
                   }
 
                 }
@@ -1837,6 +1869,14 @@ console.log("yogi 2 ", ajaxOptions.url);
           { localContext.writeChanges();
           }
       );
+      // container.on("move.spectrum", ".ratioColor",
+      //     function(event)
+      //     { debugger;
+      //       console.log("move.spectrum", $(this).data("hud_position") );
+
+      //       var clonesToColour = inputFieldHUD.modelInstance.recolourClones;
+      //     }
+      // );
     };
     localContext.createRatioInput = 
         function()
@@ -1848,7 +1888,7 @@ console.log("yogi 2 ", ajaxOptions.url);
                 $(` <div class='ratioColor'>
                       <input  class='hudItem percentageSpinner' type='number' min='0' max='100' step='0.1' value ='0' />
                       <input  class='hudItem spectrumColorPickerInput' />
-                      <span    class="hudItem closeBox    fa fa-times-circle" />
+                      <span   class="hudItem closeBox    fa fa-times-circle" />
                     </div>
                 `);
           toReturn.data("hud_position", localContext.ratioInputFieldCount++);
@@ -1859,6 +1899,7 @@ console.log("yogi 2 ", ajaxOptions.url);
               .spectrum
               ( { "showPalette"     : true,
                   "preferredFormat" : "rgb",
+                  "move":             localContext.spectrumMove,
                 }
               );
 
@@ -1890,8 +1931,19 @@ console.log("yogi 2 ", ajaxOptions.url);
 
           inputFieldHUD.modelInstance.inputFields[`["ratios"]`  ].setValue(newRatiosValArray.join("|") );
           inputFieldHUD.modelInstance.inputFields[`["colours"]` ].setValue(newColorsValArray.join("|") );
-        }
+        };
+    localContext.spectrumMove =
+        function(color)
+        { debugger;
 
+          var clonesToChange = inputFieldHUD.modelInstance.recolourClones.clones[0];
+          $.each
+          ( clonesToChange,
+            function()
+            { 
+            }
+          )
+        };
     localContext.initContainer(inputFieldHUD);
   }
 
@@ -2063,7 +2115,7 @@ console.log("yogi 2 ", ajaxOptions.url);
             .find("path")
             .each(  
                 function()
-                { if (this.getAttribute("svgHUD_protectedColor") )
+                { if (this.getAttribute("recolorClones_protectedColor") )
                   { return;
                   }
 
@@ -2123,7 +2175,7 @@ console.log("yogi 2 ", ajaxOptions.url);
                           .find("path")
                           .each(
                               function()
-                              { if (this.getAttribute("svgHUD_protectedColor") )
+                              { if (this.getAttribute("recolorClones_protectedColor") )
                                 { return;
                                 }
 

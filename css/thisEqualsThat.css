@@ -1515,6 +1515,9 @@ path.highlight, .highlight path
 { display: none;
 }
 
+.sp-palette-container
+{ width: 100px;
+}
 
 /* inputFieldHUD */
 
