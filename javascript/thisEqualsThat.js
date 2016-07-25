@@ -103,7 +103,7 @@ function recolorPaths(paths, changeTinyColor, mixAmount, changedBy)
       changeTinyColor.setAlpha(originalAlpha);
       newColor = tinycolor.mix(originalColor, changeTinyColor, mixAmount );
 
-      this.setAttribute("style", `fill(${newColor.toString("rgb")})`);
+      this.setAttribute("style", `fill: ${newColor.toString("rgb")};`);
 
       this.setAttribute(changedBy+"_protectedColor", true);
     }
@@ -1512,8 +1512,12 @@ console.log("yogi 2 ", ajaxOptions.url);
                   if (!This.hasOwnProperty("recolourClones") )
                   { This.recolourClones = 
                         { "messages": [],
+                          
                           "changeTinyColors": [],
                           "mixAmount": [],
+
+                          "clones": [],
+                          "paths": [],
                         };
                   }
 
@@ -1578,6 +1582,9 @@ console.log("yogi 2 ", ajaxOptions.url);
 
                     paths = $(clonesToChange).find("path");
                     recolorPaths(paths, changeTinyColor, mixAmount, "recolorClones");
+
+                    This.recolourClones.clones.push(clonesToChange);
+                    This.recolourClones.paths .push(paths);
 
                   }
 
@@ -1833,7 +1840,7 @@ console.log("yogi 2 ", ajaxOptions.url);
 
   this.InputFieldHUD.prototype.Replace.prototype.ratioColor = function(inputFieldHUD, localContext)
   {
-    localContext.initContainer = function(inputFieldHUD)
+    localContext.initContainer = function(inputFieldHUD, localContext)
     { var container = 
           $(` <div class='ratioColorTotal'>
                 <div class='ratioColorList'     />
@@ -1869,6 +1876,10 @@ console.log("yogi 2 ", ajaxOptions.url);
           { localContext.writeChanges();
           }
       );
+
+      for (var index; cloneSetCount of inputFieldHUD.modelInstance.recolorClones.ratios)
+      { 
+      }
       // container.on("move.spectrum", ".ratioColor",
       //     function(event)
       //     { debugger;
@@ -1944,7 +1955,7 @@ console.log("yogi 2 ", ajaxOptions.url);
             }
           )
         };
-    localContext.initContainer(inputFieldHUD);
+    localContext.initContainer(inputFieldHUD, localContext);
   }
 
 
