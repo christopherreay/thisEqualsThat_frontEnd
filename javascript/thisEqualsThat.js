@@ -2060,7 +2060,7 @@ console.log("yogi 2 ", ajaxOptions.url);
     this.contextData      = {};
     
     this.modelInstance    = modelInstance;
-    modelInstance.svgHUD  = this;
+    // modelInstance.svgHUD  = this;
   }
   this.SVGHUD.prototype.display = function()
   { var modelInstance = this.modelInstance;
@@ -2082,14 +2082,14 @@ console.log("yogi 2 ", ajaxOptions.url);
     for (hudDescriptor in svg3dDisplayJSON.svgHUD)
     { var hudAddress    = hudDescriptor.split(".");
       var hudComponent  = hudAddress[0];
-      var hudTagHooks   = $(hudAddress).slice(1);
+      var hudTagHooks   = hudAddress.slice(1);
       if (tagHook == "init")
       { if (! this.contextData[hudComponent])
         { this.contextData[hudComponent] = {};
           this.plugins[hudComponent] = new this[hudComponent](this, this.contextData[hudComponent], tagHook);
         }
       }
-      if ($.inArray(tagHook, hudTagHooks) )
+      if ($.inArray(tagHook, hudTagHooks) >-1 )
       { this.plugins[hudComponent].display(svg3dDisplayJSON.svgHUD[hudDescriptor], tagHook)
       }
     }
@@ -2113,9 +2113,9 @@ console.log("yogi 2 ", ajaxOptions.url);
       console.log(colorPickerSelector, colorPickerData);
 
       var colorPicker = $("<div class='colorPicker hudItem' />");
-      var icon        = $("<img src='/static/graphics/thisEquals/svgHUD/colorPicker.png' />");
+      // var icon        = $("<img src='/static/graphics/thisEquals/svgHUD/colorPicker.png' />");
 
-      colorPicker.append(icon);
+      // colorPicker.append(icon);
       this.context.colorPickersDiv.append(colorPicker);
 
       lastAlteredVisualisationField = this.svgHUD.modelInstance.lastAlteredVisualisationField.fullAddress;
