@@ -411,6 +411,20 @@ console.log("yogi 2 ", ajaxOptions.url);
         }
     );
   };
+
+  this.IFAQueue = function(modelInstance)
+  { this.modelInstnace = modelInstance;
+    this.state = "ready";
+  }
+  this.IFAQueue.prototype.ready = function()
+  { return this.state == "ready";
+  }
+  this.IFAQueue.prototype.enqueueItem = function(parameters)
+  { if (this.ready())
+    { this.modelInstance.inputFieldAltered(      );
+    }
+  }
+
   //MODEL INSTANCE
   this.ModelInstance = function(modelClass, modelInstanceData)
   { this.modelClass         = modelClass;
@@ -428,7 +442,9 @@ console.log("yogi 2 ", ajaxOptions.url);
     this.bottomModelHistory   = {};
 
     this.disable_createSaveLink = false;
-    this.disable_inputFieldAltered = false;
+
+    this.ifa_queue = [];
+    this.ifa_queueState = "ready";
 
     this.inputFieldHUD  = new ThisEqualsThat.InputFieldHUD(this);
     this.svgHUD         = new ThisEqualsThat.SVGHUD(this);
@@ -446,8 +462,8 @@ console.log("yogi 2 ", ajaxOptions.url);
              {
              }
              ) ;
-      this.inputFieldsSliders.on("change", ".inputFieldText",
-          this.inputFieldText_changed);
+      // this.inputFieldsSliders.on("change", ".inputFieldText",
+      //     this.inputFieldText_changed);
       $.each(
         this.data.fields,
         function(fieldNameString, value)
@@ -465,20 +481,20 @@ console.log("yogi 2 ", ajaxOptions.url);
     return this;
   }
   this.ModelInstance.prototype.inputFieldText_changed = function()
-  { $this = $(this);
-    var modelField = $(this).data("thisEquals.modelField");
-    $modelField = $(modelField)
-    if (modelField.hasOwnProperty("uiSlider"))
-    { modelField.uiSlider.data("thisEquals.disableWriteToTextField", true);
-      modelField.uiSlider.slider("value", modelField.actualToSlider(modelField.uiValue_slider.val()));
-    }
-    $modelField.data("thisEquals.oldValue", modelField.uiValue_text.val());
-    console.log($(modelField).data("thisEquals.oldValue"));
+  { //$this = $(this);
+    // var modelField = $(this).data("thisEquals.modelField");
+    // $modelField = $(modelField)
+    // if (modelField.hasOwnProperty("uiSlider"))
+    // { modelField.uiSlider.data("thisEquals.disableWriteToTextField", true);
+    //   modelField.uiSlider.slider("value", modelField.actualToSlider(modelField.uiValue_slider.val()));
+    // }
+    // $modelField.data("thisEquals.oldValue", modelField.uiValue_slider.val());
+    // console.log($(modelField).data("thisEquals.oldValue"));
 
-    modelField.modelInstance.inputFieldAltered(
-              { inputField: modelField.fullAddress,
-                newValue:   modelField.uiValue_text.val()
-              });
+    // modelField.modelInstance.inputFieldAltered(
+    //           { inputField: modelField.fullAddress,
+    //             newValue:   modelField.uiValue_slider.val()
+    //           });
   }
   this.ModelInstance.prototype.getOutputFields = function()
   { if (! this.hasOwnProperty("outputFieldData"))
@@ -568,8 +584,14 @@ console.log("yogi 2 ", ajaxOptions.url);
   }
 
   this.ModelInstance.prototype.inputFieldAltered = function(fieldChangeData, successFunction, doNotUpdateUI)
-  { if (! this.disable_inputFieldAltered)
-    { this.disable_inputFieldAltered = true;
+  { console.log("inputFieldAltered", arguments, this.ifa_queue);
+    if (arguments == this.ifa_currentlyProcessing) 
+      return;
+    if (this.ifa_queueState == "ready")
+    { this.ifa_currentlyProcessing = arguments;
+      this.ifa_queueState = "Sending Request";
+      $("#logo > img").toggleClass("spinner", true);
+
       var This = this;
       fieldChangeData	= $.extend({modelInstanceID: this.id}, fieldChangeData);
       var ajaxOptions =
@@ -583,16 +605,16 @@ console.log("yogi 2 ", ajaxOptions.url);
 
             // changed data. Now it has all the values of all the fields in it. Going to try to update the UI accordingly
             for (var fieldName in data.fieldValues)
-            { try
-              { var inputField = This.inputFields[fieldName];
-                var newValue = data.fieldValues[fieldName];
+            { if (This.inputFields.hasOwnProperty(fieldName) ) 
+              { var inputField  = This.inputFields[fieldName];
+                var newValue    = data.fieldValues[fieldName];
 
                 if (newValue != inputField.data.currentValue)
                 { inputField.setValue(newValue);              
                 }
               }
-              catch (e)
-              {}
+              //catch (e)
+              //{}
             }
 
             This.svg3dDisplayJSON = data.svg3dDisplayJSON;
@@ -604,20 +626,40 @@ console.log("yogi 2 ", ajaxOptions.url);
               This.bottomModelInstance.svg3dDisplayJSON = data.bottomModelData.svg3dDisplayJSON
               if (! This.doNotUpdateUI) This.bottomModelInstance.displayCurrentOutput()
             }
-            This.doNotUpdateUI = false;
             
             if (successFunction)
               successFunction(data, status, request);
+
           },
           "always": function()
-          {  This.disable_inputFieldAltered = false;            
+          { console.log("ajax always", This.ifa_queue[0]);
+
+            This.ifa_queueState = "receivedResponse";
+
+            if (This.doNotUpdateUI)
+            { This.doNotUpdateUI = false;
+              This.ifa_queueState = "ready";
+              $("#logo > img").toggleClass("spinner", false);
+            }
           },
           "complete": function()
-          {  This.disable_inputFieldAltered = false;            
+          { console.log("ajax complete", This.ifa_queue[0]); 
+
+            This.ifa_queueState = "receivedResponse";
+
+            if (This.doNotUpdateUI)
+            { This.doNotUpdateUI = false;
+              This.ifa_queueState = "ready";
+              $("#logo > img").toggleClass("spinner", false);
+            }
           },
         };
       console.log(ajaxOptions);
       $.ajax(ajaxOptions);
+    }
+    else
+    { console.log("pushing to queue", this.ifa_queue[0], arguments);
+      this.ifa_queue.push(arguments);
     }
   }
   this.ModelInstance.prototype.processInputFieldAlteredResponse = function(data)
@@ -1627,14 +1669,26 @@ console.log("yogi 2 ", ajaxOptions.url);
                   //   This.disable_createSaveLink = false;
                   //   This.svg_createSaveLink(This);
 
+                    console.log("animationQueue complete", This.ifa_queue[0]);
+                    if (This.ifa_queue.length > 0)
+                    { var ifa_item = This.ifa_queue.shift()
+                      This.ifa_queueState = "ready";
+                      This.inputFieldAltered(ifa_item[0], ifa_item[1], ifa_item[2]);
+                    }
+                    else
+                    { This.ifa_queueState = "ready";
+                      $("#logo > img").toggleClass("spinner", false);
+                    }
                   
                   }
                 }
                 );
 
 
-
-                This.display.svgClonableG.dequeue(This.id);
+                // This.display.svgClonableG .finish (This.id);
+                // This.display.svgReferenceG.finish (This.id);
+                
+                This.display.svgClonableG .dequeue(This.id);
                 This.display.svgReferenceG.dequeue(This.id);
 
                 var svgVisualisationGBBox   = This.display.svgVisualisationG  .getBBox();
@@ -1651,6 +1705,8 @@ console.log("yogi 2 ", ajaxOptions.url);
               }
        	}
     );
+  
+    // This.display.svgClonableG .finish (This.id);
     svgClonableG.dequeue(this.id);
     svgClonableG.hide();
   }
@@ -1850,10 +1906,6 @@ console.log("yogi 2 ", ajaxOptions.url);
                 <div class='ratioColorList'     />
                 <div class='addRatio hudItem fa fa-plus-circle'       />
                 <div class='total hudCollection'          />
-                <div class='submitCancel hudCollection'>
-                  <div class='submit hudItem fa fa-check'         />
-                  <div class='cancel hudItem fa fa-ban'         />
-                </div>
               </div>
             `);
       inputFieldHUD.modelInstance.display.modelSliders.prepend(container);
@@ -1897,7 +1949,7 @@ console.log("yogi 2 ", ajaxOptions.url);
     };
 
     localContext.createRatioInput = 
-        function(initialRatio, initialColor, listPosition)
+        function(initialRatio, initialColor)
         { if (!initialRatio) initialRatio = 0.0;
           if (!initialColor) initialColor = tinycolor("rgb(128,128,128, 0.8");
 
@@ -1923,7 +1975,9 @@ console.log("yogi 2 ", ajaxOptions.url);
                   "showAlpha"       : true,
                   "preferredFormat" : "rgb",
 
-                  "color"           : initialColor,       
+                  "color"           : initialColor,      
+                  "replacerClassName": "hudItem colorPicker",
+
 
                   "move"            : localContext.spectrumMove,
                   "change"          : localContext.spectrumChange,
@@ -1994,7 +2048,8 @@ console.log("yogi 2 ", ajaxOptions.url);
     var recolorClones     = inputFieldHUD.modelInstance.recolorClones;
     var pathSetCount      = recolorClones.paths.length;
     for (var index = 0; index < pathSetCount; index ++)
-    { ratioInput = localContext.createRatioInput(recolorClones.ratios[index], recolorClones.changeTinyColors[index]);
+    { var initialColor = recolorClones.changeTinyColors[index].setAlpha(recolorClones.mixAmount[index] / 100.0);
+      ratioInput = localContext.createRatioInput(recolorClones.ratios[index], initialColor);
       //recolorPaths(recolorClones.paths[index], recolorClones.changeTinyColors[index], recolorClones.mixAmount[index], "recolorClones")
     }
 
@@ -2342,15 +2397,18 @@ console.log("yogi 2 ", ajaxOptions.url);
     if (fieldType == "select" || fieldType == "text")
     { this.data.currentValue = newValue;
       this["uiValue_" + fieldType].val(newValue);
-      if (trigger) this["uiValue_" + fieldType].trigger("change");
     }
     if (fieldType == "slider")
     { this.data.currentValue = newValue;
-      var triggerUpdate = "slide"
-      if (trigger) triggerUpdate = "change";
-      this.updateValueText(triggerUpdate);
-      this.updateValueSlider();
+      this.ifaUpdatesControl_slider();
     }
+  }
+  this.ModelFieldInput.prototype.inputFieldAltered = function()
+  { this.modelInstance.inputFieldAltered
+    ( { "inputField": this.fullAddress,
+        "newValue"  : this.data.currentValue,
+      }
+    );
   }
 
   this.ModelFieldInput.prototype.getTag = function()
@@ -2405,10 +2463,9 @@ console.log("yogi 2 ", ajaxOptions.url);
     var This  = $(this).data("ModelInputField");
     This = event.data;
 
-    This.modelInstance.inputFieldAltered(
-    { inputField: This.fullAddress,
-      newValue:   This.uiValue_select.val()
-    });
+    This.data.currentValue = $(this).val();
+
+    This.inputFieldAltered();
   }
   this.ModelFieldInput.prototype.getTag_text = function()
   {   var fieldData = this.data;
@@ -2445,10 +2502,9 @@ console.log("yogi 2 ", ajaxOptions.url);
   { var This  = $(this).data("ModelInputField");
     This = event.data;
 
-    This.modelInstance.inputFieldAltered(
-    { inputField: This.fullAddress,
-      newValue:   This.uiValue_text.val()
-    });
+    This.data.currentValue = $(this).val();
+
+    This.inputFieldAltered();
   }
   this.ModelFieldInput.prototype.getTag_slider = function()
   { var fieldData = this.data;
@@ -2485,6 +2541,7 @@ console.log("yogi 2 ", ajaxOptions.url);
 
       uiValue_slider.val(fieldData.defaultValue);
       uiValue_slider .data("thisEquals.modelField", this);
+      uiValue_slider.on("change", this.userUpdatesSliderText);
 
       this.uiValue_slider   = uiValue_slider;
       this.uiSlider         = uiSlider;
@@ -2507,12 +2564,13 @@ console.log("yogi 2 ", ajaxOptions.url);
         slide: function(event, ui)
           {
             This.currentValue = ui.value;
-            This.updateValueText("slide");
+            This.sliderUpdatesValueText;
         },
         change: function(event, ui)
-          { This.currentValue = ui.value;
-            This.updateValueText("change");
-
+          { if (! event.originalEvent) return true;
+            This.currentValue = ui.value;
+            This.sliderUpdatesValueText;
+            This.inputFieldAltered();
         }
       };
     return sliderOptions;
@@ -2539,45 +2597,59 @@ console.log("yogi 2 ", ajaxOptions.url);
         min: min,
         value: this.actualToSlider(fieldData.currentValue),
         slide: function(event, ui)
-          { This.data.currentValue = This.sliderToActual(ui.value);
-            This.updateValueText("slide");
+          { This.data.currentValue = This.logSliderToValue(ui.value);
+            This.sliderUpdatesValueText();
           },
         change: function(event, ui)
-          { This.data.currentValue = This.sliderToActual(ui.value);
-            This.updateValueText("change");
+          { if (! event.originalEvent) return true;
+
+            This.data.currentValue = This.logSliderToValue(ui.value);
+            This.sliderUpdatesValueText();
+            
+            This.inputFieldAltered();
           }
       };
 
     return sliderOptions;
   }
-  this.ModelFieldInput.prototype.sliderToActual = function(sliderValue)
+  this.ModelFieldInput.prototype.logSliderToValue = function(sliderValue)
   { lSC = this.logSliderConstants;
     return Math.exp(lSC.minv + lSC.scale * (sliderValue-lSC.min));
   }
-  this.ModelFieldInput.prototype.actualToSlider = function(actual)
-  { lSC = this.logSliderConstants;
-    return (Math.log(actual)-lSC.minv) / lSC.scale + lSC.min;
-  }
-  this.ModelFieldInput.prototype.setValueFromActual = function(actual)
-  { this.currentValue = actual;
-    this.updateValueSlider();
-    this.updateValueText();
-  }
-  this.ModelFieldInput.prototype.updateValueSlider = function()
-  { this.uiSlider.slider("option", "value", this.actualToSlider(this.data.currentValue));
-  }
-  this.ModelFieldInput.prototype.updateValueText = function(slideOrChange)
-  { $this = $(this);
-    $uiValue_slider = $(this.uiValue_slider);
-    if (this.uiSlider.data("thisEquals.disableWriteToTextField") == true)
-      this.uiSlider.data("thisEquals.disableWriteToTextField", false);
+  
+  this.ModelFieldInput.prototype.actualToSlider = function()
+  { var currentValue = this.data.currentValue;
+    if (this.hasOwnProperty("logSliderConstants") )
+    { lSC = this.logSliderConstants;
+      toReturn = (Math.log(currentValue)-lSC.minv) / lSC.scale + lSC.min;
+    }
     else
-    { $uiValue_slider.val(Number(this.data.currentValue).toPrecision(5));
-      if (slideOrChange == "change" || slideOrChange == "")
-        $uiValue_slider.change();
+    { toReturn = currentValue;
+    }
+    return toReturn;
+  }
+
+  this.ModelFieldInput.prototype.ifaUpdatesControl_slider = function(actual)
+  { this.uiValue_slider.val(Number(this.data.currentValue).toPrecision(5));
+    this.userUpdatesValueText();
+  }
+  this.ModelFieldInput.prototype.userUpdatesValueText = function()
+  { this.data.currentValue = this.uiValue_slider.val();
+
+    this.disableUpdateOfText = true;
+    this.uiSlider.slider("option", "value", this.actualToSlider());
+    //this.uiSlider.val(this.actualToSlider()).slider("refresh");
+  }
+  this.ModelFieldInput.prototype.sliderUpdatesValueText = function(slideOrChange)
+  { if (this.disableUpdateOfText)
+    { this.disableUpdateOfText = false;
+      return;
     }
 
-    console.log(this.fullAddress, this.data.currentValue);
+    $this = $(this);
+    $uiValue_slider = $(this.uiValue_slider);
+    
+    $uiValue_slider.val(Number(this.data.currentValue).toPrecision(5));
   }
 
   this.ModelFieldOutput = function(modelInstance, fieldData)

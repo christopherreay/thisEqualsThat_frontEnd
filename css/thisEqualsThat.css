@@ -1484,6 +1484,7 @@ input.ui-colorpicker-hex-input {
 .hudItem
 { display: inline-block;
   min-width: 32px;
+  margin-left: 4px;
 }
 .hudCollection
 { height: 32px;
@@ -1494,6 +1495,13 @@ input.ui-colorpicker-hex-input {
   background-image: url('/static/graphics/thisEquals/svgHUD/colorPicker.png');
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+.hudItem.addRatio
+{ width: 100%;
+
+  text-align: center;
+
 }
 
 @keyframes highlightSVGPath
@@ -1519,6 +1527,19 @@ path.highlight, .highlight path
 { width: 100px;
 }
 
+.ratioColorTotal .sp-replacer 
+{ background-color: transparent;
+  border-color: transparent;
+}
+.ratioColorTotal .sp-preview
+{ height: 10px;
+  width: 10px;
+  margin-left: 5px;
+  margin-top: 6px;
+}
+.ratioColorTotal .sp-dd
+{ display :none;
+}
 /* inputFieldHUD */
 
 
@@ -1535,3 +1556,44 @@ path.highlight, .highlight path
   width: 10px;
   float: right;
 }
+
+
+
+
+@keyframes spinner {
+    from {
+      -moz-transform: rotateY(0deg);
+      -ms-transform: rotateY(0deg);
+      transform: rotateY(0deg);
+    }
+    to {
+      -moz-transform: rotateY(-360deg);
+      -ms-transform: rotateY(-360deg);
+      transform: rotateY(-360deg);
+    }
+  }
+
+body {
+  -webkit-perspective: 1200px;
+  -moz-perspective: 1200px;
+  -ms-perspective: 1200px;
+  perspective: 1200px;
+  perspective-origin: 50% 0%;
+}
+
+.spinner {
+    -webkit-animation-name: spinner;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-duration: 6s;
+
+    animation-name: spinner;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: 6s;
+
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }
