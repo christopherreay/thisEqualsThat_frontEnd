@@ -472,12 +472,12 @@ console.log("yogi 2 ", ajaxOptions.url);
     { modelField.uiSlider.data("thisEquals.disableWriteToTextField", true);
       modelField.uiSlider.slider("value", modelField.actualToSlider(modelField.uiValue_slider.val()));
     }
-    $modelField.data("thisEquals.oldValue", modelField.uiValue_slider.val());
+    $modelField.data("thisEquals.oldValue", modelField.uiValue_text.val());
     console.log($(modelField).data("thisEquals.oldValue"));
 
     modelField.modelInstance.inputFieldAltered(
               { inputField: modelField.fullAddress,
-                newValue:   modelField.uiValue_slider.val()
+                newValue:   modelField.uiValue_text.val()
               });
   }
   this.ModelInstance.prototype.getOutputFields = function()
@@ -570,7 +570,6 @@ console.log("yogi 2 ", ajaxOptions.url);
   this.ModelInstance.prototype.inputFieldAltered = function(fieldChangeData, successFunction, doNotUpdateUI)
   { if (! this.disable_inputFieldAltered)
     { this.disable_inputFieldAltered = true;
-      if (!doNotUpdateUI) doNotUpdateUI = false;
       var This = this;
       fieldChangeData	= $.extend({modelInstanceID: this.id}, fieldChangeData);
       var ajaxOptions =
@@ -597,14 +596,16 @@ console.log("yogi 2 ", ajaxOptions.url);
             }
 
             This.svg3dDisplayJSON = data.svg3dDisplayJSON;
-            if (!doNotUpdateUI) This.displayCurrentOutput()
+            if (! This.doNotUpdateUI) This.displayCurrentOutput()
             if (    This.bottomModelInstance && data.bottomModelData 
                 &&  This.bottomModelInstance.lastAlteredOutputField && This.bottomModelInstance.lastAlteredOutputField.data)
             { This.bottomModelInstance.lastAlteredOutputField.data.currentValue = data.bottomModelData.newValue
               This.bottomModelInstance.lastAlteredVisualisationField.data.currentValue = data.bottomModelData.svg3dDisplayJSON.svgFieldValue;
               This.bottomModelInstance.svg3dDisplayJSON = data.bottomModelData.svg3dDisplayJSON
-              if (! doNotUpdateUI) This.bottomModelInstance.displayCurrentOutput()
+              if (! This.doNotUpdateUI) This.bottomModelInstance.displayCurrentOutput()
             }
+            This.doNotUpdateUI = false;
+            
             if (successFunction)
               successFunction(data, status, request);
           },
@@ -1509,7 +1510,7 @@ console.log("yogi 2 ", ajaxOptions.url);
 
                 if ("recolorClones" in This.svg3dDisplayJSON.svg3dConfiguration)
                 { //var clones                  = $(This.display.svgVisualisationG).find("> g:nth-child(n + 2)");
-                  if (!This.hasOwnProperty("recolorClones") )
+                  //if (!This.hasOwnProperty("recolorClones") )
                   { This.recolorClones = 
                         { "messages": [],
                           
@@ -1538,7 +1539,7 @@ console.log("yogi 2 ", ajaxOptions.url);
 
                   if (ratios.length != colors.length) 
                   { debugger;
-                    This.recolorClones.messages.append({"warning": `ratios length: ${ratios.length}, colors length: ${colors.length}`});
+                    This.recolorClones.messages.push({"warning": `ratios length: ${ratios.length}, colors length: ${colors.length}`});
                   }
                   ratioCount         = ratios.length;
 
@@ -1588,6 +1589,9 @@ console.log("yogi 2 ", ajaxOptions.url);
 
                   }
 
+                  This.inputFieldHUD.renderHUD("postColor");
+                  This.svgHUD.renderHUD("postColor");
+
                 }
 
                 This.display.svgReferenceG.animate(
@@ -1623,7 +1627,7 @@ console.log("yogi 2 ", ajaxOptions.url);
                   //   This.disable_createSaveLink = false;
                   //   This.svg_createSaveLink(This);
 
-                  This.svgHUD.renderHUD("postColor");
+                  
                   }
                 }
                 );
@@ -1800,13 +1804,13 @@ console.log("yogi 2 ", ajaxOptions.url);
     }
   }
 
-  this.InputFieldHUD.prototype.Replace = function(inputFieldHUD, context)
+  this.InputFieldHUD.prototype.Remove = function(inputFieldHUD, context, tagHook)
   { this.inputFieldHUD            = inputFieldHUD;
     this.context                  = context;
     // this.context.byVisualisation  = {};
 
   }
-  this.InputFieldHUD.prototype.Replace.prototype.display =function(replaceDict, tagHook)
+  this.InputFieldHUD.prototype.Remove.prototype.display =function(replaceDict, tagHook)
   { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
     var This = this;
@@ -1819,7 +1823,6 @@ console.log("yogi 2 ", ajaxOptions.url);
       { This.context[replaceConfigName] = 
             { "fields": {},
             };
-        This[replaceConfigName](This.inputFieldHUD, This.context[replaceConfigName]);
       }
       var localContext = this.context[replaceConfigName];
 
@@ -1832,14 +1835,15 @@ console.log("yogi 2 ", ajaxOptions.url);
         // localContext.fields[fieldToHide].hidden = true;
       }
 
-      toReturn = null;
-      // eval(replaceConfig.addFieldsExec || "toReturn = {'status': 'fail', 'message': 'noCodeToExecute'}");
-
     }
   }
 
-  this.InputFieldHUD.prototype.Replace.prototype.ratioColor = function(inputFieldHUD, localContext)
-  {
+  this.InputFieldHUD.prototype.RatioColor = function(inputFieldHUD, localContext, tagHook)
+  { this.inputFieldHUD    = inputFieldHUD;
+    this.context          = localContext;
+    this.context.inputFieldHUD = inputFieldHUD;
+
+
     localContext.initContainer = function(inputFieldHUD, localContext)
     { var container = 
           $(` <div class='ratioColorTotal'>
@@ -1862,6 +1866,9 @@ console.log("yogi 2 ", ajaxOptions.url);
       container.on("click", ".addRatio",
           function(event)
           { localContext.createRatioInput();
+            localContext.writeChanges(true);
+
+            localContext.inputFieldHUD.modelInstance.inputFields[`["ratios"]` ].uiValue_text.trigger("change");
           }
       );
       container.on("click", ".closeBox",
@@ -1871,18 +1878,14 @@ console.log("yogi 2 ", ajaxOptions.url);
             localContext.destroyRatioInput($(this).parent(".ratioColor"));
           }
       );
-      container.on("change",
+      container.on("change", ".percentageSpinner",
           function(event)
           { localContext.writeChanges();
+
+            localContext.inputFieldHUD.modelInstance.inputFields[`["ratios"]` ].uiValue_text.trigger("change");
           }
       );
 
-      recolorClones = inputFieldHUD.modelInstance.recolorClones;
-      var pathSetCount = recolorClones.paths.length;
-      for (var index = 0; index < pathSetCount; index ++)
-      { ratioInput = localContext.createRatioInput(ratios[index], recolorClones.changeTinyColors[index]);
-        recolorPaths(recolorClones
-      }
       // container.on("move.spectrum", ".ratioColor",
       //     function(event)
       //     { debugger;
@@ -1892,8 +1895,9 @@ console.log("yogi 2 ", ajaxOptions.url);
       //     }
       // );
     };
+
     localContext.createRatioInput = 
-        function(initialRatio, initialColor)
+        function(initialRatio, initialColor, listPosition)
         { if (!initialRatio) initialRatio = 0.0;
           if (!initialColor) initialColor = tinycolor("rgb(128,128,128, 0.8");
 
@@ -1903,8 +1907,8 @@ console.log("yogi 2 ", ajaxOptions.url);
           }
           var toReturn = 
                 $(` <div class='ratioColor'>
-                      <input  class='hudItem percentageSpinner' type='number' min='0' max='100' step='0.1' value =""+initialRatio />
-                      <input  class='hudItem spectrumColorPickerInput' />
+                      <input  class='hudItem percentageSpinner' type='number' min='0' max='100' step='0.1' value ='${initialRatio}' />
+                      <input  class='hudItem spectrumColorPickerInput' value='${initialColor.toString("rgb")}' />
                       <span   class="hudItem closeBox    fa fa-times-circle" />
                     </div>
                   `
@@ -1916,11 +1920,13 @@ console.log("yogi 2 ", ajaxOptions.url);
               .find(".spectrumColorPickerInput")
               .spectrum
               ( { "showPalette"     : true,
+                  "showAlpha"       : true,
                   "preferredFormat" : "rgb",
 
                   "color"           : initialColor,       
 
                   "move"            : localContext.spectrumMove,
+                  "change"          : localContext.spectrumChange,
                 }
               );
 
@@ -1938,9 +1944,9 @@ console.log("yogi 2 ", ajaxOptions.url);
     localContext.markDirty = 
         function()
         {
-        }
+        };
     localContext.writeChanges =
-        function()
+        function(triggerUpdate)
         { var newRatiosValArray = [];
           var newColorsValArray = [];
           localContext.ratioColorList
@@ -1952,24 +1958,47 @@ console.log("yogi 2 ", ajaxOptions.url);
                           }
                         );
 
-          inputFieldHUD.modelInstance.inputFields[`["ratios"]`  ].setValue(newRatiosValArray.join("|") );
+          inputFieldHUD.modelInstance.inputFields[`["ratios"]` ].setValue(newRatiosValArray.join("|") );
           inputFieldHUD.modelInstance.inputFields[`["colors"]` ].setValue(newColorsValArray.join("|") );
+
+
         };
     localContext.spectrumMove =
         function(color)
-        { debugger;
+        { mixAmount = color.getAlpha() * 100;
+          color.setAlpha(1.0);
 
-          var clonesToChange = inputFieldHUD.modelInstance.recolorClones.clones[0];
-          $.each
-          ( clonesToChange,
-            function()
-            { 
+          recolorPaths(inputFieldHUD.modelInstance.recolorClones.paths[$(this).parent(".ratioColor").data("hud_position")], color, mixAmount, "recolorClones" );
+        };
+    localContext.spectrumChange =
+        function(color)
+        { setImmediate
+          ( function()
+            { localContext.inputFieldHUD.modelInstance.doNotUpdateUI = true;
+              localContext.writeChanges();
+              localContext.inputFieldHUD.modelInstance.inputFields[`["colors"]` ].uiValue_text.trigger("change");
             }
-          )
+          );
         };
     localContext.initContainer(inputFieldHUD, localContext);
-  }
+  };
 
+  this.InputFieldHUD.prototype.RatioColor.prototype.display = function(config, tagHook)
+  {
+
+    var inputFieldHUD     = this.inputFieldHUD;
+    var localContext      = this.context;
+    localContext.ratioColorList.empty();
+    delete localContext.ratioInputFieldCount;
+
+    var recolorClones     = inputFieldHUD.modelInstance.recolorClones;
+    var pathSetCount      = recolorClones.paths.length;
+    for (var index = 0; index < pathSetCount; index ++)
+    { ratioInput = localContext.createRatioInput(recolorClones.ratios[index], recolorClones.changeTinyColors[index]);
+      //recolorPaths(recolorClones.paths[index], recolorClones.changeTinyColors[index], recolorClones.mixAmount[index], "recolorClones")
+    }
+
+  }
 
   this.SVGHUD = function(modelInstance)
   { this.plugins          = {};
@@ -2308,15 +2337,18 @@ console.log("yogi 2 ", ajaxOptions.url);
     modelInstance.inputFields[data.fullAddress] = this;
   }
 
-  this.ModelFieldInput.prototype.setValue = function(newValue)
+  this.ModelFieldInput.prototype.setValue = function(newValue, trigger)
   { fieldType = this.data.fieldType;
     if (fieldType == "select" || fieldType == "text")
     { this.data.currentValue = newValue;
       this["uiValue_" + fieldType].val(newValue);
+      if (trigger) this["uiValue_" + fieldType].trigger("change");
     }
     if (fieldType == "slider")
     { this.data.currentValue = newValue;
-      this.updateValueText("slide");
+      var triggerUpdate = "slide"
+      if (trigger) triggerUpdate = "change";
+      this.updateValueText(triggerUpdate);
       this.updateValueSlider();
     }
   }
