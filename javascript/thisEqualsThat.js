@@ -1248,10 +1248,10 @@ console.log("yogi 2 ", ajaxOptions.url);
                                     }
                                   );
                               colorChangeString = colorChangeString.join("|");
-                              This.inputFields['["colours"]'].uiValueText.val(colorChangeString);
+                              This.inputFields['["colors"]'].uiValueText.val(colorChangeString);
                               This.inputFields[ '["ratios"]'].uiValueText.val(ratioString)      ;
 
-                              var alterField = This.inputFields['["colours"]'];  
+                              var alterField = This.inputFields['["colors"]'];  
                               This.inputFieldAltered(
                               { inputField: alterField.fullAddress, 
                                 newValue:   alterField.uiValueText.val()
@@ -1507,10 +1507,10 @@ console.log("yogi 2 ", ajaxOptions.url);
 
                 This.svgHUD.renderHUD("preColor");
 
-                if ("recolourClones" in This.svg3dDisplayJSON.svg3dConfiguration)
+                if ("recolorClones" in This.svg3dDisplayJSON.svg3dConfiguration)
                 { //var clones                  = $(This.display.svgVisualisationG).find("> g:nth-child(n + 2)");
-                  if (!This.hasOwnProperty("recolourClones") )
-                  { This.recolourClones = 
+                  if (!This.hasOwnProperty("recolorClones") )
+                  { This.recolorClones = 
                         { "messages": [],
                           
                           "changeTinyColors": [],
@@ -1527,18 +1527,18 @@ console.log("yogi 2 ", ajaxOptions.url);
                   var clonesNotChosenMemoise  = Array.apply(null, Array(cloneCount)).map(function (_, i) {return i;});
 
 
-                  var recolourClones = This.svg3dDisplayJSON.svg3dConfiguration.recolourClones;
+                  var recolorClones = This.svg3dDisplayJSON.svg3dConfiguration.recolorClones;
 
-                  var randomLayout   = recolourClones[0].randomLayout == "Yes";
-                  var ratios         = recolourClones[0].ratios;
-                  var colours        = recolourClones[0].colours;
+                  var randomLayout   = recolorClones[0].randomLayout == "Yes";
+                  var ratios         = recolorClones[0].ratios;
+                  var colors        = recolorClones[0].colors;
 
-                  This.recolourClones.ratios = ratios;
-                  This.recolourClones.colors = colours;
+                  This.recolorClones.ratios = ratios;
+                  This.recolorClones.colors = colors;
 
-                  if (ratios.length != colours.length) 
+                  if (ratios.length != colors.length) 
                   { debugger;
-                    This.recolourClones.messages.append({"warning": `ratios length: ${ratios.length}, colours length: ${colours.length}`});
+                    This.recolorClones.messages.append({"warning": `ratios length: ${ratios.length}, colors length: ${colors.length}`});
                   }
                   ratioCount         = ratios.length;
 
@@ -1548,7 +1548,7 @@ console.log("yogi 2 ", ajaxOptions.url);
                   { var clonesToChange  = [];
 
                     var ratio           = ratios [ratioCounter];
-                    var changeColour    = colours[ratioCounter];
+                    var changeColor    = colors[ratioCounter];
 
                     var cloneToChangeCount = Math.round(ratio * cloneCount);
 
@@ -1568,14 +1568,14 @@ console.log("yogi 2 ", ajaxOptions.url);
                     }
 
 
-                    var changeTinyColor =  tinycolor(changeColour);
+                    var changeTinyColor =  tinycolor(changeColor);
                     var mixAmount       =  changeTinyColor.getAlpha() * 100;
                     changeTinyColor.setAlpha(1.0);
 
-                    This.recolourClones.changeTinyColors.push(changeTinyColor);
-                    This.recolourClones.mixAmount       .push(mixAmount);
+                    This.recolorClones.changeTinyColors.push(changeTinyColor);
+                    This.recolorClones.mixAmount       .push(mixAmount);
 
-                    // var changeRGB = changeColour.match(/^rgb[a]?\(([-]?\d+),\s*([-]?\d+),\s*([-]?\d+)[,]?\s*(\d*[.]?\d*)\)$/);
+                    // var changeRGB = changeColor.match(/^rgb[a]?\(([-]?\d+),\s*([-]?\d+),\s*([-]?\d+)[,]?\s*(\d*[.]?\d*)\)$/);
                     // var changeR   = Number(changeRGB[1]);
                     // var changeG   = Number(changeRGB[2]);
                     // var changeB   = Number(changeRGB[3]);
@@ -1583,8 +1583,8 @@ console.log("yogi 2 ", ajaxOptions.url);
                     paths = $(clonesToChange).find("path");
                     recolorPaths(paths, changeTinyColor, mixAmount, "recolorClones");
 
-                    This.recolourClones.clones.push(clonesToChange);
-                    This.recolourClones.paths .push(paths);
+                    This.recolorClones.clones.push(clonesToChange);
+                    This.recolorClones.paths .push(paths);
 
                   }
 
@@ -1877,31 +1877,38 @@ console.log("yogi 2 ", ajaxOptions.url);
           }
       );
 
-      for (var index; cloneSetCount of inputFieldHUD.modelInstance.recolorClones.ratios)
-      { 
+      recolorClones = inputFieldHUD.modelInstance.recolorClones;
+      var pathSetCount = recolorClones.paths.length;
+      for (var index = 0; index < pathSetCount; index ++)
+      { ratioInput = localContext.createRatioInput(ratios[index], recolorClones.changeTinyColors[index]);
+        recolorPaths(recolorClones
       }
       // container.on("move.spectrum", ".ratioColor",
       //     function(event)
       //     { debugger;
       //       console.log("move.spectrum", $(this).data("hud_position") );
 
-      //       var clonesToColour = inputFieldHUD.modelInstance.recolourClones;
+      //       var clonesToColor = inputFieldHUD.modelInstance.recolorClones;
       //     }
       // );
     };
     localContext.createRatioInput = 
-        function()
-        { if (! localContext.hasOwnProperty("ratioInputFieldCount") )
+        function(initialRatio, initialColor)
+        { if (!initialRatio) initialRatio = 0.0;
+          if (!initialColor) initialColor = tinycolor("rgb(128,128,128, 0.8");
+
+          if (! localContext.hasOwnProperty("ratioInputFieldCount") )
           { localContext.ratioInputFieldCount = 0;
             localContext.ratioInputFields     = [];
           }
           var toReturn = 
                 $(` <div class='ratioColor'>
-                      <input  class='hudItem percentageSpinner' type='number' min='0' max='100' step='0.1' value ='0' />
+                      <input  class='hudItem percentageSpinner' type='number' min='0' max='100' step='0.1' value =""+initialRatio />
                       <input  class='hudItem spectrumColorPickerInput' />
                       <span   class="hudItem closeBox    fa fa-times-circle" />
                     </div>
-                `);
+                  `
+                 );
           toReturn.data("hud_position", localContext.ratioInputFieldCount++);
 
           localContext.ratioColorList.append(toReturn);
@@ -1910,11 +1917,16 @@ console.log("yogi 2 ", ajaxOptions.url);
               .spectrum
               ( { "showPalette"     : true,
                   "preferredFormat" : "rgb",
-                  "move":             localContext.spectrumMove,
+
+                  "color"           : initialColor,       
+
+                  "move"            : localContext.spectrumMove,
                 }
               );
 
           localContext.markDirty();
+
+          return toReturn
         };
     localContext.destroyRatioInput =
         function(inputFieldElement)
@@ -1941,13 +1953,13 @@ console.log("yogi 2 ", ajaxOptions.url);
                         );
 
           inputFieldHUD.modelInstance.inputFields[`["ratios"]`  ].setValue(newRatiosValArray.join("|") );
-          inputFieldHUD.modelInstance.inputFields[`["colours"]` ].setValue(newColorsValArray.join("|") );
+          inputFieldHUD.modelInstance.inputFields[`["colors"]` ].setValue(newColorsValArray.join("|") );
         };
     localContext.spectrumMove =
         function(color)
         { debugger;
 
-          var clonesToChange = inputFieldHUD.modelInstance.recolourClones.clones[0];
+          var clonesToChange = inputFieldHUD.modelInstance.recolorClones.clones[0];
           $.each
           ( clonesToChange,
             function()
