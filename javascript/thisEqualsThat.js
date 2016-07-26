@@ -1548,7 +1548,7 @@ console.log("yogi 2 ", ajaxOptions.url);
                 var referenceSVG3dConfiguration = $.extend(true, {}, This.svg3dDisplayJSON.svg3dConfiguration.translate3d);
                 $.extend(referenceSVG3dConfiguration, {"x":referenceSVG3dConfiguration.x * multiplier, "y": referenceSVG3dConfiguration.y * multiplier});
 
-                This.svgHUD.renderHUD("preColor");
+                
 
                 if ("recolorClones" in This.svg3dDisplayJSON.svg3dConfiguration)
                 { //var clones                  = $(This.display.svgVisualisationG).find("> g:nth-child(n + 2)");
@@ -1631,8 +1631,7 @@ console.log("yogi 2 ", ajaxOptions.url);
 
                   }
 
-                  This.inputFieldHUD.renderHUD("postColor");
-                  This.svgHUD.renderHUD("postColor");
+                  
 
                 }
 
@@ -1646,28 +1645,11 @@ console.log("yogi 2 ", ajaxOptions.url);
                     This.progress_translate3d(animation, progress, remainingMs, This);                     
                   },
                   complete: function() 
-                  { 
-                  //This.disable_createSaveLink = true; 
-                  //   console.log(This.svg3dDisplayJSON.postProcessing);
-                  //   var postProcessing  = This.svg3dDisplayJSON.postProcessing;
-                  //   var postProcessingFunctions = {};
-                  //   for (var ccThing in postProcessing)
-                  //   { //var delay ssdasdsdsd        = 2000.0 / postProcessing[ccThing]
-                  //     var ccFunction = This.display[ccThing+"_function"];
-                  //     var mult = postProcessing[ccThing];
-                  //     if (mult != 0) ccFunction(mult);
-                  //     // var ccBuild = postProcessingFunctions[ccThing] = {};
-                  //     // ccBuild['counter']  = postProcessing[ccThing];
+                  {  This.svgHUD.renderHUD("preColor");
 
-                  //     // for (var counter = 0; counter < ccBuild['counter']; counter ++)
-                  //     // { ccThingButton.trigger("click");
-                  //     // }
-                  //   } 
-                    
+                    This.inputFieldHUD.renderHUD("postColor");
+                    This.svgHUD.renderHUD("postColor");
 
-                    
-                  //   This.disable_createSaveLink = false;
-                  //   This.svg_createSaveLink(This);
 
                     console.log("animationQueue complete", This.ifa_queue[0]);
                     if (This.ifa_queue.length > 0)
@@ -1794,7 +1776,6 @@ console.log("yogi 2 ", ajaxOptions.url);
   }
   this.ModelInstance.prototype.displayCurrentOutput_2 = function(This)
   { this.inputFieldHUD.renderHUD("init");
-    This.inputFieldHUD.renderHUD("onLoad_allFieldsOnDOM"); 
 
     This.svgHUD.renderHUD("init");
 
@@ -2067,7 +2048,7 @@ console.log("yogi 2 ", ajaxOptions.url);
 
     this.divForHUD                = modelInstance.display.svgHUD = $("<div class='svgHUD' />");
     this.display                  = this.divForHUD;
-    modelInstance.display.svgOutput.prepend(this.divForHUD);
+    modelInstance.display.modelSvgOutput.prepend(this.divForHUD);
     modelInstance.display.svgHUD  = this.divForHUD;
   }
   this.SVGHUD.prototype.renderHUD = function(tagHook)
@@ -2077,14 +2058,14 @@ console.log("yogi 2 ", ajaxOptions.url);
 
     var svg3dDisplayJSON  = this.modelInstance.svg3dDisplayJSON;
     
-    this.divForHUD.html("");
-
     for (hudDescriptor in svg3dDisplayJSON.svgHUD)
     { var hudAddress    = hudDescriptor.split(".");
       var hudComponent  = hudAddress[0];
       var hudTagHooks   = hudAddress.slice(1);
       if (tagHook == "init")
-      { if (! this.contextData[hudComponent])
+      { this.divForHUD.html("");
+
+        if (! this.contextData[hudComponent])
         { this.contextData[hudComponent] = {};
           this.plugins[hudComponent] = new this[hudComponent](this, this.contextData[hudComponent], tagHook);
         }
