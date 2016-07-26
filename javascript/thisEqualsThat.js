@@ -2096,13 +2096,10 @@ console.log("yogi 2 ", ajaxOptions.url);
   this.SVGHUD.prototype.fillManager = function(svgHUD, context)
   { this.svgHUD     = svgHUD;
     this.context    = context;
-    this.context.byVisualisation = {};
   }
   this.SVGHUD.prototype.fillManager.prototype.postClone = function(fillManagersDict)
   { // html and behaviour a widget for a  fillManager widhet. Use the code defined in the fillManagerData to run when the fillManager exits.
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
-    var This = this;
-
     this.context.fillManagersDiv = $("<div class='fillManagers hudCollection' />");
     this.svgHUD.divForHUD.append(this.context.fillManagersDiv);
 
@@ -2110,41 +2107,32 @@ console.log("yogi 2 ", ajaxOptions.url);
     { var fillManagerData = fillManagersDict[fillManagerSelector];
       console.log(fillManagerSelector, fillManagerData);
 
-      var fillManagerDiv = $("<div class='fillManager hudItem' />");
-      this.context.fillManagersDiv.append(fillManagerDiv);
+      var localContext = null;
+      if (! this.context.loadedData)
+      { selectorContext = this.context[fillManagerSelector] = { "byVisualisation": {} };
 
-      var lastAlteredVisualisationField = this.svgHUD.modelInstance.lastAlteredVisualisationField.fullAddress;
-      var localContext;
-      if (! this.context.byVisualisation.hasOwnProperty("lastAlteredVisualisationField") )
-      { 
-        localContext = this.context.byVisualisation[lastAlteredVisualisationField] = {};
         
+
+        var fillManagerDiv = $("<div class='fillManager hudItem' />");
+        this.context.fillManagersDiv.append(fillManagerDiv);
+
+        var lastAlteredVisualisationField = this.svgHUD.modelInstance.lastAlteredVisualisationField.fullAddress;
+        localContext = selectorContext.byVisualisation[lastAlteredVisualisationField] = {};
+          
         localContext.currentColor = tinycolor(fillManagerData.initialColorString);
         
-        localContext.memoisedElements   = {};
-        for (var elementSelector in fillManagerData.fillSmasher)
-        { localContext.memoisedElements[elementSelector] = $(This.svgHUD.modelInstance.display.containerSVG).find(elementSelector);
-        }
-      }
-      else
-      { localContext = this.context.byVisualisation[lastAlteredVisualisationField];
-      }
+        localContext.rep_onColorChange = function(color)
+        { var toReturn    = null;
 
+          for (var elementSelector in fillManagerData.fillSmasher)
+          { var pickedColor = tinycolor(color.toString("rgb"));
+            localContext.memoisedElements[elementSelector].attr("fill", eval(fillManagerData.fillSmasher[elementSelector]) );
+          }
 
-      var rep_onColorChange = function(color)
-      { var toReturn    = null;
+          localContext.currentColor = color;
+        };
 
-        for (var elementSelector in fillManagerData.fillSmasher)
-        { var pickedColor = tinycolor(color.toString("rgb"));
-          localContext.memoisedElements[elementSelector].attr("fill", eval(fillManagerData.fillSmasher[elementSelector]) );
-        }
-
-        localContext.currentColor = color;
-      }
-
-      rep_onColorChange(localContext.currentColor);
-
-      fillManagerDiv.spectrum({
+        fillManagerDiv.spectrum({
           "color":            localContext.currentColor,
           "showAlpha":        true,
           "preferredFormat": "rgba",
@@ -2155,9 +2143,22 @@ console.log("yogi 2 ", ajaxOptions.url);
           { This.svgHUD.modelInstance.svg_createSaveLink(This.svgHUD.modelInstance);                     
           },
           "move": function(spectrumOutput)
-          { rep_onColorChange(spectrumOutput);
+          { localContext.rep_onColorChange(spectrumOutput);
           },
-      });
+        });
+
+        this.context.loadedData = true;
+      }
+      else
+      { var localContext = this.context[fillManagerSelector].byVisualisation[this.svgHUD.modelInstance.lastAlteredVisualisationField.fullAddress];
+      }
+
+      localContext.memoisedElements   = {};
+      for (var elementSelector in fillManagerData.fillSmasher)
+      { localContext.memoisedElements[elementSelector] = $(This.svgHUD.modelInstance.display.containerSVG).find(elementSelector);
+      }
+
+      localContext.rep_onColorChange(localContext.currentColor);
     }
   }
 
