@@ -631,17 +631,6 @@ console.log("yogi 2 ", ajaxOptions.url);
               successFunction(data, status, request);
 
           },
-          "always": function()
-          { console.log("ajax always", This.ifa_queue[0]);
-
-            This.ifa_queueState = "receivedResponse";
-
-            if (This.doNotUpdateUI)
-            { This.doNotUpdateUI = false;
-              This.ifa_queueState = "ready";
-              $("#logo > img").toggleClass("spinner", false);
-            }
-          },
           "complete": function()
           { console.log("ajax complete", This.ifa_queue[0]); 
 
@@ -651,6 +640,7 @@ console.log("yogi 2 ", ajaxOptions.url);
             { This.doNotUpdateUI = false;
               This.ifa_queueState = "ready";
               $("#logo > img").toggleClass("spinner", false);
+              This.svg_createSaveLink(This)
             }
           },
         };
@@ -841,7 +831,7 @@ console.log("yogi 2 ", ajaxOptions.url);
       display.svgOutput             = $("<div class='svgOutput'  />");
 
       display.svgTextInput          = $("<input type='text' class='svgTextDescription' placeholder='Enter Text Description'/>");
-      display.svgSaveLink           = $("<div class='svgSaveLink btn'   />");
+      display.svgSaveLink           = $("<div class='svgSaveLink'   />");
       display.svgModelRoot          = $("<div class='svgModelRoot'  />");
       display.referenceSVG          = $("<div class='referenceSVG'  />");
       var containerSVG        = document.createElementNS(d3.ns.prefix.svg, "svg");
@@ -1662,7 +1652,8 @@ console.log("yogi 2 ", ajaxOptions.url);
                       $("#logo > img").toggleClass("spinner", false);
                     }
                   
-                  }
+                    This.svg_createSaveLink(This);
+                  },
                 }
                 );
 
@@ -1697,18 +1688,38 @@ console.log("yogi 2 ", ajaxOptions.url);
       console.log("svg_createSaveLink disabled");
     else
     { console.log("svg_createSaveLink", This);
-      var savableContainerSVG  =  $(This.display.containerSVG).clone();
+      
+      var savableContainerSVG = $(This.display.containerSVG).clone();
       savableContainerSVG
           .attr("width",          This.display.svgModelRoot.css("width"))
-          .attr("height",         This.display.svgModelRoot.css("height"));
+          .attr("height",         This.display.svgModelRoot.css("height"))
+      ;
+      var removeTheseAttributes = ["xmlns", "xmlns:xlink", "xmlns:z", "z:xInfinite", "z:yInfinite", "z:zRatio"];
+      for (attributeToRemove  of removeTheseAttributes)
+      { savableContainerSVG.removeAttr(attributeToRemove)
+      }
 
+     
+      var svgString             = savableContainerSVG.get(0).outerHTML;
+      regex_zThreeD             = /z:threeD=\"true\"/g;
+      var removeTheseStrings    = [regex_zThreeD];
+      for (stringToRemove of removeTheseStrings)
+      { svgString = svgString.replace(stringToRemove, "");
+      }
+      
+      This.display.savableSVGString = svgString;
+
+      
       This.display.svgSaveLink.html(
-          $(  "<a href-lang='image/svg+xml'"
-                + " href      ='data:image/svg+xml,\n"
-                    + savableContainerSVG.get(0).outerHTML + "'"
-                + " title     ='svgRep.svg'"
-                + " download  ='" + This.display.modelOutputValue.text() + ".svg'"
-            + ">" + "</a>"
+          $(   `<a    
+                    href-lang ='image/svg+xml'
+                    href      =
+                        ' data:image/svg+xml,\n
+                          ${svgString} 
+                        '
+                    title     = 'svgRep.svg'
+                    download  = '${This.display.modelOutputValue.text()}.svg'
+                />`
           )
       );
     }
@@ -2127,7 +2138,9 @@ console.log("yogi 2 ", ajaxOptions.url);
             colorPicker.spectrum("set", This.context.byVisualisation[lastAlteredVisualisationField].currentColorString);      
           },
           "hide": function()
-          { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", false);                       
+          { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", false);  
+
+            This.svgHUD.modelInstance.svg_createSaveLink(This.svgHUD.modelInstance);                     
           },
           "move": function(spectrumOutput)
           { rep_onColorChange(spectrumOutput.toRgbString());
@@ -2312,7 +2325,7 @@ console.log("yogi 2 ", ajaxOptions.url);
             randomiseItem.spectrum("set", `rgba(0,0,0, ${itemContext.degreeOfRandom / 32.0})`);      
           },
           "hide": function()
-          { //$(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", false);                       
+          { This.svgHUD.modelInstance.svg_createSaveLink(This.svgHUD.modelInstance);                      
           },
           "move": function(spectrumOutput)
           { functionToCall(spectrumOutput.getAlpha() * 32);
