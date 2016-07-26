@@ -6,6 +6,9 @@
 html, body {
     height: 100%;
 }
+*
+{ font-family: Roboto;
+}
 body {
     font-family: Roboto;
     background: #EEEEEE;
@@ -431,11 +434,11 @@ div.modelSliders, div.modelOutputCtrl, div.modelSvgOutput, div.modelCustomSvg {
     box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
 }
 div.inputFieldElement {
-    display: block;
     width: 100%;
-    float: left;
     margin-bottom: 10px;
     border-bottom: 1px solid #9E9E9E;
+
+    min-height: 32px;
 }
 div.inputFieldElement> select {
     float: right;
@@ -455,6 +458,8 @@ div.inputFieldLabel {
     padding-top: 3px;
     font-size: 16px;
     margin-bottom: 10px;
+
+    background-repeat: no-repeat;
 }
 div.inputFieldSlider {
     height: 1px;
@@ -1165,11 +1170,13 @@ input.ui-colorpicker-hex-input {
     width: 27px;
     height: 27px;
 }
-.name_ratios> .inputFieldLabel {
+.name_ratios> .inputFieldLabel, .ratioColor > .inputFieldLabel {
     background-image: url(/static/graphics/thisEquals/icons/rations.svg);
     width: 27px;
     height: 27px;
+
 }
+
 
 /*CPS*/
 
@@ -1497,12 +1504,7 @@ input.ui-colorpicker-hex-input {
   background-repeat: no-repeat;
 }
 
-.hudItem.addRatio
-{ width: 100%;
 
-  text-align: center;
-
-}
 
 @keyframes highlightSVGPath
 {  0% { stroke: "black";}
@@ -1544,17 +1546,58 @@ path.highlight, .highlight path
 
 
 /* ratioColorTotal */
-.ratioColorTotal > div:hover
-{ background: lightgrey;
-}
 
 .ratioColor
 { height: 32px;
+
+  position:relative;
+
+  text-align: right;
 }
+
+.ratioColor .percentageSpinner
+{ position: absolute;
+  right: 140px;
+  top: 3px;
+  outline: none;
+  border-color: transparent;
+  font-size: 18px;
+  width: 80px;
+  text-align: right;
+}
+
+.ratioColor .percentLabel
+{ position: absolute;
+  right: 125px;
+  font-size: 18px;
+  top: 6px;
+  font-weight: bolder;
+}
+.ratioColor .sp-replacer
+{ position: absolute;
+  right: 60px;
+}
+
 .ratioColor > .closeBox
 { height: 10px;
   width: 10px;
-  float: right;
+  
+  position: absolute;
+  right: 0px;
+}
+
+.hudItem.addRatio
+{ width: 100%;
+
+  text-align: center;
+
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+
+}
+.ratioColorTotal .addRatio:hover
+{ background-color: lightgrey;
 }
 
 

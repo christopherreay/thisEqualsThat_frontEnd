@@ -1868,8 +1868,8 @@ console.log("yogi 2 ", ajaxOptions.url);
         { localContext.fields[fieldToHide] = {};
         }
 
-        // This.inputFieldHUD.modelInstance.inputFields[fieldToHide].uiElement.toggleClass("displayNone", true);
-        // localContext.fields[fieldToHide].hidden = true;
+        This.inputFieldHUD.modelInstance.inputFields[fieldToHide].uiElement.toggleClass("displayNone", true);
+        localContext.fields[fieldToHide].hidden = true;
       }
 
     }
@@ -1885,8 +1885,8 @@ console.log("yogi 2 ", ajaxOptions.url);
     { var container = 
           $(` <div class='ratioColorTotal'>
                 <div class='ratioColorList'     />
-                <div class='addRatio hudItem fa fa-plus-circle'       />
-                <div class='total hudCollection'          />
+                <div class='inputFieldElement addRatio hudItem fa fa-plus-circle'       />
+                <div class='inputFieldElement total hudCollection'          />
               </div>
             `);
       inputFieldHUD.modelInstance.display.modelSliders.prepend(container);
@@ -1939,8 +1939,10 @@ console.log("yogi 2 ", ajaxOptions.url);
             localContext.ratioInputFields     = [];
           }
           var toReturn = 
-                $(` <div class='ratioColor'>
-                      <input  class='hudItem percentageSpinner' type='number' min='0' max='100' step='0.1' value ='${initialRatio}' />
+                $(` <div class='ratioColor inputFieldElement'>
+                      <div    class="hudItem inputFieldLabel" />
+                      <input  class='hudItem percentageSpinner' type='number' min='0' max='100' step='0.1' value ='${initialRatio * 100}' />
+                      <div    class="hudItem textLabel percentLabel">%</div>
                       <input  class='hudItem spectrumColorPickerInput' value='${initialColor.toString("rgb")}' />
                       <span   class="hudItem closeBox    fa fa-times-circle" />
                     </div>
@@ -1988,8 +1990,8 @@ console.log("yogi 2 ", ajaxOptions.url);
                         .children()
                         .each
                         ( function()
-                          { newRatiosValArray.push($(this).find(".percentageSpinner"        ).val() );
-                            newColorsValArray.push($(this).find(".spectrumColorPickerInput" ).val() );
+                          { newRatiosValArray.push( ($(this).find(".percentageSpinner"        ).val() ) / 100 );
+                            newColorsValArray.push(  $(this).find(".spectrumColorPickerInput" ).val()         );
                           }
                         );
 
@@ -2029,8 +2031,8 @@ console.log("yogi 2 ", ajaxOptions.url);
     var recolorClones     = inputFieldHUD.modelInstance.recolorClones;
     var pathSetCount      = recolorClones.paths.length;
     for (var index = 0; index < pathSetCount; index ++)
-    { var initialColor = recolorClones.changeTinyColors[index].setAlpha(recolorClones.mixAmount[index] / 100.0);
-      ratioInput = localContext.createRatioInput(recolorClones.ratios[index], initialColor);
+    { var initialColor  = recolorClones.changeTinyColors[index].setAlpha(recolorClones.mixAmount[index] / 100.0);
+      ratioInput        = localContext.createRatioInput(recolorClones.ratios[index], initialColor);
       //recolorPaths(recolorClones.paths[index], recolorClones.changeTinyColors[index], recolorClones.mixAmount[index], "recolorClones")
     }
 
