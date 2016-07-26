@@ -1,5 +1,5 @@
 window.thisEqualsThat = {};
-thisEqualsThat.graphicLoadVersion = "0.1.1.3.20160712.1727"
+thisEqualsThat.graphicLoadVersion = "0.0.9.20160726.1639";
 
 
 thisEqualsThat.svg          = {};
@@ -844,7 +844,9 @@ console.log("yogi 2 ", ajaxOptions.url);
           .attr("height",       "100%")
           .attr("z:xInfinite",  "50")
           .attr("z:yInfinite",  "100")
-          .attr("z:zRatio",     "5");
+          .attr("z:zRatio",     "5")
+
+          .addClass(`id_${this.id}`);
 
       display.svgDefs                = d3.select(containerSVG)     .append("defs").attr("id", "svgDefsG_"+this.id).node();
       var svgTextDescription          = d3.select(containerSVG)     .append("text").attr("id", "svgTextDescription_"+this.id).text("Enter Text Description").node();
@@ -852,7 +854,8 @@ console.log("yogi 2 ", ajaxOptions.url);
 
 
       //display.svgTextDescription.text("Hello World");
-      var svgTranslatableG            = d3.select(containerSVG)     .append("g").attr("id", "svgTranslatableG_" +this.id) .node();
+      var svgTranslatableG            = d3.select(containerSVG)     .append("g").attr("id", "svgTranslatableG_" +this.id).classed(`id_${this.id}`, true) .node();
+
       display.svgTranslatableG        = svgTranslatableG;
       var svgHeightAxis               = d3.select(svgTranslatableG) .append("g").attr("id", "svgHeightAxis_"+this.id).node();
       display.svgHeightAxis           = svgHeightAxis;
@@ -1796,6 +1799,7 @@ console.log("yogi 2 ", ajaxOptions.url);
 
   this.ModelInstance.prototype.appendSVGToDisplay = function()
   { this.display.svgClonableG = thisEqualsThat.svgStore[this.svg3dDisplayJSON.svgFile].clone();
+    
     $(this.display.svgVisualisationG).html(this.display.svgClonableG);
 
     if (! this.display.addedSVGDefs)
@@ -2084,77 +2088,148 @@ console.log("yogi 2 ", ajaxOptions.url);
         }
       }
       if ($.inArray(tagHook, hudTagHooks) >-1 )
-      { this.plugins[hudComponent].display(svg3dDisplayJSON.svgHUD[hudDescriptor], tagHook)
+      { this.plugins[hudComponent][tagHook](svg3dDisplayJSON.svgHUD[hudDescriptor])
       }
     }
   }
 
-  this.SVGHUD.prototype.colorPickers = function(svgHUD, context)
+  this.SVGHUD.prototype.fillManager = function(svgHUD, context)
   { this.svgHUD     = svgHUD;
     this.context    = context;
     this.context.byVisualisation = {};
   }
-  this.SVGHUD.prototype.colorPickers.prototype.display =function(colorPickersDict)
-  { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
+  this.SVGHUD.prototype.fillManager.prototype.postClone = function(fillManagersDict)
+  { // html and behaviour a widget for a  fillManager widhet. Use the code defined in the fillManagerData to run when the fillManager exits.
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
     var This = this;
 
-    this.context.colorPickersDiv = $("<div class='colorPickers hudCollection' />");
-    this.svgHUD.divForHUD.append(this.context.colorPickersDiv);
+    this.context.fillManagersDiv = $("<div class='fillManagers hudCollection' />");
+    this.svgHUD.divForHUD.append(this.context.fillManagersDiv);
 
-    for (colorPickerSelector in colorPickersDict)
-    { var colorPickerData = colorPickersDict[colorPickerSelector];
-      console.log(colorPickerSelector, colorPickerData);
+    for (fillManagerSelector in fillManagersDict)
+    { var fillManagerData = fillManagersDict[fillManagerSelector];
+      console.log(fillManagerSelector, fillManagerData);
 
-      var colorPicker = $("<div class='colorPicker hudItem' />");
-      // var icon        = $("<img src='/static/graphics/thisEquals/svgHUD/colorPicker.png' />");
+      var fillManagerDiv = $("<div class='fillManager hudItem' />");
+      this.context.fillManagersDiv.append(fillManagerDiv);
 
-      // colorPicker.append(icon);
-      this.context.colorPickersDiv.append(colorPicker);
-
-      lastAlteredVisualisationField = this.svgHUD.modelInstance.lastAlteredVisualisationField.fullAddress;
-      if (! this.context.byVisualisation[lastAlteredVisualisationField])
-      { this.context.byVisualisation[lastAlteredVisualisationField] = {};
-        this.context.byVisualisation[lastAlteredVisualisationField].currentColorString = colorPickerData.initialColorString;        
+      var lastAlteredVisualisationField = this.svgHUD.modelInstance.lastAlteredVisualisationField.fullAddress;
+      var localContext;
+      if (! this.context.byVisualisation.hasOwnProperty("lastAlteredVisualisationField") )
+      { 
+        localContext = this.context.byVisualisation[lastAlteredVisualisationField] = {};
+        
+        localContext.currentColor = tinycolor(fillManagerData.initialColorString);
+        
+        localContext.memoisedElements   = {};
+        for (var elementSelector in fillManagerData.fillSmasher)
+        { localContext.memoisedElements[elementSelector] = $(This.svgHUD.modelInstance.display.containerSVG).find(elementSelector);
+        }
+      }
+      else
+      { localContext = this.context.byVisualisation[lastAlteredVisualisationField];
       }
 
-      var rep_onColorChange = function(colorString)
-      { var pickedColor = $.Color(colorString);
-        var toReturn = null;
-        eval (colorPickerData.onColorChange);
-        $(This.svgHUD.modelInstance.display.containerSVG).find("style#onColorChange").html(toReturn);
 
-        This.context.byVisualisation[lastAlteredVisualisationField].currentColorString = colorString;
+      var rep_onColorChange = function(color)
+      { var toReturn    = null;
+
+        for (var elementSelector in fillManagerData.fillSmasher)
+        { var pickedColor = tinycolor(color.toString("rgb"));
+          localContext.memoisedElements[elementSelector].attr("fill", eval(fillManagerData.fillSmasher[elementSelector]) );
+        }
+
+        localContext.currentColor = color;
       }
 
-      rep_onColorChange(this.context.byVisualisation[lastAlteredVisualisationField].currentColorString);
+      rep_onColorChange(localContext.currentColor);
 
-      colorPicker.spectrum({
-          "color":            this.context.byVisualisation[lastAlteredVisualisationField].currentColorString,
+      fillManagerDiv.spectrum({
+          "color":            localContext.currentColor,
           "showAlpha":        true,
           "preferredFormat": "rgba",
           "show": function()
-          { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);
-            colorPicker.spectrum("set", This.context.byVisualisation[lastAlteredVisualisationField].currentColorString);      
+          { fillManagerDiv.spectrum("set", localContext.currentColor);      
           },
           "hide": function()
-          { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", false);  
-
-            This.svgHUD.modelInstance.svg_createSaveLink(This.svgHUD.modelInstance);                     
+          { This.svgHUD.modelInstance.svg_createSaveLink(This.svgHUD.modelInstance);                     
           },
           "move": function(spectrumOutput)
-          { rep_onColorChange(spectrumOutput.toRgbString());
+          { rep_onColorChange(spectrumOutput);
           },
       });
     }
   }
+
+  // this.SVGHUD.prototype.colorPickers = function(svgHUD, context)
+  // { this.svgHUD     = svgHUD;
+  //   this.context    = context;
+  //   this.context.byVisualisation = {};
+  // }
+  // this.SVGHUD.prototype.colorPickers.prototype.display =function(colorPickersDict)
+  // { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
+  //   //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
+  //   var This = this;
+
+  //   this.context.colorPickersDiv = $("<div class='colorPickers hudCollection' />");
+  //   this.svgHUD.divForHUD.append(this.context.colorPickersDiv);
+
+  //   for (colorPickerSelector in colorPickersDict)
+  //   { var colorPickerData = colorPickersDict[colorPickerSelector];
+  //     console.log(colorPickerSelector, colorPickerData);
+
+  //     var colorPicker = $("<div class='colorPicker hudItem' />");
+  //     // var icon        = $("<img src='/static/graphics/thisEquals/svgHUD/colorPicker.png' />");
+
+  //     // colorPicker.append(icon);
+  //     this.context.colorPickersDiv.append(colorPicker);
+
+  //     var lastAlteredVisualisationField = this.svgHUD.modelInstance.lastAlteredVisualisationField.fullAddress;
+  //     if (! this.context.byVisualisation[lastAlteredVisualisationField])
+  //     { this.context.byVisualisation[lastAlteredVisualisationField] = {};
+  //       this.context.byVisualisation[lastAlteredVisualisationField].currentColorString = colorPickerData.initialColorString;        
+  //     }
+
+  //     var rep_onColorChange = function(colorString)
+  //     { var pickedColor = $.Color(colorString);
+  //       var toReturn = null;
+        
+  //       var modelInstanceID = This.svgHUD.modelInstance.id;
+
+  //       eval (colorPickerData.onColorChange);
+  //       $(This.svgHUD.modelInstance.display.containerSVG).find("style#onColorChange").html(toReturn);
+
+  //       This.context.byVisualisation[lastAlteredVisualisationField].currentColorString = colorString;
+  //     }
+
+  //     rep_onColorChange(this.context.byVisualisation[lastAlteredVisualisationField].currentColorString);
+
+  //     colorPicker.spectrum({
+  //         "color":            this.context.byVisualisation[lastAlteredVisualisationField].currentColorString,
+  //         "showAlpha":        true,
+  //         "preferredFormat": "rgba",
+  //         "show": function()
+  //         { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);
+  //           colorPicker.spectrum("set", This.context.byVisualisation[lastAlteredVisualisationField].currentColorString);      
+  //         },
+  //         "hide": function()
+  //         { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", false);  
+
+  //           This.svgHUD.modelInstance.svg_createSaveLink(This.svgHUD.modelInstance);                     
+  //         },
+  //         "move": function(spectrumOutput)
+  //         { rep_onColorChange(spectrumOutput.toRgbString());
+  //         },
+  //     });
+  //   }
+  // }
 
   this.SVGHUD.prototype.RandomiseClones= function(svgHUD, context)
   { this.svgHUD     = svgHUD;
     this.context    = context;
     this.context.byVisualisation = {};
   }
-  this.SVGHUD.prototype.RandomiseClones.prototype.display = function(randomiseClonesDict)
+  this.SVGHUD.prototype.RandomiseClones.prototype.postColor = function(randomiseClonesDict)
   { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
     var processingOrder = ["randomisePosition", "randomiseColors", "randomiseColorsByGroup"];
