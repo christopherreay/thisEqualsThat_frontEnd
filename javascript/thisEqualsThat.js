@@ -1868,25 +1868,30 @@ console.log("yogi 2 ", ajaxOptions.url);
   { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
     console.log("FieldOrder", this.inputFieldHUD.modelInstance.inputFields);
-    var This = this;
+    var This    = this;
+    var context = this.context;
 
-    var elementList = [];
+    if (! context.doOnce)
+    { var elementList = [];
 
-    for (orderItem of orderDefinition.orderList)
-    { console.log("  "+`["${orderItem.replace(", ", "\", \"")}"]`); //"
-      if (orderItem == "spacer")
-      { elementList.push($(`<div class='inputFieldElement spacer' />`) );
+      for (orderItem of orderDefinition.orderList)
+      { console.log("  "+`["${orderItem.replace(", ", "\", \"")}"]`); //"
+        if (orderItem == "spacer")
+        { elementList.push($(`<div class='inputFieldElement spacer' />`) );
+        }
+        else if (orderItem.startsWith("groupHeader") )
+        { elementList.push($(`<div class="inputFieldElement groupHeader">${orderItem.substring(12)}</div>` ) )
+        }
+        else
+        { elementList.push(this.inputFieldHUD.modelInstance.inputFields[`["${orderItem.replace(", ", "\", \"")}"]`].uiElement); //"
+        }
       }
-      else if (orderItem.startsWith("groupHeader") )
-      { elementList.push($(`<div class="inputFieldElement groupHeader">${orderItem.substring(12)}</div>` ) )
-      }
-      else
-      { elementList.push(this.inputFieldHUD.modelInstance.inputFields[`["${orderItem.replace(", ", "\", \"")}"]`].uiElement); //"
-      }
-    }
 
-    for (var index = elementList.length; index > 0; index --)
-    { this.inputFieldHUD.modelInstance.display.modelSliders.prepend(elementList[index-1]);
+      for (var index = elementList.length; index > 0; index --)
+      { this.inputFieldHUD.modelInstance.display.modelSliders.prepend(elementList[index-1]);
+      }
+
+      context.doOnce = true;
     }
   }
 
