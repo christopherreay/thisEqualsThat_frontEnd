@@ -2064,12 +2064,11 @@ console.log("yogi 2 ", ajaxOptions.url);
   { var modelInstance = this.modelInstance;
 
     this.divForHUD                = modelInstance.display.svgHUD = $("<div class='svgHUD' />");
-    this.display                  = this.divForHUD;
     modelInstance.display.modelSvgOutput.prepend(this.divForHUD);
     modelInstance.display.svgHUD  = this.divForHUD;
   }
   this.SVGHUD.prototype.renderHUD = function(tagHook)
-  { if (! this.hasOwnProperty("display") )
+  { if (! this.hasOwnProperty("divForHUD") )
     { this.display();
     }
 
@@ -2079,16 +2078,13 @@ console.log("yogi 2 ", ajaxOptions.url);
     { var hudAddress    = hudDescriptor.split(".");
       var hudComponent  = hudAddress[0];
       var hudTagHooks   = hudAddress.slice(1);
-      if (tagHook == "init")
-      { //this.divForHUD.html("");
-
-        if (! this.contextData[hudComponent])
-        { this.contextData[hudComponent] = {};
-          this.plugins[hudComponent] = new this[hudComponent](this, this.contextData[hudComponent], tagHook);
-        }
+      
+      if (! this.contextData.hasOwnProperty(hudComponent) )
+      { this.contextData[hudComponent] = {};
+        this.plugins[hudComponent] = new this[hudComponent](this, this.contextData[hudComponent], tagHook);
       }
       if ($.inArray(tagHook, hudTagHooks) >-1 )
-      { this.plugins[hudComponent][tagHook](svg3dDisplayJSON.svgHUD[hudDescriptor])
+      { this.plugins[hudComponent][tagHook](svg3dDisplayJSON.svgHUD[hudDescriptor], this.contextData[hudComponent]);
       }
     }
   }
@@ -2101,10 +2097,10 @@ console.log("yogi 2 ", ajaxOptions.url);
   { this.context.fillManagersDiv = $("<div class='fillManagers hudCollection' />");
     this.svgHUD.divForHUD.append(this.context.fillManagersDiv);
   }
-  this.SVGHUD.prototype.fillManager.prototype.postClone = function(fillManagersDict)
+  this.SVGHUD.prototype.fillManager.prototype.postClone = function(fillManagersDict, context)
   { // html and behaviour a widget for a  fillManager widhet. Use the code defined in the fillManagerData to run when the fillManager exits.
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
-    if (! this.context.hasOwnProperty("fillManagersDiv") )
+    if (! context.hasOwnProperty("fillManagersDiv") )
     { this.display();
     }
 
@@ -2114,18 +2110,18 @@ console.log("yogi 2 ", ajaxOptions.url);
 
       var selectorContext = null;
       if (! this.context.hasOwnProperty(fillManagerSelector) )
-      { selectorContext = this.context[fillManagerSelector] = { "byVisualisation": {} };
+      { selectorContext = context[fillManagerSelector] = { "byVisualisation": {} };
 
         selectorContext.fillManagerDiv = $("<div class='fillManager hudItem' />");
-        this.context.fillManagersDiv.append(selectorContext.fillManagerDiv);
+        context.fillManagersDiv.append(selectorContext.fillManagerDiv);
       }
       else
-      { selectorContext = this.context[fillManagerSelector];
+      { selectorContext = context[fillManagerSelector];
       }
 
       var lastAlteredVisualisationField = this.svgHUD.modelInstance.lastAlteredVisualisationField.fullAddress;
       var localContext = null;
-      if (! selectorContext.byVisualisation.hasOwnProperty("lastAlteredVisualisationField") )
+      if (! selectorContext.byVisualisation.hasOwnProperty(lastAlteredVisualisationField) )
       { var localContext = selectorContext.byVisualisation[lastAlteredVisualisationField] = { "currentColor": tinycolor(fillManagerData.initialColorString) };
 
         localContext.rep_onColorChange = 
