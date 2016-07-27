@@ -1960,7 +1960,7 @@ console.log("yogi 2 ", ajaxOptions.url);
 
       container.on("click", ".addRatio",
           function(event)
-          { localContext.createRatioInput(0.1, tinycolor.random().setAlpha(0.7));
+          { localContext.createRatioInput(0.1, tinycolor.random().setAlpha(0.7).saturate(50));
             localContext.writeChanges(true);
 
             localContext.inputFieldHUD.modelInstance.doNotUpdateUI = true;
@@ -2516,6 +2516,7 @@ console.log("yogi 2 ", ajaxOptions.url);
   { console.log(modelInstance, data);
     this.modelInstance  = modelInstance;
     this.fullAddress    = data.fullAddress;
+    this.simpleName     = this.fullAddress.replace(/[\[\]\",]/g, "");
     this.data           = data;
     modelInstance.inputFields[data.fullAddress] = this;
   }
@@ -2541,12 +2542,15 @@ console.log("yogi 2 ", ajaxOptions.url);
 
   this.ModelFieldInput.prototype.getTag = function()
   { if (! this.hasOwnProperty("uiElement"))
-    { this["getTag_"+this.data.fieldType]()
-     .addClass("modelClass_"  + this.data.displayFieldAddress.split(":")[0])
-     .addClass("fullAddress_" + this.fullAddress)
-     .addClass("type_"        + this.data.fieldType)
-     .addClass("name_"        + this.data.name)
-     .addClass("unit_"        + this.data.unit);
+    { var uiElement = 
+          this["getTag_"+this.data.fieldType]()
+         .addClass("modelClass_"  + this.data.displayFieldAddress.split(":")[0])
+         .addClass("fullAddress_" + this.fullAddress)
+         .addClass("type_"        + this.data.fieldType)
+         .addClass("name_"        + this.data.name)
+         .addClass("unit_"        + this.data.unit);
+     $("<h3/>").text(this.simpleName).appendTo(uiElement);
+     ;
     }
     return this.uiElement;
   }
