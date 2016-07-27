@@ -600,6 +600,8 @@ console.log("yogi 2 ", ajaxOptions.url);
           "data": fieldChangeData,
           "success": function (data, status, request)
           { console.log(data);
+            This.svg3dDisplayJSON   = data.svg3dDisplayJSON;
+
             // This.lastAlteredOutputField.data.currentValue = data.newValue;
             // This.lastAlteredVisualisationField.data.currentValue = data.svg3dDisplayJSON.svgFieldValue;
 
@@ -617,7 +619,7 @@ console.log("yogi 2 ", ajaxOptions.url);
               //{}
             }
 
-            This.svg3dDisplayJSON = data.svg3dDisplayJSON;
+            
             if (! This.doNotUpdateUI) This.displayCurrentOutput()
             if (    This.bottomModelInstance && data.bottomModelData 
                 &&  This.bottomModelInstance.lastAlteredOutputField && This.bottomModelInstance.lastAlteredOutputField.data)
@@ -1838,9 +1840,9 @@ console.log("yogi 2 ", ajaxOptions.url);
     { this.display();
     }
 
-    var svg3dDisplayJSON  = this.modelInstance.svg3dDisplayJSON;
+    var inputFieldHUDJSON  = this.modelInstance.data.inputFieldHUDJSON;
     
-    for (hudDescriptor in svg3dDisplayJSON.inputFieldHUD)
+    for (hudDescriptor in  inputFieldHUDJSON)
     { var hudAddress    = hudDescriptor.split(".");
       var hudComponent  = hudAddress[0];
       var hudTagHooks   = $(hudAddress).slice(1).get();
@@ -1851,8 +1853,40 @@ console.log("yogi 2 ", ajaxOptions.url);
         }
       }
       if ($.inArray(tagHook, hudTagHooks) >= 0)
-      { this.plugins[hudComponent].display(svg3dDisplayJSON.inputFieldHUD[hudDescriptor], tagHook)
+      { this.plugins[hudComponent].display(inputFieldHUDJSON[hudDescriptor], tagHook)
       }
+    }
+  }
+
+  this.InputFieldHUD.prototype.FieldOrder = function(inputFieldHUD, context, tagHook)
+  { this.inputFieldHUD            = inputFieldHUD;
+    this.context                  = context;
+    // this.context.byVisualisation  = {};
+
+  }
+  this.InputFieldHUD.prototype.FieldOrder.prototype.display =function(orderDefinition, tagHook)
+  { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
+    //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
+    console.log("FieldOrder", this.inputFieldHUD.modelInstance.inputFields);
+    var This = this;
+
+    var elementList = [];
+
+    for (orderItem of orderDefinition.orderList)
+    { console.log("  "+`["${orderItem.replace(", ", "\", \"")}"]`); //"
+      if (orderItem == "spacer")
+      { elementList.push($(`<div class='inputFieldElement spacer' />`) );
+      }
+      else if (orderItem.startsWith("groupHeader") )
+      { elementList.push($(`<div class="inputFieldElement groupHeader">${orderItem.substring(12)}</div>` ) )
+      }
+      else
+      { elementList.push(this.inputFieldHUD.modelInstance.inputFields[`["${orderItem.replace(", ", "\", \"")}"]`].uiElement); //"
+      }
+    }
+
+    for (var index = elementList.length; index > 0; index --)
+    { this.inputFieldHUD.modelInstance.display.modelSliders.prepend(elementList[index-1]);
     }
   }
 
@@ -2052,6 +2086,8 @@ console.log("yogi 2 ", ajaxOptions.url);
     }
 
   }
+
+
 
   this.SVGHUD = function(modelInstance)
   { this.plugins          = {};
