@@ -389,9 +389,9 @@ console.log("yogi 2 ", ajaxOptions.url);
               var referenceSVGSelectListItemDiv = $("<div class='referenceSVGSelectListItem' />").attr("thisEquals_fileHandle", referenceSVGData.fileHandle);
               var referenceSVGSelectListItemLI  = $("<li />");
               var referenceSVGSelectListItemSVG = $(document.createElementNS(d3.ns.prefix.svg, "svg"))
-                  .attr("xmlns",        "//www.w3.org/2000/svg")
-                  .attr("xmlns:xlink",  "//www.w3.org/1999/xlink")
-                  .attr("xmlns:z",      "//debeissat.nicolas.free.fr/svg3d/svg3d.rng")
+                  .attr("xmlns",        "http://www.w3.org/2000/svg")
+                  .attr("xmlns:xlink",  "http://www.w3.org/1999/xlink")
+                  .attr("xmlns:z",      "http://debeissat.nicolas.free.fr/svg3d/svg3d.rng")
                   .attr("width",        "100%")
                   .attr("height",       "100%")
               var clonedG = referenceRootG.clone().appendTo(referenceSVGSelectListItemSVG);
@@ -838,9 +838,9 @@ console.log("yogi 2 ", ajaxOptions.url);
       display.referenceSVG          = $("<div class='referenceSVG'  />");
       var containerSVG        = document.createElementNS(d3.ns.prefix.svg, "svg");
       $(containerSVG)
-          .attr("xmlns",        "//www.w3.org/2000/svg")
-          .attr("xmlns:xlink",  "//www.w3.org/1999/xlink")
-          .attr("xmlns:z",      "//debeissat.nicolas.free.fr/svg3d/svg3d.rng")
+          .attr("xmlns",        "http://www.w3.org/2000/svg")
+          .attr("xmlns:xlink",  "http://www.w3.org/1999/xlink")
+          .attr("xmlns:z",      "http://debeissat.nicolas.free.fr/svg3d/svg3d.rng")
           .attr("id",           "svgHTMLElement_"+this.id)
           .attr("width",        "100%")
           .attr("height",       "100%")
@@ -1699,7 +1699,7 @@ console.log("yogi 2 ", ajaxOptions.url);
           .attr("width",          This.display.svgModelRoot.css("width"))
           .attr("height",         This.display.svgModelRoot.css("height"))
       ;
-      var removeTheseAttributes = ["xmlns", "xmlns:xlink", "xmlns:z", "z:xInfinite", "z:yInfinite", "z:zRatio"];
+      var removeTheseAttributes = ["xmlns:xlink", "xmlns:z", "z:xInfinite", "z:yInfinite", "z:zRatio"];
       for (attributeToRemove  of removeTheseAttributes)
       { savableContainerSVG.removeAttr(attributeToRemove)
       }
@@ -1933,9 +1933,9 @@ console.log("yogi 2 ", ajaxOptions.url);
     localContext.initContainer = function(inputFieldHUD, localContext)
     { var container = 
           $(` <div class='ratioColorTotal'>
+                <div class='inputFieldElement total hudCollection'          />
                 <div class='ratioColorList'     />
                 <div class='inputFieldElement addRatio hudItem fa fa-plus-circle'       />
-                <div class='inputFieldElement total hudCollection'          />
               </div>
             `);
       inputFieldHUD.modelInstance.display.modelSliders.prepend(container);
@@ -2422,20 +2422,24 @@ console.log("yogi 2 ", ajaxOptions.url);
       };
 
       context.spectrumFunction = function(randomiseItem, functionToCall)
-      { randomiseItem.spectrum
-        ( { "color":            `rgba(0,0,0, ${randomiseItem.data("localContext").degreeOfRandom / 32.0})`,
+      { var localContext      = randomiseItem.data("localContext");
+        var degreeOfRandom    = localContext.degreeOfRandom;
+        var randomMultiplier  = localContext.randomMultiplier || 32;
+        var convertToAlpha    = localContext.degreeOfRandom / randomMultiplier;
+        randomiseItem.spectrum
+        ( { "color":            `rgba(0,0,0, ${convertToAlpha})`,
             "containerClassName": "spectrumAlphaOnly",
             "showAlpha":        true,
             "preferredFormat": "rgba",
             "show": function()
             { //$(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);
-              randomiseItem.spectrum("set", `rgba(0,0,0, ${randomiseItem.data("localContext").degreeOfRandom / 32.0})`);      
+              randomiseItem.spectrum("set", `rgba(0,0,0, ${convertToAlpha})`);      
             },
             "hide": function()
             { This.svgHUD.modelInstance.svg_createSaveLink(This.svgHUD.modelInstance);                   
             },
             "move": function(spectrumOutput)
-            { functionToCall(spectrumOutput.getAlpha() * 32);
+            { functionToCall(spectrumOutput.getAlpha() * randomMultiplier);
             },
         });
       }
@@ -2462,9 +2466,7 @@ console.log("yogi 2 ", ajaxOptions.url);
       console.log(randomiseProperty, randomiseConfig);
 
       if (!contextByVisualisation[randomiseProperty] )
-      { contextByVisualisation[randomiseProperty] =  
-            { "degreeOfRandom":     randomiseConfig.degreeOfRandom,
-            };
+      { contextByVisualisation[randomiseProperty] =  randomiseConfig
       }
       var localContext = contextByVisualisation[randomiseProperty];
 

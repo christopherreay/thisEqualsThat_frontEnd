@@ -1590,6 +1590,8 @@ path.highlight, .highlight path
   
   position: absolute;
   right: 0px;
+
+  color: darkgrey;
 }
 
 .hudItem.addRatio
