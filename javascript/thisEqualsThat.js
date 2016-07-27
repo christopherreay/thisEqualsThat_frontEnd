@@ -640,8 +640,16 @@ console.log("yogi 2 ", ajaxOptions.url);
 
             if (This.doNotUpdateUI)
             { This.doNotUpdateUI = false;
-              This.ifa_queueState = "ready";
-              $("#logo > img").toggleClass("spinner", false);
+              
+              if (This.ifa_queue.length > 0)
+              { var ifa_item = This.ifa_queue.shift()
+                This.ifa_queueState = "ready";
+                This.inputFieldAltered(ifa_item[0], ifa_item[1], ifa_item[2]);
+              }
+              else
+              { This.ifa_queueState = "ready";
+                $("#logo > img").toggleClass("spinner", false);
+              }
               This.svg_createSaveLink(This)
             }
           },
@@ -1952,10 +1960,12 @@ console.log("yogi 2 ", ajaxOptions.url);
 
       container.on("click", ".addRatio",
           function(event)
-          { localContext.createRatioInput();
+          { localContext.createRatioInput(0.1, tinycolor.random().setAlpha(0.7));
             localContext.writeChanges(true);
 
+            localContext.inputFieldHUD.modelInstance.doNotUpdateUI = true;
             localContext.inputFieldHUD.modelInstance.inputFields[`["ratios"]` ].uiValue_text.trigger("change");
+            localContext.inputFieldHUD.modelInstance.inputFields[`["colors"]` ].uiValue_text.trigger("change");
           }
       );
       container.on("click", ".closeBox",
