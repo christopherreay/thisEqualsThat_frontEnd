@@ -2330,9 +2330,8 @@ console.log("yogi 2 ", ajaxOptions.url);
                   }
               );
         }
-        contextByVisualisation.randomisePosition.degreeOfRandom = degreeOfRandom;
       };
-      context.randomiseFunctions.randomiseColors = function(degreeOfRandom, init=false)
+      context.randomiseFunctions.randomiseColors = function(degreeOfRandom)
       { if (degreeOfRandom != 0)
         { normalDistribution("randomiseColors", true);
 
@@ -2373,13 +2372,9 @@ console.log("yogi 2 ", ajaxOptions.url);
               );
         }
         
-        contextByVisualisation.randomiseColors.degreeOfRandom = degreeOfRandom;
-
-        if (!init)
-        { randomiseFunctions.randomiseColorsByGroup(contextByVisualisation.randomiseColorsByGroup.degreeOfRandom, true);
-        }
+        context.randomiseFunctions.randomiseColorsByGroup(contextByVisualisation.randomiseColorsByGroup.degreeOfRandom, true);
       }
-      context.randomiseFunctions.randomiseColorsByGroup = function(degreeOfRandom, init=false)
+      context.randomiseFunctions.randomiseColorsByGroup = function(degreeOfRandom)
       { 
         if (degreeOfRandom != 0)
         { normalDistribution("randomiseColorsByGroup", true);
@@ -2431,30 +2426,25 @@ console.log("yogi 2 ", ajaxOptions.url);
                 );
           }
 
-          contextByVisualisation.randomiseColorsByGroup.degreeOfRandom = degreeOfRandom;
         };
-        
       };
 
       context.spectrumFunction = function(randomiseItem, functionToCall)
-      { var localContext      = randomiseItem.data("localContext");
-        var degreeOfRandom    = localContext.degreeOfRandom;
-        var randomMultiplier  = localContext.randomMultiplier || 32;
-        var convertToAlpha    = localContext.degreeOfRandom / randomMultiplier;
-        randomiseItem.spectrum
-        ( { "color":            `rgba(0,0,0, ${convertToAlpha})`,
+      { randomiseItem.spectrum
+        ( { "color":            `rgba(0,0,0, ${randomiseItem.data("localContext").degreeOfRandom / (localContext.randomMultiplier || 32)})`,
             "containerClassName": "spectrumAlphaOnly",
             "showAlpha":        true,
             "preferredFormat": "rgba",
             "show": function()
             { //$(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);
-              randomiseItem.spectrum("set", `rgba(0,0,0, ${convertToAlpha})`);      
+              randomiseItem.spectrum("set", `rgba(0,0,0, ${randomiseItem.data("localContext").degreeOfRandom / (randomiseItem.data("localContext").randomMultiplier || 32) })`);      
             },
             "hide": function()
             { This.svgHUD.modelInstance.svg_createSaveLink(This.svgHUD.modelInstance);                   
             },
             "move": function(spectrumOutput)
-            { functionToCall(spectrumOutput.getAlpha() * randomMultiplier);
+            { randomiseItem.data("localContext").degreeOfRandom = spectrumOutput.getAlpha() * ( randomiseItem.data("localContext").randomMultiplier || 32 );
+              functionToCall(randomiseItem.data("localContext").degreeOfRandom);
             },
         });
       }
@@ -2468,7 +2458,7 @@ console.log("yogi 2 ", ajaxOptions.url);
     if (! this.context.byVisualisation[lastAlteredVisualisationField] )
     { this.context.byVisualisation[lastAlteredVisualisationField] = {};
     }
-    contextByVisualisation = this.context.byVisualisation[lastAlteredVisualisationField];
+    var contextByVisualisation = this.context.byVisualisation[lastAlteredVisualisationField];
     
     for (randomiseProperty of processingOrder)
     { var randomiseConfig;
@@ -2495,8 +2485,11 @@ console.log("yogi 2 ", ajaxOptions.url);
         context.hudItems[randomiseProperty].data("localContext", localContext);
         context.spectrumFunction(randomiseItem, context.randomiseFunctions[randomiseProperty]);
       }
-      
-      context.randomiseFunctions[randomiseProperty](localContext.degreeOfRandom, true);
+    }
+
+    for (randomiseProperty of processingOrder)
+    { context.hudItems[randomiseProperty].data("localContext", contextByVisualisation[randomiseProperty]);
+      context.randomiseFunctions[randomiseProperty](context.hudItems[randomiseProperty].data("localContext").degreeOfRandom );
     }
   };
   

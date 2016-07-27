@@ -357,7 +357,7 @@ div.modelClasses.active{
     position: absolute;
     top: 20px;
     left: 130%;
-    background: #20abb8;
+    background: #198a94;
     padding: 7px 40px;
     border-radius: 3px;
     opacity: 0;
@@ -451,7 +451,7 @@ div.inputFieldElement {
     
     max-width: 70%;
 
-    background: #20abb8;
+    background: #198a94;
     padding: 7px 40px;
     border-radius: 3px;
     opacity: 0;
