@@ -469,8 +469,8 @@ div.inputFieldLabel {
     top: -38px;
     left: 120%;
     width: inherit;
-    background: #555;
-    color: #fff;
+    background: #ECEFF1;
+    color: rgba(0,0,0,0.87);
     padding: 20px;
     border-radius: 3px;
     z-index: -1;
@@ -507,6 +507,7 @@ div.inputFieldSlider> .ui-state-default {
 div.inputFieldSlider .ui-slider-range {
     background: #03A9F4;
 }
+
 input.inputFieldText[type=text] {
     outline: none;
     float: right;
@@ -1510,6 +1511,7 @@ input.ui-colorpicker-hex-input {
 .hudItem
 { display: inline-block;
   min-width: 32px;
+  margin-right: 15px;
 }
 .hudCollection
 { height: 32px;
@@ -1540,7 +1542,37 @@ path.highlight, .highlight path
 .spectrumAlphaOnly .sp-fill, .spectrumAlphaOnly .sp-top-inner, .spectrumAlphaOnly .sp-button-container
 { display: none;
 }
-
+.sp-container {
+    border-radius: 3px;
+    background-color: #ECECEC;
+    border: none;
+    padding: 0;
+    -webkit-box-shadow: 0px 3px 5px rgba(0, 0, 0, .5);
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, .5);
+}
+.sp-alpha {
+  bottom: -12px;
+  height: 1px;
+}
+.sp-alpha-inner {
+    border: solid 1px #BDBDBD;
+}
+.sp-alpha-handle {
+    position: absolute;
+    top: -9px;
+    width: 18px;
+    height: 18px;
+    left: 50%;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    background: #2196F3;
+    /* opacity: .8; */
+}
+.sp-picker-container, .sp-palette-container {
+  padding-left: 20px;
+  padding-right: 20px;
+}
 
 /* inputFieldHUD */
 
