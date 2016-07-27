@@ -441,8 +441,8 @@ div.inputFieldElement {
     display: block;
     width: 100%;
     float: left;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #9E9E9E;
+    padding-bottom: 10px;
+    /*border-bottom: 1px solid #9E9E9E;*/
 }
 div.inputFieldElement> select {
     float: right;
@@ -496,24 +496,19 @@ div.inputFieldSlider {
     clear: both;
 }
 div.inputFieldSlider> .ui-state-default {
+    outline: none;
     width: 20px;
     height: 20px;
     border-radius: 50%;
     top: -10px;
     background: #2196F3;
     border: 0;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-}
-div.inputFieldSlider> .ui-state-hover, div.inputFieldSlider>.ui-widget-content .ui-state-hover {
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.16), 0 8px 16px rgba(0, 0, 0, 0.36);
-}
-div.inputFieldSlider> .ui-state-active, div.inputFieldSlider> .ui-widget-content .ui-state-active {
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.16), 0 8px 16px rgba(0, 0, 0, 0.36);
 }
 div.inputFieldSlider .ui-slider-range {
     background: #03A9F4;
 }
 input.inputFieldText[type=text] {
+    outline: none;
     float: right;
     background: transparent;
     padding-top: 3px;
