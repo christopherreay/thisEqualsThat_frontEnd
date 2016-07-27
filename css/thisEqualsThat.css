@@ -1555,7 +1555,7 @@ path.highlight, .highlight path
   height: 1px;
 }
 .sp-alpha-inner {
-    border: solid 1px #BDBDBD;
+  border: solid 1px #BDBDBD;
 }
 .sp-alpha-handle {
     position: absolute;
@@ -1567,7 +1567,7 @@ path.highlight, .highlight path
     border: none;
     border-radius: 50%;
     background: #2196F3;
-    /* opacity: .8; */
+    opacity: 1;
 }
 .sp-picker-container, .sp-palette-container {
   padding-left: 20px;
