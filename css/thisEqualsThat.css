@@ -1,8 +1,10 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+
 .displayNone
 { display: none !important;
 }
 
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+
 html, body {
     height: 100%;
 }
@@ -10,6 +12,7 @@ body {
     font-family: Roboto;
     background: #EEEEEE;
     padding-bottom: 50px;
+    margin: 0px;
 }
 body.open {
     overflow: hidden;
@@ -172,6 +175,7 @@ div.copyrightContainer {
     overflow: hidden;
 }
 div.copyrightContainer> p {
+    margin: 0px;
     margin-left: 15px;
     line-height: 50px;
 }
@@ -204,6 +208,7 @@ div.copyrightContainer> p {
     z-index: 805;
     -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
     transition: all .3s cubic-bezier(.4,0,.2,1);
+    outline: none;
 }
 .hamburger.is-active {
     left: 40px;
@@ -352,10 +357,11 @@ div.modelClasses.active{
 }
 .modelClassLI > h3 {
     position: absolute;
-    top: 20px;
+    top: 23px;
     left: 130%;
     background: #004D40;
     padding: 7px 40px;
+    margin: 0px;
     border-radius: 3px;
     opacity: 0;
     color: rgba(255,255,255,0.87);
@@ -450,7 +456,7 @@ div.inputFieldElement> select {
     font-size: 16px;
     border-bottom: 0;
 }
-div.inputFieldLabel {
+div.inputFieldLabelBg {
     float: left;
     padding-top: 3px;
     font-size: 16px;
@@ -1071,29 +1077,29 @@ input.ui-colorpicker-hex-input {
 
 
 
-.name_watts> .inputFieldLabel, .name_count> .inputFieldLabel, .name_time> .inputFieldLabel, .name_energy> .inputFieldLabel, .name_mass> .inputFieldLabel, .name_timeToBreathOut> .inputFieldLabel, .name_volume_100> .inputFieldLabel, .name_volume_inAir> .inputFieldLabel, .name_number> .inputFieldLabel, .name_density> .inputFieldLabel, .name_volume> .inputFieldLabel, .name_colours> .inputFieldLabel, .name_randomLayout> .inputFieldLabel, .name_numberOfClones> .inputFieldLabel, .name_ratios> .inputFieldLabel, .name_efficiency> .inputFieldLabel, .modelOutputContainer> .containerLabel, .visualisationOutputContainer> .containerLabel {
+.name_watts> .inputFieldLabelBg, .name_count> .inputFieldLabelBg, .name_time> .inputFieldLabelBg, .name_energy> .inputFieldLabelBg, .name_mass> .inputFieldLabelBg, .name_timeToBreathOut> .inputFieldLabelBg, .name_volume_100> .inputFieldLabelBg, .name_volume_inAir> .inputFieldLabelBg, .name_number> .inputFieldLabelBg, .name_density> .inputFieldLabelBg, .name_volume> .inputFieldLabelBg, .name_colours> .inputFieldLabelBg, .name_randomLayout> .inputFieldLabelBg, .name_numberOfClones> .inputFieldLabelBg, .name_ratios> .inputFieldLabelBg, .name_efficiency> .inputFieldLabelBg, .modelOutputContainer> .containerLabel, .visualisationOutputContainer> .containerLabel {
     background-size: cover;
 }
 
 /*lightbulb*/
 
-.name_watts> .inputFieldLabel {
+.name_watts> .inputFieldLabelBg {
     background-image: url(/static/graphics/thisEquals/icons/energy.svg);
     background-repeat: no-repeat;
     width: 27px;
     height: 27px;
 }
-.name_count> .inputFieldLabel {
+.name_count> .inputFieldLabelBg {
     background-image: url(/static/graphics/thisEquals/icons/LightBulb.svg);
     width: 27px;
     height: 27px;
 }
-.name_time> .inputFieldLabel {
+.name_time> .inputFieldLabelBg {
     background-image: url(/static/graphics/thisEquals/icons/time_second.svg);
     width: 27px;
     height: 27px;
 }
-.name_energy> .inputFieldLabel {
+.name_energy> .inputFieldLabelBg {
     background-image: url(/static/graphics/thisEquals/icons/energ_j.svg);
     width: 27px;
     height: 27px;
@@ -1101,22 +1107,22 @@ input.ui-colorpicker-hex-input {
 
 /*CO2*/
 
-.name_mass> .inputFieldLabel {
+.name_mass> .inputFieldLabelBg {
     background-image: url(/static/graphics/thisEquals/icons/mass_kg.svg);
     width: 27px;
     height: 27px;
 }
-.name_timeToBreathOut> .inputFieldLabel {
+.name_timeToBreathOut> .inputFieldLabelBg {
     background-image: url(/static/graphics/thisEquals/icons/time_second.svg);
     width: 27px;
     height: 27px;
 }
-.name_volume_100> .inputFieldLabel {
+.name_volume_100> .inputFieldLabelBg {
     background-image: url(/static/graphics/thisEquals/icons/volume_m3.svg);
     width: 27px;
     height: 27px;
 }
-.name_volume_inAir> .inputFieldLabel {
+.name_volume_inAir> .inputFieldLabelBg {
     background-image: url(/static/graphics/thisEquals/icons/volume_air.svg);
     width: 27px;
     height: 27px;
@@ -1124,12 +1130,12 @@ input.ui-colorpicker-hex-input {
 
 /*cube*/
 
-.name_density> .inputFieldLabel {
+.name_density> .inputFieldLabelBg {
     background-image: url(/static/graphics/thisEquals/icons/volume_air.svg);
     width: 27px;
     height: 27px;
 }
-.name_volume> .inputFieldLabel {
+.name_volume> .inputFieldLabelBg {
     background-image: url(/static/graphics/thisEquals/icons/volume_m3.svg);
     width: 27px;
     height: 27px;
@@ -1137,12 +1143,12 @@ input.ui-colorpicker-hex-input {
 
 /*preson*/
 
-.name_number> .inputFieldLabel {
+.name_number> .inputFieldLabelBg {
     background-image: url(/static/graphics/thisEquals/icons/person_amuont.svg);
     width: 27px;
     height: 27px;
 }
-.analysis> .inputFieldLabel {
+.analysis> .inputFieldLabelBg {
     background-image: url(/static/graphics/thisEquals/icons/analysis.svg);
     width: 27px;
     height: 27px;
@@ -1150,22 +1156,22 @@ input.ui-colorpicker-hex-input {
 
 /*PeopleRationPLay*/
 
-.name_colours> .inputFieldLabel {
+.name_colours> .inputFieldLabelBg {
     background-image: url(/static/graphics/thisEquals/icons/color_pick.svg);
     width: 27px;
     height: 27px;
 }
-.name_randomLayout> .inputFieldLabel {
+.name_randomLayout> .inputFieldLabelBg {
     background-image: url(/static/graphics/thisEquals/icons/randome.svg);
     width: 27px;
     height: 27px;
 }
-.name_numberOfClones> .inputFieldLabel {
+.name_numberOfClones> .inputFieldLabelBg {
     background-image: url(/static/graphics/thisEquals/icons/person_amuont.svg);
     width: 27px;
     height: 27px;
 }
-.name_ratios> .inputFieldLabel {
+.name_ratios> .inputFieldLabelBg {
     background-image: url(/static/graphics/thisEquals/icons/rations.svg);
     width: 27px;
     height: 27px;
@@ -1173,7 +1179,7 @@ input.ui-colorpicker-hex-input {
 
 /*CPS*/
 
-.name_efficiency> .inputFieldLabel {
+.name_efficiency> .inputFieldLabelBg {
     background-image: url(/static/graphics/thisEquals/icons/efficiency.svg);
     width: 27px;
     height: 27px;
@@ -1511,7 +1517,7 @@ path.highlight, .highlight path
   animation-iteration-count:  infinite;
 }
 
-.spectrumAlphaOnly .sp-fill, .spectrumAlphaOnly .sp-top-inner, .spectrumAlphaOnly .sp-button-container 
+.spectrumAlphaOnly .sp-fill, .spectrumAlphaOnly .sp-top-inner, .spectrumAlphaOnly .sp-button-container
 { display: none;
 }
 

@@ -39,17 +39,17 @@ function hexToRgb(hex) {
     return result ? {
         r: parseInt(result[1], 16),
         g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16)        
+        b: parseInt(result[3], 16)
     } : null;
 }
 function normalDistribution(namespace, reset=false)
 {   var context = thisEqualsThat.memoise_normalDistribution;
 
     if (! context.hasOwnProperty(namespace) )
-    { context[namespace] = 
+    { context[namespace] =
       { "counter": 0,
         "length":  0,
-        "numbers": [],        
+        "numbers": [],
       };
     }
     subContext = context[namespace];
@@ -135,7 +135,7 @@ thisEqualsThat.oop = function()
     };
 console.log("yogi 2 ", ajaxOptions.url);
     $.ajax(ajaxOptions);
-	
+
   }
   this.ModelClasses.prototype.display = function(thisEqualsThatScene)
   { var modelClassesContainerDiv = thisEqualsThatScene.modelClassesContainerDiv;
@@ -400,7 +400,7 @@ console.log("yogi 2 ", ajaxOptions.url);
 
     this.inputFieldHUD  = new ThisEqualsThat.InputFieldHUD(this);
     this.svgHUD         = new ThisEqualsThat.SVGHUD(this);
-      
+
   }
   this.ModelInstance.prototype.getFieldData = function(fieldAddress)
   { console.log("ModelInstance.getFieldData", fieldAddress);
@@ -557,7 +557,7 @@ console.log("yogi 2 ", ajaxOptions.url);
                 var newValue = data.fieldValues[fieldName];
 
                 if (newValue != inputField.data.currentValue)
-                { inputField.setValue(newValue);              
+                { inputField.setValue(newValue);
                 }
               }
               catch (e)
@@ -566,7 +566,7 @@ console.log("yogi 2 ", ajaxOptions.url);
 
             This.svg3dDisplayJSON = data.svg3dDisplayJSON;
             if (!doNotUpdateUI) This.displayCurrentOutput()
-            if (    This.bottomModelInstance && data.bottomModelData 
+            if (    This.bottomModelInstance && data.bottomModelData
                 &&  This.bottomModelInstance.lastAlteredOutputField && This.bottomModelInstance.lastAlteredOutputField.data)
             { This.bottomModelInstance.lastAlteredOutputField.data.currentValue = data.bottomModelData.newValue
               This.bottomModelInstance.lastAlteredVisualisationField.data.currentValue = data.bottomModelData.svg3dDisplayJSON.svgFieldValue;
@@ -577,10 +577,10 @@ console.log("yogi 2 ", ajaxOptions.url);
               successFunction(data, status, request);
           },
           "always": function()
-          {  This.disable_inputFieldAltered = false;            
+          {  This.disable_inputFieldAltered = false;
           },
           "complete": function()
-          {  This.disable_inputFieldAltered = false;            
+          {  This.disable_inputFieldAltered = false;
           },
         };
       console.log(ajaxOptions);
@@ -847,7 +847,7 @@ console.log("yogi 2 ", ajaxOptions.url);
       //     }
       // );
       // display.ccRandomiseColors = $("<input id='ccRandomise_"   + This.id + "' type='button' value='Random'/>");
-      // display.ccRandomiseColors_function = 
+      // display.ccRandomiseColors_function =
       //     function(mult)
       //     { $(svgVisualisationG).find("path")
       //           .each(  function()
@@ -878,16 +878,16 @@ console.log("yogi 2 ", ajaxOptions.url);
       // display.ccRandomiseColors.on("click", display.ccRandomiseColors_function);
 
       // display.ccRandomiseColorsByGroup = $("<input id='ccRandomiseGroup_"   + This.id + "' type='button' value='Random Group'/>");
-      // display.ccRandomiseColorsByGroup_function = 
+      // display.ccRandomiseColorsByGroup_function =
       //     function(mult)
       //     { $(svgVisualisationG).find("g")
       //           .each(  function()
-      //               { 
-                        
+      //               {
+
       //                   var changeR = Math.round( 5 *  mult * normalDistribution() );
       //                   var changeG = Math.round( 5  * mult * normalDistribution() );
       //                   var changeB = Math.round( 5  * mult * normalDistribution() );
-                        
+
       //                   //$(this).css("fill", newRGB);
       //                   //newStyle = this.getAttribute("style");
       //                   //if (newStyle)+newRGB;
@@ -918,7 +918,7 @@ console.log("yogi 2 ", ajaxOptions.url);
       // display.ccRandomiseColorsByGroup.on("click", display.ccRandomiseColorsByGroup_function);
 
       // display.ccRandomisePosition = $("<input id='ccRandomisePosition_"   + This.id + "' type='button' value='Random Position'/>");
-      // display.ccRandomisePosition_function = 
+      // display.ccRandomisePosition_function =
       //     function(mult)
       //     { $(svgVisualisationG).find("g")
       //           .each(  function()
@@ -1099,26 +1099,26 @@ console.log("yogi 2 ", ajaxOptions.url);
           ;
         display.googleConnect.append(display.googleConnect_email);
 
-        display.googleConnect_loginButton = 
+        display.googleConnect_loginButton =
             $("<a class='googleConnect_loginButton'>Login to Google</a>")
-            .on("click", 
+            .on("click",
                 function()
                 { var pollingComplete       = false;
                   var googleConnect_window  = false;
                   var emailAddress = display.googleConnect_email.val();
-                  (function poll() 
+                  (function poll()
                       { $.ajax(
                         { "url": "/googleConnect/gotCredentials",
                           "type": "POST",
                           "data": {"emailAddress": emailAddress},
 
-                          "success": function(data) 
+                          "success": function(data)
                           { console.log("polling", data);
                             if (googleConnect_window == false)
                             { googleConnect_window = PopupCenter("googleConnect/login?emailAddress="+display.googleConnect_email.val()+"", "googleConnect", 400,200);
                             }
                             else if (data.gotCredentials == true)
-                            { googleConnect_window.close(); 
+                            { googleConnect_window.close();
                               pollingComplete = true;
                             }
                           },
@@ -1134,54 +1134,54 @@ console.log("yogi 2 ", ajaxOptions.url);
 
         display.googleConnect.append(display.googleConnect_loginButton);
 
-        display.googleConnect_spreadsheetURL= 
+        display.googleConnect_spreadsheetURL=
             $("<input />",
              { "class" : 'googleConnect spreadsheetURL'
              }
             )
-            .on("change", 
+            .on("change",
                 function()
                 { alert("change spreadsheetURL");
-                  var ajaxOptions = 
+                  var ajaxOptions =
                       { "url":  "/googleConnect/getSheets",
                         "type": "POST",
                         "data": { "emailAddress":   display.googleConnect_email.val(),
                                   "spreadsheetURL": display.googleConnect_spreadsheetURL.val(),
                                 },
-                        "success" : 
+                        "success" :
                             function(data)
                             { console.log(data);
                               display.googleConnect_sheetSelect.empty()
                               display.googleConnect_sheetSelect.append($("<option value='Select Sheet'>Select Sheet</option>"));
                               $.each
-                              ( data.sheetNames, 
+                              ( data.sheetNames,
                                 function(index)
                                 { display.googleConnect_sheetSelect.append($("<option value='"+index+"'>"+this+"</option>"));
-                                }    
+                                }
                               )
                             },
                         "dataType": "json",
-                      }    
+                      }
                   $.ajax(ajaxOptions);
                 }
             );
         display.googleConnect.append(display.googleConnect_spreadsheetURL);
 
-        display.googleConnect_sheetSelect = 
+        display.googleConnect_sheetSelect =
             $("<select />",
              { "class" : 'googleConnect spreadsheetURL'
              }
             );
         display.googleConnect.append(display.googleConnect_sheetSelect);
 
-        display.googleConnect_cellRange = 
+        display.googleConnect_cellRange =
             $("<input />",
               { "class": 'googleConnect cellRange',
               }
             )
         display.googleConnect.append(display.googleConnect_cellRange);
 
-        display.googleConnect_requestRangeData = 
+        display.googleConnect_requestRangeData =
             $("<a />",
               { "class": "googleConnect requestRangeData"
               }
@@ -1190,7 +1190,7 @@ console.log("yogi 2 ", ajaxOptions.url);
             ( "click",
               function()
               { alert("request range data");
-                  var ajaxOptions = 
+                  var ajaxOptions =
                       { "url":  "/googleConnect/getCellRange",
                         "type": "POST",
                         "data": { "emailAddress":   display.googleConnect_email.val(),
@@ -1198,7 +1198,7 @@ console.log("yogi 2 ", ajaxOptions.url);
                                   "sheetName":      display.googleConnect_sheetSelect.val(),
                                   "cellRange":      display.googleConnect_cellRange.val(),
                                 },
-                        "success" : 
+                        "success" :
                             function(data)
                             { console.log(data);
                               // debugger;
@@ -1207,9 +1207,9 @@ console.log("yogi 2 ", ajaxOptions.url);
                               var colorRow    = data.cellRangeData.backgrounds[0];
                               var columnCount = dataRow.length;
                               ratioString     = dataRow.join("|");
-                              colorChangeString = 
+                              colorChangeString =
                                   $.map
-                                  ( colorRow, 
+                                  ( colorRow,
                                     function(hex, i)
                                     { rgb = hexToRgb(hex);
                                       return "rgb("+(rgb.r-125)+","+(rgb.g-125)+","+(rgb.b-125)+")";
@@ -1219,15 +1219,15 @@ console.log("yogi 2 ", ajaxOptions.url);
                               This.inputFields['["colours"]'].uiValueText.val(colorChangeString);
                               This.inputFields[ '["ratios"]'].uiValueText.val(ratioString)      ;
 
-                              var alterField = This.inputFields['["colours"]'];  
+                              var alterField = This.inputFields['["colours"]'];
                               This.inputFieldAltered(
-                              { inputField: alterField.fullAddress, 
+                              { inputField: alterField.fullAddress,
                                 newValue:   alterField.uiValueText.val()
-                              }, 
+                              },
                               function()
-                              { var alterField = This.inputFields['["ratios"]'];  
+                              { var alterField = This.inputFields['["ratios"]'];
                                 This.inputFieldAltered(
-                                    { inputField: alterField.fullAddress, 
+                                    { inputField: alterField.fullAddress,
                                       newValue:   alterField.uiValueText.val()
                                     }
                                 )
@@ -1236,7 +1236,7 @@ console.log("yogi 2 ", ajaxOptions.url);
                               );
                             },
                         "dataType": "json",
-                      }    
+                      }
                   $.ajax(ajaxOptions);
               }
             );
@@ -1555,14 +1555,14 @@ console.log("yogi 2 ", ajaxOptions.url);
                 { "svg3d":{"translate3d": referenceSVG3dConfiguration}
                 },
                 { queue: This.id,
-                  duration: 1000, 
+                  duration: 1000,
                   easing: "easeInCubic",
                   progress: function(animation, progress, remainingMs) { //Animate Reference SVG
-                    This.progress_translate3d(animation, progress, remainingMs, This);                     
+                    This.progress_translate3d(animation, progress, remainingMs, This);
                   },
-                  complete: function() 
-                  { 
-                  //This.disable_createSaveLink = true; 
+                  complete: function()
+                  {
+                  //This.disable_createSaveLink = true;
                   //   console.log(This.svg3dDisplayJSON.postProcessing);
                   //   var postProcessing  = This.svg3dDisplayJSON.postProcessing;
                   //   var postProcessingFunctions = {};
@@ -1577,10 +1577,10 @@ console.log("yogi 2 ", ajaxOptions.url);
                   //     // for (var counter = 0; counter < ccBuild['counter']; counter ++)
                   //     // { ccThingButton.trigger("click");
                   //     // }
-                  //   } 
-                    
+                  //   }
 
-                    
+
+
                   //   This.disable_createSaveLink = false;
                   //   This.svg_createSaveLink(This);
 
@@ -1695,7 +1695,7 @@ console.log("yogi 2 ", ajaxOptions.url);
   }
   this.ModelInstance.prototype.displayCurrentOutput_2 = function(This)
   { this.inputFieldHUD.renderHUD("init");
-    This.inputFieldHUD.renderHUD("onLoad_allFieldsOnDOM"); 
+    This.inputFieldHUD.renderHUD("onLoad_allFieldsOnDOM");
 
     This.svgHUD.renderHUD("init");
 
@@ -1709,7 +1709,7 @@ console.log("yogi 2 ", ajaxOptions.url);
 
     if (! this.display.addedSVGDefs)
     { this.display.svgDefsFromFile = thisEqualsThat.svgDefsStore[this.svg3dDisplayJSON.svgFile].clone();
-      $(this.display.svgDefs).html(this.display.svgDefsFromFile);    
+      $(this.display.svgDefs).html(this.display.svgDefsFromFile);
       this.display.addedSVGDefs = true;
     }
 
@@ -1729,7 +1729,7 @@ console.log("yogi 2 ", ajaxOptions.url);
   this.InputFieldHUD = function(modelInstance)
   { this.plugins          = {};
     this.contextData      = {};
-    
+
     this.modelInstance            = modelInstance;
     modelInstance.inputFieldHUD   = this;
   }
@@ -1744,7 +1744,7 @@ console.log("yogi 2 ", ajaxOptions.url);
     }
 
     var svg3dDisplayJSON  = this.modelInstance.svg3dDisplayJSON;
-    
+
     for (hudDescriptor in svg3dDisplayJSON.inputFieldHUD)
     { var hudAddress    = hudDescriptor.split(".");
       var hudComponent  = hudAddress[0];
@@ -1777,7 +1777,7 @@ console.log("yogi 2 ", ajaxOptions.url);
       console.log(replaceConfig, replaceConfigName);
 
       if (! This.context.hasOwnProperty(replaceConfigName) )
-      { This.context[replaceConfigName] = 
+      { This.context[replaceConfigName] =
             { "fields": {},
             };
         This[replaceConfigName](This.inputFieldHUD, This.context[replaceConfigName]);
@@ -1802,7 +1802,7 @@ console.log("yogi 2 ", ajaxOptions.url);
   this.InputFieldHUD.prototype.Replace.prototype.ratioColor = function(inputFieldHUD, localContext)
   {
     localContext.initContainer = function(inputFieldHUD)
-    { var container = 
+    { var container =
           $(` <div class='ratioColorTotal'>
                 <div class='ratioColorList'     />
                 <div class='addRatio hudItem fa fa-plus-circle'       />
@@ -1838,13 +1838,13 @@ console.log("yogi 2 ", ajaxOptions.url);
           }
       );
     };
-    localContext.createRatioInput = 
+    localContext.createRatioInput =
         function()
         { if (! localContext.hasOwnProperty("ratioInputFieldCount") )
           { localContext.ratioInputFieldCount = 0;
             localContext.ratioInputFields     = [];
           }
-          var toReturn = 
+          var toReturn =
                 $(` <div class='ratioColor'>
                       <input  class='hudItem percentageSpinner' type='number' min='0' max='100' step='0.1' value ='0' />
                       <input  class='hudItem spectrumColorPickerInput' />
@@ -1871,7 +1871,7 @@ console.log("yogi 2 ", ajaxOptions.url);
           inputFieldElement.remove();
           localContext.markDirty();
         };
-    localContext.markDirty = 
+    localContext.markDirty =
         function()
         {
         }
@@ -1899,7 +1899,7 @@ console.log("yogi 2 ", ajaxOptions.url);
   this.SVGHUD = function(modelInstance)
   { this.plugins          = {};
     this.contextData      = {};
-    
+
     this.modelInstance    = modelInstance;
     modelInstance.svgHUD  = this;
   }
@@ -1917,7 +1917,7 @@ console.log("yogi 2 ", ajaxOptions.url);
     }
 
     var svg3dDisplayJSON  = this.modelInstance.svg3dDisplayJSON;
-    
+
     this.divForHUD.html("");
 
     for (hudDescriptor in svg3dDisplayJSON.svgHUD)
@@ -1962,7 +1962,7 @@ console.log("yogi 2 ", ajaxOptions.url);
       lastAlteredVisualisationField = this.svgHUD.modelInstance.lastAlteredVisualisationField.fullAddress;
       if (! this.context.byVisualisation[lastAlteredVisualisationField])
       { this.context.byVisualisation[lastAlteredVisualisationField] = {};
-        this.context.byVisualisation[lastAlteredVisualisationField].currentColorString = colorPickerData.initialColorString;        
+        this.context.byVisualisation[lastAlteredVisualisationField].currentColorString = colorPickerData.initialColorString;
       }
 
       var rep_onColorChange = function(colorString)
@@ -1982,10 +1982,10 @@ console.log("yogi 2 ", ajaxOptions.url);
           "preferredFormat": "rgba",
           "show": function()
           { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);
-            colorPicker.spectrum("set", This.context.byVisualisation[lastAlteredVisualisationField].currentColorString);      
+            colorPicker.spectrum("set", This.context.byVisualisation[lastAlteredVisualisationField].currentColorString);
           },
           "hide": function()
-          { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", false);                       
+          { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", false);
           },
           "move": function(spectrumOutput)
           { rep_onColorChange(spectrumOutput.toRgbString());
@@ -2022,7 +2022,7 @@ console.log("yogi 2 ", ajaxOptions.url);
       { normalDistribution("randomisePosition", true);
         $(This.svgHUD.modelInstance.display.svgVisualisationG)
             .find("g") //cghange to children or correct selector for children
-            .each(  
+            .each(
                 function()
                 { var gBBox = this.getBBox();
                   var maxXChange = gBBox.width  / 80;
@@ -2061,7 +2061,7 @@ console.log("yogi 2 ", ajaxOptions.url);
 
         $(This.svgHUD.modelInstance.display.svgVisualisationG)
             .find("path")
-            .each(  
+            .each(
                 function()
                 { if (this.getAttribute("svgHUD_protectedColor") )
                   { return;
@@ -2095,7 +2095,7 @@ console.log("yogi 2 ", ajaxOptions.url);
                 }
             );
       }
-      
+
       contextByVisualisation.randomiseColors.degreeOfRandom = degreeOfRandom;
 
       if (!init)
@@ -2103,19 +2103,19 @@ console.log("yogi 2 ", ajaxOptions.url);
       }
     }
     randomiseFunctions.randomiseColorsByGroup = function(degreeOfRandom, init=false)
-    { 
+    {
       if (degreeOfRandom != 0)
       { normalDistribution("randomiseColorsByGroup", true);
         { $(This.svgHUD.modelInstance.display.svgVisualisationG)
               .find("g")
-              .each(  
+              .each(
                   function()
-                  { 
-                      
+                  {
+
                       var changeR = Math.round( 5 *  degreeOfRandom * normalDistribution("randomiseColorsByGroup") );
                       var changeG = Math.round( 5 *  degreeOfRandom * normalDistribution("randomiseColorsByGroup") );
                       var changeB = Math.round( 5 *  degreeOfRandom * normalDistribution("randomiseColorsByGroup") );
-                      
+
                       //$(this).css("fill", newRGB);
                       //newStyle = this.getAttribute("style");
                       //if (newStyle)+newRGB;
@@ -2131,7 +2131,7 @@ console.log("yogi 2 ", ajaxOptions.url);
                                 { this.setAttribute("initial_fill_group", $(this).css("fill"));
                                 }
                                 var colorRGB = this.getAttribute("initial_fill_group");
-                                
+
                                 if (colorRGB == null)
                                   colorRGB = "rgb(50, 50, 50)";
                                 if (colorRGB.indexOf("rgb") === 0)
@@ -2156,9 +2156,9 @@ console.log("yogi 2 ", ajaxOptions.url);
 
         contextByVisualisation.randomiseColorsByGroup.degreeOfRandom = degreeOfRandom;
       };
-      
+
     };
-    
+
     var spectrumFunction = function(randomiseItem, itemContext, functionToCall)
     { randomiseItem.spectrum
       ( { "color":            `rgba(0,0,0, ${itemContext.degreeOfRandom / 32.0})`,
@@ -2167,10 +2167,10 @@ console.log("yogi 2 ", ajaxOptions.url);
           "preferredFormat": "rgba",
           "show": function()
           { //$(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);
-            randomiseItem.spectrum("set", `rgba(0,0,0, ${itemContext.degreeOfRandom / 32.0})`);      
+            randomiseItem.spectrum("set", `rgba(0,0,0, ${itemContext.degreeOfRandom / 32.0})`);
           },
           "hide": function()
-          { //$(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", false);                       
+          { //$(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", false);
           },
           "move": function(spectrumOutput)
           { functionToCall(spectrumOutput.getAlpha() * 32);
@@ -2194,9 +2194,9 @@ console.log("yogi 2 ", ajaxOptions.url);
 
       randomiseItem.append(icon);
       this.context.collectionDiv.append(randomiseItem);
-      
+
       if (!contextByVisualisation[randomiseProperty] )
-      { contextByVisualisation[randomiseProperty] =  
+      { contextByVisualisation[randomiseProperty] =
             { "degreeOfRandom":     randomiseConfig.degreeOfRandom,
             };
       }
@@ -2206,13 +2206,13 @@ console.log("yogi 2 ", ajaxOptions.url);
       randomiseFunctions[randomiseProperty](itemContext.degreeOfRandom, true);
 
       var functionToCall = randomiseFunctions[randomiseProperty];
-      
+
       spectrumFunction(randomiseItem, itemContext, functionToCall);
     }
 
     This.svgHUD.modelInstance.svg_createSaveLink(This.svgHUD.modelInstance);
   };
-  
+
 
   //SVG STORE
   this.SVGStore = function()
@@ -2223,7 +2223,7 @@ console.log("yogi 2 ", ajaxOptions.url);
     {
     }
   }
-  
+
 
   this.ModelFieldInput = function(modelInstance, data)
   { console.log(modelInstance, data);
@@ -2286,7 +2286,7 @@ console.log("yogi 2 ", ajaxOptions.url);
           )
 
     this.uiValue_select = select;
-    
+
     this.uiElement.append(uiLabel);
     this.uiElement.append(this.uiValue_select);
 
@@ -2357,12 +2357,16 @@ console.log("yogi 2 ", ajaxOptions.url);
           { "class": "inputFieldElement"
           }
         );
+      var uiLabelBg =
+        $("<div />",
+          { "class": "inputFieldLabelBg"
+          }
+        );
       var uiLabel =
         $("<div />",
           { "class": "inputFieldLabel"
           }
-        );
-        // .append(this.data.displayFieldAddress);
+        ).append(this.data.displayFieldAddress);
       var uiValue_slider =
         $("<input />",
           { "class": "inputFieldText",
@@ -2382,6 +2386,7 @@ console.log("yogi 2 ", ajaxOptions.url);
       this.uiValue_slider   = uiValue_slider;
       this.uiSlider         = uiSlider;
 
+      this.uiElement.append(uiLabelBg);
       this.uiElement.append(uiLabel);
       this.uiElement.append(this.uiValue_slider);
       this.uiElement.append(uiSlider);
