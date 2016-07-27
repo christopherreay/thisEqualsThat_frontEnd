@@ -2123,8 +2123,27 @@ console.log("yogi 2 ", ajaxOptions.url);
     { this.display();
     }
 
+    var defaultDict = 
+        { "svg3dCloneTimer.preClone.postColor":
+          { 
+          }
+        }
+    for (hudDescriptor in defaultDict)
+    { var hudAddress    = hudDescriptor.split(".");
+      var hudComponent  = hudAddress[0];
+      var hudTagHooks   = hudAddress.slice(1);
+      
+      if (! this.contextData.hasOwnProperty(hudComponent) )
+      { this.contextData[hudComponent] = {};
+        this.plugins[hudComponent] = new this[hudComponent](this, this.contextData[hudComponent], tagHook);
+      }
+      if ($.inArray(tagHook, hudTagHooks) >-1 )
+      { this.plugins[hudComponent][tagHook](defaultDict[hudDescriptor], this.contextData[hudComponent]);
+      }
+    }
+
     var svg3dDisplayJSON  = this.modelInstance.svg3dDisplayJSON;
-    
+
     for (hudDescriptor in svg3dDisplayJSON.svgHUD)
     { var hudAddress    = hudDescriptor.split(".");
       var hudComponent  = hudAddress[0];
@@ -2139,6 +2158,32 @@ console.log("yogi 2 ", ajaxOptions.url);
       }
     }
   }
+
+  this.SVGHUD.prototype.svg3dCloneTimer = function(svgHUD, context)
+  { this.svgHUD     = svgHUD;
+    this.context    = context;
+    this.context.totalClonesRendered  = 0;
+    this.context.totalTimeTaken       = 0;
+  }
+  this.SVGHUD.prototype.svg3dCloneTimer.prototype.preClone = function(svgHUD, context)
+  { var clonesToBeRendered    = this.svgHUD.modelInstance.svg3dDisplayJSON.svg3dConfiguration.clone3d.nb;
+
+    var averageTimePerClone   = this.context.totalTimeTaken / this.context.totalClonesRendered;
+    var estimatedTimeToRender = clonesToBeRendered * averageTimePerClone;
+
+    if (estimatedTimeToRender > 5000)
+    { var render = window.confirm("Estimated time to render: "+ (estimatedTimeToRender / 1000).toPrecision(5) +" seconds");
+      if (! render)
+      { clonesToBeRendered = this.svgHUD.modelInstance.svg3dDisplayJSON.svg3dConfiguration.clone3d.nb = 1;
+      }
+    }
+    this.context.totalClonesRendered += clonesToBeRendered;
+    this.context.startTime = Date.now(); 
+  }
+  this.SVGHUD.prototype.svg3dCloneTimer.prototype.postColor = function(svgHUD, context)
+  { this.context.totalTimeTaken += Date.now() - this.context.startTime;
+  }
+
 
   this.SVGHUD.prototype.fillManager = function(svgHUD, context)
   { this.svgHUD     = svgHUD;
