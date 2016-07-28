@@ -444,7 +444,11 @@ div.inputFieldElement {
     min-height: 32px;
 }
 
+<<<<<<< HEAD
 .inputFieldElement > h3 {
+=======
+.inputFieldLabel > h3 {
+>>>>>>> master
     position: absolute;
     bottom: 0px;
     left: 130%;
@@ -464,10 +468,17 @@ div.inputFieldElement {
     -webkit-transition: all .4s cubic-bezier(0.51, 0.49, 0.22, 1.29);
     transition: all .4s cubic-bezier(0.51, 0.49, 0.22, 1.29);
 
+<<<<<<< HEAD
     -webkit-transition-delay: 0.3s; /* Safari */
     transition-delay: 0.3s;
 }
 .inputFieldElement:hover > h3 {
+=======
+    /*-webkit-transition-delay: 0.3s; /* Safari */
+    /*transition-delay: 0.3s;*/
+}
+.inputFieldLabel:hover > h3 {
+>>>>>>> master
     opacity: 0.9;
     left: 10%;
     visibility: visible;
