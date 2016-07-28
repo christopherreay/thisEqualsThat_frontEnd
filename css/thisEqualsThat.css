@@ -272,11 +272,12 @@ div.modelClasses {
     z-index: 800;
     -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
     transition: all .3s cubic-bezier(.4,0,.2,1);
-    overflow: hidden;
+    overflow-x: scroll;
+    overflow-y: visible;
 }
 div.modelClasses.active{
     left: 0;
-    overflow: visible;
+    /*overflow: visible;*/
     -webkit-box-shadow: 0 5px 12px rgba(0,0,0, .5);
     box-shadow: 0 5px 12px rgba(0,0,0, .5);
 }
@@ -856,7 +857,6 @@ div.toggleFeatures> label {
 div.toggleFeatures> label:last-child {
     margin-right: 0px;
 }
-
 
 
 * {
