@@ -1,5 +1,5 @@
 window.thisEqualsThat = {};
-thisEqualsThat.graphicLoadVersion = "0.1.1.3.20160712.1727"
+thisEqualsThat.graphicLoadVersion = "0.0.9.20160726.1639";
 
 
 thisEqualsThat.svg          = {};
@@ -78,6 +78,38 @@ function normalDistribution(namespace, reset=false)
 
     return toReturn;
 }
+
+function recolorPaths(paths, changeTinyColor, mixAmount, changedBy)
+{ paths.each
+  ( function()
+    { var originalColor = null;
+      var originalAlpha = null;
+
+      if (! this.getAttribute("original_fill_color") )
+      { var colorRGB  = $(this).css("fill");
+        if (colorRGB == null)
+          colorRGB = "rgb(128, 128, 128)";
+        originalColor = tinycolor(colorRGB);
+        this.setAttribute("original_fill_color",  originalColor );
+        originalAlpha = originalColor.getAlpha();
+        this.setAttribute("original_fill_alpha",  originalAlpha );
+      }
+      else
+      { originalColor = this.getAttribute("original_fill_color");
+        originalAlpha = this.getAttribute("original_fill_alpha");
+      }
+
+
+      changeTinyColor.setAlpha(originalAlpha);
+      newColor = tinycolor.mix(originalColor, changeTinyColor, mixAmount );
+
+      this.setAttribute("style", `fill: ${newColor.toString("rgb")};`);
+
+      this.setAttribute(changedBy+"_protectedColor", true);
+    }
+  );
+}
+
 // function normalDistribution() {
 //     var u = 1 - Math.random(); // Subtraction to flip [0, 1) to (0, 1].
 //     var v = 1 - Math.random();
@@ -357,9 +389,9 @@ console.log("yogi 2 ", ajaxOptions.url);
               var referenceSVGSelectListItemDiv = $("<div class='referenceSVGSelectListItem' />").attr("thisEquals_fileHandle", referenceSVGData.fileHandle);
               var referenceSVGSelectListItemLI  = $("<li />");
               var referenceSVGSelectListItemSVG = $(document.createElementNS(d3.ns.prefix.svg, "svg"))
-                  .attr("xmlns",        "//www.w3.org/2000/svg")
-                  .attr("xmlns:xlink",  "//www.w3.org/1999/xlink")
-                  .attr("xmlns:z",      "//debeissat.nicolas.free.fr/svg3d/svg3d.rng")
+                  .attr("xmlns",        "http://www.w3.org/2000/svg")
+                  .attr("xmlns:xlink",  "http://www.w3.org/1999/xlink")
+                  .attr("xmlns:z",      "http://debeissat.nicolas.free.fr/svg3d/svg3d.rng")
                   .attr("width",        "100%")
                   .attr("height",       "100%")
               var clonedG = referenceRootG.clone().appendTo(referenceSVGSelectListItemSVG);
@@ -379,6 +411,20 @@ console.log("yogi 2 ", ajaxOptions.url);
         }
     );
   };
+
+  this.IFAQueue = function(modelInstance)
+  { this.modelInstnace = modelInstance;
+    this.state = "ready";
+  }
+  this.IFAQueue.prototype.ready = function()
+  { return this.state == "ready";
+  }
+  this.IFAQueue.prototype.enqueueItem = function(parameters)
+  { if (this.ready())
+    { this.modelInstance.inputFieldAltered(      );
+    }
+  }
+
   //MODEL INSTANCE
   this.ModelInstance = function(modelClass, modelInstanceData)
   { this.modelClass         = modelClass;
@@ -396,7 +442,9 @@ console.log("yogi 2 ", ajaxOptions.url);
     this.bottomModelHistory   = {};
 
     this.disable_createSaveLink = false;
-    this.disable_inputFieldAltered = false;
+
+    this.ifa_queue = [];
+    this.ifa_queueState = "ready";
 
     this.inputFieldHUD  = new ThisEqualsThat.InputFieldHUD(this);
     this.svgHUD         = new ThisEqualsThat.SVGHUD(this);
@@ -414,8 +462,8 @@ console.log("yogi 2 ", ajaxOptions.url);
              {
              }
              ) ;
-      this.inputFieldsSliders.on("change", ".inputFieldText",
-          this.inputFieldText_changed);
+      // this.inputFieldsSliders.on("change", ".inputFieldText",
+      //     this.inputFieldText_changed);
       $.each(
         this.data.fields,
         function(fieldNameString, value)
@@ -433,20 +481,20 @@ console.log("yogi 2 ", ajaxOptions.url);
     return this;
   }
   this.ModelInstance.prototype.inputFieldText_changed = function()
-  { $this = $(this);
-    var modelField = $(this).data("thisEquals.modelField");
-    $modelField = $(modelField)
-    if (modelField.hasOwnProperty("uiSlider"))
-    { modelField.uiSlider.data("thisEquals.disableWriteToTextField", true);
-      modelField.uiSlider.slider("value", modelField.actualToSlider(modelField.uiValue_slider.val()));
-    }
-    $modelField.data("thisEquals.oldValue", modelField.uiValue_slider.val());
-    console.log($(modelField).data("thisEquals.oldValue"));
+  { //$this = $(this);
+    // var modelField = $(this).data("thisEquals.modelField");
+    // $modelField = $(modelField)
+    // if (modelField.hasOwnProperty("uiSlider"))
+    // { modelField.uiSlider.data("thisEquals.disableWriteToTextField", true);
+    //   modelField.uiSlider.slider("value", modelField.actualToSlider(modelField.uiValue_slider.val()));
+    // }
+    // $modelField.data("thisEquals.oldValue", modelField.uiValue_slider.val());
+    // console.log($(modelField).data("thisEquals.oldValue"));
 
-    modelField.modelInstance.inputFieldAltered(
-              { inputField: modelField.fullAddress,
-                newValue:   modelField.uiValue_slider.val()
-              });
+    // modelField.modelInstance.inputFieldAltered(
+    //           { inputField: modelField.fullAddress,
+    //             newValue:   modelField.uiValue_slider.val()
+    //           });
   }
   this.ModelInstance.prototype.getOutputFields = function()
   { if (! this.hasOwnProperty("outputFieldData"))
@@ -536,9 +584,14 @@ console.log("yogi 2 ", ajaxOptions.url);
   }
 
   this.ModelInstance.prototype.inputFieldAltered = function(fieldChangeData, successFunction, doNotUpdateUI)
-  { if (! this.disable_inputFieldAltered)
-    { this.disable_inputFieldAltered = true;
-      if (!doNotUpdateUI) doNotUpdateUI = false;
+  { console.log("inputFieldAltered", arguments, this.ifa_queue);
+    if (arguments == this.ifa_currentlyProcessing)
+      return;
+    if (this.ifa_queueState == "ready")
+    { this.ifa_currentlyProcessing = arguments;
+      this.ifa_queueState = "Sending Request";
+      $("#logo > img").toggleClass("spinner", true);
+
       var This = this;
       fieldChangeData	= $.extend({modelInstanceID: this.id}, fieldChangeData);
       var ajaxOptions =
@@ -547,44 +600,66 @@ console.log("yogi 2 ", ajaxOptions.url);
           "data": fieldChangeData,
           "success": function (data, status, request)
           { console.log(data);
+            This.svg3dDisplayJSON   = data.svg3dDisplayJSON;
+
             // This.lastAlteredOutputField.data.currentValue = data.newValue;
             // This.lastAlteredVisualisationField.data.currentValue = data.svg3dDisplayJSON.svgFieldValue;
 
             // changed data. Now it has all the values of all the fields in it. Going to try to update the UI accordingly
             for (var fieldName in data.fieldValues)
-            { try
-              { var inputField = This.inputFields[fieldName];
-                var newValue = data.fieldValues[fieldName];
+            { if (This.inputFields.hasOwnProperty(fieldName) )
+              { var inputField  = This.inputFields[fieldName];
+                var newValue    = data.fieldValues[fieldName];
 
                 if (newValue != inputField.data.currentValue)
                 { inputField.setValue(newValue);
                 }
               }
-              catch (e)
-              {}
+              //catch (e)
+              //{}
             }
 
-            This.svg3dDisplayJSON = data.svg3dDisplayJSON;
-            if (!doNotUpdateUI) This.displayCurrentOutput()
+
+            if (! This.doNotUpdateUI) This.displayCurrentOutput()
             if (    This.bottomModelInstance && data.bottomModelData
                 &&  This.bottomModelInstance.lastAlteredOutputField && This.bottomModelInstance.lastAlteredOutputField.data)
             { This.bottomModelInstance.lastAlteredOutputField.data.currentValue = data.bottomModelData.newValue
               This.bottomModelInstance.lastAlteredVisualisationField.data.currentValue = data.bottomModelData.svg3dDisplayJSON.svgFieldValue;
               This.bottomModelInstance.svg3dDisplayJSON = data.bottomModelData.svg3dDisplayJSON
-              if (! doNotUpdateUI) This.bottomModelInstance.displayCurrentOutput()
+              if (! This.doNotUpdateUI) This.bottomModelInstance.displayCurrentOutput()
             }
+
             if (successFunction)
               successFunction(data, status, request);
-          },
-          "always": function()
-          {  This.disable_inputFieldAltered = false;
+
           },
           "complete": function()
-          {  This.disable_inputFieldAltered = false;
+          { console.log("ajax complete", This.ifa_queue[0]);
+
+            This.ifa_queueState = "receivedResponse";
+
+            if (This.doNotUpdateUI)
+            { This.doNotUpdateUI = false;
+
+              if (This.ifa_queue.length > 0)
+              { var ifa_item = This.ifa_queue.shift()
+                This.ifa_queueState = "ready";
+                This.inputFieldAltered(ifa_item[0], ifa_item[1], ifa_item[2]);
+              }
+              else
+              { This.ifa_queueState = "ready";
+                $("#logo > img").toggleClass("spinner", false);
+              }
+              This.svg_createSaveLink(This)
+            }
           },
         };
       console.log(ajaxOptions);
       $.ajax(ajaxOptions);
+    }
+    else
+    { console.log("pushing to queue", this.ifa_queue[0], arguments);
+      this.ifa_queue.push(arguments);
     }
   }
   this.ModelInstance.prototype.processInputFieldAlteredResponse = function(data)
@@ -766,20 +841,22 @@ console.log("yogi 2 ", ajaxOptions.url);
       display.svgOutput             = $("<div class='svgOutput'  />");
 
       display.svgTextInput          = $("<input type='text' class='svgTextDescription' placeholder='Enter Text Description'/>");
-      display.svgSaveLink           = $("<div class='svgSaveLink btn'   />");
+      display.svgSaveLink           = $("<div class='svgSaveLink'   />");
       display.svgModelRoot          = $("<div class='svgModelRoot'  />");
       display.referenceSVG          = $("<div class='referenceSVG'  />");
       var containerSVG        = document.createElementNS(d3.ns.prefix.svg, "svg");
       $(containerSVG)
-          .attr("xmlns",        "//www.w3.org/2000/svg")
-          .attr("xmlns:xlink",  "//www.w3.org/1999/xlink")
-          .attr("xmlns:z",      "//debeissat.nicolas.free.fr/svg3d/svg3d.rng")
+          .attr("xmlns",        "http://www.w3.org/2000/svg")
+          .attr("xmlns:xlink",  "http://www.w3.org/1999/xlink")
+          .attr("xmlns:z",      "http://debeissat.nicolas.free.fr/svg3d/svg3d.rng")
           .attr("id",           "svgHTMLElement_"+this.id)
           .attr("width",        "100%")
           .attr("height",       "100%")
           .attr("z:xInfinite",  "50")
           .attr("z:yInfinite",  "100")
-          .attr("z:zRatio",     "5");
+          .attr("z:zRatio",     "5")
+
+          .addClass(`id_${this.id}`);
 
       display.svgDefs                = d3.select(containerSVG)     .append("defs").attr("id", "svgDefsG_"+this.id).node();
       var svgTextDescription          = d3.select(containerSVG)     .append("text").attr("id", "svgTextDescription_"+this.id).text("Enter Text Description").node();
@@ -787,7 +864,8 @@ console.log("yogi 2 ", ajaxOptions.url);
 
 
       //display.svgTextDescription.text("Hello World");
-      var svgTranslatableG            = d3.select(containerSVG)     .append("g").attr("id", "svgTranslatableG_" +this.id) .node();
+      var svgTranslatableG            = d3.select(containerSVG)     .append("g").attr("id", "svgTranslatableG_" +this.id).classed(`id_${this.id}`, true) .node();
+
       display.svgTranslatableG        = svgTranslatableG;
       var svgHeightAxis               = d3.select(svgTranslatableG) .append("g").attr("id", "svgHeightAxis_"+this.id).node();
       display.svgHeightAxis           = svgHeightAxis;
@@ -1216,10 +1294,10 @@ console.log("yogi 2 ", ajaxOptions.url);
                                     }
                                   );
                               colorChangeString = colorChangeString.join("|");
-                              This.inputFields['["colours"]'].uiValueText.val(colorChangeString);
+                              This.inputFields['["colors"]'].uiValueText.val(colorChangeString);
                               This.inputFields[ '["ratios"]'].uiValueText.val(ratioString)      ;
 
-                              var alterField = This.inputFields['["colours"]'];
+                              var alterField = This.inputFields['["colors"]'];
                               This.inputFieldAltered(
                               { inputField: alterField.fullAddress,
                                 newValue:   alterField.uiValueText.val()
@@ -1352,8 +1430,8 @@ console.log("yogi 2 ", ajaxOptions.url);
           "easing"    : "easeInCubic",
           //"progress"  : This.progressCounter,
           "complete"  : function()
-              { This.svgHUD.inputFieldHUD("postClone");
-                This.svgHUD.    renderHUD("postClone");
+              { This.inputFieldHUD.renderHUD("postClone");
+                This.svgHUD       .renderHUD("postClone");
 
                 //Add the Scale Axis to the right hand side of the clone group
                 //  hopefully this should deal with position and that by itself
@@ -1473,30 +1551,50 @@ console.log("yogi 2 ", ajaxOptions.url);
                 var referenceSVG3dConfiguration = $.extend(true, {}, This.svg3dDisplayJSON.svg3dConfiguration.translate3d);
                 $.extend(referenceSVG3dConfiguration, {"x":referenceSVG3dConfiguration.x * multiplier, "y": referenceSVG3dConfiguration.y * multiplier});
 
-                This.svgHUD.renderHUD("preColor");
 
-                if ("recolourClones" in This.svg3dDisplayJSON.svg3dConfiguration)
+
+                if ("recolorClones" in This.svg3dDisplayJSON.svg3dConfiguration)
                 { //var clones                  = $(This.display.svgVisualisationG).find("> g:nth-child(n + 2)");
+                  //if (!This.hasOwnProperty("recolorClones") )
+                  { This.recolorClones =
+                        { "messages": [],
+
+                          "changeTinyColors": [],
+                          "mixAmount": [],
+
+                          "clones": [],
+                          "paths": [],
+                        };
+                  }
+
                   var clones                  = $(This.display.svgVisualisationG).data("svg3dclones");
                   var cloneCount              = clones.length;
                   var clonesNotChosenCount    = cloneCount;
                   var clonesNotChosenMemoise  = Array.apply(null, Array(cloneCount)).map(function (_, i) {return i;});
 
 
-                  var recolourClones = This.svg3dDisplayJSON.svg3dConfiguration.recolourClones;
+                  var recolorClones = This.svg3dDisplayJSON.svg3dConfiguration.recolorClones;
 
-                  var randomLayout   = recolourClones[0].randomLayout == "Yes";
-                  var ratios         = recolourClones[0].ratios;
-                  var colours        = recolourClones[0].colours;
-                  if (ratios.length != colours.length) debugger;
+                  var randomLayout   = recolorClones[0].randomLayout == "Yes";
+                  var ratios         = recolorClones[0].ratios;
+                  var colors        = recolorClones[0].colors;
+
+                  This.recolorClones.ratios = ratios;
+                  This.recolorClones.colors = colors;
+
+                  if (ratios.length != colors.length)
+                  { debugger;
+                    This.recolorClones.messages.push({"warning": `ratios length: ${ratios.length}, colors length: ${colors.length}`});
+                  }
                   ratioCount         = ratios.length;
+
 
 
                   for (var ratioCounter = 0; ratioCounter < ratioCount; ratioCounter ++)
                   { var clonesToChange  = [];
 
                     var ratio           = ratios [ratioCounter];
-                    var changeColour    = colours[ratioCounter];
+                    var changeColor    = colors[ratioCounter];
 
                     var cloneToChangeCount = Math.round(ratio * cloneCount);
 
@@ -1516,38 +1614,27 @@ console.log("yogi 2 ", ajaxOptions.url);
                     }
 
 
-                    var changeRGB = changeColour.match(/^rgb[a]?\(([-]?\d+),\s*([-]?\d+),\s*([-]?\d+)[,]?\s*(\d*[.]?\d*)\)$/);
-                    var changeR   = Number(changeRGB[1]);
-                    var changeG   = Number(changeRGB[2]);
-                    var changeB   = Number(changeRGB[3]);
+                    var changeTinyColor =  tinycolor(changeColor);
+                    var mixAmount       =  changeTinyColor.getAlpha() * 100;
+                    changeTinyColor.setAlpha(1.0);
 
-                    $.each( clonesToChange,
-                          function()
-                          { $(this).find("path").each(function()
-                            {   var colorRGB  = $(this).css("fill");
-                                if (colorRGB == null)
-                                  colorRGB = "rgb(50, 50, 50)";
-                                if (colorRGB.indexOf("rgb") === 0)
-                                { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
-                                  var r = Number(rgb[1]);
-                                  var newR = Math.min(Math.max(r + changeR, 0), 255);
-                                  var g = Number(rgb[2]);
-                                  var newG = Math.min(Math.max(g + changeG, 0), 255);
-                                  var b = Number(rgb[3]);
-                                  var newB = Math.min(Math.max(b + changeB, 0), 255);
-                                  if (4 in changeRGB && changeRGB[4] != "")
-                                    var newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
-                                  else
-                                    var newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
-                                  this.setAttribute("style", newRGB);
+                    This.recolorClones.changeTinyColors.push(changeTinyColor);
+                    This.recolorClones.mixAmount       .push(mixAmount);
 
-                                  this.setAttribute("svgHUD_protectedColor", true);
-                                }
-                            }
-                            )
-                          }
-                        );
+                    // var changeRGB = changeColor.match(/^rgb[a]?\(([-]?\d+),\s*([-]?\d+),\s*([-]?\d+)[,]?\s*(\d*[.]?\d*)\)$/);
+                    // var changeR   = Number(changeRGB[1]);
+                    // var changeG   = Number(changeRGB[2]);
+                    // var changeB   = Number(changeRGB[3]);
+
+                    paths = $(clonesToChange).find("path");
+                    recolorPaths(paths, changeTinyColor, mixAmount, "recolorClones");
+
+                    This.recolorClones.clones.push(clonesToChange);
+                    This.recolorClones.paths .push(paths);
+
                   }
+
+
 
                 }
 
@@ -1561,37 +1648,33 @@ console.log("yogi 2 ", ajaxOptions.url);
                     This.progress_translate3d(animation, progress, remainingMs, This);
                   },
                   complete: function()
-                  {
-                  //This.disable_createSaveLink = true;
-                  //   console.log(This.svg3dDisplayJSON.postProcessing);
-                  //   var postProcessing  = This.svg3dDisplayJSON.postProcessing;
-                  //   var postProcessingFunctions = {};
-                  //   for (var ccThing in postProcessing)
-                  //   { //var delay ssdasdsdsd        = 2000.0 / postProcessing[ccThing]
-                  //     var ccFunction = This.display[ccThing+"_function"];
-                  //     var mult = postProcessing[ccThing];
-                  //     if (mult != 0) ccFunction(mult);
-                  //     // var ccBuild = postProcessingFunctions[ccThing] = {};
-                  //     // ccBuild['counter']  = postProcessing[ccThing];
+                  {  This.svgHUD.renderHUD("preColor");
 
-                  //     // for (var counter = 0; counter < ccBuild['counter']; counter ++)
-                  //     // { ccThingButton.trigger("click");
-                  //     // }
-                  //   }
+                    This.inputFieldHUD.renderHUD("postColor");
+                    This.svgHUD.renderHUD("postColor");
 
 
+                    console.log("animationQueue complete", This.ifa_queue[0]);
+                    if (This.ifa_queue.length > 0)
+                    { var ifa_item = This.ifa_queue.shift()
+                      This.ifa_queueState = "ready";
+                      This.inputFieldAltered(ifa_item[0], ifa_item[1], ifa_item[2]);
+                    }
+                    else
+                    { This.ifa_queueState = "ready";
+                      $("#logo > img").toggleClass("spinner", false);
+                    }
 
-                  //   This.disable_createSaveLink = false;
-                  //   This.svg_createSaveLink(This);
-
-                  This.svgHUD.renderHUD("postColor");
-                  }
+                    This.svg_createSaveLink(This);
+                  },
                 }
                 );
 
 
+                // This.display.svgClonableG .finish (This.id);
+                // This.display.svgReferenceG.finish (This.id);
 
-                This.display.svgClonableG.dequeue(This.id);
+                This.display.svgClonableG .dequeue(This.id);
                 This.display.svgReferenceG.dequeue(This.id);
 
                 var svgVisualisationGBBox   = This.display.svgVisualisationG  .getBBox();
@@ -1608,6 +1691,8 @@ console.log("yogi 2 ", ajaxOptions.url);
               }
        	}
     );
+
+    // This.display.svgClonableG .finish (This.id);
     svgClonableG.dequeue(this.id);
     svgClonableG.hide();
   }
@@ -1616,18 +1701,38 @@ console.log("yogi 2 ", ajaxOptions.url);
       console.log("svg_createSaveLink disabled");
     else
     { console.log("svg_createSaveLink", This);
-      var savableContainerSVG  =  $(This.display.containerSVG).clone();
+
+      var savableContainerSVG = $(This.display.containerSVG).clone();
       savableContainerSVG
           .attr("width",          This.display.svgModelRoot.css("width"))
-          .attr("height",         This.display.svgModelRoot.css("height"));
+          .attr("height",         This.display.svgModelRoot.css("height"))
+      ;
+      var removeTheseAttributes = ["xmlns:xlink", "xmlns:z", "z:xInfinite", "z:yInfinite", "z:zRatio"];
+      for (attributeToRemove  of removeTheseAttributes)
+      { savableContainerSVG.removeAttr(attributeToRemove)
+      }
+
+
+      var svgString             = savableContainerSVG.get(0).outerHTML;
+      regex_zThreeD             = /z:threeD=\"true\"/g;
+      var removeTheseStrings    = [regex_zThreeD];
+      for (stringToRemove of removeTheseStrings)
+      { svgString = svgString.replace(stringToRemove, "");
+      }
+
+      This.display.savableSVGString = svgString;
+
 
       This.display.svgSaveLink.html(
-          $(  "<a href-lang='image/svg+xml'"
-                + " href      ='data:image/svg+xml,\n"
-                    + savableContainerSVG.get(0).outerHTML + "'"
-                + " title     ='svgRep.svg'"
-                + " download  ='" + This.display.modelOutputValue.text() + ".svg'"
-            + ">" + "</a>"
+          $(   `<a
+                    href-lang ='image/svg+xml'
+                    href      =
+                        ' data:image/svg+xml,\n
+                          ${svgString}
+                        '
+                    title     = 'svgRep.svg'
+                    download  = '${This.display.modelOutputValue.text()}.svg'
+                />`
           )
       );
     }
@@ -1695,7 +1800,6 @@ console.log("yogi 2 ", ajaxOptions.url);
   }
   this.ModelInstance.prototype.displayCurrentOutput_2 = function(This)
   { this.inputFieldHUD.renderHUD("init");
-    This.inputFieldHUD.renderHUD("onLoad_allFieldsOnDOM");
 
     This.svgHUD.renderHUD("init");
 
@@ -1705,6 +1809,7 @@ console.log("yogi 2 ", ajaxOptions.url);
 
   this.ModelInstance.prototype.appendSVGToDisplay = function()
   { this.display.svgClonableG = thisEqualsThat.svgStore[this.svg3dDisplayJSON.svgFile].clone();
+
     $(this.display.svgVisualisationG).html(this.display.svgClonableG);
 
     if (! this.display.addedSVGDefs)
@@ -1743,9 +1848,9 @@ console.log("yogi 2 ", ajaxOptions.url);
     { this.display();
     }
 
-    var svg3dDisplayJSON  = this.modelInstance.svg3dDisplayJSON;
+    var inputFieldHUDJSON  = this.modelInstance.data.inputFieldHUDJSON;
 
-    for (hudDescriptor in svg3dDisplayJSON.inputFieldHUD)
+    for (hudDescriptor in  inputFieldHUDJSON)
     { var hudAddress    = hudDescriptor.split(".");
       var hudComponent  = hudAddress[0];
       var hudTagHooks   = $(hudAddress).slice(1).get();
@@ -1756,18 +1861,55 @@ console.log("yogi 2 ", ajaxOptions.url);
         }
       }
       if ($.inArray(tagHook, hudTagHooks) >= 0)
-      { this.plugins[hudComponent].display(svg3dDisplayJSON.inputFieldHUD[hudDescriptor], tagHook)
+      { this.plugins[hudComponent].display(inputFieldHUDJSON[hudDescriptor], tagHook)
       }
     }
   }
 
-  this.InputFieldHUD.prototype.Replace = function(inputFieldHUD, context)
+  this.InputFieldHUD.prototype.FieldOrder = function(inputFieldHUD, context, tagHook)
   { this.inputFieldHUD            = inputFieldHUD;
     this.context                  = context;
     // this.context.byVisualisation  = {};
 
   }
-  this.InputFieldHUD.prototype.Replace.prototype.display =function(replaceDict, tagHook)
+  this.InputFieldHUD.prototype.FieldOrder.prototype.display =function(orderDefinition, tagHook)
+  { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
+    //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
+    console.log("FieldOrder", this.inputFieldHUD.modelInstance.inputFields);
+    var This    = this;
+    var context = this.context;
+
+    if (! context.doOnce)
+    { var elementList = [];
+
+      for (orderItem of orderDefinition.orderList)
+      { console.log("  "+`["${orderItem.replace(", ", "\", \"")}"]`); //"
+        if (orderItem == "spacer")
+        { elementList.push($(`<div class='inputFieldElement spacer' />`) );
+        }
+        else if (orderItem.startsWith("groupHeader") )
+        { elementList.push($(`<div class="inputFieldElement groupHeader">${orderItem.substring(12)}</div>` ) )
+        }
+        else
+        { elementList.push(this.inputFieldHUD.modelInstance.inputFields[`["${orderItem.replace(", ", "\", \"")}"]`].uiElement); //"
+        }
+      }
+
+      for (var index = elementList.length; index > 0; index --)
+      { this.inputFieldHUD.modelInstance.display.modelSliders.prepend(elementList[index-1]);
+      }
+
+      context.doOnce = true;
+    }
+  }
+
+  this.InputFieldHUD.prototype.Remove = function(inputFieldHUD, context, tagHook)
+  { this.inputFieldHUD            = inputFieldHUD;
+    this.context                  = context;
+    // this.context.byVisualisation  = {};
+
+  }
+  this.InputFieldHUD.prototype.Remove.prototype.display =function(replaceDict, tagHook)
   { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
     var This = this;
@@ -1780,7 +1922,6 @@ console.log("yogi 2 ", ajaxOptions.url);
       { This.context[replaceConfigName] =
             { "fields": {},
             };
-        This[replaceConfigName](This.inputFieldHUD, This.context[replaceConfigName]);
       }
       var localContext = this.context[replaceConfigName];
 
@@ -1789,28 +1930,25 @@ console.log("yogi 2 ", ajaxOptions.url);
         { localContext.fields[fieldToHide] = {};
         }
 
-        // This.inputFieldHUD.modelInstance.inputFields[fieldToHide].uiElement.toggleClass("displayNone", true);
-        // localContext.fields[fieldToHide].hidden = true;
+        This.inputFieldHUD.modelInstance.inputFields[fieldToHide].uiElement.toggleClass("displayNone", true);
+        localContext.fields[fieldToHide].hidden = true;
       }
-
-      toReturn = null;
-      // eval(replaceConfig.addFieldsExec || "toReturn = {'status': 'fail', 'message': 'noCodeToExecute'}");
 
     }
   }
 
-  this.InputFieldHUD.prototype.Replace.prototype.ratioColor = function(inputFieldHUD, localContext)
-  {
-    localContext.initContainer = function(inputFieldHUD)
+  this.InputFieldHUD.prototype.RatioColor = function(inputFieldHUD, localContext, tagHook)
+  { this.inputFieldHUD    = inputFieldHUD;
+    this.context          = localContext;
+    this.context.inputFieldHUD = inputFieldHUD;
+
+
+    localContext.initContainer = function(inputFieldHUD, localContext)
     { var container =
           $(` <div class='ratioColorTotal'>
+                <div class='inputFieldElement total hudCollection'          />
                 <div class='ratioColorList'     />
-                <div class='addRatio hudItem fa fa-plus-circle'       />
-                <div class='total hudCollection'          />
-                <div class='submitCancel hudCollection'>
-                  <div class='submit hudItem fa fa-check'         />
-                  <div class='cancel hudItem fa fa-ban'         />
-                </div>
+                <div class='inputFieldElement addRatio hudItem fa fa-plus-circle'       />
               </div>
             `);
       inputFieldHUD.modelInstance.display.modelSliders.prepend(container);
@@ -1822,7 +1960,12 @@ console.log("yogi 2 ", ajaxOptions.url);
 
       container.on("click", ".addRatio",
           function(event)
-          { localContext.createRatioInput();
+          { localContext.createRatioInput(0.1, tinycolor.random().setAlpha(0.7).saturate(50));
+            localContext.writeChanges(true);
+
+            localContext.inputFieldHUD.modelInstance.doNotUpdateUI = true;
+            localContext.inputFieldHUD.modelInstance.inputFields[`["ratios"]` ].uiValue_text.trigger("change");
+            localContext.inputFieldHUD.modelInstance.inputFields[`["colors"]` ].uiValue_text.trigger("change");
           }
       );
       container.on("click", ".closeBox",
@@ -1832,25 +1975,43 @@ console.log("yogi 2 ", ajaxOptions.url);
             localContext.destroyRatioInput($(this).parent(".ratioColor"));
           }
       );
-      container.on("change",
+      container.on("change", ".percentageSpinner",
           function(event)
           { localContext.writeChanges();
+
+            localContext.inputFieldHUD.modelInstance.inputFields[`["ratios"]` ].uiValue_text.trigger("change");
           }
       );
+
+      // container.on("move.spectrum", ".ratioColor",
+      //     function(event)
+      //     { debugger;
+      //       console.log("move.spectrum", $(this).data("hud_position") );
+
+      //       var clonesToColor = inputFieldHUD.modelInstance.recolorClones;
+      //     }
+      // );
     };
+
     localContext.createRatioInput =
-        function()
-        { if (! localContext.hasOwnProperty("ratioInputFieldCount") )
+        function(initialRatio, initialColor)
+        { if (!initialRatio) initialRatio = 0.0;
+          if (!initialColor) initialColor = tinycolor("rgb(128,128,128, 0.8");
+
+          if (! localContext.hasOwnProperty("ratioInputFieldCount") )
           { localContext.ratioInputFieldCount = 0;
             localContext.ratioInputFields     = [];
           }
           var toReturn =
-                $(` <div class='ratioColor'>
-                      <input  class='hudItem percentageSpinner' type='number' min='0' max='100' step='0.1' value ='0' />
-                      <input  class='hudItem spectrumColorPickerInput' />
-                      <span    class="hudItem closeBox    fa fa-times-circle" />
+                $(` <div class='ratioColor inputFieldElement'>
+                      <div    class="hudItem inputFieldLabel" />
+                      <input  class='hudItem percentageSpinner' type='number' min='0' max='100' step='0.1' value ='${initialRatio * 100}' />
+                      <div    class="hudItem textLabel percentLabel">%</div>
+                      <input  class='hudItem spectrumColorPickerInput' value='${initialColor.toString("rgb")}' />
+                      <span   class="hudItem closeBox    fa fa-times-circle" />
                     </div>
-                `);
+                  `
+                 );
           toReturn.data("hud_position", localContext.ratioInputFieldCount++);
 
           localContext.ratioColorList.append(toReturn);
@@ -1858,11 +2019,21 @@ console.log("yogi 2 ", ajaxOptions.url);
               .find(".spectrumColorPickerInput")
               .spectrum
               ( { "showPalette"     : true,
+                  "showAlpha"       : true,
                   "preferredFormat" : "rgb",
+
+                  "color"           : initialColor,
+                  "replacerClassName": "hudItem colorPicker",
+
+
+                  "move"            : localContext.spectrumMove,
+                  "change"          : localContext.spectrumChange,
                 }
               );
 
           localContext.markDirty();
+
+          return toReturn
         };
     localContext.destroyRatioInput =
         function(inputFieldElement)
@@ -1874,26 +2045,63 @@ console.log("yogi 2 ", ajaxOptions.url);
     localContext.markDirty =
         function()
         {
-        }
+        };
     localContext.writeChanges =
-        function()
+        function(triggerUpdate)
         { var newRatiosValArray = [];
           var newColorsValArray = [];
           localContext.ratioColorList
                         .children()
                         .each
                         ( function()
-                          { newRatiosValArray.push($(this).find(".percentageSpinner"        ).val() );
-                            newColorsValArray.push($(this).find(".spectrumColorPickerInput" ).val() );
+                          { newRatiosValArray.push( ($(this).find(".percentageSpinner"        ).val() ) / 100 );
+                            newColorsValArray.push(  $(this).find(".spectrumColorPickerInput" ).val()         );
                           }
                         );
 
-          inputFieldHUD.modelInstance.inputFields[`["ratios"]`  ].setValue(newRatiosValArray.join("|") );
-          inputFieldHUD.modelInstance.inputFields[`["colours"]` ].setValue(newColorsValArray.join("|") );
-        }
+          inputFieldHUD.modelInstance.inputFields[`["ratios"]` ].setValue(newRatiosValArray.join("|") );
+          inputFieldHUD.modelInstance.inputFields[`["colors"]` ].setValue(newColorsValArray.join("|") );
 
-    localContext.initContainer(inputFieldHUD);
+
+        };
+    localContext.spectrumMove =
+        function(color)
+        { mixAmount = color.getAlpha() * 100;
+          color.setAlpha(1.0);
+
+          recolorPaths(inputFieldHUD.modelInstance.recolorClones.paths[$(this).parent(".ratioColor").data("hud_position")], color, mixAmount, "recolorClones" );
+        };
+    localContext.spectrumChange =
+        function(color)
+        { setImmediate
+          ( function()
+            { localContext.inputFieldHUD.modelInstance.doNotUpdateUI = true;
+              localContext.writeChanges();
+              localContext.inputFieldHUD.modelInstance.inputFields[`["colors"]` ].uiValue_text.trigger("change");
+            }
+          );
+        };
+    localContext.initContainer(inputFieldHUD, localContext);
+  };
+
+  this.InputFieldHUD.prototype.RatioColor.prototype.display = function(config, tagHook)
+  {
+
+    var inputFieldHUD     = this.inputFieldHUD;
+    var localContext      = this.context;
+    localContext.ratioColorList.empty();
+    delete localContext.ratioInputFieldCount;
+
+    var recolorClones     = inputFieldHUD.modelInstance.recolorClones;
+    var pathSetCount      = recolorClones.paths.length;
+    for (var index = 0; index < pathSetCount; index ++)
+    { var initialColor  = recolorClones.changeTinyColors[index].setAlpha(recolorClones.mixAmount[index] / 100.0);
+      ratioInput        = localContext.createRatioInput(recolorClones.ratios[index], initialColor);
+      //recolorPaths(recolorClones.paths[index], recolorClones.changeTinyColors[index], recolorClones.mixAmount[index], "recolorClones")
+    }
+
   }
+
 
 
   this.SVGHUD = function(modelInstance)
@@ -1901,283 +2109,418 @@ console.log("yogi 2 ", ajaxOptions.url);
     this.contextData      = {};
 
     this.modelInstance    = modelInstance;
-    modelInstance.svgHUD  = this;
+    // modelInstance.svgHUD  = this;
   }
   this.SVGHUD.prototype.display = function()
   { var modelInstance = this.modelInstance;
 
     this.divForHUD                = modelInstance.display.svgHUD = $("<div class='svgHUD' />");
-    this.display                  = this.divForHUD;
-    modelInstance.display.svgOutput.prepend(this.divForHUD);
+    modelInstance.display.modelSvgOutput.prepend(this.divForHUD);
     modelInstance.display.svgHUD  = this.divForHUD;
   }
   this.SVGHUD.prototype.renderHUD = function(tagHook)
-  { if (! this.hasOwnProperty("display") )
+  { if (! this.hasOwnProperty("divForHUD") )
     { this.display();
+    }
+
+    var defaultDict =
+        { "svg3dCloneTimer.preClone.postColor":
+          {
+          }
+        }
+    for (hudDescriptor in defaultDict)
+    { var hudAddress    = hudDescriptor.split(".");
+      var hudComponent  = hudAddress[0];
+      var hudTagHooks   = hudAddress.slice(1);
+
+      if (! this.contextData.hasOwnProperty(hudComponent) )
+      { this.contextData[hudComponent] = {};
+        this.plugins[hudComponent] = new this[hudComponent](this, this.contextData[hudComponent], tagHook);
+      }
+      if ($.inArray(tagHook, hudTagHooks) >-1 )
+      { this.plugins[hudComponent][tagHook](defaultDict[hudDescriptor], this.contextData[hudComponent]);
+      }
     }
 
     var svg3dDisplayJSON  = this.modelInstance.svg3dDisplayJSON;
 
-    this.divForHUD.html("");
-
     for (hudDescriptor in svg3dDisplayJSON.svgHUD)
     { var hudAddress    = hudDescriptor.split(".");
       var hudComponent  = hudAddress[0];
-      var hudTagHooks   = $(hudAddress).slice(1);
-      if (tagHook == "init")
-      { if (! this.contextData[hudComponent])
-        { this.contextData[hudComponent] = {};
-          this.plugins[hudComponent] = new this[hudComponent](this, this.contextData[hudComponent], tagHook);
-        }
+      var hudTagHooks   = hudAddress.slice(1);
+
+      if (! this.contextData.hasOwnProperty(hudComponent) )
+      { this.contextData[hudComponent] = {};
+        this.plugins[hudComponent] = new this[hudComponent](this, this.contextData[hudComponent], tagHook);
       }
-      if ($.inArray(tagHook, hudTagHooks) )
-      { this.plugins[hudComponent].display(svg3dDisplayJSON.svgHUD[hudDescriptor], tagHook)
+      if ($.inArray(tagHook, hudTagHooks) >-1 )
+      { this.plugins[hudComponent][tagHook](svg3dDisplayJSON.svgHUD[hudDescriptor], this.contextData[hudComponent]);
       }
     }
   }
 
-  this.SVGHUD.prototype.colorPickers = function(svgHUD, context)
+  this.SVGHUD.prototype.svg3dCloneTimer = function(svgHUD, context)
+
+  { var This = this;
+
+    this.svgHUD     = svgHUD;
+    this.context    = context;
+    this.context.totalClonesRendered  = 0;
+    this.context.totalTimeTaken       = 0;
+
+    this.context.display = $("<div class='renderTimer' />");
+    this.context.display.appendTo(this.svgHUD.divForHUD);
+
+    // this.context.countDown = function(millis)
+    // { This.context.display.text(This.context.estimatedFinishTime - Date.now() );
+    //   if (! This.context.cancelCountdown )
+    //   { setTimeout(This.context.countDown, 50);
+    //   }
+    // }
+  }
+  this.SVGHUD.prototype.svg3dCloneTimer.prototype.preClone = function(svgHUD, context)
+  { var clonesToBeRendered    = this.svgHUD.modelInstance.svg3dDisplayJSON.svg3dConfiguration.clone3d.nb;
+
+    var averageTimePerClone   = this.context.totalTimeTaken / this.context.totalClonesRendered;
+    var estimatedTimeToRender = clonesToBeRendered * averageTimePerClone;
+
+    if (estimatedTimeToRender > 5000)
+    { var render = window.confirm("Estimated time to render: "+ (estimatedTimeToRender / 1000).toPrecision(5) +" seconds");
+      if (! render)
+      { clonesToBeRendered = this.svgHUD.modelInstance.svg3dDisplayJSON.svg3dConfiguration.clone3d.nb = 1;
+      }
+    }
+    this.context.totalClonesRendered += clonesToBeRendered;
+    this.context.startTime = Date.now();
+    this.context.estimatedFinishTime = this.context.startTime + estimatedTimeToRender;
+    // this.context.cancelCountdown = false;
+    // this.context.countDown();
+  }
+  this.SVGHUD.prototype.svg3dCloneTimer.prototype.postColor = function(svgHUD, context)
+  { this.context.totalTimeTaken += Date.now() - this.context.startTime;
+    this.context.cancelCountdown = true;
+  }
+
+
+  this.SVGHUD.prototype.fillManager = function(svgHUD, context)
   { this.svgHUD     = svgHUD;
     this.context    = context;
-    this.context.byVisualisation = {};
   }
-  this.SVGHUD.prototype.colorPickers.prototype.display =function(colorPickersDict)
-  { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
+  this.SVGHUD.prototype.fillManager.prototype.display   = function()
+  { this.context.fillManagersDiv = $("<div class='fillManagers hudCollection' />");
+    this.svgHUD.divForHUD.append(this.context.fillManagersDiv);
+  }
+  this.SVGHUD.prototype.fillManager.prototype.postClone = function(fillManagersDict, context)
+  { // html and behaviour a widget for a  fillManager widhet. Use the code defined in the fillManagerData to run when the fillManager exits.
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
-    var This = this;
+    if (! context.hasOwnProperty("fillManagersDiv") )
+    { this.display();
+    }
 
-    this.context.colorPickersDiv = $("<div class='colorPickers hudCollection' />");
-    this.svgHUD.divForHUD.append(this.context.colorPickersDiv);
+    for (fillManagerSelector in fillManagersDict)
+    { var fillManagerData = fillManagersDict[fillManagerSelector];
+      console.log(fillManagerSelector, fillManagerData);
 
-    for (colorPickerSelector in colorPickersDict)
-    { var colorPickerData = colorPickersDict[colorPickerSelector];
-      console.log(colorPickerSelector, colorPickerData);
+      var selectorContext = null;
+      if (! this.context.hasOwnProperty(fillManagerSelector) )
+      { selectorContext = context[fillManagerSelector] = { "byVisualisation": {} };
 
-      var colorPicker = $("<div class='colorPicker hudItem' />");
-      var icon        = $("<img src='/static/graphics/thisEquals/svgHUD/colorPicker.png' />");
-
-      colorPicker.append(icon);
-      this.context.colorPickersDiv.append(colorPicker);
-
-      lastAlteredVisualisationField = this.svgHUD.modelInstance.lastAlteredVisualisationField.fullAddress;
-      if (! this.context.byVisualisation[lastAlteredVisualisationField])
-      { this.context.byVisualisation[lastAlteredVisualisationField] = {};
-        this.context.byVisualisation[lastAlteredVisualisationField].currentColorString = colorPickerData.initialColorString;
+        selectorContext.fillManagerDiv = $("<div class='fillManager hudItem' />");
+        context.fillManagersDiv.append(selectorContext.fillManagerDiv);
+      }
+      else
+      { selectorContext = context[fillManagerSelector];
       }
 
-      var rep_onColorChange = function(colorString)
-      { var pickedColor = $.Color(colorString);
-        var toReturn = null;
-        eval (colorPickerData.onColorChange);
-        $(This.svgHUD.modelInstance.display.containerSVG).find("style#onColorChange").html(toReturn);
+      var lastAlteredVisualisationField = this.svgHUD.modelInstance.lastAlteredVisualisationField.fullAddress;
+      var localContext = null;
+      if (! selectorContext.byVisualisation.hasOwnProperty(lastAlteredVisualisationField) )
+      { var localContext = selectorContext.byVisualisation[lastAlteredVisualisationField] = { "currentColor": tinycolor(fillManagerData.initialColorString) };
 
-        This.context.byVisualisation[lastAlteredVisualisationField].currentColorString = colorString;
-      }
+        localContext.rep_onColorChange =
+            function(color)
+            { var toReturn    = null;
 
-      rep_onColorChange(this.context.byVisualisation[lastAlteredVisualisationField].currentColorString);
+              for (var elementSelector in fillManagerData.fillSmasher)
+              { var pickedColor = tinycolor(color.toString("rgb"));
+                localContext.memoisedElements[elementSelector].attr("fill", eval(fillManagerData.fillSmasher[elementSelector]) );
+              }
 
-      colorPicker.spectrum({
-          "color":            this.context.byVisualisation[lastAlteredVisualisationField].currentColorString,
+              localContext.currentColor = color;
+            };
+
+        selectorContext.fillManagerDiv.spectrum({
+          "color":            localContext.currentColor,
           "showAlpha":        true,
           "preferredFormat": "rgba",
           "show": function()
-          { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);
-            colorPicker.spectrum("set", This.context.byVisualisation[lastAlteredVisualisationField].currentColorString);
+          { selectorContext.fillManagerDiv.spectrum("set", localContext.currentColor);
           },
           "hide": function()
-          { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", false);
+          { This.svgHUD.modelInstance.svg_createSaveLink(This.svgHUD.modelInstance);
           },
           "move": function(spectrumOutput)
-          { rep_onColorChange(spectrumOutput.toRgbString());
+          { localContext.rep_onColorChange(spectrumOutput);
           },
-      });
+        });
+      }
+      else
+      { localContext = selectorContext.byVisualisation[lastAlteredVisualisationField];
+      }
+
+      localContext.memoisedElements   = {};
+      for (var elementSelector in fillManagerData.fillSmasher)
+      { localContext.memoisedElements[elementSelector] = $(This.svgHUD.modelInstance.display.containerSVG).find(elementSelector);
+      }
+
+      localContext.rep_onColorChange(localContext.currentColor);
     }
   }
+
+  // this.SVGHUD.prototype.colorPickers = function(svgHUD, context)
+  // { this.svgHUD     = svgHUD;
+  //   this.context    = context;
+  //   this.context.byVisualisation = {};
+  // }
+  // this.SVGHUD.prototype.colorPickers.prototype.display =function(colorPickersDict)
+  // { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
+  //   //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
+  //   var This = this;
+
+  //   this.context.colorPickersDiv = $("<div class='colorPickers hudCollection' />");
+  //   this.svgHUD.divForHUD.append(this.context.colorPickersDiv);
+
+  //   for (colorPickerSelector in colorPickersDict)
+  //   { var colorPickerData = colorPickersDict[colorPickerSelector];
+  //     console.log(colorPickerSelector, colorPickerData);
+
+  //     var colorPicker = $("<div class='colorPicker hudItem' />");
+  //     // var icon        = $("<img src='/static/graphics/thisEquals/svgHUD/colorPicker.png' />");
+
+  //     // colorPicker.append(icon);
+  //     this.context.colorPickersDiv.append(colorPicker);
+
+  //     var lastAlteredVisualisationField = this.svgHUD.modelInstance.lastAlteredVisualisationField.fullAddress;
+  //     if (! this.context.byVisualisation[lastAlteredVisualisationField])
+  //     { this.context.byVisualisation[lastAlteredVisualisationField] = {};
+  //       this.context.byVisualisation[lastAlteredVisualisationField].currentColorString = colorPickerData.initialColorString;
+  //     }
+
+  //     var rep_onColorChange = function(colorString)
+  //     { var pickedColor = $.Color(colorString);
+  //       var toReturn = null;
+
+  //       var modelInstanceID = This.svgHUD.modelInstance.id;
+
+  //       eval (colorPickerData.onColorChange);
+  //       $(This.svgHUD.modelInstance.display.containerSVG).find("style#onColorChange").html(toReturn);
+
+  //       This.context.byVisualisation[lastAlteredVisualisationField].currentColorString = colorString;
+  //     }
+
+  //     rep_onColorChange(this.context.byVisualisation[lastAlteredVisualisationField].currentColorString);
+
+  //     colorPicker.spectrum({
+  //         "color":            this.context.byVisualisation[lastAlteredVisualisationField].currentColorString,
+  //         "showAlpha":        true,
+  //         "preferredFormat": "rgba",
+  //         "show": function()
+  //         { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);
+  //           colorPicker.spectrum("set", This.context.byVisualisation[lastAlteredVisualisationField].currentColorString);
+  //         },
+  //         "hide": function()
+  //         { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", false);
+
+  //           This.svgHUD.modelInstance.svg_createSaveLink(This.svgHUD.modelInstance);
+  //         },
+  //         "move": function(spectrumOutput)
+  //         { rep_onColorChange(spectrumOutput.toRgbString());
+  //         },
+  //     });
+  //   }
+  // }
 
   this.SVGHUD.prototype.RandomiseClones= function(svgHUD, context)
   { this.svgHUD     = svgHUD;
     this.context    = context;
     this.context.byVisualisation = {};
   }
-  this.SVGHUD.prototype.RandomiseClones.prototype.display = function(randomiseClonesDict)
+  this.SVGHUD.prototype.RandomiseClones.prototype.postColor = function(randomiseClonesDict, context)
   { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
-    var processingOrder = ["randomisePosition", "randomiseColors", "randomiseColorsByGroup"];
 
-    var This = this;
+    if (! context.hasOwnProperty("hudItems") )
+    { context.collectionDiv = $("<div class='randomiseClones hudCollection' />");
+      this.svgHUD.divForHUD.append(this.context.collectionDiv);
 
-    this.context.collectionDiv = $("<div class='randomiseClones hudCollection' />");
-    this.svgHUD.divForHUD.append(this.context.collectionDiv);
+      context.hudItems = {};
 
-    lastAlteredVisualisationField = this.svgHUD.modelInstance.lastAlteredVisualisationField.fullAddress;
-    if (! this.context.byVisualisation[lastAlteredVisualisationField] )
-    { this.context.byVisualisation[lastAlteredVisualisationField] = {};
-    }
-    contextByVisualisation = this.context.byVisualisation[lastAlteredVisualisationField];
-
-
-    var randomiseFunctions = {};
-    randomiseFunctions.randomisePosition      = function(degreeOfRandom)
-    { if (degreeOfRandom != 0)
-      { normalDistribution("randomisePosition", true);
-        $(This.svgHUD.modelInstance.display.svgVisualisationG)
-            .find("g") //cghange to children or correct selector for children
-            .each(
-                function()
-                { var gBBox = this.getBBox();
-                  var maxXChange = gBBox.width  / 80;
-                  var maxYChange = gBBox.height / 80;
-
-                  var changeX = ((normalDistribution("randomisePosition")  * degreeOfRandom * maxXChange) );
-                  var changeY = ((normalDistribution("randomisePosition")  * degreeOfRandom * maxYChange) );
-
-                  var transform;
-
-                  if (! this.getAttribute("svgHUD_initial_transform") )
-                  { transform = this.getAttribute("transform");
-                    if (transform === null)
-                    { transform = "translate(0 0)";
-                    }
-                    this.setAttribute("svgHUD_initial_transform", transform);
-                  }
-                  else
-                  { transform = this.getAttribute("svgHUD_initial_transform");
-                  }
-
-                  var translate = transform.match(/^translate\(([-]?\d+[.]?\d*)\s*([-]?\d+[.]?\d*)\)$/);
-                  var newX = Number(translate[1]) + changeX;
-                  var newY = Number(translate[2]) + changeY;
-                  var newTranslate = "translate("+newX+" "+newY+")";
-                  this.setAttribute("transform", newTranslate);
-                  //console.log(this, transform);
-                }
-            );
-      }
-      contextByVisualisation.randomisePosition.degreeOfRandom = degreeOfRandom;
-    };
-    randomiseFunctions.randomiseColors = function(degreeOfRandom, init=false)
-    { if (degreeOfRandom != 0)
-      { normalDistribution("randomiseColors", true);
-
-        $(This.svgHUD.modelInstance.display.svgVisualisationG)
-            .find("path")
-            .each(
-                function()
-                { if (this.getAttribute("svgHUD_protectedColor") )
-                  { return;
-                  }
-
-
-                  if (! this.getAttribute("initial_fill_path") )
-                  { this.setAttribute("initial_fill_path", $(this).css("fill") );
-                  }
-                  var colorRGB = this.getAttribute("initial_fill_path");
-                  if (colorRGB == null)
-                    colorRGB = "rgb(50, 50, 50)";
-                  if (colorRGB.indexOf("rgb") === 0)
-                  { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
-                    r = Number(rgb[1]);
-                    newR = Math.round(Math.max((((degreeOfRandom * normalDistribution("randomiseColors") * 10.0) - 5) ) + r, 0));
-                    g = Number(rgb[2]);
-                    newG = Math.round(Math.max((((degreeOfRandom * normalDistribution("randomiseColors") * 10.0) - 5) ) + g, 0));
-                    b = Number(rgb[3]);
-                    newB = Math.round(Math.max((((degreeOfRandom * normalDistribution("randomiseColors") * 10.0) - 5) ) + b, 0));
-                    if (4 in rgb && rgb[4] != "")
-                      newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
-                    else
-                      newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
-                    //$(this).css("fill", newRGB);
-                    //newStyle = this.getAttribute("style");
-                    //if (newStyle)+newRGB;
-                    this.setAttribute("style", newRGB);
-                    this.setAttribute("initial_fill_group", newRGB.substring(6).replace(";", ""));
-                  }
-                }
-            );
-      }
-
-      contextByVisualisation.randomiseColors.degreeOfRandom = degreeOfRandom;
-
-      if (!init)
-      { randomiseFunctions.randomiseColorsByGroup(contextByVisualisation.randomiseColorsByGroup.degreeOfRandom, true);
-      }
-    }
-    randomiseFunctions.randomiseColorsByGroup = function(degreeOfRandom, init=false)
-    {
-      if (degreeOfRandom != 0)
-      { normalDistribution("randomiseColorsByGroup", true);
-        { $(This.svgHUD.modelInstance.display.svgVisualisationG)
-              .find("g")
+      context.randomiseFunctions = {};
+      context.randomiseFunctions.randomisePosition      = function(degreeOfRandom)
+      { if (degreeOfRandom != 0)
+        { normalDistribution("randomisePosition", true);
+          $(This.svgHUD.modelInstance.display.svgVisualisationG)
+              .children("g") //cghange to children or correct selector for children
               .each(
                   function()
-                  {
+                  { var gBBox = this.getBBox();
+                    var maxXChange = gBBox.width  / 80;
+                    var maxYChange = gBBox.height / 80;
 
-                      var changeR = Math.round( 5 *  degreeOfRandom * normalDistribution("randomiseColorsByGroup") );
-                      var changeG = Math.round( 5 *  degreeOfRandom * normalDistribution("randomiseColorsByGroup") );
-                      var changeB = Math.round( 5 *  degreeOfRandom * normalDistribution("randomiseColorsByGroup") );
+                    var changeX = ((normalDistribution("randomisePosition")  * degreeOfRandom * maxXChange) );
+                    var changeY = ((normalDistribution("randomisePosition")  * degreeOfRandom * maxYChange) );
 
+                    var transform;
+
+                    if (! this.getAttribute("svgHUD_initial_transform") )
+                    { transform = this.getAttribute("transform");
+                      if (transform === null)
+                      { transform = "translate(0 0)";
+                      }
+                      this.setAttribute("svgHUD_initial_transform", transform);
+                    }
+                    else
+                    { transform = this.getAttribute("svgHUD_initial_transform");
+                    }
+
+                    var translate = transform.match(/^translate\(([-]?\d+[.]?\d*)\s*([-]?\d+[.]?\d*)\)$/);
+                    var newX = Number(translate[1]) + changeX;
+                    var newY = Number(translate[2]) + changeY;
+                    var newTranslate = "translate("+newX+" "+newY+")";
+                    this.setAttribute("transform", newTranslate);
+                    //console.log(this, transform);
+                  }
+              );
+        }
+      };
+      context.randomiseFunctions.randomiseColors = function(degreeOfRandom)
+      { if (degreeOfRandom != 0)
+        { normalDistribution("randomiseColors", true);
+
+          $(This.svgHUD.modelInstance.display.svgVisualisationG)
+              .find("path")
+              .each(
+                  function()
+                  { if (this.getAttribute("recolorClones_protectedColor") )
+                    { return;
+                    }
+
+
+                    if (! this.getAttribute("initial_fill_path") )
+                    { this.setAttribute("initial_fill_path", $(this).css("fill") );
+                    }
+                    var colorRGB = this.getAttribute("initial_fill_path");
+                    if (colorRGB == null)
+                      colorRGB = "rgb(50, 50, 50)";
+                    if (colorRGB.indexOf("rgb") === 0)
+                    { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
+                      r = Number(rgb[1]);
+                      newR = Math.round(Math.max((((degreeOfRandom * normalDistribution("randomiseColors") * 10.0) - 5) ) + r, 0));
+                      g = Number(rgb[2]);
+                      newG = Math.round(Math.max((((degreeOfRandom * normalDistribution("randomiseColors") * 10.0) - 5) ) + g, 0));
+                      b = Number(rgb[3]);
+                      newB = Math.round(Math.max((((degreeOfRandom * normalDistribution("randomiseColors") * 10.0) - 5) ) + b, 0));
+                      if (4 in rgb && rgb[4] != "")
+                        newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
+                      else
+                        newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
                       //$(this).css("fill", newRGB);
                       //newStyle = this.getAttribute("style");
                       //if (newStyle)+newRGB;
-                      $(this)
-                          .find("path")
-                          .each(
-                              function()
-                              { if (this.getAttribute("svgHUD_protectedColor") )
-                                { return;
-                                }
-
-                                if (! this.getAttribute("initial_fill_group") )
-                                { this.setAttribute("initial_fill_group", $(this).css("fill"));
-                                }
-                                var colorRGB = this.getAttribute("initial_fill_group");
-
-                                if (colorRGB == null)
-                                  colorRGB = "rgb(50, 50, 50)";
-                                if (colorRGB.indexOf("rgb") === 0)
-                                { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
-                                  var r = Number(rgb[1]);
-                                  var newR = Math.max(r + changeR, 0);
-                                  var g = Number(rgb[2]);
-                                  var newG = Math.max(g + changeG, 0);
-                                  var b = Number(rgb[3]);
-                                  var newB = Math.max(b + changeB, 0);
-                                  if (4 in rgb && rgb[4] != "")
-                                    var newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
-                                  else
-                                    var newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
-                                  this.setAttribute("style", newRGB);
-                                }
-                              }
-                          );
+                      this.setAttribute("style", newRGB);
+                      this.setAttribute("initial_fill_group", newRGB.substring(6).replace(";", ""));
+                    }
                   }
               );
         }
 
-        contextByVisualisation.randomiseColorsByGroup.degreeOfRandom = degreeOfRandom;
+        context.randomiseFunctions.randomiseColorsByGroup(contextByVisualisation.randomiseColorsByGroup.degreeOfRandom, true);
+      }
+      context.randomiseFunctions.randomiseColorsByGroup = function(degreeOfRandom)
+      {
+        if (degreeOfRandom != 0)
+        { normalDistribution("randomiseColorsByGroup", true);
+          { $(This.svgHUD.modelInstance.display.svgVisualisationG)
+                .children("g")
+                .each(
+                    function()
+                    {
+
+                        var changeR = Math.round( 5 *  degreeOfRandom * normalDistribution("randomiseColorsByGroup") );
+                        var changeG = Math.round( 5 *  degreeOfRandom * normalDistribution("randomiseColorsByGroup") );
+                        var changeB = Math.round( 5 *  degreeOfRandom * normalDistribution("randomiseColorsByGroup") );
+
+                        //$(this).css("fill", newRGB);
+                        //newStyle = this.getAttribute("style");
+                        //if (newStyle)+newRGB;
+                        $(this)
+                            .find("path")
+                            .each(
+                                function()
+                                { if (this.getAttribute("recolorClones_protectedColor") )
+                                  { return;
+                                  }
+
+                                  if (! this.getAttribute("initial_fill_group") )
+                                  { this.setAttribute("initial_fill_group", $(this).css("fill"));
+                                  }
+                                  var colorRGB = this.getAttribute("initial_fill_group");
+
+                                  if (colorRGB == null)
+                                    colorRGB = "rgb(50, 50, 50)";
+                                  if (colorRGB.indexOf("rgb") === 0)
+                                  { var rgb       = colorRGB.match(/^rgb[a]?\((\d+),\s*(\d+),\s*(\d+)[,]?\s*(\d*[.]?\d*)\)$/);
+                                    var r = Number(rgb[1]);
+                                    var newR = Math.max(r + changeR, 0);
+                                    var g = Number(rgb[2]);
+                                    var newG = Math.max(g + changeG, 0);
+                                    var b = Number(rgb[3]);
+                                    var newB = Math.max(b + changeB, 0);
+                                    if (4 in rgb && rgb[4] != "")
+                                      var newRGB = "fill: rgba("+newR+", "+newG+", "+newB+", "+rgb[4]+");";
+                                    else
+                                      var newRGB = "fill: rgb("+newR+", "+newG+", "+newB+");"
+                                    this.setAttribute("style", newRGB);
+                                  }
+                                }
+                            );
+                    }
+                );
+          }
+
+        };
       };
 
-    };
-
-    var spectrumFunction = function(randomiseItem, itemContext, functionToCall)
-    { randomiseItem.spectrum
-      ( { "color":            `rgba(0,0,0, ${itemContext.degreeOfRandom / 32.0})`,
-          "containerClassName": "spectrumAlphaOnly",
-          "showAlpha":        true,
-          "preferredFormat": "rgba",
-          "show": function()
-          { //$(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);
-            randomiseItem.spectrum("set", `rgba(0,0,0, ${itemContext.degreeOfRandom / 32.0})`);
-          },
-          "hide": function()
-          { //$(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", false);
-          },
-          "move": function(spectrumOutput)
-          { functionToCall(spectrumOutput.getAlpha() * 32);
-          },
-      });
+      context.spectrumFunction = function(randomiseItem, functionToCall)
+      { randomiseItem.spectrum
+        ( { "color":            `rgba(0,0,0, ${randomiseItem.data("localContext").degreeOfRandom / (localContext.randomMultiplier || 32)})`,
+            "containerClassName": "spectrumAlphaOnly",
+            "showAlpha":        true,
+            "preferredFormat": "rgba",
+            "show": function()
+            { //$(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);
+              randomiseItem.spectrum("set", `rgba(0,0,0, ${randomiseItem.data("localContext").degreeOfRandom / (randomiseItem.data("localContext").randomMultiplier || 32) })`);
+            },
+            "hide": function()
+            { This.svgHUD.modelInstance.svg_createSaveLink(This.svgHUD.modelInstance);
+            },
+            "move": function(spectrumOutput)
+            { randomiseItem.data("localContext").degreeOfRandom = spectrumOutput.getAlpha() * ( randomiseItem.data("localContext").randomMultiplier || 32 );
+              functionToCall(randomiseItem.data("localContext").degreeOfRandom);
+            },
+        });
+      }
     }
 
+    var processingOrder = ["randomisePosition", "randomiseColors", "randomiseColorsByGroup"];
+
+    var This = this;
+
+    var lastAlteredVisualisationField = this.svgHUD.modelInstance.lastAlteredVisualisationField.fullAddress;
+    if (! this.context.byVisualisation[lastAlteredVisualisationField] )
+    { this.context.byVisualisation[lastAlteredVisualisationField] = {};
+    }
+    var contextByVisualisation = this.context.byVisualisation[lastAlteredVisualisationField];
 
     for (randomiseProperty of processingOrder)
     { var randomiseConfig;
@@ -2189,28 +2532,27 @@ console.log("yogi 2 ", ajaxOptions.url);
       }
       console.log(randomiseProperty, randomiseConfig);
 
-      var randomiseItem   = $("<div class='randomiseProperty hudItem' />");
-      var icon            = $(`<img src='/static/graphics/thisEquals/svgHUD/${randomiseProperty}.png' />`);
-
-      randomiseItem.append(icon);
-      this.context.collectionDiv.append(randomiseItem);
-
       if (!contextByVisualisation[randomiseProperty] )
-      { contextByVisualisation[randomiseProperty] =
-            { "degreeOfRandom":     randomiseConfig.degreeOfRandom,
-            };
+      { contextByVisualisation[randomiseProperty] =  randomiseConfig
       }
-      var itemContext = contextByVisualisation[randomiseProperty];
+      var localContext = contextByVisualisation[randomiseProperty];
 
+      if (! context.hudItems.hasOwnProperty(randomiseProperty) )
+      { var randomiseItem   = context.hudItems[randomiseProperty] =   $("<div class='randomiseProperty hudItem' />");
+        var icon            = $(`<img src='/static/graphics/thisEquals/svgHUD/${randomiseProperty}.png' />`);
 
-      randomiseFunctions[randomiseProperty](itemContext.degreeOfRandom, true);
+        randomiseItem.append(icon);
+        context.collectionDiv.append(randomiseItem);
 
-      var functionToCall = randomiseFunctions[randomiseProperty];
-
-      spectrumFunction(randomiseItem, itemContext, functionToCall);
+        context.hudItems[randomiseProperty].data("localContext", localContext);
+        context.spectrumFunction(randomiseItem, context.randomiseFunctions[randomiseProperty]);
+      }
     }
 
-    This.svgHUD.modelInstance.svg_createSaveLink(This.svgHUD.modelInstance);
+    for (randomiseProperty of processingOrder)
+    { context.hudItems[randomiseProperty].data("localContext", contextByVisualisation[randomiseProperty]);
+      context.randomiseFunctions[randomiseProperty](context.hudItems[randomiseProperty].data("localContext").degreeOfRandom );
+    }
   };
 
 
@@ -2229,11 +2571,12 @@ console.log("yogi 2 ", ajaxOptions.url);
   { console.log(modelInstance, data);
     this.modelInstance  = modelInstance;
     this.fullAddress    = data.fullAddress;
+    this.simpleName     = this.fullAddress.replace(/[\[\]\",]/g, "");
     this.data           = data;
     modelInstance.inputFields[data.fullAddress] = this;
   }
 
-  this.ModelFieldInput.prototype.setValue = function(newValue)
+  this.ModelFieldInput.prototype.setValue = function(newValue, trigger)
   { fieldType = this.data.fieldType;
     if (fieldType == "select" || fieldType == "text")
     { this.data.currentValue = newValue;
@@ -2241,19 +2584,32 @@ console.log("yogi 2 ", ajaxOptions.url);
     }
     if (fieldType == "slider")
     { this.data.currentValue = newValue;
-      this.updateValueText("slide");
-      this.updateValueSlider();
+      this.ifaUpdatesControl_slider();
     }
+  }
+  this.ModelFieldInput.prototype.inputFieldAltered = function()
+  { this.modelInstance.inputFieldAltered
+    ( { "inputField": this.fullAddress,
+        "newValue"  : this.data.currentValue,
+      }
+    );
   }
 
   this.ModelFieldInput.prototype.getTag = function()
   { if (! this.hasOwnProperty("uiElement"))
-    { this["getTag_"+this.data.fieldType]()
-     .addClass("modelClass_"  + this.data.displayFieldAddress.split(":")[0])
-     .addClass("fullAddress_" + this.fullAddress)
-     .addClass("type_"        + this.data.fieldType)
-     .addClass("name_"        + this.data.name)
-     .addClass("unit_"        + this.data.unit);
+    { var uiElement =
+          this["getTag_"+this.data.fieldType]()
+         .addClass("modelClass_"  + this.data.displayFieldAddress.split(":")[0])
+         .addClass("fullAddress_" + this.fullAddress)
+         .addClass("type_"        + this.data.fieldType)
+         .addClass("name_"        + this.data.name)
+         .addClass("unit_"        + this.data.unit);
+// // <<<<<<< HEAD
+//      $("<h3/>").text(this.simpleName).appendTo(uiElement);
+// // =======
+//      $("<h3/>").text(this.simpleName).appendTo(uiElement.find(".inputFieldLabel") );
+// // >>>>>>> master
+//     //  ;
     }
     return this.uiElement;
   }
@@ -2298,16 +2654,20 @@ console.log("yogi 2 ", ajaxOptions.url);
     var This  = $(this).data("ModelInputField");
     This = event.data;
 
-    This.modelInstance.inputFieldAltered(
-    { inputField: This.fullAddress,
-      newValue:   This.uiValue_select.val()
-    });
+    This.data.currentValue = $(this).val();
+
+    This.inputFieldAltered();
   }
   this.ModelFieldInput.prototype.getTag_text = function()
   {   var fieldData = this.data;
       this.uiElement    =
         $("<div />",
           { "class": "inputFieldElement"
+          }
+        );
+      var uiLabelBg =
+        $("<div />",
+          { "class": "inputFieldLabelBg"
           }
         );
       var uiLabel =
@@ -2329,6 +2689,7 @@ console.log("yogi 2 ", ajaxOptions.url);
       uiValue_text.on("change", this, this.inputField_text_changeFunction);
       this.uiValue_text  = uiValue_text;
 
+      this.uiElement.append(uiLabelBg);
       this.uiElement.append(uiLabel);
       this.uiElement.append(uiValue_text);
 
@@ -2338,10 +2699,9 @@ console.log("yogi 2 ", ajaxOptions.url);
   { var This  = $(this).data("ModelInputField");
     This = event.data;
 
-    This.modelInstance.inputFieldAltered(
-    { inputField: This.fullAddress,
-      newValue:   This.uiValue_text.val()
-    });
+    This.data.currentValue = $(this).val();
+
+    This.inputFieldAltered();
   }
   this.ModelFieldInput.prototype.getTag_slider = function()
   { var fieldData = this.data;
@@ -2366,7 +2726,7 @@ console.log("yogi 2 ", ajaxOptions.url);
         $("<div />",
           { "class": "inputFieldLabel"
           }
-        ).append(this.data.displayFieldAddress);
+        ).append(this.simpleName);
       var uiValue_slider =
         $("<input />",
           { "class": "inputFieldText",
@@ -2382,6 +2742,7 @@ console.log("yogi 2 ", ajaxOptions.url);
 
       uiValue_slider.val(fieldData.defaultValue);
       uiValue_slider .data("thisEquals.modelField", this);
+      uiValue_slider.on("change", this.userUpdatesSliderText);
 
       this.uiValue_slider   = uiValue_slider;
       this.uiSlider         = uiSlider;
@@ -2405,12 +2766,13 @@ console.log("yogi 2 ", ajaxOptions.url);
         slide: function(event, ui)
           {
             This.currentValue = ui.value;
-            This.updateValueText("slide");
+            This.sliderUpdatesValueText;
         },
         change: function(event, ui)
-          { This.currentValue = ui.value;
-            This.updateValueText("change");
-
+          { if (! event.originalEvent) return true;
+            This.currentValue = ui.value;
+            This.sliderUpdatesValueText;
+            This.inputFieldAltered();
         }
       };
     return sliderOptions;
@@ -2437,45 +2799,59 @@ console.log("yogi 2 ", ajaxOptions.url);
         min: min,
         value: this.actualToSlider(fieldData.currentValue),
         slide: function(event, ui)
-          { This.data.currentValue = This.sliderToActual(ui.value);
-            This.updateValueText("slide");
+          { This.data.currentValue = This.logSliderToValue(ui.value);
+            This.sliderUpdatesValueText();
           },
         change: function(event, ui)
-          { This.data.currentValue = This.sliderToActual(ui.value);
-            This.updateValueText("change");
+          { if (! event.originalEvent) return true;
+
+            This.data.currentValue = This.logSliderToValue(ui.value);
+            This.sliderUpdatesValueText();
+
+            This.inputFieldAltered();
           }
       };
 
     return sliderOptions;
   }
-  this.ModelFieldInput.prototype.sliderToActual = function(sliderValue)
+  this.ModelFieldInput.prototype.logSliderToValue = function(sliderValue)
   { lSC = this.logSliderConstants;
     return Math.exp(lSC.minv + lSC.scale * (sliderValue-lSC.min));
   }
-  this.ModelFieldInput.prototype.actualToSlider = function(actual)
-  { lSC = this.logSliderConstants;
-    return (Math.log(actual)-lSC.minv) / lSC.scale + lSC.min;
-  }
-  this.ModelFieldInput.prototype.setValueFromActual = function(actual)
-  { this.currentValue = actual;
-    this.updateValueSlider();
-    this.updateValueText();
-  }
-  this.ModelFieldInput.prototype.updateValueSlider = function()
-  { this.uiSlider.slider("option", "value", this.actualToSlider(this.data.currentValue));
-  }
-  this.ModelFieldInput.prototype.updateValueText = function(slideOrChange)
-  { $this = $(this);
-    $uiValue_slider = $(this.uiValue_slider);
-    if (this.uiSlider.data("thisEquals.disableWriteToTextField") == true)
-      this.uiSlider.data("thisEquals.disableWriteToTextField", false);
+
+  this.ModelFieldInput.prototype.actualToSlider = function()
+  { var currentValue = this.data.currentValue;
+    if (this.hasOwnProperty("logSliderConstants") )
+    { lSC = this.logSliderConstants;
+      toReturn = (Math.log(currentValue)-lSC.minv) / lSC.scale + lSC.min;
+    }
     else
-    { $uiValue_slider.val(Number(this.data.currentValue).toPrecision(5));
-      if (slideOrChange == "change" || slideOrChange == "")
-        $uiValue_slider.change();
+    { toReturn = currentValue;
+    }
+    return toReturn;
+  }
+
+  this.ModelFieldInput.prototype.ifaUpdatesControl_slider = function(actual)
+  { this.uiValue_slider.val(Number(this.data.currentValue).toPrecision(5));
+    this.userUpdatesValueText();
+  }
+  this.ModelFieldInput.prototype.userUpdatesValueText = function()
+  { this.data.currentValue = this.uiValue_slider.val();
+
+    this.disableUpdateOfText = true;
+    this.uiSlider.slider("option", "value", this.actualToSlider());
+    //this.uiSlider.val(this.actualToSlider()).slider("refresh");
+  }
+  this.ModelFieldInput.prototype.sliderUpdatesValueText = function(slideOrChange)
+  { if (this.disableUpdateOfText)
+    { this.disableUpdateOfText = false;
+      return;
     }
 
-    console.log(this.fullAddress, this.data.currentValue);
+    $this = $(this);
+    $uiValue_slider = $(this.uiValue_slider);
+
+    $uiValue_slider.val(Number(this.data.currentValue).toPrecision(5));
   }
 
   this.ModelFieldOutput = function(modelInstance, fieldData)
