@@ -357,10 +357,10 @@ div.modelClasses.active{
 }
 .modelClassLI > h3 {
     position: absolute;
-    top: 23px;
+    top: 20px;
     left: 130%;
     background: #004D40;
-    padding: 7px 40px;
+    padding: 10px 40px;
     margin: 0px;
     border-radius: 3px;
     opacity: 0;
