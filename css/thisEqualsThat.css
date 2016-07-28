@@ -388,17 +388,14 @@ div.modelClasses.active{
     left: 90%;
     visibility: visible;
 }
-
 .masterReferenceSVGSelectList {
     position: absolute;
     left: -100px;
     top: -10000000px;
 }
-
 .userSelectedReferenceSVG_selected {
     background-color: lightgrey;
 }
-
 
 div.model {
     position: relative;
