@@ -2160,10 +2160,22 @@ console.log("yogi 2 ", ajaxOptions.url);
   }
 
   this.SVGHUD.prototype.svg3dCloneTimer = function(svgHUD, context)
-  { this.svgHUD     = svgHUD;
+  { var This = this;
+
+    this.svgHUD     = svgHUD;
     this.context    = context;
     this.context.totalClonesRendered  = 0;
     this.context.totalTimeTaken       = 0;
+
+    this.context.display = $("<div class='renderTimer' />");
+    this.context.display.appendTo(this.svgHUD.divForHUD);
+
+    // this.context.countDown = function(millis)
+    // { This.context.display.text(This.context.estimatedFinishTime - Date.now() );
+    //   if (! This.context.cancelCountdown )
+    //   { setTimeout(This.context.countDown, 50);
+    //   }
+    // }
   }
   this.SVGHUD.prototype.svg3dCloneTimer.prototype.preClone = function(svgHUD, context)
   { var clonesToBeRendered    = this.svgHUD.modelInstance.svg3dDisplayJSON.svg3dConfiguration.clone3d.nb;
@@ -2178,10 +2190,14 @@ console.log("yogi 2 ", ajaxOptions.url);
       }
     }
     this.context.totalClonesRendered += clonesToBeRendered;
-    this.context.startTime = Date.now(); 
+    this.context.startTime = Date.now();
+    this.context.estimatedFinishTime = this.context.startTime + estimatedTimeToRender;
+    // this.context.cancelCountdown = false;
+    // this.context.countDown();
   }
   this.SVGHUD.prototype.svg3dCloneTimer.prototype.postColor = function(svgHUD, context)
   { this.context.totalTimeTaken += Date.now() - this.context.startTime;
+    this.context.cancelCountdown = true;
   }
 
 
@@ -2587,7 +2603,7 @@ console.log("yogi 2 ", ajaxOptions.url);
          .addClass("type_"        + this.data.fieldType)
          .addClass("name_"        + this.data.name)
          .addClass("unit_"        + this.data.unit);
-     $("<h3/>").text(this.simpleName).appendTo(uiElement);
+     $("<h3/>").text(this.simpleName).appendTo(uiElement.find(".inputFieldLabel") );
      ;
     }
     return this.uiElement;
