@@ -4,15 +4,16 @@
 { display: none !important;
 }
 
-
 html, body {
     height: 100%;
 }
+* { font-family: Roboto; }
+
 body {
     font-family: Roboto;
     background: #EEEEEE;
     padding-bottom: 50px;
-    margin: 0px;
+    margin: 0;
 }
 body.open {
     overflow: hidden;
@@ -175,7 +176,6 @@ div.copyrightContainer {
     overflow: hidden;
 }
 div.copyrightContainer> p {
-    margin: 0px;
     margin-left: 15px;
     line-height: 50px;
 }
@@ -205,10 +205,10 @@ div.copyrightContainer> p {
     border: 0;
     margin: 0;
     overflow: visible;
+    outline: none;
     z-index: 805;
     -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
     transition: all .3s cubic-bezier(.4,0,.2,1);
-    outline: none;
 }
 .hamburger.is-active {
     left: 40px;
@@ -272,12 +272,11 @@ div.modelClasses {
     z-index: 800;
     -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
     transition: all .3s cubic-bezier(.4,0,.2,1);
-    overflow-x: scroll;
-    overflow-y: visible;
+    overflow: hidden;
 }
 div.modelClasses.active{
     left: 0;
-    /*overflow: visible;*/
+    overflow: visible;
     -webkit-box-shadow: 0 5px 12px rgba(0,0,0, .5);
     box-shadow: 0 5px 12px rgba(0,0,0, .5);
 }
@@ -356,13 +355,12 @@ div.modelClasses.active{
     -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
     transition: all .3s cubic-bezier(.4,0,.2,1);
 }
-.modelClassLI > h3 {
+.modelClassLI > h3{
     position: absolute;
     top: 20px;
     left: 130%;
-    background: #004D40;
-    padding: 10px 40px;
-    margin: 0px;
+    background: #198a94;
+    padding: 7px 40px;
     border-radius: 3px;
     opacity: 0;
     color: rgba(255,255,255,0.87);
@@ -389,14 +387,18 @@ div.modelClasses.active{
     left: 90%;
     visibility: visible;
 }
+
 .masterReferenceSVGSelectList {
     position: absolute;
     left: -100px;
     top: -10000000px;
 }
+
 .userSelectedReferenceSVG_selected {
     background-color: lightgrey;
 }
+
+
 div.model {
     position: relative;
     margin-top: 20px;
@@ -435,12 +437,46 @@ div.modelSliders, div.modelOutputCtrl, div.modelSvgOutput, div.modelCustomSvg {
 }
 div.inputFieldElement {
     position: relative;
-    display: block;
     width: 100%;
-    float: left;
     padding-bottom: 10px;
     /*border-bottom: 1px solid #9E9E9E;*/
+    min-height: 32px;
 }
+
+/*.inputFieldLabelBg > h3 {
+    position: absolute;
+    bottom: 0px;
+    left: 130%;
+    max-width: 70%;
+    background: #198a94;
+    padding: 7px 40px;
+    border-radius: 3px;
+    opacity: 0;
+    color: rgba(255,255,255,0.87);
+    font-size: 21px;
+    font-weight: 400;
+    visibility: hidden;
+    -webkit-box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+    -webkit-transition: all .4s cubic-bezier(0.51, 0.49, 0.22, 1.29);
+    transition: all .4s cubic-bezier(0.51, 0.49, 0.22, 1.29);
+
+    -webkit-transition-delay: 0.3s;
+    transition-delay: 0.3s;
+}
+.inputFieldElement:hover > h3 {
+    -webkit-transition-delay: 0.3s;
+    transition-delay: 0.3s;
+}
+.inputFieldLabelBg:hover > h3 {
+    opacity: 0.9;
+    left: 10%;
+    visibility: visible;
+    z-index: 1000;
+    -webkit-transition-delay: 0.0s;
+    transition-delay: 0.0s;
+}*/
+
 div.inputFieldElement> select {
     float: right;
     background: transparent;
@@ -453,6 +489,7 @@ div.inputFieldElement> select {
     font-family: Roboto;
     font-size: 16px;
     border-bottom: 0;
+    outline: none;
 }
 div.inputFieldElement:hover div.inputFieldLabel {
     position: absolute;
@@ -481,8 +518,9 @@ div.inputFieldLabelBg {
     padding-top: 3px;
     font-size: 16px;
     margin-bottom: 10px;
-}
 
+    background-repeat: no-repeat;
+}
 div.inputFieldSlider {
     height: 1px;
     border: 0;
@@ -492,20 +530,22 @@ div.inputFieldSlider {
     clear: both;
 }
 div.inputFieldSlider> .ui-state-default {
-    outline: none;
     width: 20px;
     height: 20px;
     border-radius: 50%;
     top: -10px;
     background: #23becc;
     border: 0;
+    outline: none;
 }
 div.inputFieldSlider .ui-slider-range {
     background: #23becc;
 }
+div.inputFieldSlider .ui-slider-handle
+{ background: #23becc;
+}
 
 input.inputFieldText[type=text] {
-    outline: none;
     float: right;
     background: transparent;
     padding-top: 3px;
@@ -664,15 +704,18 @@ input.svgTextDescription:focus {
   -webkit-box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
   box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1
 }
-.svgSaveLink> a {
+.svgSaveLink > a {
+    display   :block;
+    width     : 100%;
+    height    : 100%;
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.9);
-    background: rgba(33, 150, 243, .8);
 }
-.svgSaveLink> a:hover {
+.svgSaveLink > a:hover {
     text-decoration: none;
     color: rgba(255, 255, 255, 1);
-    background: rgba(33, 150, 243, 1);
+    border-radius: 50%;
+    -webkit-box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+    box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1
 }
 
 div.customSVGList {
@@ -857,6 +900,7 @@ div.toggleFeatures> label {
 div.toggleFeatures> label:last-child {
     margin-right: 0px;
 }
+
 
 
 * {
@@ -1187,11 +1231,13 @@ input.ui-colorpicker-hex-input {
     width: 27px;
     height: 27px;
 }
-.name_ratios> .inputFieldLabelBg {
+.name_ratios> .inputFieldLabelBg, .ratioColor > .inputFieldLabelBg {
     background-image: url(/static/graphics/thisEquals/icons/rations.svg);
     width: 27px;
     height: 27px;
+
 }
+
 
 /*CPS*/
 
@@ -1506,19 +1552,20 @@ input.ui-colorpicker-hex-input {
 .hudItem
 { display: inline-block;
   min-width: 32px;
-  margin-right: 15px;
+  margin-left: 4px;
 }
 .hudCollection
 { height: 32px;
 }
 
-.hudItem.colorPicker,
-.fillManager.hudItem
-{ height:32px;
+.hudItem.colorPicker, .fillManager.hudItem
+{ height: 32px;
   background-image: url('/static/graphics/thisEquals/svgHUD/colorPicker.png');
   background-size: contain;
   background-repeat: no-repeat;
 }
+
+
 
 @keyframes highlightSVGPath
 {  0% { stroke: "black";}
@@ -1538,51 +1585,121 @@ path.highlight, .highlight path
 .spectrumAlphaOnly .sp-fill, .spectrumAlphaOnly .sp-top-inner, .spectrumAlphaOnly .sp-button-container
 { display: none;
 }
-.sp-container {
-    border-radius: 3px;
-    background-color: #ECECEC;
-    border: none;
-    padding: 0;
-    -webkit-box-shadow: 0px 3px 5px rgba(0, 0, 0, .5);
-    box-shadow: 0px 3px 5px rgba(0, 0, 0, .5);
-}
-.sp-alpha {
-  bottom: -12px;
-  height: 1px;
-}
-.sp-alpha-inner {
-  border: solid 1px #BDBDBD;
-}
-.sp-alpha-handle {
-    position: absolute;
-    top: -9px;
-    width: 18px;
-    height: 18px;
-    left: 50%;
-    cursor: pointer;
-    border: none;
-    border-radius: 50%;
-    background: #23becc;
-    opacity: 1;
-}
-.sp-picker-container, .sp-palette-container {
-  padding-left: 20px;
-  padding-right: 20px;
+
+.sp-palette-container
+{ width: 100px;
 }
 
+.ratioColorTotal .sp-replacer
+{ background-color: transparent;
+  border-color: transparent;
+}
+.ratioColorTotal .sp-preview
+{ height: 10px;
+  width: 10px;
+  margin-left: 5px;
+  margin-top: 6px;
+}
+.ratioColorTotal .sp-dd
+{ display :none;
+}
 /* inputFieldHUD */
 
 
 /* ratioColorTotal */
-.ratioColorTotal > div:hover
-{ background: lightgrey;
-}
 
 .ratioColor
 { height: 32px;
+
+  position:relative;
+
+  text-align: right;
 }
+
+.ratioColor .percentageSpinner
+{ position: absolute;
+  right: 140px;
+  top: 3px;
+  outline: none;
+  border-color: transparent;
+  font-size: 18px;
+  width: 80px;
+  text-align: right;
+}
+
+.ratioColor .percentLabel
+{ position: absolute;
+  right: 125px;
+  font-size: 18px;
+  top: 6px;
+  font-weight: bolder;
+}
+.ratioColor .sp-replacer
+{ position: absolute;
+  right: 60px;
+}
+
 .ratioColor > .closeBox
 { height: 10px;
   width: 10px;
-  float: right;
+
+  position: absolute;
+  right: 0px;
+
+  color: darkgrey;
 }
+
+.hudItem.addRatio
+{ width: 100%;
+
+  text-align: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+.ratioColorTotal .addRatio:hover
+{ background-color: lightgrey;
+}
+
+
+
+
+@keyframes spinner {
+    from {
+      -moz-transform: rotateY(0deg);
+      -ms-transform: rotateY(0deg);
+      transform: rotateY(0deg);
+    }
+    to {
+      -moz-transform: rotateY(-360deg);
+      -ms-transform: rotateY(-360deg);
+      transform: rotateY(-360deg);
+    }
+  }
+
+body {
+  -webkit-perspective: 1200px;
+  -moz-perspective: 1200px;
+  -ms-perspective: 1200px;
+  perspective: 1200px;
+  perspective-origin: 50% 0%;
+}
+
+.spinner {
+    -webkit-animation-name: spinner;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-duration: 6s;
+
+    animation-name: spinner;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: 6s;
+
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }
