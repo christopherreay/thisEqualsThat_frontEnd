@@ -138,6 +138,7 @@ div.bottomModelDiv {
     color: #fff;
     text-decoration: none;
     background: #2196F3;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 .btn:hover {
@@ -357,10 +358,10 @@ div.modelClasses.active{
 }
 .modelClassLI > h3{
     position: absolute;
-    top: 20px;
+    top: 0px;
     left: 130%;
     background: #198a94;
-    padding: 7px 40px;
+    padding: 10px 40px;
     border-radius: 3px;
     opacity: 0;
     color: rgba(255,255,255,0.87);
@@ -1552,7 +1553,7 @@ input.ui-colorpicker-hex-input {
 .hudItem
 { display: inline-block;
   min-width: 32px;
-  margin-left: 4px;
+  margin-left: 10px;
 }
 .hudCollection
 { height: 32px;
@@ -1589,7 +1590,93 @@ path.highlight, .highlight path
 .sp-palette-container
 { width: 100px;
 }
-
+.sp-color, .sp-hue, .sp-clear {
+  border-radius: 3px;
+  -webkit-box-shadow: 0px 3px 5px rgba(0, 0, 0, .5);
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, .5);
+}
+.sp-dragger {
+  border: 1px solid rgba(255, 255, 255, .6);
+  background: rgba(0,0,0, .5);
+}
+.sp-slider {
+  top: 7px;
+  height: 7px;
+  border: 1px solid rgba(255, 255, 255, .8);
+  background: rgba(0, 0, 0, .5);
+  opacity: 1;
+  border-radius: 3px;
+}
+.sp-container button, .sp-cancel {
+  text-shadow: none;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  border: none;
+  border-radius: 2px;
+  position: relative;
+  padding: 10px 15px;
+  margin: 10px 1px;
+  font-size: 16px;
+  font-weight: 100;
+  font-family: Roboto;
+  letter-spacing: 0;
+  will-change: box-shadow, transform;
+  -webkit-transition: -webkit-box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: 0;
+  cursor: pointer;
+  color: #fff;
+  text-decoration: none;
+  background: #2196F3;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+.sp-container button:hover {
+  background: #2196F3;
+  text-shadow: none;
+  border: none;
+}
+.sp-container, .sp-picker-container, .sp-palette-container, .sp-alpha-inner, .sp-alpha-handle, .sp-color, .sp-hue, .sp-clear {
+  border: none;
+}
+.sp-container {
+  border-radius: 3px;
+  background: #fff;
+  -webkit-box-shadow: 0px 4px 10px rgba(0,0,0, .5);
+  box-shadow: 0px 4px 10px rgba(0,0,0, .5);
+}
+.sp-picker-container, .sp-palette-container {
+  margin-bottom: -285px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.sp-preview, .sp-alpha, .sp-thumb-el {
+  background: #9E9E9E;
+}
+.sp-alpha {
+  height: 1px;
+}
+.sp-alpha-handle {
+  top: -9px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  opacity: 1;
+  background: #23becc;
+}
 .ratioColorTotal .sp-replacer
 { background-color: transparent;
   border-color: transparent;
