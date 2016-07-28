@@ -2621,6 +2621,11 @@ console.log("yogi 2 ", ajaxOptions.url);
           { "class": "inputFieldElement"
           }
         );
+      var uiLabelBg =
+        $("<div />",
+          { "class": "inputFieldLabelBg"
+          }
+        );
       var uiLabel =
         $("<div />",
           { "class": "inputFieldLabel"
@@ -2643,6 +2648,7 @@ console.log("yogi 2 ", ajaxOptions.url);
 
     this.uiValue_select = select;
 
+    this.uiElement.append(uiLabelBg);
     this.uiElement.append(uiLabel);
     this.uiElement.append(this.uiValue_select);
 

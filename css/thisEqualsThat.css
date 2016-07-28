@@ -1512,7 +1512,8 @@ input.ui-colorpicker-hex-input {
 { height: 32px;
 }
 
-.hudItem.colorPicker
+.hudItem.colorPicker,
+.fillManager.hudItem
 { height:32px;
   background-image: url('/static/graphics/thisEquals/svgHUD/colorPicker.png');
   background-size: contain;
