@@ -2195,8 +2195,8 @@ $().ready(
               .on("mouseover", function(){ 
                     var tooltipText = this.getAttribute("id");
                     var d3Event = d3.event;
-                    if (d3Event.toElement.id.indexOf("listSeat") != -1)
-                    { tooltipText = d3Event.toElement.getAttribute("class").split(" ")[0] + " " +tooltipText;
+                    if (d3Event.target.id.indexOf("listSeat") != -1)
+                    { tooltipText = d3Event.target.getAttribute("class").split(" ")[0] + " " +tooltipText;
                     }
                     tooltip.text(tooltipText); return tooltip.style("visibility", "visible"); } )
               .on("mousemove", function()
@@ -2245,7 +2245,7 @@ $().ready(
                 var selectRegion = function(event)
                 { console.log(event);
                   
-                  var activeRegionName    = scottishParliamentaryElections.activeRegionName     = event.toElement.id.split("_")[0];
+                  var activeRegionName    = scottishParliamentaryElections.activeRegionName     = event.target.id.split("_")[0];
                   var activeRegionElement = scottishParliamentaryElections.activeRegionElement  = $("#constituencies > svg #"+activeRegionName).attr("opacity", 1.0);
 
                   d3.select(activeRegionElement.get(0)).selectAll("*").classed("activeRegion", true);

@@ -1,18 +1,18 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
-
 .displayNone
 { display: none !important;
 }
 
-
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
 html, body {
     height: 100%;
+}
+*
+{ font-family: Roboto;
 }
 body {
     font-family: Roboto;
     background: #EEEEEE;
     padding-bottom: 50px;
-    margin: 0px;
 }
 body.open {
     overflow: hidden;
@@ -175,7 +175,6 @@ div.copyrightContainer {
     overflow: hidden;
 }
 div.copyrightContainer> p {
-    margin: 0px;
     margin-left: 15px;
     line-height: 50px;
 }
@@ -208,7 +207,6 @@ div.copyrightContainer> p {
     z-index: 805;
     -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
     transition: all .3s cubic-bezier(.4,0,.2,1);
-    outline: none;
 }
 .hamburger.is-active {
     left: 40px;
@@ -355,13 +353,12 @@ div.modelClasses.active{
     -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
     transition: all .3s cubic-bezier(.4,0,.2,1);
 }
-.modelClassLI > h3 {
+.modelClassLI > h3{
     position: absolute;
-    top: 23px;
+    top: 20px;
     left: 130%;
-    background: #004D40;
+    background: #198a94;
     padding: 7px 40px;
-    margin: 0px;
     border-radius: 3px;
     opacity: 0;
     color: rgba(255,255,255,0.87);
@@ -437,13 +434,50 @@ div.modelSliders, div.modelOutputCtrl, div.modelSvgOutput, div.modelCustomSvg {
     box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
 }
 div.inputFieldElement {
+    
     position: relative;
-    display: block;
+
     width: 100%;
-    float: left;
-    padding-bottom: 10px;
-    /*border-bottom: 1px solid #9E9E9E;*/
+    margin-top: 10px;
+    border-bottom: 1px solid #9E9E9E;
+
+    min-height: 32px;
 }
+
+.inputFieldElement > h3 {
+    position: absolute;
+    bottom: 0px;
+    left: 130%;
+    
+    max-width: 70%;
+
+    background: #198a94;
+    padding: 7px 40px;
+    border-radius: 3px;
+    opacity: 0;
+    color: rgba(255,255,255,0.87);
+    font-size: 21px;
+    font-weight: 400;
+    visibility: hidden;
+    -webkit-box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+    -webkit-transition: all .4s cubic-bezier(0.51, 0.49, 0.22, 1.29);
+    transition: all .4s cubic-bezier(0.51, 0.49, 0.22, 1.29);
+
+    -webkit-transition-delay: 0.3s; /* Safari */
+    transition-delay: 0.3s;
+}
+.inputFieldElement:hover > h3 {
+    opacity: 0.9;
+    left: 10%;
+    visibility: visible;
+
+    z-index: 1000;
+
+    -webkit-transition-delay: 0.0s; /* Safari */
+    transition-delay: 0.0s;
+}
+
 div.inputFieldElement> select {
     float: right;
     background: transparent;
@@ -457,35 +491,14 @@ div.inputFieldElement> select {
     font-size: 16px;
     border-bottom: 0;
 }
-div.inputFieldElement:hover div.inputFieldLabel {
-    position: absolute;
-    top: -38px;
-    left: 104%;
-    z-index: 999;
-    opacity: 1;
-}
 div.inputFieldLabel {
-    position: absolute;
-    top: -38px;
-    left: 120%;
-    width: inherit;
-    background: #ECEFF1;
-    color: rgba(0,0,0,0.87);
-    padding: 20px;
-    border-radius: 3px;
-    opacity: 0;
-    -webkit-box-shadow: 0px 3px 7px rgba(0, 0, 0, .6);
-    box-shadow: 0px 3px 7px rgba(0, 0, 0, .6);
-    -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
-    transition: all .3s cubic-bezier(.4,0,.2,1);
-}
-div.inputFieldLabelBg {
     float: left;
     padding-top: 3px;
     font-size: 16px;
     margin-bottom: 10px;
-}
 
+    background-repeat: no-repeat;
+}
 div.inputFieldSlider {
     height: 1px;
     border: 0;
@@ -495,20 +508,28 @@ div.inputFieldSlider {
     clear: both;
 }
 div.inputFieldSlider> .ui-state-default {
-    outline: none;
     width: 20px;
     height: 20px;
     border-radius: 50%;
     top: -10px;
     background: #23becc;
     border: 0;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+div.inputFieldSlider> .ui-state-hover, div.inputFieldSlider>.ui-widget-content .ui-state-hover {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.16), 0 8px 16px rgba(0, 0, 0, 0.36);
+}
+div.inputFieldSlider> .ui-state-active, div.inputFieldSlider> .ui-widget-content .ui-state-active {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.16), 0 8px 16px rgba(0, 0, 0, 0.36);
 }
 div.inputFieldSlider .ui-slider-range {
     background: #23becc;
 }
+div.inputFieldSlider .ui-slider-handle
+{ background: #23becc;
+}
 
 input.inputFieldText[type=text] {
-    outline: none;
     float: right;
     background: transparent;
     padding-top: 3px;
@@ -667,15 +688,21 @@ input.svgTextDescription:focus {
   -webkit-box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
   box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1
 }
-.svgSaveLink> a {
+.svgSaveLink > a {
+    display   :block;
+
+    width     : 100%;
+    height    : 100%;
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.9);
-    background: rgba(33, 150, 243, .8);
 }
-.svgSaveLink> a:hover {
+.svgSaveLink > a:hover {
     text-decoration: none;
     color: rgba(255, 255, 255, 1);
-    background: rgba(33, 150, 243, 1);
+
+    border-radius: 50%;
+
+    -webkit-box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+    box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1
 }
 
 div.customSVGList {
@@ -1097,29 +1124,29 @@ input.ui-colorpicker-hex-input {
 
 
 
-.name_watts> .inputFieldLabelBg, .name_count> .inputFieldLabelBg, .name_time> .inputFieldLabelBg, .name_energy> .inputFieldLabelBg, .name_mass> .inputFieldLabelBg, .name_timeToBreathOut> .inputFieldLabelBg, .name_volume_100> .inputFieldLabelBg, .name_volume_inAir> .inputFieldLabelBg, .name_number> .inputFieldLabelBg, .name_density> .inputFieldLabelBg, .name_volume> .inputFieldLabelBg, .name_colours> .inputFieldLabelBg, .name_randomLayout> .inputFieldLabelBg, .name_numberOfClones> .inputFieldLabelBg, .name_ratios> .inputFieldLabelBg, .name_efficiency> .inputFieldLabelBg, .modelOutputContainer> .containerLabel, .visualisationOutputContainer> .containerLabel {
+.name_watts> .inputFieldLabel, .name_count> .inputFieldLabel, .name_time> .inputFieldLabel, .name_energy> .inputFieldLabel, .name_mass> .inputFieldLabel, .name_timeToBreathOut> .inputFieldLabel, .name_volume_100> .inputFieldLabel, .name_volume_inAir> .inputFieldLabel, .name_number> .inputFieldLabel, .name_density> .inputFieldLabel, .name_volume> .inputFieldLabel, .name_colours> .inputFieldLabel, .name_randomLayout> .inputFieldLabel, .name_numberOfClones> .inputFieldLabel, .name_ratios> .inputFieldLabel, .name_efficiency> .inputFieldLabel, .modelOutputContainer> .containerLabel, .visualisationOutputContainer> .containerLabel {
     background-size: cover;
 }
 
 /*lightbulb*/
 
-.name_watts> .inputFieldLabelBg {
+.name_watts> .inputFieldLabel {
     background-image: url(/static/graphics/thisEquals/icons/energy.svg);
     background-repeat: no-repeat;
     width: 27px;
     height: 27px;
 }
-.name_count> .inputFieldLabelBg {
+.name_count> .inputFieldLabel {
     background-image: url(/static/graphics/thisEquals/icons/LightBulb.svg);
     width: 27px;
     height: 27px;
 }
-.name_time> .inputFieldLabelBg {
+.name_time> .inputFieldLabel {
     background-image: url(/static/graphics/thisEquals/icons/time_second.svg);
     width: 27px;
     height: 27px;
 }
-.name_energy> .inputFieldLabelBg {
+.name_energy> .inputFieldLabel {
     background-image: url(/static/graphics/thisEquals/icons/energ_j.svg);
     width: 27px;
     height: 27px;
@@ -1127,22 +1154,22 @@ input.ui-colorpicker-hex-input {
 
 /*CO2*/
 
-.name_mass> .inputFieldLabelBg {
+.name_mass> .inputFieldLabel {
     background-image: url(/static/graphics/thisEquals/icons/mass_kg.svg);
     width: 27px;
     height: 27px;
 }
-.name_timeToBreathOut> .inputFieldLabelBg {
+.name_timeToBreathOut> .inputFieldLabel {
     background-image: url(/static/graphics/thisEquals/icons/time_second.svg);
     width: 27px;
     height: 27px;
 }
-.name_volume_100> .inputFieldLabelBg {
+.name_volume_100> .inputFieldLabel {
     background-image: url(/static/graphics/thisEquals/icons/volume_m3.svg);
     width: 27px;
     height: 27px;
 }
-.name_volume_inAir> .inputFieldLabelBg {
+.name_volume_inAir> .inputFieldLabel {
     background-image: url(/static/graphics/thisEquals/icons/volume_air.svg);
     width: 27px;
     height: 27px;
@@ -1150,12 +1177,12 @@ input.ui-colorpicker-hex-input {
 
 /*cube*/
 
-.name_density> .inputFieldLabelBg {
+.name_density> .inputFieldLabel {
     background-image: url(/static/graphics/thisEquals/icons/volume_air.svg);
     width: 27px;
     height: 27px;
 }
-.name_volume> .inputFieldLabelBg {
+.name_volume> .inputFieldLabel {
     background-image: url(/static/graphics/thisEquals/icons/volume_m3.svg);
     width: 27px;
     height: 27px;
@@ -1163,12 +1190,12 @@ input.ui-colorpicker-hex-input {
 
 /*preson*/
 
-.name_number> .inputFieldLabelBg {
+.name_number> .inputFieldLabel {
     background-image: url(/static/graphics/thisEquals/icons/person_amuont.svg);
     width: 27px;
     height: 27px;
 }
-.analysis> .inputFieldLabelBg {
+.analysis> .inputFieldLabel {
     background-image: url(/static/graphics/thisEquals/icons/analysis.svg);
     width: 27px;
     height: 27px;
@@ -1176,30 +1203,32 @@ input.ui-colorpicker-hex-input {
 
 /*PeopleRationPLay*/
 
-.name_colours> .inputFieldLabelBg {
+.name_colours> .inputFieldLabel {
     background-image: url(/static/graphics/thisEquals/icons/color_pick.svg);
     width: 27px;
     height: 27px;
 }
-.name_randomLayout> .inputFieldLabelBg {
+.name_randomLayout> .inputFieldLabel {
     background-image: url(/static/graphics/thisEquals/icons/randome.svg);
     width: 27px;
     height: 27px;
 }
-.name_numberOfClones> .inputFieldLabelBg {
+.name_numberOfClones> .inputFieldLabel {
     background-image: url(/static/graphics/thisEquals/icons/person_amuont.svg);
     width: 27px;
     height: 27px;
 }
-.name_ratios> .inputFieldLabelBg {
+.name_ratios> .inputFieldLabel, .ratioColor > .inputFieldLabel {
     background-image: url(/static/graphics/thisEquals/icons/rations.svg);
     width: 27px;
     height: 27px;
+
 }
+
 
 /*CPS*/
 
-.name_efficiency> .inputFieldLabelBg {
+.name_efficiency> .inputFieldLabel {
     background-image: url(/static/graphics/thisEquals/icons/efficiency.svg);
     width: 27px;
     height: 27px;
@@ -1510,18 +1539,20 @@ input.ui-colorpicker-hex-input {
 .hudItem
 { display: inline-block;
   min-width: 32px;
-  margin-right: 15px;
+  margin-left: 4px;
 }
 .hudCollection
 { height: 32px;
 }
 
-.hudItem.colorPicker
+.hudItem.colorPicker, .hudItem.fillManager
 { height:32px;
   background-image: url('/static/graphics/thisEquals/svgHUD/colorPicker.png');
   background-size: contain;
   background-repeat: no-repeat;
 }
+
+
 
 @keyframes highlightSVGPath
 {  0% { stroke: "black";}
@@ -1538,54 +1569,124 @@ path.highlight, .highlight path
   animation-iteration-count:  infinite;
 }
 
-.spectrumAlphaOnly .sp-fill, .spectrumAlphaOnly .sp-top-inner, .spectrumAlphaOnly .sp-button-container
+.spectrumAlphaOnly .sp-fill, .spectrumAlphaOnly .sp-top-inner, .spectrumAlphaOnly .sp-button-container 
 { display: none;
 }
-.sp-container {
-    border-radius: 3px;
-    background-color: #ECECEC;
-    border: none;
-    padding: 0;
-    -webkit-box-shadow: 0px 3px 5px rgba(0, 0, 0, .5);
-    box-shadow: 0px 3px 5px rgba(0, 0, 0, .5);
-}
-.sp-alpha {
-  bottom: -12px;
-  height: 1px;
-}
-.sp-alpha-inner {
-  border: solid 1px #BDBDBD;
-}
-.sp-alpha-handle {
-    position: absolute;
-    top: -9px;
-    width: 18px;
-    height: 18px;
-    left: 50%;
-    cursor: pointer;
-    border: none;
-    border-radius: 50%;
-    background: #23becc;
-    opacity: 1;
-}
-.sp-picker-container, .sp-palette-container {
-  padding-left: 20px;
-  padding-right: 20px;
+
+.sp-palette-container
+{ width: 100px;
 }
 
+.ratioColorTotal .sp-replacer 
+{ background-color: transparent;
+  border-color: transparent;
+}
+.ratioColorTotal .sp-preview
+{ height: 10px;
+  width: 10px;
+  margin-left: 5px;
+  margin-top: 6px;
+}
+.ratioColorTotal .sp-dd
+{ display :none;
+}
 /* inputFieldHUD */
 
 
 /* ratioColorTotal */
-.ratioColorTotal > div:hover
-{ background: lightgrey;
-}
 
 .ratioColor
 { height: 32px;
+
+  position:relative;
+
+  text-align: right;
 }
+
+.ratioColor .percentageSpinner
+{ position: absolute;
+  right: 140px;
+  top: 3px;
+  outline: none;
+  border-color: transparent;
+  font-size: 18px;
+  width: 80px;
+  text-align: right;
+}
+
+.ratioColor .percentLabel
+{ position: absolute;
+  right: 125px;
+  font-size: 18px;
+  top: 6px;
+  font-weight: bolder;
+}
+.ratioColor .sp-replacer
+{ position: absolute;
+  right: 60px;
+}
+
 .ratioColor > .closeBox
 { height: 10px;
   width: 10px;
-  float: right;
+  
+  position: absolute;
+  right: 0px;
+
+  color: darkgrey;
 }
+
+.hudItem.addRatio
+{ width: 100%;
+
+  text-align: center;
+
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+
+}
+.ratioColorTotal .addRatio:hover
+{ background-color: lightgrey;
+}
+
+
+
+
+@keyframes spinner {
+    from {
+      -moz-transform: rotateY(0deg);
+      -ms-transform: rotateY(0deg);
+      transform: rotateY(0deg);
+    }
+    to {
+      -moz-transform: rotateY(-360deg);
+      -ms-transform: rotateY(-360deg);
+      transform: rotateY(-360deg);
+    }
+  }
+
+body {
+  -webkit-perspective: 1200px;
+  -moz-perspective: 1200px;
+  -ms-perspective: 1200px;
+  perspective: 1200px;
+  perspective-origin: 50% 0%;
+}
+
+.spinner {
+    -webkit-animation-name: spinner;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-duration: 6s;
+
+    animation-name: spinner;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: 6s;
+
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }

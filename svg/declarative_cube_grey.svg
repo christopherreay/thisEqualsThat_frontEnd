@@ -5,15 +5,6 @@
  xmlns:z="http://debeissat.nicolas.free.fr/svg3d/svg3d.rng" 
  z:xInfinite="300" z:yInfinite="200" z:zRatio="2">
 
-  <defs>
-    <style id="initialColor" type="text/css">
-        .face 
-        { fill: rgba(35, 35, 35, 0.3);
-        }
-    </style>
-    <style id="onColorChange" type="text/css">
-    </style>
-  </defs>
 	<g id="g1">
       <path id="faceBack"   class="face faceBack"    d="M0,0,123.6 L200,0,123.6 L200,76.4,123.6 L0,76.4,123.6 Z" 
             z:threeD="true">
