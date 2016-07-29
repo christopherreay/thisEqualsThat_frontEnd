@@ -8,6 +8,10 @@ thisEqualsThat.svgDefsStore = {};
 thisEqualsThat.memoise_normalDistribution = {};
 
 
+thisEqualsThat.standardPrecision = function(number)
+{ return number.toPrecision(5);
+}
+
 window.attachFunc = function(parent, name, functionContent)
 { if (!(hasOwnProperty(parent.prototype, name)))
   { var This = parent;
@@ -1788,10 +1792,10 @@ console.log("yogi 2 ", ajaxOptions.url);
     //$("#document").append("<script type='text/javascript' src='/svg/rg1024_metal_barrel' />);
 
     this.display.modelOutputValue.html
-    ( outputField.data.displayFieldAddress.toString()+": "+outputField.data.unitPrefix+Number(outputField.data.currentValue).toPrecision(5)+outputField.data.unitSuffix
+    ( outputField.data.displayFieldAddress.toString()+": "+outputField.data.unitPrefix+thisEqualsThat.standardPrecision(Number(outputField.data.currentValue))+outputField.data.unitSuffix
     );
     this.display.modelVisualisationValue.html
-    ( visualisationField.data.displayFieldAddress.toString()+": "+visualisationField.data.unitPrefix+Number(visualisationField.data.currentValue).toPrecision(5)+visualisationField.data.unitSuffix
+    ( visualisationField.data.displayFieldAddress.toString()+": "+visualisationField.data.unitPrefix+thisEqualsThat.standardPrecision(Number(visualisationField.data.currentValue) )+visualisationField.data.unitSuffix
     );
 
     // Add HUD interface
@@ -2185,7 +2189,7 @@ console.log("yogi 2 ", ajaxOptions.url);
     var estimatedTimeToRender = clonesToBeRendered * averageTimePerClone;
 
     if (estimatedTimeToRender > 5000)
-    { var render = window.confirm("Estimated time to render: "+ (estimatedTimeToRender / 1000).toPrecision(5) +" seconds");
+    { var render = window.confirm("Estimated time to render: "+ thisEqualsThat.standardPrecision( (estimatedTimeToRender / 1000) ) +" seconds");
       if (! render)
       { clonesToBeRendered = this.svgHUD.modelInstance.svg3dDisplayJSON.svg3dConfiguration.clone3d.nb = 1;
       }
@@ -2856,7 +2860,14 @@ console.log("yogi 2 ", ajaxOptions.url);
   { this.uiSlider.slider("option", "value", this.actualToSlider());
   }
   this.ModelFieldInput.prototype.slider_sliderUpdatesText = function(slideOrChange)
-  { this.uiValue_slider.val(Number(this.data.currentValue).toPrecision(5));
+  { if (this.data.hasOwnProperty("sliderRoundFunction") )
+    { var currentValue = this.data.currentValue;
+      eval(this.data.sliderRoundFunction);
+    }
+    else
+    { toReturn = thisEqualsThat.standardPrecision( Number(this.data.currentValue) );
+    }
+    this.uiValue_slider.val(toReturn);
   }
 
   this.ModelFieldOutput = function(modelInstance, fieldData)
