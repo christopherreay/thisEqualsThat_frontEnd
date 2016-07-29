@@ -761,16 +761,16 @@ console.log("yogi 2 ", ajaxOptions.url);
           }
         );
 
-      display.modelSliders              = $("<div class='modelSliders model_options'  />");
+      display.modelSliders              = $("<div class='modelSliders model_options' data-step='3' data-intro='Model options'  />");
       display.modelSliders.append(this.getInputFields().inputFieldsSliders);
 
       display.boxSliders    = $('<div class="model_box_ctrl boxSliders" />');
       display.boxOutputCtrl = $('<div class="model_box_ctrl boxOutputCtrl" />');
       display.boxCustomSvg  = $('<div class="model_box_ctrl boxCustomSvg" />');
 
-      display.modelOutputCtrl           = $("<div class='modelOutputCtrl model_options' />");
+      display.modelOutputCtrl           = $("<div class='modelOutputCtrl model_options' data-step='4' data-intro='Model output options' />");
 
-      display.modelCustomSvg            = $("<div class='modelCustomSvg model_options' />");
+      display.modelCustomSvg            = $("<div class='modelCustomSvg model_options' data-step='5' data-intro='Customization options' />");
 
       var models = [ display.boxSliders, display.boxOutputCtrl, display.boxCustomSvg ];
         $.each( models, function ( i, elem )
@@ -822,7 +822,7 @@ console.log("yogi 2 ", ajaxOptions.url);
             });
         });
 
-      display.modelSvgOutput            = $("<div class='modelSvgOutput' />");
+      display.modelSvgOutput            = $("<div class='modelSvgOutput' data-step='6' data-intro='Your output svg' />");
 
       display.modelOutputDisplay        = $("<div class='modelOutputContainer'><div class='containerLabel'></div></div>");
 
@@ -3033,7 +3033,10 @@ $().ready(function(){
 
 
     $('.guid').on('click', function () {
-      introJs().start();
+      introJs().setOption({
+        'showProgress': true,
+        'tooltipPosition': 'auto'
+      }).start();
     });
     $('.hamburger').on('click', function() {
 
