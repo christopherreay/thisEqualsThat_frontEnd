@@ -1,18 +1,19 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+
 .displayNone
 { display: none !important;
 }
 
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
 html, body {
     height: 100%;
 }
-*
-{ font-family: Roboto;
-}
+* { font-family: Roboto; }
+
 body {
     font-family: Roboto;
     background: #EEEEEE;
     padding-bottom: 50px;
+    margin: 0;
 }
 body.open {
     overflow: hidden;
@@ -22,64 +23,6 @@ body::-webkit-scrollbar {
 }
 body::scrollbar {
   display: none;
-}
-.greeting {
-  position: fixed;
-  top: -50px;
-  left: -50px;
-  right: -50px;
-  bottom: -50px;
-  background: linear-gradient(285deg, #2095f2, #fe9700, #0d47a1, #f50057, #4a148c, #ff1744, #ff3d00);
-  background-size: 1400% 1400%;
-
-  -webkit-animation: greet 45s ease infinite;
-  animation: greet 45s ease infinite;
-  -webkit-filter: blur(10px);
-  filter: blur(10px);
-  z-index: 9999;
-}
-@-webkit-keyframes greet {
-    0%{background-position:0% 13%}
-    50%{background-position:100% 88%}
-    100%{background-position:0% 13%}
-}
-@keyframes greet {
-    0%{background-position:0% 13%}
-    50%{background-position:100% 88%}
-    100%{background-position:0% 13%}
-}
-
-.greet_container {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  line-height: 100vh;
-  text-align: center;
-  z-index: 9999;
-}
-.greet_img {
-  vertical-align: middle;
-  width: 400px;
-  opacity: .7;
-  transition: all .3s ease-in;
-}
-.greet_text {
-  vertical-align: middle;
-  display: inline-block;
-  font-size: 39px;
-  font-family: Roboto;
-  line-height: 0;
-  margin-left: 50px;
-  margin-top: -18px;
-  opacity: .7;
-  transition: all .3s ease-in;
-}
-.greet_text, .greet_img:hover {
-  opacity: 1;
-  cursor: pointer;
 }
 
 .open-menu {
@@ -136,7 +79,8 @@ div.bottomModelDiv {
     cursor: pointer;
     color: #fff;
     text-decoration: none;
-    background: #2196F3;
+    background: #2abfc9;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 .btn:hover {
@@ -175,6 +119,7 @@ div.copyrightContainer {
     overflow: hidden;
 }
 div.copyrightContainer> p {
+    margin: 0;
     margin-left: 15px;
     line-height: 50px;
 }
@@ -204,6 +149,7 @@ div.copyrightContainer> p {
     border: 0;
     margin: 0;
     overflow: visible;
+    outline: none;
     z-index: 805;
     -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
     transition: all .3s cubic-bezier(.4,0,.2,1);
@@ -355,10 +301,10 @@ div.modelClasses.active{
 }
 .modelClassLI > h3{
     position: absolute;
-    top: 20px;
+    top: 0px;
     left: 130%;
     background: #198a94;
-    padding: 7px 40px;
+    padding: 10px 40px;
     border-radius: 3px;
     opacity: 0;
     color: rgba(255,255,255,0.87);
@@ -434,27 +380,18 @@ div.modelSliders, div.modelOutputCtrl, div.modelSvgOutput, div.modelCustomSvg {
     box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
 }
 div.inputFieldElement {
-    
     position: relative;
-
     width: 100%;
-    margin-top: 10px;
-    border-bottom: 1px solid #9E9E9E;
-
+    padding-bottom: 10px;
+    /*border-bottom: 1px solid #9E9E9E;*/
     min-height: 32px;
 }
 
-<<<<<<< HEAD
-.inputFieldElement > h3 {
-=======
-.inputFieldLabel > h3 {
->>>>>>> master
+/*.inputFieldIcon > h3 {
     position: absolute;
     bottom: 0px;
     left: 130%;
-    
     max-width: 70%;
-
     background: #198a94;
     padding: 7px 40px;
     border-radius: 3px;
@@ -468,26 +405,21 @@ div.inputFieldElement {
     -webkit-transition: all .4s cubic-bezier(0.51, 0.49, 0.22, 1.29);
     transition: all .4s cubic-bezier(0.51, 0.49, 0.22, 1.29);
 
-<<<<<<< HEAD
-    -webkit-transition-delay: 0.3s; /* Safari */
+    -webkit-transition-delay: 0.3s;
     transition-delay: 0.3s;
 }
 .inputFieldElement:hover > h3 {
-=======
-    /*-webkit-transition-delay: 0.3s; /* Safari */
-    /*transition-delay: 0.3s;*/
+    -webkit-transition-delay: 0.3s;
+    transition-delay: 0.3s;
 }
-.inputFieldLabel:hover > h3 {
->>>>>>> master
+.inputFieldIcon:hover > h3 {
     opacity: 0.9;
     left: 10%;
     visibility: visible;
-
     z-index: 1000;
-
-    -webkit-transition-delay: 0.0s; /* Safari */
+    -webkit-transition-delay: 0.0s;
     transition-delay: 0.0s;
-}
+}*/
 
 div.inputFieldElement> select {
     float: right;
@@ -501,8 +433,34 @@ div.inputFieldElement> select {
     font-family: Roboto;
     font-size: 16px;
     border-bottom: 0;
+    outline: none;
+}
+div.inputFieldElement:hover div.inputFieldLabel {
+    position: absolute;
+    top: -38px;
+    left: 104%;
+    z-index: 999;
+    opacity: 1;
 }
 div.inputFieldLabel {
+    position: absolute;
+    top: -38px;
+    left: 120%;
+    width: inherit;
+    background: #ECEFF1;
+    color: rgba(0,0,0,0.87);
+    padding: 20px;
+    border-radius: 3px;
+    opacity: 0;
+    -webkit-box-shadow: 0px 3px 7px rgba(0, 0, 0, .6);
+    box-shadow: 0px 3px 7px rgba(0, 0, 0, .6);
+    -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
+    transition: all .3s cubic-bezier(.4,0,.2,1);
+}
+div.inputFieldLabel > h3 {
+    margin: 0;
+}
+div.inputFieldIcon {
     float: left;
     padding-top: 3px;
     font-size: 16px;
@@ -523,21 +481,15 @@ div.inputFieldSlider> .ui-state-default {
     height: 20px;
     border-radius: 50%;
     top: -10px;
-    background: #23becc;
+    background: #2abfc9;
     border: 0;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-}
-div.inputFieldSlider> .ui-state-hover, div.inputFieldSlider>.ui-widget-content .ui-state-hover {
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.16), 0 8px 16px rgba(0, 0, 0, 0.36);
-}
-div.inputFieldSlider> .ui-state-active, div.inputFieldSlider> .ui-widget-content .ui-state-active {
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.16), 0 8px 16px rgba(0, 0, 0, 0.36);
+    outline: none;
 }
 div.inputFieldSlider .ui-slider-range {
-    background: #23becc;
+    background: #2abfc9;
 }
 div.inputFieldSlider .ui-slider-handle
-{ background: #23becc;
+{ background: #2abfc9;
 }
 
 input.inputFieldText[type=text] {
@@ -547,6 +499,7 @@ input.inputFieldText[type=text] {
     border-top: 0;
     border-right: 0;
     border-left: 0;
+    outline: none;
     width: 130px;
     text-align: right;
     font-family: Roboto;
@@ -569,6 +522,7 @@ div.modelOutputContainer> select {
     border-top: 0;
     border-right: 0;
     border-left: 0;
+    outline: none;
     text-align: right;
     font-family: Roboto;
     font-size: 15px;
@@ -581,6 +535,7 @@ div.visualisationOutputContainer select {
     border-top: 0;
     border-right: 0;
     border-left: 0;
+    outline: none;
     text-align: right;
     font-family: Roboto;
     font-size: 15px;
@@ -603,6 +558,7 @@ div.bottomModelSelectDiv select {
     border-top: 0;
     border-right: 0;
     border-left: 0;
+    outline: none;
     width: 100%;
     text-align: right;
     font-family: Roboto;
@@ -625,6 +581,7 @@ div.visualisationOutputContainer select {
     border-top: 0;
     border-right: 0;
     border-left: 0;
+    outline: none;
     text-align: right;
     font-family: Roboto;
     font-size: 15px;
@@ -667,6 +624,7 @@ input.svgTextDescription {
     border-top: 0;
     border-right: 0;
     border-left: 0;
+    outline: none;
     margin-top: 0;
     margin-bottom: 20px;
     text-align: left;
@@ -677,11 +635,11 @@ input.svgTextDescription {
     transition: all .3s;
 }
 input.svgTextDescription:hover {
-    border-color: rgba(33, 150, 243, .5);
+    border-color: rgba(42, 191, 201, .5);
 }
 input.svgTextDescription:focus {
-    color: #0091EA;
-    border-color: rgba(33, 150, 243, 1);
+    color: #424242;
+    border-color: rgba(42, 191, 201, 1);
 }
 .svgSaveLink {
   border-radius: 50%;
@@ -691,7 +649,7 @@ input.svgTextDescription:focus {
   float: right;
   margin-top: 3px;
   padding: 0;
-  background-color: #2196F3;
+  background-color: #2abfc9;
   background-image: url(../graphics/thisEquals/icons/save_svg.svg);
   background-size: 20px;
   background-repeat: no-repeat;
@@ -701,7 +659,6 @@ input.svgTextDescription:focus {
 }
 .svgSaveLink > a {
     display   :block;
-
     width     : 100%;
     height    : 100%;
     text-decoration: none;
@@ -709,9 +666,7 @@ input.svgTextDescription:focus {
 .svgSaveLink > a:hover {
     text-decoration: none;
     color: rgba(255, 255, 255, 1);
-
     border-radius: 50%;
-
     -webkit-box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
     box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1
 }
@@ -750,7 +705,7 @@ div.customSVGPaneSubmitButton {
     height: 40px;
     border-radius: 50%;
     padding: 0;
-    background-color: #2196F3;
+    background-color: #2abfc9;
     background-image: url(../graphics/thisEquals/icons/upload_svg.svg);
     background-size: 25px;
     background-repeat: no-repeat;
@@ -846,7 +801,7 @@ div.googleConnect.ui-draggable-dragging {
     left: 0;
     width: 100%;
     color: #fff;
-    background: #2196F3;
+    background: #2abfc9;
     padding: 5px 5px 5px 20px;
 }
 .googleConnect> .custom_svgNameInput {
@@ -857,12 +812,12 @@ div.googleConnect.ui-draggable-dragging {
 a.googleConnect_loginButton {
     text-decoration: none;
     color: rgba(255, 255, 255, 0.9);
-    background: rgba(33, 150, 243, .8);
+    background: rgba(42, 191, 201, .8);
 }
 a.googleConnect_loginButton:hover {
     text-decoration: none;
     color: rgba(255, 255, 255, 1);
-    background: rgba(33, 150, 243, 1);
+    background: rgba(42, 191, 201, 1);
 }
 .googleConnect> input.spreadsheetURL {
     width: 90%;
@@ -920,10 +875,10 @@ input.checkbox {
     opacity: 0.2;
 }
 .checkbox:checked+ .checkbox_ui .check {
-    border-color: #2196F3;
+    border-color: #2abfc9;
 }
 .checkbox:checked+ .checkbox_ui .fa {
-    color: #2196F3;
+    color: #2abfc9;
     opacity: 1;
 }
 .toggleFeatures .fa {
@@ -1117,7 +1072,7 @@ input.ui-colorpicker-hex-input {
     cursor: pointer;
     color: #fff;
     text-decoration: none;
-    background: #2196F3;
+    background: #2abfc9;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 .ui-dialog .ui-dialog-buttonpane button:hover {
@@ -1135,29 +1090,29 @@ input.ui-colorpicker-hex-input {
 
 
 
-.name_watts> .inputFieldLabel, .name_count> .inputFieldLabel, .name_time> .inputFieldLabel, .name_energy> .inputFieldLabel, .name_mass> .inputFieldLabel, .name_timeToBreathOut> .inputFieldLabel, .name_volume_100> .inputFieldLabel, .name_volume_inAir> .inputFieldLabel, .name_number> .inputFieldLabel, .name_density> .inputFieldLabel, .name_volume> .inputFieldLabel, .name_colours> .inputFieldLabel, .name_randomLayout> .inputFieldLabel, .name_numberOfClones> .inputFieldLabel, .name_ratios> .inputFieldLabel, .name_efficiency> .inputFieldLabel, .modelOutputContainer> .containerLabel, .visualisationOutputContainer> .containerLabel {
+.name_watts> .inputFieldIcon, .name_count> .inputFieldIcon, .name_time> .inputFieldIcon, .name_energy> .inputFieldIcon, .name_mass> .inputFieldIcon, .name_timeToBreathOut> .inputFieldIcon, .name_volume_100> .inputFieldIcon, .name_volume_inAir> .inputFieldIcon, .name_number> .inputFieldIcon, .name_density> .inputFieldIcon, .name_volume> .inputFieldIcon, .name_colours> .inputFieldIcon, .name_randomLayout> .inputFieldIcon, .name_numberOfClones> .inputFieldIcon, .name_ratios> .inputFieldIcon, .name_efficiency> .inputFieldIcon, .modelOutputContainer> .containerLabel, .visualisationOutputContainer> .containerLabel {
     background-size: cover;
 }
 
 /*lightbulb*/
 
-.name_watts> .inputFieldLabel {
+.name_watts> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/energy.svg);
     background-repeat: no-repeat;
     width: 27px;
     height: 27px;
 }
-.name_count> .inputFieldLabel {
+.name_count> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/LightBulb.svg);
     width: 27px;
     height: 27px;
 }
-.name_time> .inputFieldLabel {
+.name_time> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/time_second.svg);
     width: 27px;
     height: 27px;
 }
-.name_energy> .inputFieldLabel {
+.name_energy> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/energ_j.svg);
     width: 27px;
     height: 27px;
@@ -1165,22 +1120,22 @@ input.ui-colorpicker-hex-input {
 
 /*CO2*/
 
-.name_mass> .inputFieldLabel {
+.name_mass> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/mass_kg.svg);
     width: 27px;
     height: 27px;
 }
-.name_timeToBreathOut> .inputFieldLabel {
+.name_timeToBreathOut> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/time_second.svg);
     width: 27px;
     height: 27px;
 }
-.name_volume_100> .inputFieldLabel {
+.name_volume_100> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/volume_m3.svg);
     width: 27px;
     height: 27px;
 }
-.name_volume_inAir> .inputFieldLabel {
+.name_volume_inAir> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/volume_air.svg);
     width: 27px;
     height: 27px;
@@ -1188,12 +1143,12 @@ input.ui-colorpicker-hex-input {
 
 /*cube*/
 
-.name_density> .inputFieldLabel {
+.name_density> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/volume_air.svg);
     width: 27px;
     height: 27px;
 }
-.name_volume> .inputFieldLabel {
+.name_volume> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/volume_m3.svg);
     width: 27px;
     height: 27px;
@@ -1201,12 +1156,12 @@ input.ui-colorpicker-hex-input {
 
 /*preson*/
 
-.name_number> .inputFieldLabel {
+.name_number> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/person_amuont.svg);
     width: 27px;
     height: 27px;
 }
-.analysis> .inputFieldLabel {
+.analysis> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/analysis.svg);
     width: 27px;
     height: 27px;
@@ -1214,22 +1169,22 @@ input.ui-colorpicker-hex-input {
 
 /*PeopleRationPLay*/
 
-.name_colours> .inputFieldLabel {
+.name_colours> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/color_pick.svg);
     width: 27px;
     height: 27px;
 }
-.name_randomLayout> .inputFieldLabel {
+.name_randomLayout> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/randome.svg);
     width: 27px;
     height: 27px;
 }
-.name_numberOfClones> .inputFieldLabel {
+.name_numberOfClones> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/person_amuont.svg);
     width: 27px;
     height: 27px;
 }
-.name_ratios> .inputFieldLabel, .ratioColor > .inputFieldLabel {
+.name_ratios> .inputFieldIcon, .ratioColor > .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/rations.svg);
     width: 27px;
     height: 27px;
@@ -1239,7 +1194,7 @@ input.ui-colorpicker-hex-input {
 
 /*CPS*/
 
-.name_efficiency> .inputFieldLabel {
+.name_efficiency> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/efficiency.svg);
     width: 27px;
     height: 27px;
@@ -1550,14 +1505,14 @@ input.ui-colorpicker-hex-input {
 .hudItem
 { display: inline-block;
   min-width: 32px;
-  margin-left: 4px;
+  margin-left: 10px;
 }
 .hudCollection
 { height: 32px;
 }
 
-.hudItem.colorPicker, .hudItem.fillManager
-{ height:32px;
+.hudItem.colorPicker, .fillManager.hudItem
+{ height: 32px;
   background-image: url('/static/graphics/thisEquals/svgHUD/colorPicker.png');
   background-size: contain;
   background-repeat: no-repeat;
@@ -1580,15 +1535,102 @@ path.highlight, .highlight path
   animation-iteration-count:  infinite;
 }
 
-.spectrumAlphaOnly .sp-fill, .spectrumAlphaOnly .sp-top-inner, .spectrumAlphaOnly .sp-button-container 
+.spectrumAlphaOnly .sp-fill, .spectrumAlphaOnly .sp-top-inner, .spectrumAlphaOnly .sp-button-container
 { display: none;
 }
 
 .sp-palette-container
 { width: 100px;
 }
+.sp-color, .sp-hue, .sp-clear {
+  border-radius: 3px;
+  -webkit-box-shadow: 0px 3px 5px rgba(0, 0, 0, .5);
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, .5);
+}
+.sp-dragger {
+  border: 1px solid rgba(255, 255, 255, .6);
+  background: rgba(0,0,0, .5);
+}
+.sp-slider {
+  top: 7px;
+  height: 7px;
+  border: 1px solid rgba(255, 255, 255, .8);
+  background: rgba(0, 0, 0, .5);
+  opacity: 1;
+  border-radius: 3px;
+}
 
-.ratioColorTotal .sp-replacer 
+.sp-container button, .sp-cancel {
+  text-shadow: none;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  border: none;
+  border-radius: 2px;
+  position: relative;
+  padding: 10px 15px;
+  margin: 10px 1px;
+  font-size: 16px;
+  font-weight: 100;
+  font-family: Roboto;
+  letter-spacing: 0;
+  will-change: box-shadow, transform;
+  -webkit-transition: -webkit-box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: 0;
+  cursor: pointer;
+  color: #fff;
+  text-decoration: none;
+  background: #2abfc9;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+.sp-container button:hover {
+  background: #2abfc9;
+  text-shadow: none;
+  border: none;
+}
+.sp-container, .sp-picker-container, .sp-palette-container, .sp-alpha-inner, .sp-alpha-handle, .sp-color, .sp-hue, .sp-clear {
+  border: none;
+}
+.sp-container {
+  border-radius: 3px;
+  background: #fff;
+  -webkit-box-shadow: 0px 4px 10px rgba(0,0,0, .5);
+  box-shadow: 0px 4px 10px rgba(0,0,0, .5);
+}
+.sp-picker-container, .sp-palette-container {
+  margin-bottom: -285px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.sp-preview, .sp-alpha, .sp-thumb-el {
+  background: #9E9E9E;
+}
+.sp-alpha {
+  height: 1px;
+}
+.sp-alpha-handle {
+  top: -9px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  opacity: 1;
+  background: #2abfc9;
+}
+.ratioColorTotal .sp-replacer
 { background-color: transparent;
   border-color: transparent;
 }
@@ -1640,7 +1682,7 @@ path.highlight, .highlight path
 .ratioColor > .closeBox
 { height: 10px;
   width: 10px;
-  
+
   position: absolute;
   right: 0px;
 
@@ -1652,7 +1694,7 @@ path.highlight, .highlight path
 
   text-align: center;
 
-  display: flex; 
+  display: flex;
   align-items: center;
   justify-content: center;
 
