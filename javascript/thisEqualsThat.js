@@ -230,7 +230,9 @@ console.log("yogi 2 ", ajaxOptions.url);
         }
       ).data("modelClass", this)
        .append( $('<h3>' + this.name + '</h3>' ).addClass('modelDesc') )
-       .append( $("<img />", { src: this.imageURL } ).addClass('modelImg') );
+       .append( $("<img />", { src: this.imageURL } ).addClass('modelImg') )
+       .attr('data-step', '2')
+       .attr('data-intro', 'choose model');
 
   }
   this.ModelClass.prototype.imageBaseURL =  "/static/graphics/thisEquals/modelClasses/";
@@ -3008,11 +3010,10 @@ $().ready(
 
 $().ready(function(){
 
-
-
     $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>')
-             .append('<div class="open-menu"></div>');
-    $('body').append('<button class="hamburger hamburger--spin-r" type="button" aria-label="Menu" aria-controls="navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>');
+             .append('<div class="open-menu"></div>')
+             .append('<div class="guid">Show me how</div');
+    $('body').append('<button class="hamburger hamburger--spin-r" type="button" aria-label="Menu" aria-controls="navigation" data-step="1" data-intro="Click on menu hamburger!"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>');
 
     $.fn.coloPick = function() {
         console.info('CP created');
@@ -3031,7 +3032,9 @@ $().ready(function(){
 
 
 
-
+    $('.guid').on('click', function () {
+      introJs().start();
+    });
     $('.hamburger').on('click', function() {
 
         var menuBtn = $(this),
@@ -3088,6 +3091,8 @@ function showMenu(b, w, o) {
 
 $('head').append('<script src="https://use.fontawesome.com/cee7f18682.js"></script>');
 $('head').append('<script src="/static/javascript/jquery.ui.touch-punch.min.js"></script>');
+$('head').append('<script src="/static/javascript/intro.min.js"></script>');
 $('head').append('<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">');
 $('head').find('link[href="//static/pylons.css"]').attr('href', '/static/pylons.css');
 $('head').append('<link rel="stylesheet" href="/static/css/menu.css" type="text/css" media="screen" charset="utf-8">');
+$('head').append('<link rel="stylesheet" href="/static/css/introjs.min.css" type="text/css" media="screen" charset="utf-8">');
