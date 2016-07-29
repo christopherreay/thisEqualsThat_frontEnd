@@ -79,7 +79,7 @@ div.bottomModelDiv {
     cursor: pointer;
     color: #fff;
     text-decoration: none;
-    background: #2196F3;
+    background: #23becc;
     -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
@@ -615,6 +615,7 @@ input.svgTextDescription {
     border-top: 0;
     border-right: 0;
     border-left: 0;
+    outline: none;
     margin-top: 0;
     margin-bottom: 20px;
     text-align: left;
@@ -625,11 +626,11 @@ input.svgTextDescription {
     transition: all .3s;
 }
 input.svgTextDescription:hover {
-    border-color: rgba(33, 150, 243, .5);
+    border-color: rgba(35, 190, 204, .5);
 }
 input.svgTextDescription:focus {
-    color: #0091EA;
-    border-color: rgba(33, 150, 243, 1);
+    color: #424242;
+    border-color: rgba(35, 190, 204, 1);
 }
 .svgSaveLink {
   border-radius: 50%;
@@ -639,7 +640,7 @@ input.svgTextDescription:focus {
   float: right;
   margin-top: 3px;
   padding: 0;
-  background-color: #2196F3;
+  background-color: #23becc;
   background-image: url(../graphics/thisEquals/icons/save_svg.svg);
   background-size: 20px;
   background-repeat: no-repeat;
@@ -695,7 +696,7 @@ div.customSVGPaneSubmitButton {
     height: 40px;
     border-radius: 50%;
     padding: 0;
-    background-color: #2196F3;
+    background-color: #23becc;
     background-image: url(../graphics/thisEquals/icons/upload_svg.svg);
     background-size: 25px;
     background-repeat: no-repeat;
@@ -791,7 +792,7 @@ div.googleConnect.ui-draggable-dragging {
     left: 0;
     width: 100%;
     color: #fff;
-    background: #2196F3;
+    background: #23becc;
     padding: 5px 5px 5px 20px;
 }
 .googleConnect> .custom_svgNameInput {
@@ -802,12 +803,12 @@ div.googleConnect.ui-draggable-dragging {
 a.googleConnect_loginButton {
     text-decoration: none;
     color: rgba(255, 255, 255, 0.9);
-    background: rgba(33, 150, 243, .8);
+    background: rgba(35, 190, 204, .8);
 }
 a.googleConnect_loginButton:hover {
     text-decoration: none;
     color: rgba(255, 255, 255, 1);
-    background: rgba(33, 150, 243, 1);
+    background: rgba(35, 190, 204, 1);
 }
 .googleConnect> input.spreadsheetURL {
     width: 90%;
@@ -865,10 +866,10 @@ input.checkbox {
     opacity: 0.2;
 }
 .checkbox:checked+ .checkbox_ui .check {
-    border-color: #2196F3;
+    border-color: #23becc;
 }
 .checkbox:checked+ .checkbox_ui .fa {
-    color: #2196F3;
+    color: #23becc;
     opacity: 1;
 }
 .toggleFeatures .fa {
@@ -1062,7 +1063,7 @@ input.ui-colorpicker-hex-input {
     cursor: pointer;
     color: #fff;
     text-decoration: none;
-    background: #2196F3;
+    background: #23becc;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 .ui-dialog .ui-dialog-buttonpane button:hover {
@@ -1549,6 +1550,7 @@ path.highlight, .highlight path
   opacity: 1;
   border-radius: 3px;
 }
+
 .sp-container button, .sp-cancel {
   text-shadow: none;
   display: inline-block;
@@ -1582,12 +1584,12 @@ path.highlight, .highlight path
   cursor: pointer;
   color: #fff;
   text-decoration: none;
-  background: #2196F3;
+  background: #23becc;
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 .sp-container button:hover {
-  background: #2196F3;
+  background: #23becc;
   text-shadow: none;
   border: none;
 }
