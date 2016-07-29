@@ -498,6 +498,7 @@ input.inputFieldText[type=text] {
     border-top: 0;
     border-right: 0;
     border-left: 0;
+    outline: none;
     width: 130px;
     text-align: right;
     font-family: Roboto;
@@ -520,6 +521,7 @@ div.modelOutputContainer> select {
     border-top: 0;
     border-right: 0;
     border-left: 0;
+    outline: none;
     text-align: right;
     font-family: Roboto;
     font-size: 15px;
@@ -532,6 +534,7 @@ div.visualisationOutputContainer select {
     border-top: 0;
     border-right: 0;
     border-left: 0;
+    outline: none;
     text-align: right;
     font-family: Roboto;
     font-size: 15px;
@@ -554,6 +557,7 @@ div.bottomModelSelectDiv select {
     border-top: 0;
     border-right: 0;
     border-left: 0;
+    outline: none;
     width: 100%;
     text-align: right;
     font-family: Roboto;
@@ -576,6 +580,7 @@ div.visualisationOutputContainer select {
     border-top: 0;
     border-right: 0;
     border-left: 0;
+    outline: none;
     text-align: right;
     font-family: Roboto;
     font-size: 15px;
