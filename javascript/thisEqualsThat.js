@@ -2584,7 +2584,7 @@ console.log("yogi 2 ", ajaxOptions.url);
     }
     if (fieldType == "slider")
     { this.data.currentValue = newValue;
-      this.ifaUpdatesControl_slider();
+      this.slider_ifaUpdatesCurrentValue();
     }
   }
   this.ModelFieldInput.prototype.inputFieldAltered = function()
@@ -2747,8 +2747,19 @@ console.log("yogi 2 ", ajaxOptions.url);
       uiSlider    .data("thisEquals.modelField", this);
 
       uiValue_slider.val(fieldData.defaultValue);
-      uiValue_slider .data("thisEquals.modelField", this);
-      uiValue_slider.on("change", this.userUpdatesSliderText);
+      uiValue_slider.data("thisEquals.modelField", this);
+      uiValue_slider
+          .on
+          ( "change", 
+            function()
+            { var $this = $(this);
+              var modelField = $this.data("thisEquals.modelField");
+              modelField.data.currentValue = $this.val();
+              modelField.slider_userUpdatesText()
+
+              modelField.inputFieldAltered();
+            }
+          );
 
       this.uiValue_slider   = uiValue_slider;
       this.uiSlider         = uiSlider;
@@ -2772,12 +2783,12 @@ console.log("yogi 2 ", ajaxOptions.url);
         slide: function(event, ui)
           {
             This.currentValue = ui.value;
-            This.sliderUpdatesValueText;
+            This.slider_sliderUpdatesText;
         },
         change: function(event, ui)
           { if (! event.originalEvent) return true;
             This.currentValue = ui.value;
-            This.sliderUpdatesValueText;
+            This.slider_sliderUpdatesText;
             This.inputFieldAltered();
         }
       };
@@ -2806,13 +2817,13 @@ console.log("yogi 2 ", ajaxOptions.url);
         value: this.actualToSlider(fieldData.currentValue),
         slide: function(event, ui)
           { This.data.currentValue = This.logSliderToValue(ui.value);
-            This.sliderUpdatesValueText();
+            This.slider_sliderUpdatesText();
           },
         change: function(event, ui)
           { if (! event.originalEvent) return true;
 
             This.data.currentValue = This.logSliderToValue(ui.value);
-            This.sliderUpdatesValueText();
+            This.slider_sliderUpdatesText();
 
             This.inputFieldAltered();
           }
@@ -2837,27 +2848,15 @@ console.log("yogi 2 ", ajaxOptions.url);
     return toReturn;
   }
 
-  this.ModelFieldInput.prototype.ifaUpdatesControl_slider = function(actual)
+  this.ModelFieldInput.prototype.slider_ifaUpdatesCurrentValue = function(newValue)
+  { this.slider_sliderUpdatesText();
+    this.slider_userUpdatesText();
+  }
+  this.ModelFieldInput.prototype.slider_userUpdatesText = function()
+  { this.uiSlider.slider("option", "value", this.actualToSlider());
+  }
+  this.ModelFieldInput.prototype.slider_sliderUpdatesText = function(slideOrChange)
   { this.uiValue_slider.val(Number(this.data.currentValue).toPrecision(5));
-    this.userUpdatesValueText();
-  }
-  this.ModelFieldInput.prototype.userUpdatesValueText = function()
-  { this.data.currentValue = this.uiValue_slider.val();
-
-    this.disableUpdateOfText = true;
-    this.uiSlider.slider("option", "value", this.actualToSlider());
-    //this.uiSlider.val(this.actualToSlider()).slider("refresh");
-  }
-  this.ModelFieldInput.prototype.sliderUpdatesValueText = function(slideOrChange)
-  { if (this.disableUpdateOfText)
-    { this.disableUpdateOfText = false;
-      return;
-    }
-
-    $this = $(this);
-    $uiValue_slider = $(this.uiValue_slider);
-
-    $uiValue_slider.val(Number(this.data.currentValue).toPrecision(5));
   }
 
   this.ModelFieldOutput = function(modelInstance, fieldData)
