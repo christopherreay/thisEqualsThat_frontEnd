@@ -2387,7 +2387,7 @@ console.log("yogi 2 ", ajaxOptions.url);
                     { transform = this.getAttribute("svgHUD_initial_transform");
                     }
 
-                    var translate = transform.match(/^translate\(([-]?\d+[.]?\d*)\s*([-]?\d+[.]?\d*)\)$/);
+                    var translate = transform.match(/^translate\(([-]?\d+[.]?\d*)\s*\,\s*([-]?\d+[.]?\d*)\)$/);
                     var newX = Number(translate[1]) + changeX;
                     var newY = Number(translate[2]) + changeY;
                     var newTranslate = "translate("+newX+" "+newY+")";
