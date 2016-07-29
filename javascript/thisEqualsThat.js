@@ -2604,12 +2604,9 @@ console.log("yogi 2 ", ajaxOptions.url);
          .addClass("type_"        + this.data.fieldType)
          .addClass("name_"        + this.data.name)
          .addClass("unit_"        + this.data.unit);
-// // <<<<<<< HEAD
-//      $("<h3/>").text(this.simpleName).appendTo(uiElement);
-// // =======
-//      $("<h3/>").text(this.simpleName).appendTo(uiElement.find(".inputFieldLabel") );
-// // >>>>>>> master
-//     //  ;
+        //  $("<h3/>").text(this.simpleName).appendTo(uiElement);
+         $("<h3/>").text(this.simpleName).appendTo(uiElement.find(".inputFieldLabel") );
+
     }
     return this.uiElement;
   }
@@ -2621,9 +2618,9 @@ console.log("yogi 2 ", ajaxOptions.url);
           { "class": "inputFieldElement"
           }
         );
-      var uiLabelBg =
+      var uiLabelIcon =
         $("<div />",
-          { "class": "inputFieldLabelBg"
+          { "class": "inputFieldIcon"
           }
         );
       var uiLabel =
@@ -2648,7 +2645,7 @@ console.log("yogi 2 ", ajaxOptions.url);
 
     this.uiValue_select = select;
 
-    this.uiElement.append(uiLabelBg);
+    this.uiElement.append(uiLabelIcon);
     this.uiElement.append(uiLabel);
     this.uiElement.append(this.uiValue_select);
 
@@ -2671,9 +2668,9 @@ console.log("yogi 2 ", ajaxOptions.url);
           { "class": "inputFieldElement"
           }
         );
-      var uiLabelBg =
+      var uiLabelIcon =
         $("<div />",
-          { "class": "inputFieldLabelBg"
+          { "class": "inputFieldIcon"
           }
         );
       var uiLabel =
@@ -2695,7 +2692,7 @@ console.log("yogi 2 ", ajaxOptions.url);
       uiValue_text.on("change", this, this.inputField_text_changeFunction);
       this.uiValue_text  = uiValue_text;
 
-      this.uiElement.append(uiLabelBg);
+      this.uiElement.append(uiLabelIcon);
       this.uiElement.append(uiLabel);
       this.uiElement.append(uiValue_text);
 
@@ -2723,16 +2720,16 @@ console.log("yogi 2 ", ajaxOptions.url);
           { "class": "inputFieldElement"
           }
         );
-      var uiLabelBg =
+      var uiLabelIcon =
         $("<div />",
-          { "class": "inputFieldLabelBg"
+          { "class": "inputFieldIcon"
           }
         );
       var uiLabel =
         $("<div />",
           { "class": "inputFieldLabel"
           }
-        ).append(this.simpleName);
+        );
       var uiValue_slider =
         $("<input />",
           { "class": "inputFieldText",
@@ -2753,7 +2750,7 @@ console.log("yogi 2 ", ajaxOptions.url);
       this.uiValue_slider   = uiValue_slider;
       this.uiSlider         = uiSlider;
 
-      this.uiElement.append(uiLabelBg);
+      this.uiElement.append(uiLabelIcon);
       this.uiElement.append(uiLabel);
       this.uiElement.append(this.uiValue_slider);
       this.uiElement.append(uiSlider);

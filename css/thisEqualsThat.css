@@ -79,7 +79,7 @@ div.bottomModelDiv {
     cursor: pointer;
     color: #fff;
     text-decoration: none;
-    background: #23becc;
+    background: #2abfc9;
     -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
@@ -386,7 +386,7 @@ div.inputFieldElement {
     min-height: 32px;
 }
 
-/*.inputFieldLabelBg > h3 {
+/*.inputFieldIcon > h3 {
     position: absolute;
     bottom: 0px;
     left: 130%;
@@ -411,7 +411,7 @@ div.inputFieldElement {
     -webkit-transition-delay: 0.3s;
     transition-delay: 0.3s;
 }
-.inputFieldLabelBg:hover > h3 {
+.inputFieldIcon:hover > h3 {
     opacity: 0.9;
     left: 10%;
     visibility: visible;
@@ -456,7 +456,10 @@ div.inputFieldLabel {
     -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
     transition: all .3s cubic-bezier(.4,0,.2,1);
 }
-div.inputFieldLabelBg {
+div.inputFieldLabel > h3 {
+    margin: 0;
+}
+div.inputFieldIcon {
     float: left;
     padding-top: 3px;
     font-size: 16px;
@@ -477,15 +480,15 @@ div.inputFieldSlider> .ui-state-default {
     height: 20px;
     border-radius: 50%;
     top: -10px;
-    background: #23becc;
+    background: #2abfc9;
     border: 0;
     outline: none;
 }
 div.inputFieldSlider .ui-slider-range {
-    background: #23becc;
+    background: #2abfc9;
 }
 div.inputFieldSlider .ui-slider-handle
-{ background: #23becc;
+{ background: #2abfc9;
 }
 
 input.inputFieldText[type=text] {
@@ -626,11 +629,11 @@ input.svgTextDescription {
     transition: all .3s;
 }
 input.svgTextDescription:hover {
-    border-color: rgba(35, 190, 204, .5);
+    border-color: rgba(42, 191, 201, .5);
 }
 input.svgTextDescription:focus {
     color: #424242;
-    border-color: rgba(35, 190, 204, 1);
+    border-color: rgba(42, 191, 201, 1);
 }
 .svgSaveLink {
   border-radius: 50%;
@@ -640,7 +643,7 @@ input.svgTextDescription:focus {
   float: right;
   margin-top: 3px;
   padding: 0;
-  background-color: #23becc;
+  background-color: #2abfc9;
   background-image: url(../graphics/thisEquals/icons/save_svg.svg);
   background-size: 20px;
   background-repeat: no-repeat;
@@ -696,7 +699,7 @@ div.customSVGPaneSubmitButton {
     height: 40px;
     border-radius: 50%;
     padding: 0;
-    background-color: #23becc;
+    background-color: #2abfc9;
     background-image: url(../graphics/thisEquals/icons/upload_svg.svg);
     background-size: 25px;
     background-repeat: no-repeat;
@@ -792,7 +795,7 @@ div.googleConnect.ui-draggable-dragging {
     left: 0;
     width: 100%;
     color: #fff;
-    background: #23becc;
+    background: #2abfc9;
     padding: 5px 5px 5px 20px;
 }
 .googleConnect> .custom_svgNameInput {
@@ -803,12 +806,12 @@ div.googleConnect.ui-draggable-dragging {
 a.googleConnect_loginButton {
     text-decoration: none;
     color: rgba(255, 255, 255, 0.9);
-    background: rgba(35, 190, 204, .8);
+    background: rgba(42, 191, 201, .8);
 }
 a.googleConnect_loginButton:hover {
     text-decoration: none;
     color: rgba(255, 255, 255, 1);
-    background: rgba(35, 190, 204, 1);
+    background: rgba(42, 191, 201, 1);
 }
 .googleConnect> input.spreadsheetURL {
     width: 90%;
@@ -866,10 +869,10 @@ input.checkbox {
     opacity: 0.2;
 }
 .checkbox:checked+ .checkbox_ui .check {
-    border-color: #23becc;
+    border-color: #2abfc9;
 }
 .checkbox:checked+ .checkbox_ui .fa {
-    color: #23becc;
+    color: #2abfc9;
     opacity: 1;
 }
 .toggleFeatures .fa {
@@ -1063,7 +1066,7 @@ input.ui-colorpicker-hex-input {
     cursor: pointer;
     color: #fff;
     text-decoration: none;
-    background: #23becc;
+    background: #2abfc9;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 .ui-dialog .ui-dialog-buttonpane button:hover {
@@ -1081,29 +1084,29 @@ input.ui-colorpicker-hex-input {
 
 
 
-.name_watts> .inputFieldLabelBg, .name_count> .inputFieldLabelBg, .name_time> .inputFieldLabelBg, .name_energy> .inputFieldLabelBg, .name_mass> .inputFieldLabelBg, .name_timeToBreathOut> .inputFieldLabelBg, .name_volume_100> .inputFieldLabelBg, .name_volume_inAir> .inputFieldLabelBg, .name_number> .inputFieldLabelBg, .name_density> .inputFieldLabelBg, .name_volume> .inputFieldLabelBg, .name_colours> .inputFieldLabelBg, .name_randomLayout> .inputFieldLabelBg, .name_numberOfClones> .inputFieldLabelBg, .name_ratios> .inputFieldLabelBg, .name_efficiency> .inputFieldLabelBg, .modelOutputContainer> .containerLabel, .visualisationOutputContainer> .containerLabel {
+.name_watts> .inputFieldIcon, .name_count> .inputFieldIcon, .name_time> .inputFieldIcon, .name_energy> .inputFieldIcon, .name_mass> .inputFieldIcon, .name_timeToBreathOut> .inputFieldIcon, .name_volume_100> .inputFieldIcon, .name_volume_inAir> .inputFieldIcon, .name_number> .inputFieldIcon, .name_density> .inputFieldIcon, .name_volume> .inputFieldIcon, .name_colours> .inputFieldIcon, .name_randomLayout> .inputFieldIcon, .name_numberOfClones> .inputFieldIcon, .name_ratios> .inputFieldIcon, .name_efficiency> .inputFieldIcon, .modelOutputContainer> .containerLabel, .visualisationOutputContainer> .containerLabel {
     background-size: cover;
 }
 
 /*lightbulb*/
 
-.name_watts> .inputFieldLabelBg {
+.name_watts> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/energy.svg);
     background-repeat: no-repeat;
     width: 27px;
     height: 27px;
 }
-.name_count> .inputFieldLabelBg {
+.name_count> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/LightBulb.svg);
     width: 27px;
     height: 27px;
 }
-.name_time> .inputFieldLabelBg {
+.name_time> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/time_second.svg);
     width: 27px;
     height: 27px;
 }
-.name_energy> .inputFieldLabelBg {
+.name_energy> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/energ_j.svg);
     width: 27px;
     height: 27px;
@@ -1111,22 +1114,22 @@ input.ui-colorpicker-hex-input {
 
 /*CO2*/
 
-.name_mass> .inputFieldLabelBg {
+.name_mass> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/mass_kg.svg);
     width: 27px;
     height: 27px;
 }
-.name_timeToBreathOut> .inputFieldLabelBg {
+.name_timeToBreathOut> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/time_second.svg);
     width: 27px;
     height: 27px;
 }
-.name_volume_100> .inputFieldLabelBg {
+.name_volume_100> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/volume_m3.svg);
     width: 27px;
     height: 27px;
 }
-.name_volume_inAir> .inputFieldLabelBg {
+.name_volume_inAir> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/volume_air.svg);
     width: 27px;
     height: 27px;
@@ -1134,12 +1137,12 @@ input.ui-colorpicker-hex-input {
 
 /*cube*/
 
-.name_density> .inputFieldLabelBg {
+.name_density> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/volume_air.svg);
     width: 27px;
     height: 27px;
 }
-.name_volume> .inputFieldLabelBg {
+.name_volume> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/volume_m3.svg);
     width: 27px;
     height: 27px;
@@ -1147,12 +1150,12 @@ input.ui-colorpicker-hex-input {
 
 /*preson*/
 
-.name_number> .inputFieldLabelBg {
+.name_number> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/person_amuont.svg);
     width: 27px;
     height: 27px;
 }
-.analysis> .inputFieldLabelBg {
+.analysis> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/analysis.svg);
     width: 27px;
     height: 27px;
@@ -1160,22 +1163,22 @@ input.ui-colorpicker-hex-input {
 
 /*PeopleRationPLay*/
 
-.name_colours> .inputFieldLabelBg {
+.name_colours> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/color_pick.svg);
     width: 27px;
     height: 27px;
 }
-.name_randomLayout> .inputFieldLabelBg {
+.name_randomLayout> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/randome.svg);
     width: 27px;
     height: 27px;
 }
-.name_numberOfClones> .inputFieldLabelBg {
+.name_numberOfClones> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/person_amuont.svg);
     width: 27px;
     height: 27px;
 }
-.name_ratios> .inputFieldLabelBg, .ratioColor > .inputFieldLabelBg {
+.name_ratios> .inputFieldIcon, .ratioColor > .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/rations.svg);
     width: 27px;
     height: 27px;
@@ -1185,7 +1188,7 @@ input.ui-colorpicker-hex-input {
 
 /*CPS*/
 
-.name_efficiency> .inputFieldLabelBg {
+.name_efficiency> .inputFieldIcon {
     background-image: url(/static/graphics/thisEquals/icons/efficiency.svg);
     width: 27px;
     height: 27px;
@@ -1584,12 +1587,12 @@ path.highlight, .highlight path
   cursor: pointer;
   color: #fff;
   text-decoration: none;
-  background: #23becc;
+  background: #2abfc9;
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 .sp-container button:hover {
-  background: #23becc;
+  background: #2abfc9;
   text-shadow: none;
   border: none;
 }
@@ -1619,7 +1622,7 @@ path.highlight, .highlight path
   height: 18px;
   border-radius: 50%;
   opacity: 1;
-  background: #23becc;
+  background: #2abfc9;
 }
 .ratioColorTotal .sp-replacer
 { background-color: transparent;
