@@ -446,19 +446,19 @@ div.inputFieldElement> select {
 }
 div.inputFieldElement:hover div.inputFieldLabel {
     position: absolute;
-    top: -38px;
+    top: -15px;
     left: 104%;
     z-index: 999;
     opacity: 1;
 }
 div.inputFieldLabel {
     position: absolute;
-    top: -38px;
+    top: -15px;
     left: 120%;
     width: inherit;
     background: #ECEFF1;
     color: rgba(0,0,0,0.87);
-    padding: 20px;
+    padding: 15px;
     border-radius: 3px;
     opacity: 0;
     -webkit-box-shadow: 0px 3px 7px rgba(0, 0, 0, .6);
@@ -468,13 +468,13 @@ div.inputFieldLabel {
 }
 div.inputFieldLabel > h3 {
     margin: 0;
+    font-weight: 400;
 }
 div.inputFieldIcon {
     float: left;
     padding-top: 3px;
     font-size: 16px;
     margin-bottom: 10px;
-
     background-repeat: no-repeat;
 }
 div.inputFieldSlider {

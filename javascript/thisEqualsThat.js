@@ -3033,10 +3033,12 @@ $().ready(function(){
 
 
     $('.guid').on('click', function () {
-      introJs().setOption({
-        'showProgress': true,
-        'tooltipPosition': 'auto'
-      }).start();
+      var tour = introJs()
+      introJs()
+      .setOption('showProgress', true)
+      .setOption('tooltipPosition', 'auto')
+      .setOption('positionPrecedence', ['left', 'right', 'bottom', 'top'])
+      .start();
     });
     $('.hamburger').on('click', function() {
 
