@@ -26,8 +26,8 @@ body::scrollbar {
 }
 .guid {
   position: fixed;
-  top: 10px;
-  right: 10px;
+  top: 8px;
+  left: 100px;
   background: #fff;
   padding: 20px;
   border-radius: 3px;
