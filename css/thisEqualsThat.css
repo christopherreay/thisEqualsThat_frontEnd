@@ -4,7 +4,7 @@
 { display: none !important;
 }
 
-html, body {
+html {
     height: 100%;
 }
 * { font-family: Roboto; }
@@ -14,6 +14,7 @@ body {
     background: #EEEEEE;
     padding-bottom: 50px;
     margin: 0;
+    min-height: 100%;
 }
 body.open {
     overflow: hidden;
@@ -120,6 +121,7 @@ div.bottomModelDiv {
     height: 52px;
 }
 div.copyrightContainer {
+    position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -444,6 +446,7 @@ div.inputFieldElement> select {
     border-bottom: 0;
     outline: none;
 }
+
 div.inputFieldElement:hover div.inputFieldLabel {
     position: absolute;
     top: -15px;
@@ -455,7 +458,7 @@ div.inputFieldLabel {
     position: absolute;
     top: -15px;
     left: 120%;
-    width: inherit;
+    white-space: nowrap;
     background: #ECEFF1;
     color: rgba(0,0,0,0.87);
     padding: 15px;
@@ -469,13 +472,13 @@ div.inputFieldLabel {
 div.inputFieldLabel > h3 {
     margin: 0;
     font-weight: 400;
+    font-size: 16px;
 }
 div.inputFieldIcon {
     float: left;
     padding-top: 3px;
     font-size: 16px;
     margin-bottom: 10px;
-
     background-repeat: no-repeat;
 }
 div.inputFieldSlider {
