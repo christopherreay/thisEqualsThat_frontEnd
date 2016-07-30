@@ -3012,7 +3012,7 @@ $().ready(function(){
 
 
 
-    // new Squire({replace: 'textarea#textEditor', height: 300});
+    new Squire({replace: 'textarea#textEditor', height: 300});
 
 
     $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>')
