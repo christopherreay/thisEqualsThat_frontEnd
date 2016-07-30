@@ -1401,7 +1401,6 @@ console.log("yogi 2 ", ajaxOptions.url);
         .attr("x", internalSize.x)
         .attr("y", internalSize.y + internalSize.height + px20Height)
         .attr("font-size", (px20Height)+"px")
-        .append('<input type="text" />')
         .on('click', function () {
           var editor = new wysihtml5.Editor("textEditor", {
              toolbar:        "toolbar",
@@ -3017,14 +3016,18 @@ $().ready(function(){
 
 
     $('body').append('<div id="toolbar" style="display: none;">' +
-                        '<a data-wysihtml5-command="bold">bold</a>' +
-                        '<a data-wysihtml5-command="italic">italic</a>' +
+            '<a data-wysihtml5-command="bold">' + '<i class="fa fa-bold" aria-hidden="true"></i>' + '</a>' +
+            '<a data-wysihtml5-command="italic">' + '<i class="fa fa-italic" aria-hidden="true"></i>' + '</a>' +
 
-                        '<a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="red">red</a>' +
-                        '<a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="green">green</a>' +
-                        '<a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="blue">blue</a>' +
+            '<a data-wysihtml5-command="createLink">' + '<i class="fa fa-link" aria-hidden="true"></i>' + '</a>' +
+            '<a data-wysihtml5-command="insertImage">'  + '<i class="fa fa-file-image-o" aria-hidden="true"></i>' + '</a>' +
 
-                        '<a data-wysihtml5-command="createLink">insert link</a>' +
+            '<a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" unselectable="on">h1</a>' +
+            '<a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" unselectable="on">h2</a>' +
+
+            '<a data-wysihtml5-command="insertUnorderedList" unselectable="on">' + '<i class="fa fa-list-ul" aria-hidden="true"></i>' + '</a>' +
+            '<a data-wysihtml5-command="insertOrderedList" unselectable="on">' + '<i class="fa fa-list-ol" aria-hidden="true"></i>' + '</a>' +
+
                         '<div data-wysihtml5-dialog="createLink" style="display: none;">' +
                           '<label>' +
                             'Link:' +
