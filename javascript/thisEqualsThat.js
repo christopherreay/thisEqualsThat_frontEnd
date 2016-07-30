@@ -1401,10 +1401,12 @@ console.log("yogi 2 ", ajaxOptions.url);
         .attr("x", internalSize.x)
         .attr("y", internalSize.y + internalSize.height + px20Height)
         .attr("font-size", (px20Height)+"px")
+        .append('<input type="text" />')
         .on('click', function () {
-            tinymce.init({
-              selector: '#textEditor'
-            });
+          var editor = new wysihtml5.Editor("textEditor", {
+             toolbar:        "toolbar",
+             parserRules:    wysihtml5ParserRules
+           });
         });
 
         //.attr("transform", "scale(")
@@ -3014,7 +3016,24 @@ $().ready(
 $().ready(function(){
 
 
-    $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>')
+    $('body').append('<div id="toolbar" style="display: none;">' +
+                        '<a data-wysihtml5-command="bold">bold</a>' +
+                        '<a data-wysihtml5-command="italic">italic</a>' +
+
+                        '<a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="red">red</a>' +
+                        '<a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="green">green</a>' +
+                        '<a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="blue">blue</a>' +
+
+                        '<a data-wysihtml5-command="createLink">insert link</a>' +
+                        '<div data-wysihtml5-dialog="createLink" style="display: none;">' +
+                          '<label>' +
+                            'Link:' +
+                            '<input data-wysihtml5-dialog-field="href" value="http://" class="text">' +
+                          '</label>' +
+                          '<a data-wysihtml5-dialog-action="save">OK</a> <a data-wysihtml5-dialog-action="cancel">Cancel</a>' +
+                        '</div>' +
+                      '</div>')
+             .append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>')
              .append('<div class="open-menu"></div>')
              .append('<div class="guid">Show me how</div');
     $('body').append('<button class="hamburger hamburger--spin-r" type="button" aria-label="Menu" aria-controls="navigation" data-step="1" data-intro="Click on menu hamburger!"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>');
@@ -3100,8 +3119,8 @@ function showMenu(b, w, o) {
 $('head').append('<script src="https://use.fontawesome.com/cee7f18682.js"></script>');
 $('head').append('<script src="/static/javascript/jquery.ui.touch-punch.min.js"></script>');
 $('head').append('<script src="/static/javascript/intro.min.js"></script>');
-
-$('head').append('<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>');
+$('head').append('<script src="/static/javascript/advanced.js"></script>');
+$('head').append('<script src="/static/javascript/wysihtml5-0.4.0pre.min.js"></script>');
 
 $('head').append('<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">');
 $('head').find('link[href="//static/pylons.css"]').attr('href', '/static/pylons.css');
