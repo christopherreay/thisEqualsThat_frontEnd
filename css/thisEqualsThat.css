@@ -1758,6 +1758,19 @@ body {
   }
 
 /*wysihtml5*/
+div#toolbar {
+    position: fixed;
+    top: 45%;
+    right: 20px;
+    background: #fff;
+    padding: 20px;
+    display: inline-block;
+}
+div#toolbar a {
+    color: #000;
+    margin-right: 10px;
+    text-decoration: none;
+}
 
   .wysiwyg-font-size-smaller {
     font-size: smaller;
