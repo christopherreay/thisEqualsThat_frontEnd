@@ -843,7 +843,6 @@ console.log("yogi 2 ", ajaxOptions.url);
       display.svgOutput             = $("<div class='svgOutput'  />");
 
       display.svgTextInput          = $("<textarea type='text' id='textEditor' class='svgTextDescription' placeholder='Enter Text Description'/>");
-      display.textEditor            = $("<iframe src='/static/document.html' />");
       display.svgSaveLink           = $("<div class='svgSaveLink'   />");
       display.svgModelRoot          = $("<div class='svgModelRoot'  />");
       display.referenceSVG          = $("<div class='referenceSVG'  />");
@@ -865,7 +864,6 @@ console.log("yogi 2 ", ajaxOptions.url);
       var svgTextDescription          = d3.select(containerSVG)     .append("text").attr("id", "svgTextDescription_"+this.id).text("Enter Text Description").node();
       display.svgTextDescription      = svgTextDescription;
 
-
       //display.svgTextDescription.text("Hello World");
       var svgTranslatableG            = d3.select(containerSVG)     .append("g").attr("id", "svgTranslatableG_" +this.id).classed(`id_${this.id}`, true) .node();
 
@@ -882,7 +880,6 @@ console.log("yogi 2 ", ajaxOptions.url);
       display.svgOutput.append(display.svgModelRoot);
 
       display.svgOutput.append(display.svgTextInput);
-      display.svgTextInput.append(display.textEditor);
       display.svgTextInput.on("change", function() { d3.select(display.svgTextDescription).text($(this).val()); This.svg_createSaveLink(This);});
       display.svgModelRoot.append(containerSVG);
       //display.svgOutput.append(display.referenceSVG);
@@ -1403,7 +1400,13 @@ console.log("yogi 2 ", ajaxOptions.url);
     d3.select(modelInstance.display.svgTextDescription)
         .attr("x", internalSize.x)
         .attr("y", internalSize.y + internalSize.height + px20Height)
-        .attr("font-size", (px20Height)+"px");
+        .attr("font-size", (px20Height)+"px")
+        .on('click', function () {
+            tinymce.init({
+              selector: '#textEditor'
+            });
+        });
+
         //.attr("transform", "scale(")
 
 
@@ -3011,10 +3014,6 @@ $().ready(
 $().ready(function(){
 
 
-
-    // new Squire({replace: 'textarea#textEditor', height: 300});
-
-
     $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>')
              .append('<div class="open-menu"></div>')
              .append('<div class="guid">Show me how</div');
@@ -3101,7 +3100,9 @@ function showMenu(b, w, o) {
 $('head').append('<script src="https://use.fontawesome.com/cee7f18682.js"></script>');
 $('head').append('<script src="/static/javascript/jquery.ui.touch-punch.min.js"></script>');
 $('head').append('<script src="/static/javascript/intro.min.js"></script>');
-$('head').append('<script src="/static/squire.js"></script>');
+
+$('head').append('<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>');
+
 $('head').append('<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">');
 $('head').find('link[href="//static/pylons.css"]').attr('href', '/static/pylons.css');
 $('head').append('<link rel="stylesheet" href="/static/css/menu.css" type="text/css" media="screen" charset="utf-8">');
