@@ -1263,6 +1263,12 @@ input.ui-colorpicker-hex-input {
 */
 
 @media screen and (max-width: 959px) {
+   .guid {
+     top: 8px;
+     left: 67px;
+     padding: 8px;
+     font-size: 8px;
+   }
     #top {
       height: 60px;
     }
@@ -1415,6 +1421,16 @@ input.ui-colorpicker-hex-input {
         overflow: hidden;
         -webkit-transition: all .6s cubic-bezier(0.95, -0.09, .35, .95);
         transition: all .6s cubic-bezier(0.95, -0.09, .35, .95);
+    }
+    div.inputFieldLabel {
+        padding: 11px;
+    }
+    div.inputFieldElement:hover div.inputFieldLabel {
+        top: -20px;
+        left: 12%;
+    }
+    div.inputFieldLabel > h3 {
+        font-size: 14px;
     }
     input.svgTextDescription, input.custom_svgNameInput {
         width: 90%;
@@ -1756,6 +1772,8 @@ body {
     -ms-transform-style: preserve-3d;
     transform-style: preserve-3d;
   }
+
+
 
 /*wysihtml5*/
 div#toolbar {
