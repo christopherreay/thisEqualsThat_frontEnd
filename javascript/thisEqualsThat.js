@@ -841,8 +841,31 @@ console.log("yogi 2 ", ajaxOptions.url);
       display.visualisationOutputContainer.append(display.visualisationFieldsSelect);
 
       display.svgOutput             = $("<div class='svgOutput'  />");
+      display.textAreaEditor        = $("<textarea id='textEditor' />");
+      display.textEditorToolbar     = $('<div id="toolbar" style="display: none;">' +
+              '<a data-wysihtml5-command="bold">' + '<i class="fa fa-bold" aria-hidden="true"></i>' + '</a>' +
+              '<a data-wysihtml5-command="italic">' + '<i class="fa fa-italic" aria-hidden="true"></i>' + '</a>' +
 
-      display.svgTextInput          = $("<textarea type='text' id='textEditor' class='svgTextDescription' placeholder='Enter Text Description'/>");
+              '<a data-wysihtml5-command="createLink">' + '<i class="fa fa-link" aria-hidden="true"></i>' + '</a>' +
+              '<a data-wysihtml5-command="insertImage">'  + '<i class="fa fa-file-image-o" aria-hidden="true"></i>' + '</a>' +
+
+              '<a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" unselectable="on">h1</a>' +
+              '<a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" unselectable="on">h2</a>' +
+
+              '<a data-wysihtml5-command="insertUnorderedList" unselectable="on">' + '<i class="fa fa-list-ul" aria-hidden="true"></i>' + '</a>' +
+              '<a data-wysihtml5-command="insertOrderedList" unselectable="on">' + '<i class="fa fa-list-ol" aria-hidden="true"></i>' + '</a>' +
+
+                          '<div data-wysihtml5-dialog="createLink" style="display: none;">' +
+                            '<label>' +
+                              'Link:' +
+                              '<input data-wysihtml5-dialog-field="href" value="http://" class="text">' +
+                            '</label>' +
+                            '<a data-wysihtml5-dialog-action="save">OK</a> <a data-wysihtml5-dialog-action="cancel">Cancel</a>' +
+                          '</div>' +
+                        '</div>');
+
+
+      display.svgTextInput          = $("<textarea type='text' id='' class='svgTextDescription' placeholder='Enter Text Description'/>");
       display.svgSaveLink           = $("<div class='svgSaveLink'   />");
       display.svgModelRoot          = $("<div class='svgModelRoot'  />");
       display.referenceSVG          = $("<div class='referenceSVG'  />");
@@ -878,6 +901,9 @@ console.log("yogi 2 ", ajaxOptions.url);
       display.containerSVG            = containerSVG;
 
       display.svgOutput.append(display.svgModelRoot);
+
+      display.svgOutput.append(display.textAreaEditor);
+      display.svgOutput.append(display.textEditorToolbar);
 
       display.svgOutput.append(display.svgTextInput);
       display.svgTextInput.on("change", function() { d3.select(display.svgTextDescription).text($(this).val()); This.svg_createSaveLink(This);});
@@ -3015,28 +3041,7 @@ $().ready(
 $().ready(function(){
 
 
-    $('body').append('<div id="toolbar" style="display: none;">' +
-            '<a data-wysihtml5-command="bold">' + '<i class="fa fa-bold" aria-hidden="true"></i>' + '</a>' +
-            '<a data-wysihtml5-command="italic">' + '<i class="fa fa-italic" aria-hidden="true"></i>' + '</a>' +
-
-            '<a data-wysihtml5-command="createLink">' + '<i class="fa fa-link" aria-hidden="true"></i>' + '</a>' +
-            '<a data-wysihtml5-command="insertImage">'  + '<i class="fa fa-file-image-o" aria-hidden="true"></i>' + '</a>' +
-
-            '<a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" unselectable="on">h1</a>' +
-            '<a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" unselectable="on">h2</a>' +
-
-            '<a data-wysihtml5-command="insertUnorderedList" unselectable="on">' + '<i class="fa fa-list-ul" aria-hidden="true"></i>' + '</a>' +
-            '<a data-wysihtml5-command="insertOrderedList" unselectable="on">' + '<i class="fa fa-list-ol" aria-hidden="true"></i>' + '</a>' +
-
-                        '<div data-wysihtml5-dialog="createLink" style="display: none;">' +
-                          '<label>' +
-                            'Link:' +
-                            '<input data-wysihtml5-dialog-field="href" value="http://" class="text">' +
-                          '</label>' +
-                          '<a data-wysihtml5-dialog-action="save">OK</a> <a data-wysihtml5-dialog-action="cancel">Cancel</a>' +
-                        '</div>' +
-                      '</div>')
-             .append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>')
+    $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>')
              .append('<div class="open-menu"></div>')
              .append('<div class="guid">Show me how</div');
     $('body').append('<button class="hamburger hamburger--spin-r" type="button" aria-label="Menu" aria-controls="navigation" data-step="1" data-intro="Click on menu hamburger!"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>');
