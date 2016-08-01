@@ -4,7 +4,7 @@
 { display: none !important;
 }
 
-html, body {
+html {
     height: 100%;
 }
 * { font-family: Roboto; }
@@ -14,6 +14,7 @@ body {
     background: #EEEEEE;
     padding-bottom: 50px;
     margin: 0;
+    min-height: 100%;
 }
 body.open {
     overflow: hidden;
@@ -120,6 +121,7 @@ div.bottomModelDiv {
     height: 52px;
 }
 div.copyrightContainer {
+    position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -207,7 +209,7 @@ div.copyrightContainer> p {
   height: 100%;
   margin: 0;
   padding: 0px;
-  padding-top: 90px;
+  padding-top: 80px;
 }
 #modelClassUL::-webkit-scrollbar {
   display: none;
@@ -227,7 +229,7 @@ div.modelClasses {
     transition: all .3s cubic-bezier(.4,0,.2,1);
     overflow: hidden;
 }
-div.modelClasses.active{
+div.modelClasses.active {
     left: 0;
     overflow: visible;
     -webkit-box-shadow: 0 5px 12px rgba(0,0,0, .5);
@@ -302,7 +304,7 @@ div.modelClasses.active{
     right: 0;
 }*/
 .modelClassLI > img {
-    width: 50px;
+    width: 40px;
     -webkit-transform: scale(1);
     transform: scale(1);
     -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
@@ -444,6 +446,7 @@ div.inputFieldElement> select {
     border-bottom: 0;
     outline: none;
 }
+
 div.inputFieldElement:hover div.inputFieldLabel {
     position: absolute;
     top: -15px;
@@ -455,7 +458,7 @@ div.inputFieldLabel {
     position: absolute;
     top: -15px;
     left: 120%;
-    width: inherit;
+    white-space: nowrap;
     background: #ECEFF1;
     color: rgba(0,0,0,0.87);
     padding: 15px;
@@ -469,6 +472,7 @@ div.inputFieldLabel {
 div.inputFieldLabel > h3 {
     margin: 0;
     font-weight: 400;
+    font-size: 16px;
 }
 div.inputFieldIcon {
     float: left;
@@ -1259,6 +1263,12 @@ input.ui-colorpicker-hex-input {
 */
 
 @media screen and (max-width: 959px) {
+   .guid {
+     top: 8px;
+     left: 67px;
+     padding: 8px;
+     font-size: 8px;
+   }
     #top {
       height: 60px;
     }
@@ -1340,17 +1350,6 @@ input.ui-colorpicker-hex-input {
       left: 45px;
       top: 20px;
     }
-    #modelClassUL{
-      padding-top: 80px;
-    }
-    .ripplelink {
-      height: 80px;
-      margin: 0;
-      padding: 20px 0;
-    }
-    .modelClassLI img {
-      width: 40px;
-    }
     div.model_box_ctrl {
       position: relative;
       height: 60px;
@@ -1411,6 +1410,16 @@ input.ui-colorpicker-hex-input {
         overflow: hidden;
         -webkit-transition: all .6s cubic-bezier(0.95, -0.09, .35, .95);
         transition: all .6s cubic-bezier(0.95, -0.09, .35, .95);
+    }
+    div.inputFieldLabel {
+        padding: 11px;
+    }
+    div.inputFieldElement:hover div.inputFieldLabel {
+        top: -20px;
+        left: 12%;
+    }
+    div.inputFieldLabel > h3 {
+        font-size: 14px;
     }
     input.svgTextDescription, input.custom_svgNameInput {
         width: 90%;
@@ -1751,4 +1760,155 @@ body {
     -moz-transform-style: preserve-3d;
     -ms-transform-style: preserve-3d;
     transform-style: preserve-3d;
+  }
+
+
+
+/*wysihtml5*/
+div#toolbar {
+    position: absolute;
+    top: 45%;
+    right: 20px;
+    background: #fff;
+    padding: 20px;
+    display: inline-block;
+}
+div#toolbar a {
+    color: #000;
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+  .wysiwyg-font-size-smaller {
+    font-size: smaller;
+  }
+
+  .wysiwyg-font-size-larger {
+    font-size: larger;
+  }
+
+  .wysiwyg-font-size-xx-large {
+    font-size: xx-large;
+  }
+
+  .wysiwyg-font-size-x-large {
+    font-size: x-large;
+  }
+
+  .wysiwyg-font-size-large {
+    font-size: large;
+  }
+
+  .wysiwyg-font-size-medium {
+    font-size: medium;
+  }
+
+  .wysiwyg-font-size-small {
+    font-size: small;
+  }
+
+  .wysiwyg-font-size-x-small {
+    font-size: x-small;
+  }
+
+  .wysiwyg-font-size-xx-small {
+    font-size: xx-small;
+  }
+
+  .wysiwyg-color-black {
+    color: black;
+  }
+
+  .wysiwyg-color-silver {
+    color: silver;
+  }
+
+  .wysiwyg-color-gray {
+    color: gray;
+  }
+
+  .wysiwyg-color-white {
+    color: white;
+  }
+
+  .wysiwyg-color-maroon {
+    color: maroon;
+  }
+
+  .wysiwyg-color-red {
+    color: red;
+  }
+
+  .wysiwyg-color-purple {
+    color: purple;
+  }
+
+  .wysiwyg-color-fuchsia {
+    color: fuchsia;
+  }
+
+  .wysiwyg-color-green {
+    color: green;
+  }
+
+  .wysiwyg-color-lime {
+    color: lime;
+  }
+
+  .wysiwyg-color-olive {
+    color: olive;
+  }
+
+  .wysiwyg-color-yellow {
+    color: yellow;
+  }
+
+  .wysiwyg-color-navy {
+    color: navy;
+  }
+
+  .wysiwyg-color-blue {
+    color: blue;
+  }
+
+  .wysiwyg-color-teal {
+    color: teal;
+  }
+
+  .wysiwyg-color-aqua {
+    color: aqua;
+  }
+
+  .wysiwyg-text-align-right {
+    text-align: right;
+  }
+
+  .wysiwyg-text-align-center {
+    text-align: center;
+  }
+
+  .wysiwyg-text-align-left {
+    text-align: left;
+  }
+
+  .wysiwyg-text-align-justify {
+    text-align: justify;
+  }
+
+  .wysiwyg-float-left {
+    float: left;
+    margin: 0 8px 8px 0;
+  }
+
+  .wysiwyg-float-right {
+    float: right;
+    margin: 0 0 8px 8px;
+  }
+
+  .wysiwyg-clear-right {
+    clear: right;
+  }
+
+  .wysiwyg-clear-left {
+    clear: left;
   }
