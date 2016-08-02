@@ -121,7 +121,78 @@ function recolorPaths(paths, changeTinyColor, mixAmount, changedBy)
 // }
 
 thisEqualsThat.oop = function()
-{ this.ThisEqualsThatScene = function(displayContainerDiv)
+{ this.ComponentCookieManager = function()
+  { this.context = {};
+  }
+  this.ComponentCookieManager.prototype.register = function(componentName, expires=null, domain=null, path=null)
+  { var componentCookieName = "visual.tools."+componentName;
+
+    var defaultCookieSettings;
+    try
+    { defaultCookieSettings = JSON.parse(Cookies.get(componentCookieName+".defaultCookieSettings") ) || {};
+    }
+    catch (e)
+    { defaultCookieSettings = {};
+    }
+
+    var localContext = this.context[componentName] = 
+        { "componentCookieName":    componentCookieName,
+          "userPermissionGranted" : Cookies.get(componentCookieName) || false,
+        };
+    
+    var parameterDefaults =
+        { "expires": 3650,
+          "domain": null,
+          "path": null,
+        };
+    for (parameterName in parameterDefaults )
+    { eval
+      ( `if (${parameterName} !== null) 
+          defaultCookieSettings.${parameterName} = ${parameterName}
+        ` 
+      );
+      if (defaultCookieSettings[parameterName] == null) 
+        defaultCookieSettings[parameterName] = parameterDefaults[parameterName];
+    }
+
+    Cookies.set(componentCookieName+".defaultCookieSettings", JSON.stringify(defaultCookieSettings) );
+    localContext.defaultCookieSettings = defaultCookieSettings;
+
+
+    var This = this;
+
+    var toReturn =
+      function(cookieName, value)
+      { return This.cookie(componentName, cookieName, value);
+      };
+
+    return toReturn;
+  }
+  this.ComponentCookieManager.prototype.cookie = function(componentName, cookieName, value=null)
+  { var localContext        = this.context[componentName];
+    var componentCookieName = localContext.componentCookieName;
+
+    if (value !== null)
+    { if (localContext.userPermissionGranted == false)
+      { localContext.userPermissionGranted = window.confirm("The component "+componentName+" has requested to store cookies on this device");
+
+        Cookies.set(componentCookieName, true, localContext.defaultCookieSettings);
+        Cookies.set(componentCookieName+".defaultCookieSettings", localContext.defaultCookieSettings);
+      } 
+      if (localContext.userPermissionGranted)
+      { Cookies.set(componentCookieName+"."+cookieName, value, localContext.defaultCookieSettings);
+        return true;
+      }
+      else
+      { return false;
+      }
+    }
+    else
+    { return Cookies.get(componentCookieName+"."+cookieName, localContext.defaultCookieSettings);
+    }
+  }
+
+  this.ThisEqualsThatScene = function(displayContainerDiv)
   { this.displayContainerDiv = displayContainerDiv;
     this.thisEqualsScene =
       $("<div />",
@@ -142,9 +213,11 @@ thisEqualsThat.oop = function()
     this.thisEqualsScene.append(this.modelContainerDiv);
     this.displayContainerDiv.append(this.thisEqualsScene);
 
-    this.referenceVisual = new ThisEqualsThat.ReferenceVisual();
+    this.referenceVisual        = new ThisEqualsThat.ReferenceVisual();
 
-    this.modelClasses = new ThisEqualsThat.ModelClasses(this);
+    this.modelClasses           = new ThisEqualsThat.ModelClasses(this);
+
+    this.componentCookieManager = new ThisEqualsThat.ComponentCookieManager();
   }
   this.ThisEqualsThatScene.prototype.setCurrentModel = function(modelInstance)
   { if (this.hasOwnProperty("currentModel"))
@@ -2169,6 +2242,9 @@ console.log("yogi 2 ", ajaxOptions.url);
 
     this.svgHUD     = svgHUD;
     this.context    = context;
+
+    var cookieManager = this.context.cookieManager = thisEqualsThat.scene.componentCookieManager.register("svg3dCloneTimer");
+
     this.context.totalClonesRendered  = 0;
     this.context.totalTimeTaken       = 0;
 
@@ -2183,8 +2259,13 @@ console.log("yogi 2 ", ajaxOptions.url);
     // }
   }
   this.SVGHUD.prototype.svg3dCloneTimer.prototype.preClone = function(svgHUD, context)
-  { var clonesToBeRendered    = this.svgHUD.modelInstance.svg3dDisplayJSON.svg3dConfiguration.clone3d.nb;
+  { var representationName    = this.svgHUD.modelInstance.svg3dDisplayJSON.representationName;
+    var clonesToBeRendered    = this.svgHUD.modelInstance.svg3dDisplayJSON.svg3dConfiguration.clone3d.nb;
 
+    
+    this.context.totalTimeTaken       = parseInt(this.context.cookieManager(representationName+".totalTimeTaken"     )) || this.context.totalTimeTaken;
+    this.context.totalClonesRendered  = parseInt(this.context.cookieManager(representationName+".totalClonesRendered")) || this.context.totalClonesRendered;
+    
     var averageTimePerClone   = this.context.totalTimeTaken / this.context.totalClonesRendered;
     var estimatedTimeToRender = clonesToBeRendered * averageTimePerClone;
 
@@ -2195,13 +2276,20 @@ console.log("yogi 2 ", ajaxOptions.url);
       }
     }
     this.context.totalClonesRendered += clonesToBeRendered;
-    this.context.startTime = Date.now();
-    this.context.estimatedFinishTime = this.context.startTime + estimatedTimeToRender;
+    this.context.startTime            = Date.now();
+    this.context.estimatedFinishTime  = this.context.startTime + estimatedTimeToRender;
     // this.context.cancelCountdown = false;
     // this.context.countDown();
   }
   this.SVGHUD.prototype.svg3dCloneTimer.prototype.postColor = function(svgHUD, context)
   { this.context.totalTimeTaken += Date.now() - this.context.startTime;
+
+    
+    var representationName      = this.svgHUD.modelInstance.svg3dDisplayJSON.representationName;
+    this.context.cookieManager( representationName+".totalTimeTaken"     , this.context.totalTimeTaken       );
+    this.context.cookieManager( representationName+".totalClonesRendered", this.context.totalClonesRendered  );
+
+
     this.context.cancelCountdown = true;
   }
 
@@ -3104,3 +3192,5 @@ $('head').append('<script src="/static/javascript/jquery.ui.touch-punch.min.js">
 $('head').append('<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">');
 $('head').find('link[href="//static/pylons.css"]').attr('href', '/static/pylons.css');
 $('head').append('<link rel="stylesheet" href="/static/css/menu.css" type="text/css" media="screen" charset="utf-8">');
+
+$('head').append('<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.2/js.cookie.min.js"></script>');
