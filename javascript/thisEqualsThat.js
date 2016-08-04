@@ -121,7 +121,14 @@ function recolorPaths(paths, changeTinyColor, mixAmount, changedBy)
 // }
 
 thisEqualsThat.oop = function()
-{ this.ComponentCookieManager = function()
+{ this.Welcome = function()
+  { this.display = $("<div id='welcome' />");
+    $("body").append(this.display);
+
+    
+  }
+
+  this.ComponentCookieManager = function()
   { this.context = {};
   }
   this.ComponentCookieManager.prototype.register = function(componentName, expires=null, domain=null, path=null)
@@ -3024,94 +3031,29 @@ console.log("yogi 2 ", ajaxOptions.url);
     return visualisationFieldOption;
   }
 }
-ThisEqualsThat = new thisEqualsThat.oop();
-/*
-thisEqualsThat.display =
-{ modelClassSelector: function()
-  { console.log("display.modelClassSelector");
-    var modelClassesDiv = $("#modelClassesDiv");
-    var modelClassList =
-      $("<ul/>",
-        { id: "modelClassUL",
-        }
-      ).on("click", ".modelClassLI",
-          function(event)
-          { var modelClass = $(event.currentTarget).data("modelClass");
-            console.log(modelClass);
-            modelClass.getModelInstance(thisEqualsThat.display.topModel);
-          }
-        );
-    $.each( thisEqualsThat.modelClasses,
-      function (modelClassName, modelClass)
-      { modelClassList.append(modelClass.modelClassListLI);
-      }
-    );
-    modelClassesDiv.append(modelClassList);
-  },
-  topModel: function(modelInstance)
-  { modelInstance.display($("#topModelDisplayDiv"));
-  },
-  modelInstance:
-  { getSliders: function(modelInstance)
-    { inputFieldData = modelInstance.getInputFields();
-      $.each(
-        inputFieldData,
-        function(index, value)
-        { console.log(index, value);
-        }
-      );
-    }
-  }
-
-}
-
-thisEqualsThat.SVG = function()
-{ this.cloner = function(svgGroupTagToClone, settings)
-  { var nX = settings.numberX;
-    var nY = settings.numberY;
-    var nZ = settings.numberZ;
 
 
-
-    for (nZ = 0; nZ < settings.numberZ; nZ++)
-    { while (nY >= 0)
-      { nY--;
-        while (nX >= 0)
-        { nX--;
-
-
-        }
-      }
-    }
-  }
-  this.clonerDefaults =
-  { numberX: 1,
-    numberY: 1,
-    numberZ: 1,
-    offsetX: 0,
-    offsetY: 0,
-    offsetZ: 0
-  }
-}
-*/
-
-//function colorPickerdef() {
-//    $('.colorPickerElement:first').find('input.inputFieldText').addClass('colorPickerInput');
-//}
 
 $().ready(
   function()
-  { frameBuffer = $("<div style='display: hidden'>");
-    frameBuffer.appendTo($(document.body));
-    thisEqualsThat.scene = new ThisEqualsThat.ThisEqualsThatScene($("#thisEqualsThatSceneDiv"));
+  { window.ThisEqualsThat = new thisEqualsThat.oop();
+
+    var welcome = new ThisEqualsThat.Welcome();
+
+
+    // thisEqualsThat.scene = new ThisEqualsThat.ThisEqualsThatScene($("#thisEqualsThatSceneDiv"));
   }
 );
 
-$().ready(function(){
 
 
 
-    $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>')
+
+$().ready
+( function ()
+  { 
+
+    /*$('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>')
              .append('<div class="open-menu"></div>');
     $('body').append('<button class="hamburger hamburger--spin-r" type="button" aria-label="Menu" aria-controls="navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>');
 
@@ -3168,6 +3110,7 @@ $().ready(function(){
         }
 
     });
+*/
 
 
 });
@@ -3185,12 +3128,3 @@ function showMenu(b, w, o) {
   w.addClass('active');
   o.addClass('active');
 }
-
-
-$('head').append('<script src="https://use.fontawesome.com/cee7f18682.js"></script>');
-$('head').append('<script src="/static/javascript/jquery.ui.touch-punch.min.js"></script>');
-$('head').append('<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">');
-$('head').find('link[href="//static/pylons.css"]').attr('href', '/static/pylons.css');
-$('head').append('<link rel="stylesheet" href="/static/css/menu.css" type="text/css" media="screen" charset="utf-8">');
-
-$('head').append('<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.2/js.cookie.min.js"></script>');
