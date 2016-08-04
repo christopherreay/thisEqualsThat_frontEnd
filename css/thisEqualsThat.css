@@ -4,23 +4,42 @@
 
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
-* { font-family: Roboto; }
+* 
+{ font-family: Roboto;
+  -webkit-transition-duration: 0.5s; /* Safari */
+  transition-duration: 0.5s;
+}
 
-html, body, div {
+html, body, div{
     height: 100%;
     width: 100%;
 
     background: #EEEEEE;
 }
 
-#welcome
-{ background-image:     url(/static/graphics/thisEquals/this-equals-that.png);
+.wrapper
+{ padding: 0px 20px;
+}
+.xs .wrapper
+{ padding: 0px 10px;
+}
+
+
+.visualToolsLogo
+{ background-image:     url(/static/graphics/visualTools/visual.tools.logo.png);
 
   background-position:  center;
   background-repeat:    no-repeat;
   background-size:      contain;
 
   
+  height: 100%;
+  width: 100%;
+
+  min-height: 64px;
+  min-width: 64px;
+  max-width:            600px;
+  margin:               auto auto !important;
 }
 
 

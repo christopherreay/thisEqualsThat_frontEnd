@@ -122,10 +122,18 @@ function recolorPaths(paths, changeTinyColor, mixAmount, changedBy)
 
 thisEqualsThat.oop = function()
 { this.Welcome = function()
-  { this.display = $("<div id='welcome' />");
-    $("body").append(this.display);
+  { this.display = 
+        O.create( [ "wrapper", "visualToolsLogo" ], $("body") );
+        // O.create
+        // ( [ "bs-component", "list-group", "list-group-item", "row-content", "welcome",
+        //   ],
+        //   $("body")
+        // );
+ 
+    // $("body").append( this.display );
 
-    
+
+
   }
 
   this.ComponentCookieManager = function()
@@ -728,7 +736,9 @@ console.log("yogi 2 ", ajaxOptions.url);
               if (This.ifa_queue.length > 0)
               { var ifa_item = This.ifa_queue.shift()
                 This.ifa_queueState = "ready";
-                This.inputFieldAltered(ifa_item[0], ifa_item[1], ifa_item[2]);
+                setImmediate
+                ( function() { This.inputFieldAltered(ifa_item[0], ifa_item[1], ifa_item[2]) }
+                );
               }
               else
               { This.ifa_queueState = "ready";
@@ -1742,7 +1752,11 @@ console.log("yogi 2 ", ajaxOptions.url);
                     if (This.ifa_queue.length > 0)
                     { var ifa_item = This.ifa_queue.shift()
                       This.ifa_queueState = "ready";
-                      This.inputFieldAltered(ifa_item[0], ifa_item[1], ifa_item[2]);
+                      setImmediate
+                      ( function()
+                        { This.inputFieldAltered(ifa_item[0], ifa_item[1], ifa_item[2])
+                        }
+                      );
                     }
                     else
                     { This.ifa_queueState = "ready";
