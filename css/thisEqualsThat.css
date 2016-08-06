@@ -25,28 +25,55 @@ body
   transition-duration: 0.5s;
 }
 
+.marginAuto
+{ margin: auto;
+}
+
+.opacityZero
+{ opacity: 0.0;
+}
+
 .fullHeight
 { height:   100%;
 }
 .height64
 { height: 64px;
 }
+.square92
+{ height: 92px;
+  width: 92px;
+}
+
 .wrapper
 { padding:  20px;
-
   position: relative;
-  
 }
 .xs .wrapper
 { padding:  10px;
 }
 
-
-/* bs material */
-.row
-{ margin: 0px;
+.fullScreenOverlay
+{ position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
+/* bs material */
+.row, .container-fluid
+{ margin: 0px;
+  padding: 0px;
+}
+
+.navbar-fixed-side-container
+{ width: 100%;
+}
+.navbar-fixed-side
+{ margin-bottom: 0px !important;
+}
+
+/* Tools */
 
 .centerBackgroundImage
 { background-position:  center;
@@ -62,148 +89,104 @@ body
 .visualToolsLogo
 { background-image:     url(/static/graphics/visualTools/visual.tools.logo.png);
 
-  min-height: 64px;
-  min-width: 64px;
+  min-height: 16px;
+  min-width: 16px;
   max-width:            600px;
 }
 .visualToolsEye
 { background-image:     url(/static/graphics/visualTools/visual.tools.eye.png);
 
-  min-height: 64px;
-  min-width: 64px;
-  max-width:            200px;
+  min-height: 16px;
+  min-width: 16px;
+  max-width: 200px;
+}
+
+.profilePic
+{ background-image:     url(/static/graphics/user/profilePic.jpg);
+
+  min-height: 16px;
+  min-width: 16px;
+  max-width: 200px;
 }
 
 
+/*unique based content layout*/
 
-
-
-.open-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow: hidden;
-  background: rgba(0,0,0, .5);
-  z-index: -1;
-  opacity: 0;
-  -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
-}
-.open-menu.active {
-  z-index: 500;
-  opacity: 1;
+#welcomeOver
+{ opacity: 1.0;
 }
 
+.mainNav .navbar
+{ align-items: flex-start;
+}
+.mainNav .navLogo
+{ min-width: 64px;
+  height:42px;
+}
+.mainNav .profilePic
+{ margin-top: 32px !important;
 
-.btn {
-    display: inline-block;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-image: none;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    border: none;
-    border-radius: 2px;
-    position: relative;
-    padding: 8px 30px;
-    margin: 10px 1px;
-    font-size: 16px;
-    font-weight: 100;
-    font-family: Roboto;
-    letter-spacing: 0;
-    will-change: box-shadow, transform;
-    -webkit-transition: -webkit-box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    -webkit-transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    outline: 0;
-    cursor: pointer;
-    color: #fff;
-    text-decoration: none;
-    background: #2196F3;
-    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-}
-.btn:hover {
-    box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-}
-.btn:focus, .btn:active {
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.18), 0 8px 16px rgba(0, 0, 0, 0.36);
-}
-.top {
-    max-width: 960px;
-    line-height: 80px;
+  border-radius: 50%;
 }
 
 
+.copyrightContainer
+{ position: fixed;
+  bottom: 0px;
+  left: 0px;
 
-.hamburger {
+  z-index: 1;
+}
+
+
+.masterReferenceSVGSelectList {
     position: absolute;
-    top: 10px;
-    left: 15px;
-    width: 60px;
-    height: 60px;
-    padding: 13px;
-    padding-top: 20px;
-    background: transparent;
-    display: inline-block;
-    cursor: pointer;
-    font: inherit;
-    color: inherit;
-    text-transform: none;
-    border: 0;
-    margin: 0;
-    overflow: visible;
-    outline: none;
-    z-index: 805;
-    -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
-    transition: all .3s cubic-bezier(.4,0,.2,1);
+    left: -100px;
+    top: -10000000px;
 }
-.hamburger.is-active {
-    left: 40px;
-}
-.hamburger-box {
-    width: 34px;
-    height: 20px;
-    display: inline-block;
-    position: relative;
-}
-.hamburger-inner {
-    display: block;
-    top: 50%;
-    margin-top: -2px;
-}
-.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
-    width: 34px;
-    height: 3px;
-    background-color: #000;
-    border-radius: 4px;
-    position: absolute;
-    transition-property: -webkit-transform;
-    -webkit-transition-property: -webkit-transform;
-    transition-property: transform;
-    transition-property: transform, -webkit-transform;
-    -webkit-transition-duration: 0.15s;
-    transition-duration: 0.15s;
-    -webkit-transition-timing-function: ease;
-    transition-timing-function: ease;
-}
-.hamburger-inner::before, .hamburger-inner::after {
-    content: "";
-    display: block;
-}
-.hamburger-inner::before {
-    top: -8.5px;
-}
-.hamburger-inner::after {
-    bottom: -8.5px;
+.masterReferenceSVGSelectList *
+{   height: 1px !important;
+    width:  1px !important;
 }
 
+
+
+/* Animations */
+
+@keyframes spinner {
+    from {
+      -moz-transform: rotateY(0deg);
+      -ms-transform: rotateY(0deg);
+      transform: rotateY(0deg);
+    }
+    to {
+      -moz-transform: rotateY(-360deg);
+      -ms-transform: rotateY(-360deg);
+      transform: rotateY(-360deg);
+    }
+  }
+
+body {
+  -webkit-perspective: 1200px;
+  -moz-perspective: 1200px;
+  -ms-perspective: 1200px;
+  perspective: 1200px;
+  perspective-origin: 50% 0%;
+}
+
+.spinner {
+    -webkit-animation-name: spinner;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-duration: 6s;
+
+    animation-name: spinner;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: 6s;
+
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }

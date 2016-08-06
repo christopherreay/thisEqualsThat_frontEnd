@@ -194,98 +194,72 @@ thisEqualsThat.oop = function()
 
 
   this.Welcome = function()
-  { var This = this;
-    this.display = {}
-    O.create( [ "wrapper.fullHeight", 
-                [ [ "row.fullHeight", "pageLogo.centerBackgroundImage.visualToolsLogo.inputFieldAlteredSpinner" ],
-                  [ "thisEqualsThatSceneDiv", ],
+  { var display = ThisEqualsThat.display = {};
+    O.create( [ "#welcomeOver.wrapper.fullScreenOverlay", 
+                [ [ ".centerBackgroundImage.visualToolsLogo" ],
                 ],
               ],
-              this.display,
+              display,
               $("body") 
             );
 
     setTimeout
     ( function() 
-      { This.display.row.toggleClass("height64", true);
+      { display.welcomeOver.toggleClass("opacityZero", true);
         
         setTimeout
         ( function()
-          { ThisEqualsThat.displayInterface(This.display.thisEqualsThatSceneDiv);
+          { ThisEqualsThat.displayInterface();
           },
           500
         );
 
       },
-      2000
+      // 2000
+      10
     );
   }
-  this.displayInterface = function(wrapper)
-  { wrapper.append('<button class="hamburger hamburger--spin-r" type="button" aria-label="Menu" aria-controls="navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>');
-    wrapper.append('<div class="open-menu"></div>');
-    wrapper.append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>')  
 
-    thisEqualsThat.scene = new ThisEqualsThat.ThisEqualsThatScene( wrapper );
+  this.displayInterface = function()
+  { ThisEqualsThat.display.navbar = {};
+    O.create( [ "#pageWrapper",
+                [ [ O.navbarFixedLeft(ThisEqualsThat.display.navbar, null, "mainNav", ".navLogo.centerBackgroundImage.visualToolsEye.inputFieldAlteredSpinner.panel") ],
+                  [ $("<div class='copyrightContainer' />").text("© This Equals ltd 2016") ],
+                  
+                ],
+              ],
+              ThisEqualsThat.display,
+              $("body")
+            );
+    O.create( [ "#doubleBuffer" ], ThisEqualsThat, $("body") );
 
-    $('.hamburger').on('click', function() {
+    this.mainNavigation(ThisEqualsThat.display.navbar);
+    thisEqualsThat.scene = new ThisEqualsThat.ThisEqualsThatScene( ThisEqualsThat.display.mainContent );
 
-        var menuBtn = $(this),
-            wWidth = $(window).outerWidth(),
-            openMenu = $('.open-menu'),
-            menuWrap = $('.modelClasses'),
-            menuItemList = $('#modelClassUL'),
-            modelClassLI = $('.modelClassLI'),
-            body = $('body');
+  };
 
-        menuBtn.toggleClass('is-active');
-
-        modelClassLI.on('dblclick', function() {
-            closeMenu(body, menuBtn, menuWrap, openMenu);
-        });
-
-        if (wWidth <= 768) {
-            modelClassLI.on('click', function() {
-                closeMenu(body, menuBtn, menuWrap, openMenu);
-            });
-        }
-
-        if (menuBtn.hasClass('is-active')) {
-
-            showMenu(body, menuWrap, openMenu);
-
-            openMenu.on('click', function() {
-                closeMenu(body, menuBtn, menuWrap, openMenu);
-            });
-
-        } else {
-            closeMenu(body, menuBtn, menuWrap, openMenu);
-        }
-
-    });
-  }
+  this.mainNavigation = function(navbar)
+  { O.create( [ ".bs-component",
+                [ 
+                  [ ".square92.marginAuto", ".profilePic.panel.row.centerBackgroundImage"],
+                  // [ ".square92.marginAuto", ".editProfile.panel.row"       ],
+                  [ ".square92.marginAuto", "a.createConstruct.panel.row"   ],
+                  [ ".inDevelopment.panel.row", ".col-12"     ],
+                ],
+              ],
+              navbar,
+              navbar.navbarContent
+            );
+  };
 
  
   this.ThisEqualsThatScene = function(displayContainerDiv)
   { this.displayContainerDiv = displayContainerDiv;
-    this.thisEqualsScene =
-      $("<div />",
-      { "class": "thisEqualsScene"
-      }
-      );
-    this.modelClassesContainerDiv =
-      $("<div />",
-      { "class": "modelClasses"
-      }
-      );
-    this.modelContainerDiv =
-      $("<div />",
-      { "class": "model"
-      }
-      );
-    this.thisEqualsScene.append(this.modelClassesContainerDiv);
-    this.thisEqualsScene.append(this.modelContainerDiv);
-    this.displayContainerDiv.append(this.thisEqualsScene);
-
+    O.create( [ ".thisEqualsScene", ".constructContainer" ],
+              this,
+              displayContainerDiv
+            );
+    
     this.referenceVisual        = new ThisEqualsThat.ReferenceVisual();
 
     this.modelClasses           = new ThisEqualsThat.ModelClasses(this);
@@ -296,91 +270,75 @@ thisEqualsThat.oop = function()
   { if (this.hasOwnProperty("currentModel"))
     { this.currentModel.hide();
     }
-    this.currentModel = modelInstance.displayIntoTarget(thisEqualsThat.scene.modelContainerDiv);
+    this.currentModel = modelInstance.displayIntoTarget(thisEqualsThat.scene.constructContainer);
   }
 
+
   this.ModelClasses = function(thisEqualsThatScene)
-  { this.thisEqualsThatScene = thisEqualsThatScene;
-    var This = this;
+  { var This = this;
+
+    var constructBlueprint = ThisEqualsThat.display.constructBlueprint = {};
+    O.modal(  constructBlueprint,
+              ThisEqualsThat.doubleBuffer,
+              "constructBlueprint",
+              $("<span>Construct Blueprint</span>"),
+              ".constructBlueprintContainer.row",
+              ""
+            );
+
+    ThisEqualsThat.doubleBuffer.constructBlueprint
+    .on("click", ".blueprintItem",
+        function(event)
+        { var modelClass = $(event.currentTarget).data("modelClass");
+          modelClass.getModelInstance(thisEqualsThat.scene.setCurrentModel);
+
+          $(this).addClass('active');
+          $(this).siblings().removeClass('active');
+        }
+      );
+
     var ajaxOptions =
     { url: "getModelClasses",
       dataType: "json",
       success: function(data, status, request)
-      { console.log("Yogi 1 ", data, status, request);
-	console.log("yogi 1.1",  request);
-        $.each(data, function(index, value)
+      { $.each
+        ( data, 
+          function(index, value)
           { This[value] = new ThisEqualsThat.ModelClass(value);
           }
         );
-        This.display(This.thisEqualsThatScene)
       },
     };
-console.log("yogi 2 ", ajaxOptions.url);
     $.ajax(ajaxOptions);
-
   }
-  this.ModelClasses.prototype.display = function(thisEqualsThatScene)
-  { var modelClassesContainerDiv = thisEqualsThatScene.modelClassesContainerDiv;
-    var modelClassList =
-      $("<ul/>",
-        { id: "modelClassUL",
-        }
-      ).on("click", ".modelClassLI",
-          function(event)
-          { var modelClass = $(event.currentTarget).data("modelClass");
-            console.log("yogi 3 ",modelClass);
-            modelClass.getModelInstance(thisEqualsThat.scene.setCurrentModel);
 
-            $(this).addClass('active');
-            $(this).siblings().removeClass('active');
-
-            // var ink, d, x, y;
-            //
-            //     if($(this).find(".ink").length === 0){
-            //         $(this).prepend("<span class='ink'></span>");
-            //     }
-            //
-            //     ink = $(this).find(".ink");
-            //     ink.removeClass("animate");
-            //
-            //     if(!ink.height() && !ink.width()){
-            //         d = Math.max($(this).outerWidth(), $(this).outerHeight());
-            //         ink.css({height: d, width: d});
-            //     }
-            //
-            //     x = event.pageX - $(this).offset().left - ink.width()/2;
-            //     y = event.pageY - $(this).offset().top - ink.height()/2;
-            //
-            //     ink.css({top: y+'px', left: x+'px'}).addClass("animate");
-
-          }
-        );
-
-    $.each( this,
-      function (modelClassName, modelClass)
-      { modelClassList.append(modelClass.modelClassListLI);
-      }
-    );
-    modelClassesContainerDiv.append(modelClassList);
-    // MAP
-    // modelClassList.append('<div class="modelClassLI ripplelink cyan">' +
-    //           '<img src="/static/graphics/thisEquals/icons/map.svg">' +
-    //           '<h3>Map</h3>' +
-    //           '</div>'
-    //   ).on('click', function () {
-    //     console.debug('clicked on map');
-    //   });
-  }
   this.ModelClass = function(modelClassName)
   { this.name = modelClassName;
     this.imageURL = this.imageBaseURL+modelClassName+".svg";
-    this.modelClassListLI =
-      $("<li />",
-        { "class": "modelClassLI ripplelink cyan",
-        }
-      ).data("modelClass", this)
-       .append( $('<h3>' + this.name + '</h3>' ).addClass('modelDesc') )
-       .append( $("<img />", { src: this.imageURL } ).addClass('modelImg') );
+    var blueprints = ThisEqualsThat.display.blueprintItems = {};
+
+    O.create
+    ( [ ".list-group-item.ripplelink", 
+        [ [ ".row-action-primary", $(`<img class="blueprintIcon" src="${this.imageURL}" />`) ], 
+          [ ".row-content", 
+            [ [ ".list-group-item-heading" ,  $("<span>"+this.name+"</span>") ],
+              [ ".list-group-item-text",      $("<span>Description Text</span>") ]
+            ], 
+          ],
+        ],
+        ".list-group-separator",
+      ],
+      blueprints,
+      ThisEqualsThat.display.doubleBuffer.constructBlueprintContainer
+    );
+
+      // this.display.modelClassIcon.append( $("<img />", { src: this.imageURL } ).addClass('modelImg') );
+
+      // $("<li />",
+      //   { "class": "modelClassLI ripplelink cyan",
+      //   }
+      // ).data("modelClass", this)
+      //  .append( $('<h3>' + this.name + '</h3>' ).addClass('modelDesc') )
 
   }
   this.ModelClass.prototype.imageBaseURL =  "/static/graphics/thisEquals/modelClasses/";
@@ -3118,15 +3076,52 @@ $().ready(
 
 
 
-function closeMenu(b, m, w, o) {
-  b.removeClass('open');
-  m.removeClass('is-active');
-  w.removeClass('active');
-  o.removeClass('active');
-}
+// function closeMenu(b, m, w, o) {
+//   b.removeClass('open');
+//   m.removeClass('is-active');
+//   w.removeClass('active');
+//   o.removeClass('active');
+// }
 
-function showMenu(b, w, o) {
-  b.addClass('open');
-  w.addClass('active');
-  o.addClass('active');
-}
+// function showMenu(b, w, o) {
+//   b.addClass('open');
+//   w.addClass('active');
+//   o.addClass('active');
+// }
+
+
+// ThisEqualsThat.display.hamburger.on('click', function() {
+
+    //     var menuBtn = $(this),
+    //         wWidth = $(window).outerWidth(),
+    //         openMenu = $('.open-menu'),
+    //         menuWrap = $('.modelClasses'),
+    //         menuItemList = $('#modelClassUL'),
+    //         modelClassLI = $('.modelClassLI'),
+    //         body = $('body');
+
+    //     menuBtn.toggleClass('is-active');
+
+    //     modelClassLI.on('dblclick', function() {
+    //         closeMenu(body, menuBtn, menuWrap, openMenu);
+    //     });
+
+    //     if (wWidth <= 768) {
+    //         modelClassLI.on('click', function() {
+    //             closeMenu(body, menuBtn, menuWrap, openMenu);
+    //         });
+    //     }
+
+    //     if (menuBtn.hasClass('is-active')) {
+
+    //         showMenu(body, menuWrap, openMenu);
+
+    //         openMenu.on('click', function() {
+    //             closeMenu(body, menuBtn, menuWrap, openMenu);
+    //         });
+
+    //     } else {
+    //         closeMenu(body, menuBtn, menuWrap, openMenu);
+    //     }
+
+    // });

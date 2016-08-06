@@ -33,16 +33,51 @@ function($)
   { var toReturn = O.div().append(O.div);
   };
 
+  this.regex_elementType  = /^([^.#@]+)/;
+  this.regex_id           = /#([^.@]+)/;
+  this.regex_classes      = /\.([^@]+)/;
+  this.regex_chainCalls   = /@(.*)/;
+  this.regex_dot          = /\./g;
+
+  this.elementDefSequence = {"elementType": "div", "id":"", "classes":""};
+
   this.create =
   function(listContents, targetDict=null, current=null, depth=0)
   { var toReturn = [];
-    if ( targetDict === null )
-      targetDict = listContents;
     for (item of listContents)
-    { if ( typeof(item) == "string" )
-      { var elemClasses = item.replace(/\./g, " ");
-        var newElem = O.div(elemClasses);
-        var dictKey = elemClasses.split(" ")[0];
+    { 
+      // if (typeof(item) == "string")
+      // { var itemSequentialList = item.split(" ");
+      //   if (itemSequentialList.length > 1)
+      //     item = itemSequentialList;
+      // }
+
+      if ( typeof(item) == "string" )
+      { 
+        { 
+        }
+        var elementDef = {};
+
+        for (elementParamName in this.elementDefSequence)
+        { var matchValue = item.match(this["regex_"+elementParamName]);
+          if (matchValue !== null)
+          { elementDef[elementParamName] = matchValue[1];
+          }
+          else
+          { elementDef[elementParamName] = this.elementDefSequence[elementParamName];
+          }
+        }
+        elementDef.classes = $.trim(elementDef.classes.replace(this.regex_dot, " "));
+
+        var elemOptions = {};
+        if (elementDef.id) elemOptions.id = elementDef.id;
+        if (elementDef.classes) elemOptions.class = elementDef.classes;
+
+        var newElem = 
+            $("<"+elementDef.elementType+"/>",
+              elemOptions
+            );
+        var dictKey = elementDef.id || elementDef.classes.split(" ")[0];
 
         if (current === null) 
         { current = newElem;
@@ -62,13 +97,18 @@ function($)
         }
         toReturn.push(subTree);
       }
-      else
-      { var subDict = {};
-        for (key in item)
-        { subDict[key] = O.create(item[key], targetDict, current, depth+1);
-          current.append(subDict[key]);
-          toReturn.push(subDict);
-        }
+      else if ( item instanceof jQuery )
+      { current.append(item);
+        current = item.slice(-1);
+        
+        var dictKey = item.attr("id")
+        var classAttr = item.attr("class")
+        if (classAttr) classAttr = classAttr.split(" ")[0];
+        dictKey = dictKey || classAttr || "__blank";
+
+        targetDict[ dictKey ] = item;
+
+        toReturn.push(item);
       }
 
     }
@@ -76,35 +116,106 @@ function($)
     return toReturn;
   }
 
-  this.wrap =
-  function (object, classes)
-  { return O.div({"class": classes }).append(object);
-  };
-  this.row = 
-  function(classes)
-  { toReturn = O.div( {"class": row+" "+classes } );
-  }
-  this.col =
-  function(colSize, classes)
-  { return O.div({"class": "col-"+colSize+" "+classes } );
+  this.navbar_collapse_id_counter = 0;
+  this.navbarFixedLeft =
+  function(passThrough, appendTo, navbarUniqueClass, logo=".navbar-brand-logo")
+  { if (!navbarUniqueClass) navbarUniqueClass = "navbar-autoID-"+this.navbar_collapse_id_counter++;
+    var toReturn =
+        O.create( [".bs-component."+navbarUniqueClass, ".container-fluid", ".row", 
+                    [ [ ".col-xs-12.col-sm-12.col-lg-2" ,  "bs-component", ".navbar.navbar-default.navbar-fixed-side", ".navbar-fixed-side-container", 
+                        [ [ ".navbarHeader.navbar-header", 
+                            [ [ $("<button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='."+navbarUniqueClass+"-collapse' aria-expanded='false'>"),
+                                [ [ "span.icon-bar" ],
+                                  [ "span.icon-bar" ], 
+                                  [ "span.icon-bar" ],
+                                ],
+                              ],
+                              [ "a.navbar-brand", logo, ".ripple-container"],
+                            ],
+                          ],
+                          [ ".navbar-collapse.collapse."+navbarUniqueClass+"-collapse",
+                            [ ["ul.navbarContent.nav.navbar-nav"],
+                              ["ul.navbarContentLeft.nav.navbar-left"],
+                              ["ul.navbarContentRight.nav.navbar-right"],
+                            ]
+                          ],
+                        ],
+                      ],
+                      [ ".col-xs-12.col-sm-12.col-lg-10",  ".mainContent" ]
+                    ]
+                  ],
+                  passThrough,
+                  appendTo
+                );
+    return toReturn[0];
+
+    /*<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Brand</a>*/
+  } 
+  
+  this.modalUniqueCounter = 0;
+  this.modal =
+  function(passThrough, appendTo, modalUniqueClass=null, modalHeader="", modalBody="", modalFooter="")
+  { if (!modalUniqueClass) modalUniqueClass = "modal-autoID-"+this.modalUniqueCounter++;
+    var toReturn =
+        O.create
+        ( ["."+modalUniqueClass+".modal.fade", ".modal-dialog", 
+            ".modal-content",
+            [ [ ".modal-header", 
+                [ [ $("<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>×</button>") ],
+                  [ "h4.modal-title", modalHeader ],
+                ],
+              ],
+              [ ".modal-body",   modalBody   ],
+              [ ".modal-footer", modalFooter ],
+            ],
+          ],
+          passThrough,
+          appendTo
+        );
+    // <div class="modal">
+    //   <div class="modal-dialog">
+    //     <div class="modal-content">
+    //       <div class="modal-header">
+    //         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    //         <h4 class="modal-title">Modal title</h4>
+    //       </div>
+    //       <div class="modal-body">
+    //         <p>One fine body…</p>
+    //       </div>
+    //       <div class="modal-footer">
+    //         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    //         <button type="button" class="btn btn-primary">Save changes</button>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
+    return toReturn[0];
   }
 
-        // <div class="bs-component">
-        //   <div class="list-group">
-        //     <div class="list-group-item">
-        //       <div class="row-action-primary">
-        //         <div class="visualEye" />
-        //       </div>
-        //       <div class="row-content">
-        //         <div class="least-content">15m</div>
-        //         <h4 class="list-group-item-heading">Tile with a label</h4>
+  this.openModal_aTag =
+  function (passThrough, appendTo, modalID=null, openModalClassString, openModalContent)
+  { if (!modalID) console.warn("openModal created without referenceID");
+    var toReturn =
+    O.create
+    ( [ $(`<a href="#" class='${openModalClassString}' data-toggle='modal' data-target='${modalID}' />`), 
+        openModalContent 
+      ],
+      passThrough,
+      appendTo
+    );
 
-        //         <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus.</p>
-        //       </div>
-        //     </div>
-        //     <div class="list-group-separator"></div>
-        //   </div>
-        // </div>
+   //  <a href="#" class="btn btn-lg btn-success" 
+   // data-toggle="modal" 
+   // data-target="#basicModal">Click to open Modal</a>
+  }
+
+
 
   this.listGroups =
   { /*<div class="bs-component">
