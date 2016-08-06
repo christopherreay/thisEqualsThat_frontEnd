@@ -44,6 +44,12 @@ body
   width: 92px;
 }
 
+.bg_visualTools
+{ background-color: #23becc;
+}
+.bg_visualTools_dark
+{ background-color: #18858e;
+}
 .wrapper
 { padding:  20px;
   position: relative;
@@ -109,7 +115,6 @@ body
   max-width: 200px;
 }
 
-
 /*unique based content layout*/
 
 #welcomeOver
@@ -124,11 +129,29 @@ body
   height:42px;
 }
 .mainNav .profilePic
-{ margin-top: 32px !important;
+{ margin-top: 10% !important;
 
   border-radius: 50%;
 }
+.mainNav .createConstructImage
+{ height: 92px;
+  width:  92px;
 
+  background-image:     url(/static/graphics/thisEquals/icons/blueprint.svg);
+}
+.constructBlueprint .blueprintIcon
+{ height: 32px;
+  width:  32px;
+}
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover
+{ background-color: #18858e;
+}
+.constructBlueprint .list-group-item :first-child
+{ margin-right: inherit;
+}
+.constructBlueprint .blueprintItem .row-action-primary
+{ margin-right: 8px;
+}
 
 .copyrightContainer
 { position: fixed;

@@ -243,7 +243,7 @@ thisEqualsThat.oop = function()
                 [ 
                   [ ".square92.marginAuto", ".profilePic.panel.row.centerBackgroundImage"],
                   // [ ".square92.marginAuto", ".editProfile.panel.row"       ],
-                  [ ".square92.marginAuto", "a.createConstruct.panel.row"   ],
+                  [ ".square92.marginAuto", O.openModal_aTag(navbar, null, "constructBlueprint", ".createConstruct.panel.row", ".createConstructImage") ],
                   [ ".inDevelopment.panel.row", ".col-12"     ],
                 ],
               ],
@@ -278,6 +278,7 @@ thisEqualsThat.oop = function()
   { var This = this;
 
     var constructBlueprint = ThisEqualsThat.display.constructBlueprint = {};
+    ThisEqualsThat.doubleBuffer.constructBlueprint = 
     O.modal(  constructBlueprint,
               ThisEqualsThat.doubleBuffer,
               "constructBlueprint",
@@ -289,8 +290,8 @@ thisEqualsThat.oop = function()
     ThisEqualsThat.doubleBuffer.constructBlueprint
     .on("click", ".blueprintItem",
         function(event)
-        { var modelClass = $(event.currentTarget).data("modelClass");
-          modelClass.getModelInstance(thisEqualsThat.scene.setCurrentModel);
+        { var modelClass = $(event.currentTarget).data("thisEquals_blueprint");
+          // modelClass.getModelInstance(thisEqualsThat.scene.setCurrentModel);
 
           $(this).addClass('active');
           $(this).siblings().removeClass('active');
@@ -318,7 +319,7 @@ thisEqualsThat.oop = function()
     var blueprints = ThisEqualsThat.display.blueprintItems = {};
 
     O.create
-    ( [ ".list-group-item.ripplelink", 
+    ( [ ".blueprintItem.list-group-item.ripplelink.col-lg-4", 
         [ [ ".row-action-primary", $(`<img class="blueprintIcon" src="${this.imageURL}" />`) ], 
           [ ".row-content", 
             [ [ ".list-group-item-heading" ,  $("<span>"+this.name+"</span>") ],
@@ -329,8 +330,9 @@ thisEqualsThat.oop = function()
         ".list-group-separator",
       ],
       blueprints,
-      ThisEqualsThat.display.doubleBuffer.constructBlueprintContainer
-    );
+      ThisEqualsThat.display.constructBlueprint.constructBlueprintContainer
+    )[0].data("thisEquals_blueprint", this);
+
 
       // this.display.modelClassIcon.append( $("<img />", { src: this.imageURL } ).addClass('modelImg') );
 

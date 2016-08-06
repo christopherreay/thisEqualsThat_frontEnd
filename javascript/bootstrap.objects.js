@@ -98,7 +98,8 @@ function($)
         toReturn.push(subTree);
       }
       else if ( item instanceof jQuery )
-      { current.append(item);
+      { if (current) current.append(item);
+
         current = item.slice(-1);
         
         var dictKey = item.attr("id")
@@ -199,11 +200,11 @@ function($)
   }
 
   this.openModal_aTag =
-  function (passThrough, appendTo, modalID=null, openModalClassString, openModalContent)
-  { if (!modalID) console.warn("openModal created without referenceID");
+  function (passThrough, appendTo, modalUniqueClass=null, openModalClassString, openModalContent)
+  { if (!modalUniqueClass) console.warn("openModal created without referenceID");
     var toReturn =
     O.create
-    ( [ $(`<a href="#" class='${openModalClassString}' data-toggle='modal' data-target='${modalID}' />`), 
+    ( [ $(`<a href="#" class='${openModalClassString.replace(this.regex_dot, " ")}' data-toggle='modal' data-target='.${modalUniqueClass}' />`), 
         openModalContent 
       ],
       passThrough,
@@ -213,6 +214,8 @@ function($)
    //  <a href="#" class="btn btn-lg btn-success" 
    // data-toggle="modal" 
    // data-target="#basicModal">Click to open Modal</a>
+
+    return toReturn[0];
   }
 
 
