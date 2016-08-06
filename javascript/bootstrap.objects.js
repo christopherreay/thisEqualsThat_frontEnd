@@ -34,11 +34,16 @@ function($)
   };
 
   this.create =
-  function(listContents, current=null, depth=0)
+  function(listContents, targetDict=null, current=null, depth=0)
   { var toReturn = [];
+    if ( targetDict === null )
+      targetDict = listContents;
     for (item of listContents)
     { if ( typeof(item) == "string" )
-      { var newElem = O.div(item);
+      { var elemClasses = item.replace(/\./g, " ");
+        var newElem = O.div(elemClasses);
+        var dictKey = elemClasses.split(" ")[0];
+
         if (current === null) 
         { current = newElem;
         }
@@ -46,12 +51,13 @@ function($)
         { current.append(newElem);
           current = newElem;
         }
+        targetDict[dictKey] = newElem;
         toReturn.push(current);
       }
       else if ( Object.prototype.toString.call(item) === "[object Array]" )
       { var subTree = [];
         for (subItem of item)
-        { var child = O.create(subItem, current, depth+1);
+        { var child = O.create(subItem, targetDict, current, depth+1);
           subTree.push(child);
         }
         toReturn.push(subTree);
@@ -59,7 +65,7 @@ function($)
       else
       { var subDict = {};
         for (key in item)
-        { subDict[key] = O.create(item[key], current, depth+1);
+        { subDict[key] = O.create(item[key], targetDict, current, depth+1);
           current.append(subDict[key]);
           toReturn.push(subDict);
         }

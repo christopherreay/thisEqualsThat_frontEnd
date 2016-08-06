@@ -121,22 +121,7 @@ function recolorPaths(paths, changeTinyColor, mixAmount, changedBy)
 // }
 
 thisEqualsThat.oop = function()
-{ this.Welcome = function()
-  { this.display = 
-        O.create( [ "wrapper", "visualToolsLogo" ], $("body") );
-        // O.create
-        // ( [ "bs-component", "list-group", "list-group-item", "row-content", "welcome",
-        //   ],
-        //   $("body")
-        // );
- 
-    // $("body").append( this.display );
-
-
-
-  }
-
-  this.ComponentCookieManager = function()
+{  this.ComponentCookieManager = function()
   { this.context = {};
   }
   this.ComponentCookieManager.prototype.register = function(componentName, expires=null, domain=null, path=null)
@@ -207,6 +192,79 @@ thisEqualsThat.oop = function()
     }
   }
 
+
+  this.Welcome = function()
+  { var This = this;
+    this.display = {}
+    O.create( [ "wrapper.fullHeight", 
+                [ [ "row.fullHeight", "pageLogo.centerBackgroundImage.visualToolsLogo.inputFieldAlteredSpinner" ],
+                  [ "thisEqualsThatSceneDiv", ],
+                ],
+              ],
+              this.display,
+              $("body") 
+            );
+
+    setTimeout
+    ( function() 
+      { This.display.row.toggleClass("height64", true);
+        
+        setTimeout
+        ( function()
+          { ThisEqualsThat.displayInterface(This.display.thisEqualsThatSceneDiv);
+          },
+          500
+        );
+
+      },
+      2000
+    );
+  }
+  this.displayInterface = function(wrapper)
+  { wrapper.append('<button class="hamburger hamburger--spin-r" type="button" aria-label="Menu" aria-controls="navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>');
+    wrapper.append('<div class="open-menu"></div>');
+    wrapper.append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>')  
+
+    thisEqualsThat.scene = new ThisEqualsThat.ThisEqualsThatScene( wrapper );
+
+    $('.hamburger').on('click', function() {
+
+        var menuBtn = $(this),
+            wWidth = $(window).outerWidth(),
+            openMenu = $('.open-menu'),
+            menuWrap = $('.modelClasses'),
+            menuItemList = $('#modelClassUL'),
+            modelClassLI = $('.modelClassLI'),
+            body = $('body');
+
+        menuBtn.toggleClass('is-active');
+
+        modelClassLI.on('dblclick', function() {
+            closeMenu(body, menuBtn, menuWrap, openMenu);
+        });
+
+        if (wWidth <= 768) {
+            modelClassLI.on('click', function() {
+                closeMenu(body, menuBtn, menuWrap, openMenu);
+            });
+        }
+
+        if (menuBtn.hasClass('is-active')) {
+
+            showMenu(body, menuWrap, openMenu);
+
+            openMenu.on('click', function() {
+                closeMenu(body, menuBtn, menuWrap, openMenu);
+            });
+
+        } else {
+            closeMenu(body, menuBtn, menuWrap, openMenu);
+        }
+
+    });
+  }
+
+ 
   this.ThisEqualsThatScene = function(displayContainerDiv)
   { this.displayContainerDiv = displayContainerDiv;
     this.thisEqualsScene =
@@ -682,7 +740,7 @@ console.log("yogi 2 ", ajaxOptions.url);
     if (this.ifa_queueState == "ready")
     { this.ifa_currentlyProcessing = arguments;
       this.ifa_queueState = "Sending Request";
-      $("#logo > img").toggleClass("spinner", true);
+      $(".inputFieldAlteredSpinner").toggleClass("spinner", true);
 
       var This = this;
       fieldChangeData	= $.extend({modelInstanceID: this.id}, fieldChangeData);
@@ -701,7 +759,7 @@ console.log("yogi 2 ", ajaxOptions.url);
             for (var fieldName in data.fieldValues)
             { if (This.inputFields.hasOwnProperty(fieldName) )
               { var inputField  = This.inputFields[fieldName];
-                var newValue    = data.fieldValues[fieldName];
+                var newValue    = data.fieldValues[fieldName];item.replace(/\./g, " ")
 
                 if (newValue != inputField.data.currentValue)
                 { inputField.setValue(newValue);
@@ -742,7 +800,7 @@ console.log("yogi 2 ", ajaxOptions.url);
               }
               else
               { This.ifa_queueState = "ready";
-                $("#logo > img").toggleClass("spinner", false);
+                $(".inputFieldAlteredSpinner").toggleClass("spinner", false);
               }
               This.svg_createSaveLink(This)
             }
@@ -845,17 +903,29 @@ console.log("yogi 2 ", ajaxOptions.url);
     { This = this;
       this.display = {};
       var display = this.display;
-      //var inputs = "inputs"
-      //var outputsText = "outputs"
-      display.displayElement =
-        $("<div />",
-          { "id"    : "modelInstanceDiv_"+this.modelClass.name+"_"+this.id
-          }
+
+      var toCreate = 
+        O.create
+        ( [ "modelInstanceDiv."+this.modelClass.name+"."+this.id,
+            "topModelDiv",
+            [ [ "row", "col-12", "panel.panel-default", "visualisationOutputContainer.panel-body" ],
+              [ "modelSliders.model_options" ],
+
+            ],
+          ],
+          this.display,
+          targetContainer
         );
 
-      display.modelSliders              = $("<div class='modelSliders model_options'  />");
+      
+      // display.bottomModelSelectDiv    = $("<div class='bottomModelSelectDiv bottomModelSelectDiv."+this.id+"' />");
+      // display.bottomModelSelectLable  = $("<div class='bottomModelSelectLable'/>");
+      // display.bottomModelSelectDiv.append(display.bottomModelSelectLable);
+      // display.bottomModelDiv          = $("<div class='bottomModelDiv' />");
+
       display.modelSliders.append(this.getInputFields().inputFieldsSliders);
 
+      
       display.boxSliders    = $('<div class="model_box_ctrl boxSliders" />');
       display.boxOutputCtrl = $('<div class="model_box_ctrl boxOutputCtrl" />');
       display.boxCustomSvg  = $('<div class="model_box_ctrl boxCustomSvg" />');
@@ -922,9 +992,6 @@ console.log("yogi 2 ", ajaxOptions.url);
       display.outputFieldsSelect        = this.getOutputFields().outputFieldsSelect;
       // display.modelOutputDisplay.append(display.modelOutputValue);
       display.modelOutputDisplay.append(display.outputFieldsSelect);
-
-
-      display.visualisationOutputContainer       = $("<div class='visualisationOutputContainer'><div class='containerLabel'></div></div>");
 
       display.modelVisualisationValue   = $("<div class='modelVisualisationValue'  />");
 
@@ -1138,36 +1205,29 @@ console.log("yogi 2 ", ajaxOptions.url);
       // display.colorControl.append(display.ccRandomisePosition);
 
 
-      display.bottomModelSelectDiv  = $("<div class='bottomModelSelectDiv bottomModelSelectDiv."+this.id+"' />");
-      display.bottomModelSelectLable  = $("<div class='bottomModelSelectLable'/>");
-      display.bottomModelSelectDiv.append(display.bottomModelSelectLable);
-      display.bottomModelDiv        = $("<div class='bottomModelDiv' />");
+      
 
-      var d = display.displayElement;
-
-      display.topModelDiv = $("<div class='modelInstance topModelDiv modelInstance'"+this.modelPosition+" />");
-
-      display.topModelDiv.append(display.boxSliders);
-      display.topModelDiv.append(display.boxOutputCtrl);
-      display.topModelDiv.append(display.boxCustomSvg);
-      display.topModelDiv.append(display.modelSliders);
-      display.topModelDiv.append(display.modelOutputCtrl);
-      display.topModelDiv.append(display.modelCustomSvg);
-      display.topModelDiv.append(display.modelSvgOutput);
-      display.modelSvgOutput.append(display.svgOutput);
-      display.modelOutputCtrl.append(display.modelOutputDisplay);
-      display.modelOutputCtrl.append(display.visualisationOutputContainer);
-      display.modelOutputCtrl.append(display.toggleFeatures);
-      display.modelOutputCtrl.append(display.colorControl);
-      display.modelCustomSvg.append(display.svgSaveLink);
-      display.modelCustomSvg.append(display.svgTextInput);
+      // display.topModelDiv.append(display.boxSliders);
+      // display.topModelDiv.append(display.boxOutputCtrl);
+      // display.topModelDiv.append(display.boxCustomSvg);
+      // display.topModelDiv.append(display.modelSliders);
+      // display.topModelDiv.append(display.modelOutputCtrl);
+      // display.topModelDiv.append(display.modelCustomSvg);
+      // display.topModelDiv.append(display.modelSvgOutput);
+      // display.modelSvgOutput.append(display.svgOutput);
+      // display.modelOutputCtrl.append(display.modelOutputDisplay);
+      // display.modelOutputCtrl.append(display.visualisationOutputContainer);
+      // display.modelOutputCtrl.append(display.toggleFeatures);
+      // display.modelOutputCtrl.append(display.colorControl);
+      // display.modelCustomSvg.append(display.svgSaveLink);
+      // display.modelCustomSvg.append(display.svgTextInput);
 
 
-      d.append(display.topModelDiv);
-      d.append(display.bottomModelDiv);
+      // d.append(display.topModelDiv);
+      // d.append(display.bottomModelDiv);
 
 
-      targetContainer.append(this.display.displayElement).coloPick();
+      // targetContainer.append(this.display.displayElement);
 
       //display.bottomModelDiv = sceneContainer;
 
@@ -1760,7 +1820,7 @@ console.log("yogi 2 ", ajaxOptions.url);
                     }
                     else
                     { This.ifa_queueState = "ready";
-                      $("#logo > img").toggleClass("spinner", false);
+                      $(".inputFieldAlteredSpinner").toggleClass("spinner", false);
                     }
 
                     This.svg_createSaveLink(This);
@@ -3053,81 +3113,9 @@ $().ready(
   { window.ThisEqualsThat = new thisEqualsThat.oop();
 
     var welcome = new ThisEqualsThat.Welcome();
-
-
-    // thisEqualsThat.scene = new ThisEqualsThat.ThisEqualsThatScene($("#thisEqualsThatSceneDiv"));
   }
 );
 
-
-
-
-
-$().ready
-( function ()
-  { 
-
-    /*$('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>')
-             .append('<div class="open-menu"></div>');
-    $('body').append('<button class="hamburger hamburger--spin-r" type="button" aria-label="Menu" aria-controls="navigation"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>');
-
-    $.fn.coloPick = function() {
-        console.info('CP created');
-        $('input.unit_rgb').colorpicker({
-            inline: false,
-            alpha: false,
-            colorFormat: "RGB",
-            buttonClass: 'btn',
-            color: 'rgb(123,45,67)',
-            altField: 'input.colorPickerInput',
-            close: function(){
-                $('input.unit_rgb').change();
-            }
-        });
-    };
-
-
-
-
-    $('.hamburger').on('click', function() {
-
-        var menuBtn = $(this),
-            wWidth = $(window).outerWidth(),
-            openMenu = $('.open-menu'),
-            menuWrap = $('.modelClasses'),
-            menuItemList = $('#modelClassUL'),
-            modelClassLI = $('.modelClassLI'),
-            body = $('body');
-
-        menuBtn.toggleClass('is-active');
-
-        modelClassLI.on('dblclick', function() {
-            closeMenu(body, menuBtn, menuWrap, openMenu);
-        });
-
-        if (wWidth <= 768) {
-            modelClassLI.on('click', function() {
-                closeMenu(body, menuBtn, menuWrap, openMenu);
-            });
-        }
-
-        if (menuBtn.hasClass('is-active')) {
-
-            showMenu(body, menuWrap, openMenu);
-
-            openMenu.on('click', function() {
-                closeMenu(body, menuBtn, menuWrap, openMenu);
-            });
-
-        } else {
-            closeMenu(body, menuBtn, menuWrap, openMenu);
-        }
-
-    });
-*/
-
-
-});
 
 
 function closeMenu(b, m, w, o) {
