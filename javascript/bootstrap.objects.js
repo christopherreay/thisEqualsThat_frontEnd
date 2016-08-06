@@ -119,7 +119,7 @@ function($)
 
   this.navbar_collapse_id_counter = 0;
   this.navbarFixedLeft =
-  function(passThrough, appendTo, navbarUniqueClass, logo=".navbar-brand-logo")
+  function(passThrough, appendTo, navbarUniqueClass, logo=".navbar-brand-logo", mainContent)
   { if (!navbarUniqueClass) navbarUniqueClass = "navbar-autoID-"+this.navbar_collapse_id_counter++;
     var toReturn =
         O.create( [".bs-component."+navbarUniqueClass, ".container-fluid", ".row", 
@@ -142,7 +142,7 @@ function($)
                           ],
                         ],
                       ],
-                      [ ".col-xs-12.col-sm-12.col-lg-10",  ".mainContent" ]
+                      [ ".col-xs-12.col-sm-12.col-lg-10",  mainContent ]
                     ]
                   ],
                   passThrough,

@@ -223,9 +223,8 @@ thisEqualsThat.oop = function()
   this.displayInterface = function()
   { ThisEqualsThat.display.navbar = {};
     O.create( [ "#pageWrapper",
-                [ [ O.navbarFixedLeft(ThisEqualsThat.display.navbar, null, "mainNav", ".navLogo.centerBackgroundImage.visualToolsEye.inputFieldAlteredSpinner.panel") ],
+                [ [ O.navbarFixedLeft(ThisEqualsThat.display.navbar, null, "mainNav", ".navLogo.centerBackgroundImage.visualToolsEye.inputFieldAlteredSpinner.panel", ".thisEqualsThatScene") ],
                   [ $("<div class='copyrightContainer' />").text("© This Equals ltd 2016") ],
-                  
                 ],
               ],
               ThisEqualsThat.display,
@@ -252,28 +251,6 @@ thisEqualsThat.oop = function()
             );
   };
 
- 
-  this.ThisEqualsThatScene = function(displayContainerDiv)
-  { this.displayContainerDiv = displayContainerDiv;
-    O.create( [ ".thisEqualsScene", ".constructContainer" ],
-              this,
-              displayContainerDiv
-            );
-    
-    this.referenceVisual        = new ThisEqualsThat.ReferenceVisual();
-
-    this.modelClasses           = new ThisEqualsThat.ModelClasses(this);
-
-    this.componentCookieManager = new ThisEqualsThat.ComponentCookieManager();
-  }
-  this.ThisEqualsThatScene.prototype.setCurrentModel = function(modelInstance)
-  { if (this.hasOwnProperty("currentModel"))
-    { this.currentModel.hide();
-    }
-    this.currentModel = modelInstance.displayIntoTarget(thisEqualsThat.scene.constructContainer);
-  }
-
-
   this.ModelClasses = function(thisEqualsThatScene)
   { var This = this;
 
@@ -291,10 +268,8 @@ thisEqualsThat.oop = function()
     .on("click", ".blueprintItem",
         function(event)
         { var modelClass = $(event.currentTarget).data("thisEquals_blueprint");
-          // modelClass.getModelInstance(thisEqualsThat.scene.setCurrentModel);
-
-          $(this).addClass('active');
-          $(this).siblings().removeClass('active');
+          modelClass.getModelInstance(thisEqualsThat.scene.setCurrentModel);
+          $(this).parent("modal").modal("hide");
         }
       );
 
@@ -331,7 +306,7 @@ thisEqualsThat.oop = function()
       ],
       blueprints,
       ThisEqualsThat.display.constructBlueprint.constructBlueprintContainer
-    )[0].data("thisEquals_blueprint", this);
+    )[0].data("thisEquals_blueprint", this).data("dismiss", "modal");
 
 
       // this.display.modelClassIcon.append( $("<img />", { src: this.imageURL } ).addClass('modelImg') );
@@ -370,6 +345,27 @@ thisEqualsThat.oop = function()
       $.ajax(ajaxOptions);
     }
   }
+
+  this.ThisEqualsThatScene = function(displayContainerDiv)
+  { this.displayContainerDiv = displayContainerDiv;
+    O.create( [ ".thisEqualsScene", ".constructContainer" ],
+              this,
+              displayContainerDiv
+            );
+    
+    this.referenceVisual        = new ThisEqualsThat.ReferenceVisual();
+
+    this.modelClasses           = new ThisEqualsThat.ModelClasses(this);
+
+    this.componentCookieManager = new ThisEqualsThat.ComponentCookieManager();
+  }
+  this.ThisEqualsThatScene.prototype.setCurrentModel = function(modelInstance)
+  { if (this.hasOwnProperty("currentModel"))
+    { this.currentModel.hide();
+    }
+    this.currentModel = modelInstance.displayIntoTarget(ThisEqualsThat.display.navbar.thisEqualsThatScene);
+  }
+
 
   //REFERENCE VISUAL
   this.ReferenceVisual = function()
@@ -572,8 +568,6 @@ thisEqualsThat.oop = function()
              {
              }
              ) ;
-      // this.inputFieldsSliders.on("change", ".inputFieldText",
-      //     this.inputFieldText_changed);
       $.each(
         this.data.fields,
         function(fieldNameString, value)
@@ -590,22 +584,7 @@ thisEqualsThat.oop = function()
     }
     return this;
   }
-  this.ModelInstance.prototype.inputFieldText_changed = function()
-  { //$this = $(this);
-    // var modelField = $(this).data("thisEquals.modelField");
-    // $modelField = $(modelField)
-    // if (modelField.hasOwnProperty("uiSlider"))
-    // { modelField.uiSlider.data("thisEquals.disableWriteToTextField", true);
-    //   modelField.uiSlider.slider("value", modelField.actualToSlider(modelField.uiValue_slider.val()));
-    // }
-    // $modelField.data("thisEquals.oldValue", modelField.uiValue_slider.val());
-    // console.log($(modelField).data("thisEquals.oldValue"));
 
-    // modelField.modelInstance.inputFieldAltered(
-    //           { inputField: modelField.fullAddress,
-    //             newValue:   modelField.uiValue_slider.val()
-    //           });
-  }
   this.ModelInstance.prototype.getOutputFields = function()
   { if (! this.hasOwnProperty("outputFieldData"))
     { var This = this;
@@ -866,14 +845,14 @@ thisEqualsThat.oop = function()
 
       var toCreate = 
         O.create
-        ( [ "modelInstanceDiv."+this.modelClass.name+"."+this.id,
-            "topModelDiv",
-            [ [ "row", "col-12", "panel.panel-default", "visualisationOutputContainer.panel-body" ],
-              [ "modelSliders.model_options" ],
+        ( [ ".modelInstanceDiv."+this.modelClass.name+"."+this.id,
+            ".topModelDiv",
+            [ [ ".row", ".col-lg-12", ".panel.panel-default", ".visualisationOutputContainer.panel-body" ],
+              [ ".modelSliders.model_options" ],
 
             ],
           ],
-          this.display,
+          display,
           targetContainer
         );
 

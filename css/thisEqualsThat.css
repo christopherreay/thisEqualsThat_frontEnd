@@ -173,6 +173,138 @@ body
 }
 
 
+div.modelSliders, div.modelOutputCtrl, div.modelSvgOutput, div.modelCustomSvg {
+    position: relative;
+    padding: 20px;
+    background: #fff;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+}
+div.inputFieldElement {
+    position: relative;
+    width: 100%;
+    padding-bottom: 10px;
+    /*border-bottom: 1px solid #9E9E9E;*/
+    min-height: 32px;
+}
+
+/*.inputFieldLabelBg > h3 {
+    position: absolute;
+    bottom: 0px;
+    left: 130%;
+    max-width: 70%;
+    background: #198a94;
+    padding: 7px 40px;
+    border-radius: 3px;
+    opacity: 0;
+    color: rgba(255,255,255,0.87);
+    font-size: 21px;
+    font-weight: 400;
+    visibility: hidden;
+    -webkit-box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+    -webkit-transition: all .4s cubic-bezier(0.51, 0.49, 0.22, 1.29);
+    transition: all .4s cubic-bezier(0.51, 0.49, 0.22, 1.29);
+
+    -webkit-transition-delay: 0.3s;
+    transition-delay: 0.3s;
+}
+.inputFieldElement:hover > h3 {
+    -webkit-transition-delay: 0.3s;
+    transition-delay: 0.3s;
+}
+.inputFieldLabelBg:hover > h3 {
+    opacity: 0.9;
+    left: 10%;
+    visibility: visible;
+    z-index: 1000;
+    -webkit-transition-delay: 0.0s;
+    transition-delay: 0.0s;
+}*/
+
+div.inputFieldElement> select {
+    float: right;
+    background: transparent;
+    padding: 5px;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    width: 60px;
+    text-align: right;
+    font-family: Roboto;
+    font-size: 16px;
+    border-bottom: 0;
+    outline: none;
+}
+div.inputFieldElement:hover div.inputFieldLabel {
+    position: absolute;
+    top: -38px;
+    left: 104%;
+    z-index: 999;
+    opacity: 1;
+}
+div.inputFieldLabel {
+    position: absolute;
+    top: -38px;
+    left: 120%;
+    width: inherit;
+    background: #ECEFF1;
+    color: rgba(0,0,0,0.87);
+    padding: 20px;
+    border-radius: 3px;
+    opacity: 0;
+    -webkit-box-shadow: 0px 3px 7px rgba(0, 0, 0, .6);
+    box-shadow: 0px 3px 7px rgba(0, 0, 0, .6);
+    -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
+    transition: all .3s cubic-bezier(.4,0,.2,1);
+}
+div.inputFieldLabelBg {
+    float: left;
+    padding-top: 3px;
+    font-size: 16px;
+    margin-bottom: 10px;
+
+    background-repeat: no-repeat;
+}
+div.inputFieldSlider {
+    height: 1px;
+    border: 0;
+    background: #9E9E9E;
+    width: 100%;
+    bottom: -1px;
+    clear: both;
+}
+div.inputFieldSlider> .ui-state-default {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    top: -10px;
+    background: #23becc;
+    border: 0;
+    outline: none;
+}
+div.inputFieldSlider .ui-slider-range {
+    background: #23becc;
+}
+div.inputFieldSlider .ui-slider-handle
+{ background: #23becc;
+}
+
+input.inputFieldText[type=text] {
+    float: right;
+    background: transparent;
+    padding-top: 3px;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    width: 130px;
+    text-align: right;
+    font-family: Roboto;
+    font-size: 16px;
+    border-bottom: 0;
+}
+
 
 /* Animations */
 
