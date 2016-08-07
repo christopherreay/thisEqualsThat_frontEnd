@@ -120,6 +120,9 @@ body
 #welcomeOver
 { opacity: 1.0;
 }
+#welcomeOver.opacityZero
+{ opacity: 0.2;
+}
 
 .mainNav .navbar
 { align-items: flex-start;

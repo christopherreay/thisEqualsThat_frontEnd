@@ -195,7 +195,7 @@ thisEqualsThat.oop = function()
 
   this.Welcome = function()
   { var display = ThisEqualsThat.display = {};
-    O.create( [ "#welcomeOver.wrapper.fullScreenOverlay", 
+    O.create( [ "#welcomeOver.wrapper.fullScreenOverlay.smoothMove", 
                 [ [ ".centerBackgroundImage.visualToolsLogo" ],
                 ],
               ],
@@ -607,10 +607,6 @@ thisEqualsThat.oop = function()
 
             }
           );
-      /*This.outputFieldsSelect.append
-      ( ThisEqualsThat.ModelFieldOutput.prototype.getChooseOutputFieldDropDownItem()
-      );
-      */
       this.outputFieldsSelect.append($("<option selected='selected' value=''>Select Output</option>"));
       $.each(
         this.data.fields,
@@ -847,9 +843,21 @@ thisEqualsThat.oop = function()
         O.create
         ( [ ".modelInstanceDiv."+this.modelClass.name+"."+this.id,
             ".topModelDiv",
-            [ [ ".row", ".col-lg-12", ".panel.panel-default", ".visualisationOutputContainer.panel-body" ],
-              [ ".modelSliders.model_options" ],
-
+            [ //[ ".row", ".col-lg-12", ".panel.panel-default", ".visualisationOutputContainer.panel-body" ],
+              [ ".row", ".col-lg-12", ".panel.panel-default", 
+                [ [ ".modelOutputValue.panel-body" ],
+                  [ ".outputFieldsSelect", this.getOutputFields().outputFieldsSelect, ],
+                ],
+              ],
+              [ ".row", 
+                [ [".col-lg-4",  ".modelSliders.panel.panel-default", this.getInputFields().inputFieldsSliders ],
+                  [".col-lg-8",  "row", 
+                    [ [ ".visualisationFieldSelect.panel.panel-default", this.getVisualisationFields().visualisationFieldSelect ],
+                      [ ".modelSvgOutput.panel.panel-default"],
+                    ],
+                  ],
+                ],
+              ],
             ],
           ],
           display,
@@ -862,81 +870,20 @@ thisEqualsThat.oop = function()
       // display.bottomModelSelectDiv.append(display.bottomModelSelectLable);
       // display.bottomModelDiv          = $("<div class='bottomModelDiv' />");
 
-      display.modelSliders.append(this.getInputFields().inputFieldsSliders);
+      // display.modelSvgOutput            = $("<div class='modelSvgOutput' />");
 
-      
-      display.boxSliders    = $('<div class="model_box_ctrl boxSliders" />');
-      display.boxOutputCtrl = $('<div class="model_box_ctrl boxOutputCtrl" />');
-      display.boxCustomSvg  = $('<div class="model_box_ctrl boxCustomSvg" />');
+      // display.modelOutputDisplay        = $("<div class='modelOutputContainer'><div class='containerLabel'></div></div>");
 
-      display.modelOutputCtrl           = $("<div class='modelOutputCtrl model_options' />");
+      // display.modelOutputValue          = $("<div class='modelOutputValue'  />");
+      // display.outputFieldsSelect        = this.getOutputFields().outputFieldsSelect;
+      // // display.modelOutputDisplay.append(display.modelOutputValue);
+      // display.modelOutputDisplay.append(display.outputFieldsSelect);
 
-      display.modelCustomSvg            = $("<div class='modelCustomSvg model_options' />");
+      // display.modelVisualisationValue   = $("<div class='modelVisualisationValue'  />");
 
-      var models = [ display.boxSliders, display.boxOutputCtrl, display.boxCustomSvg ];
-        $.each( models, function ( i, elem )
-        {
-          elem.on('click', function ()
-          {
-            var   self   = $(this),
-                  wWidth = $(window).outerWidth();
-
-                if ( wWidth <= 768 )
-                {
-                    switch (i)
-                    {
-                      case 0:
-                            display.modelSliders.toggleClass('active');
-                            display.modelOutputCtrl.removeClass('active');
-                            display.modelCustomSvg.removeClass('active');
-
-                            display.boxSliders.toggleClass('active').removeClass('shadow');
-                            display.boxOutputCtrl.removeClass('active').addClass('shadow');
-                            display.boxCustomSvg.removeClass('active').addClass('shadow');
-                        break;
-                      case 1:
-                            display.modelOutputCtrl.toggleClass('active');
-                            display.modelSliders.removeClass('active');
-                            display.modelCustomSvg.removeClass('active');
-
-                            display.boxOutputCtrl.toggleClass('active').removeClass('shadow');
-                            display.boxSliders.removeClass('active').addClass('shadow');
-                            display.boxCustomSvg.removeClass('active').addClass('shadow');
-                        break;
-                      case 2:
-                            display.modelCustomSvg.toggleClass('active');
-                            display.modelOutputCtrl.removeClass('active');
-                            display.modelSliders.removeClass('active');
-
-                            display.boxCustomSvg.toggleClass('active').removeClass('shadow');
-                            display.boxSliders.removeClass('active').addClass('shadow');
-                            display.boxOutputCtrl.removeClass('active').addClass('shadow');
-                        break;
-                    }
-                    if (! self.hasClass('active') )
-                    {
-                        display.boxCustomSvg.removeClass('shadow');
-                        display.boxSliders.removeClass('shadow');
-                        display.boxOutputCtrl.removeClass('shadow');
-                    }
-                }
-            });
-        });
-
-      display.modelSvgOutput            = $("<div class='modelSvgOutput' />");
-
-      display.modelOutputDisplay        = $("<div class='modelOutputContainer'><div class='containerLabel'></div></div>");
-
-      display.modelOutputValue          = $("<div class='modelOutputValue'  />");
-      display.outputFieldsSelect        = this.getOutputFields().outputFieldsSelect;
-      // display.modelOutputDisplay.append(display.modelOutputValue);
-      display.modelOutputDisplay.append(display.outputFieldsSelect);
-
-      display.modelVisualisationValue   = $("<div class='modelVisualisationValue'  />");
-
-      display.visualisationFieldsSelect = this.getVisualisationFields().visualisationFieldsSelect;
-      // display.visualisationOutputContainer.append(display.modelVisualisationValue);
-      display.visualisationOutputContainer.append(display.visualisationFieldsSelect);
+      // display.visualisationFieldsSelect = this.getVisualisationFields().visualisationFieldsSelect;
+      // // display.visualisationOutputContainer.append(display.modelVisualisationValue);
+      // display.visualisationOutputContainer.append(display.visualisationFieldsSelect);
 
       display.svgOutput             = $("<div class='svgOutput'  />");
 
