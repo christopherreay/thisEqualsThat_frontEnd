@@ -852,34 +852,48 @@ thisEqualsThat.oop = function()
               [ ".row", 
                 [ [".col-lg-4",  ".modelSliders.panel.panel-default", this.getInputFields().inputFieldsSliders ],
                   [".col-lg-8",  
-                    "row", 
-                    [ [ ".visualisationFieldSelect.panel.panel-default.col-lg-12", this.getVisualisationFields().visualisationFieldSelect ],
-                      [ ".svgDiv.panel.panel-default.col-lg-12", 
-                        $(document.createElementNS(d3.ns.prefix.svg, "svg"))
-                        .attr("xmlns",        "http://www.w3.org/2000/svg")
-                        .attr("xmlns:xlink",  "http://www.w3.org/1999/xlink")
-                        .attr("xmlns:z",      "http://debeissat.nicolas.free.fr/svg3d/svg3d.rng")
-                        .attr("width",        "100%")
-                        .attr("height",       "100%")
-                        .attr("z:xInfinite",  "50")
-                        .attr("z:yInfinite",  "100")
-                        .attr("z:zRatio",     "5")
-
-                        .attr("class", "rootSVG id_"+this.id),
-                        [ [ "defs.svgDefs" ],
-                          [ "text.svgTextDescription" ],
-                          [ "g.svgTranslatableG" ,
-                            [ [ "g.svgHeightAxis"         ],
-                              [ "g.svgVisualisationG"     ],
-                              [ "g.svgReferenceG"         ],
-                            ],
-                          ]
+                    [ [ ".row", 
+                        [ [ ".visualisationFieldSelect.panel.panel-default.col-lg-6", this.getVisualisationFields().visualisationFieldSelect ],
+                          [ ".visualisationOutputValue.panel.panel-default.col-lg-6" ],
                         ],
                       ],
-                      [ ".toggleFeatures.panel.panel-default.col-lg-12" ],
+                      [ ".row",
+                        [ [ ".svgDiv.panel.panel-default.col-lg-12", 
+                            $(document.createElementNS(d3.ns.prefix.svg, "svg"))
+                            .attr("xmlns",        "http://www.w3.org/2000/svg")
+                            .attr("xmlns:xlink",  "http://www.w3.org/1999/xlink")
+                            .attr("xmlns:z",      "http://debeissat.nicolas.free.fr/svg3d/svg3d.rng")
+                            .attr("width",        "100%")
+                            .attr("height",       "100%")
+                            .attr("z:xInfinite",  "50")
+                            .attr("z:yInfinite",  "100")
+                            .attr("z:zRatio",     "5")
+
+                            .attr("class", "rootSVG id_"+this.id),
+                            [ [ "defs.svgDefs" ],
+                              [ "text.svgTextDescription" ],
+                              [ "g.svgTranslatableG" ,
+                                [ [ "g.svgHeightAxis"         ],
+                                  [ "g.svgVisualisationG"     ],
+                                  [ "g.svgReferenceG"         ],
+                                ],
+                              ],
+                            ],
+                          ],
+                          [ ".toggleFeatures.panel.panel-default.col-lg-12" ,
+                          ],
+                        ],
+                      ],
+                      [ ".row",
+                        [ [ ".bottomModelSelectDiv.col-lg-12", ".bottomModelSelectLable" ],
+                        ],
+                      ],
                     ],
                   ],
                 ],
+              ],
+              [ ".row",
+                ".bottomModelDiv.col-lg-12"
               ],
             ],
           ],
@@ -887,14 +901,8 @@ thisEqualsThat.oop = function()
           targetContainer
         );
 
-      
-      // display.bottomModelSelectDiv    = $("<div class='bottomModelSelectDiv bottomModelSelectDiv."+this.id+"' />");
-      // display.bottomModelSelectLable  = $("<div class='bottomModelSelectLable'/>");
-      // display.bottomModelSelectDiv.append(display.bottomModelSelectLable);
-      // display.bottomModelDiv          = $("<div class='bottomModelDiv' />");
-
-      //display.svgTextDescription.text("Hello World");
-      //display.svgTextInput.on("change", function() { d3.select(display.svgTextDescription).text($(this).val()); This.svg_createSaveLink(This);});
+      display.svgTextDescription.text("Hello World");
+      // display.svgTextInput.on("change", function() { display.svgTextDescription.text($(this).val()); This.svg_createSaveLink(This);});
 
       display.toggle =
         { "axes":                 $("<input class='checkbox' id = 'toggle_axes_" + This.id + "' type='checkbox'  checked='checked'title='Show / Hide Axes' /><span class='checkbox_ui ch_axis'><span class='check'><i class='fa fa-check'></i></span></span>"),
@@ -929,262 +937,7 @@ thisEqualsThat.oop = function()
 
       
       
-      // display.customSVGPane =
-      //   $("<div />",
-      //     { "class": "customSVGPane makeDraggable customSVGList"
-      //     }
-      //   );
-      //   // display.customSVGPane.append(
-      //   //   $("<div class='customSVGPaneTitle'>Get SVG from File</div>"));
-      //   display.customSVGTitle =
-      //     $("<input />",
-      //        { "class" : 'custom_svgNameInput',
-      //          "type"  : 'file',
-      //          'placeholder' : 'Get SVG from File',
-      //          'accept' : 'image/svg+xml'
-      //        }
-      //       );
-      //   display.customSVGPane.append(display.customSVGTitle);
-
-      //   display.customSVGPane.append(
-      //     $("<div />",
-      //         { "class" : 'customSVGPaneSubmitButton btn'
-      //       }
-      //     ).on("click", function(event)
-      //       { var svgFile = $('input.custom_svgNameInput').val();
-
-      //        if( svgFile === "" || svgFile === undefined){
-      //          alert('.svg file not uploaded!');
-      //        } else {
-      //          alert(svgFile + ' ' + 'uploaded');
-      //        }
-      //         console.log($('input.custom_svgNameInput').val());
-      //       }
-      //     )
-      //   );
-      //   var referenceSVGSelectListContainer = $("<div class='referenceSVGSelectListContainer' />");
-      //   referenceSVGSelectListContainer.append(thisEqualsThat.scene.referenceVisual.svgSelectList.clone().show());
-      //   display.customSVGPane.append(referenceSVGSelectListContainer);
-      //   display.customSVGPane.on("click", ".referenceSVGSelectListItem",
-      //       function(clickEvent)
-      //       { var selectedDiv = $(clickEvent.currentTarget)
-      //         var fileHandle = selectedDiv.attr("thisequals_filehandle");
-      //         if (This.userSelectedReferenceSVG == fileHandle)
-      //         { This.userSelectedReferenceSVG = "";
-      //           // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
-
-      //         }
-      //         else
-      //         { This.userSelectedReferenceSVG = fileHandle;
-      //           // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
-      //           // selectedDiv.toggleClass("userSelectedReferenceSVG_selected");
-      //         }
-      //         This.displayCurrentOutput()
-
-      //       }
-      //   );
-
-      //   display.modelCustomSvg.append(display.customSVGPane);
-      //   display.modelOutputCtrl.append(display.bottomModelSelectDiv);
-
-      //   display.googleConnect =
-      //   $("<div />",
-      //     { "class": "customSVGPane googleConnect makeDraggable"
-      //     }
-      //   ).draggable().css({
-      //     'position' : 'absolute',
-      //     'top'      : '104%',
-      //     'left'     : '0',
-      //     'right'    : '0'
-      //   });
-
-      //   var wWidth = $(window).outerWidth();
-      //   if ( wWidth <= 768 )
-      //   {
-      //     display.googleConnect.draggable('disable')
-      //                          .css({
-      //                            'opacity': '1',
-      //                            'filter' : 'Alpha(Opacity=100)'
-      //                          });
-      //     display.topModelDiv.append(display.googleConnect);
-      //   }
-      //   else
-      //   {
-      //     display.modelSvgOutput.append(display.googleConnect);
-      //   }
-
-      //   display.googleConnect.append(
-      //     $("<div class='customSVGPaneTitle'>googleConnect</div>"));
-      //   display.googleConnect_email=
-      //     $("<input />",
-      //        { "class" : 'custom_svgNameInput',
-      //          "placeholder" : 'Placeholder text'
-      //        }
-      //     )
-      //     .val(Cookies.get("TET.googleConnect.email"))
-      //     .on("change", function(){Cookies.set("TET.googleConnect.email", display.googleConnect_email.val(), {"expires": 9999})})
-      //     ;
-      //   display.googleConnect.append(display.googleConnect_email);
-
-      //   display.googleConnect_loginButton =
-      //       $("<a class='googleConnect_loginButton'>Login to Google</a>")
-      //       .on("click",
-      //           function()
-      //           { var pollingComplete       = false;
-      //             var googleConnect_window  = false;
-      //             var emailAddress = display.googleConnect_email.val();
-      //             (function poll()
-      //                 { $.ajax(
-      //                   { "url": "/googleConnect/gotCredentials",
-      //                     "type": "POST",
-      //                     "data": {"emailAddress": emailAddress},
-
-      //                     "success": function(data)
-      //                     { console.log("polling", data);
-      //                       if (googleConnect_window == false)
-      //                       { googleConnect_window = PopupCenter("googleConnect/login?emailAddress="+display.googleConnect_email.val()+"", "googleConnect", 400,200);
-      //                       }
-      //                       else if (data.gotCredentials == true)
-      //                       { googleConnect_window.close();
-      //                         pollingComplete = true;
-      //                       }
-      //                     },
-      //                     "error": function(jqXHR ,textStatus, errorThrown){debugger;},
-      //                     "dataType": "json",
-      //                     "complete": function(){console.log("polling status: ", pollingComplete); if (!pollingComplete) setTimeout(poll, 2000)},
-      //                     "timeout": 2000,
-      //                   });
-      //                 }
-      //             )();
-      //           }
-      //        );
-
-      //   display.googleConnect.append(display.googleConnect_loginButton);
-
-      //   display.googleConnect_spreadsheetURL=
-      //       $("<input />",
-      //        { "class" : 'googleConnect spreadsheetURL'
-      //        }
-      //       )
-      //       .on("change",
-      //           function()
-      //           { alert("change spreadsheetURL");
-      //             var ajaxOptions =
-      //                 { "url":  "/googleConnect/getSheets",
-      //                   "type": "POST",
-      //                   "data": { "emailAddress":   display.googleConnect_email.val(),
-      //                             "spreadsheetURL": display.googleConnect_spreadsheetURL.val(),
-      //                           },
-      //                   "success" :
-      //                       function(data)
-      //                       { console.log(data);
-      //                         display.googleConnect_sheetSelect.empty()
-      //                         display.googleConnect_sheetSelect.append($("<option value='Select Sheet'>Select Sheet</option>"));
-      //                         $.each
-      //                         ( data.sheetNames,
-      //                           function(index)
-      //                           { display.googleConnect_sheetSelect.append($("<option value='"+index+"'>"+this+"</option>"));
-      //                           }
-      //                         )
-      //                       },
-      //                   "dataType": "json",
-      //                 }
-      //             $.ajax(ajaxOptions);
-      //           }
-      //       );
-      //   display.googleConnect.append(display.googleConnect_spreadsheetURL);
-
-      //   display.googleConnect_sheetSelect =
-      //       $("<select />",
-      //        { "class" : 'googleConnect spreadsheetURL'
-      //        }
-      //       );
-      //   display.googleConnect.append(display.googleConnect_sheetSelect);
-
-      //   display.googleConnect_cellRange =
-      //       $("<input />",
-      //         { "class": 'googleConnect cellRange',
-      //         }
-      //       )
-      //   display.googleConnect.append(display.googleConnect_cellRange);
-
-      //   display.googleConnect_requestRangeData =
-      //       $("<a />",
-      //         { "class": "googleConnect requestRangeData"
-      //         }
-      //       ).text("Request Range Data")
-      //       .on
-      //       ( "click",
-      //         function()
-      //         { alert("request range data");
-      //             var ajaxOptions =
-      //                 { "url":  "/googleConnect/getCellRange",
-      //                   "type": "POST",
-      //                   "data": { "emailAddress":   display.googleConnect_email.val(),
-      //                             "spreadsheetURL": display.googleConnect_spreadsheetURL.val(),
-      //                             "sheetName":      display.googleConnect_sheetSelect.val(),
-      //                             "cellRange":      display.googleConnect_cellRange.val(),
-      //                           },
-      //                   "success" :
-      //                       function(data)
-      //                       { console.log(data);
-      //                         // debugger;
-
-      //                         var dataRow     = data.cellRangeData.values[0];
-      //                         var colorRow    = data.cellRangeData.backgrounds[0];
-      //                         var columnCount = dataRow.length;
-      //                         ratioString     = dataRow.join("|");
-      //                         colorChangeString =
-      //                             $.map
-      //                             ( colorRow,
-      //                               function(hex, i)
-      //                               { rgb = hexToRgb(hex);
-      //                                 return "rgb("+(rgb.r-125)+","+(rgb.g-125)+","+(rgb.b-125)+")";
-      //                               }
-      //                             );
-      //                         colorChangeString = colorChangeString.join("|");
-      //                         This.inputFields['["colors"]'].uiValueText.val(colorChangeString);
-      //                         This.inputFields[ '["ratios"]'].uiValueText.val(ratioString)      ;
-
-      //                         var alterField = This.inputFields['["colors"]'];
-      //                         This.inputFieldAltered(
-      //                         { inputField: alterField.fullAddress,
-      //                           newValue:   alterField.uiValueText.val()
-      //                         },
-      //                         function()
-      //                         { var alterField = This.inputFields['["ratios"]'];
-      //                           This.inputFieldAltered(
-      //                               { inputField: alterField.fullAddress,
-      //                                 newValue:   alterField.uiValueText.val()
-      //                               }
-      //                           )
-      //                         },
-      //                         true
-      //                         );
-      //                       },
-      //                   "dataType": "json",
-      //                 }
-      //             $.ajax(ajaxOptions);
-      //         }
-      //       );
-      //   display.googleConnect.append(display.googleConnect_requestRangeData)
-
-          // on("click", function(event)
-          //   { var ajaxOptions =
-          //         { "url": "/googleConnect/login",
-          //           "data": {"emailAddress": display.googleConnect_email.val()},
-          //           "dataType": "json",
-          //           "method": "POST",
-          //           "success": function(data, a, b)
-          //                         { debugger;
-          //                           console.log(data);
-          //                         }
-          //         };
-          //     $.ajax(ajaxOptions);
-          //   }
-          // )
-        // );
-        //thisEqualsThat.scene.modelContainerDiv.append(display.customSVGPane);
+      
 
     }
     this.display.modelInstanceDiv.show();
@@ -1202,24 +955,24 @@ thisEqualsThat.oop = function()
     //Place the bottom of the scale axis at the bottom of svgVisualisationG, 10 px to the right
     var internalSize    = modelInstance.display.svgTranslatableG.getBBox();
 
-    aspectScaleRatio = Math.max(internalSize.width, internalSize.height);
+    var aspectScaleRatio = Math.max(internalSize.width, internalSize.height);
     var px20Height   = (aspectScaleRatio / 400.0) * 20;
 
-    svgVisualisationGBBox = modelInstance.display.svgVisualisationG.getBBox();
+    var svgVisualisationGBBox = modelInstance.display.svgVisualisationG.getBBox();
 
-    svgHeightAxisBBox     = modelInstance.display.svgMeasureY.getBBox();
-    svgHeightAxisX        = svgVisualisationGBBox.x + svgVisualisationGBBox.width + (px20Height/2);
-    svgHeightAxisY        = svgVisualisationGBBox.y + svgVisualisationGBBox.height - svgHeightAxisBBox.height;
+    var svgHeightAxisBBox     = modelInstance.display.svgMeasureY.getBBox();
+    var svgHeightAxisX        = svgVisualisationGBBox.x + svgVisualisationGBBox.width + (px20Height/2);
+    var svgHeightAxisY        = svgVisualisationGBBox.y + svgVisualisationGBBox.height - svgHeightAxisBBox.height;
 
-    svgWidthAxisBBox      = modelInstance.display.svgMeasureX.getBBox();
-    svgWidthAxisX         = svgVisualisationGBBox.x + svgVisualisationGBBox.width  - svgWidthAxisBBox.width;
-    svgWidthAxisY         = svgVisualisationGBBox.y + svgVisualisationGBBox.height + (px20Height/2);
+    var svgWidthAxisBBox      = modelInstance.display.svgMeasureX.getBBox();
+    var svgWidthAxisX         = svgVisualisationGBBox.x + svgVisualisationGBBox.width  - svgWidthAxisBBox.width;
+    var svgWidthAxisY         = svgVisualisationGBBox.y + svgVisualisationGBBox.height + (px20Height/2);
 
     modelInstance.display.svgMeasureAxisY.setAttribute("transform", "translate("+svgHeightAxisX+" "+svgHeightAxisY+")");
     modelInstance.display.svgMeasureAxisX.setAttribute("transform", "translate("+svgWidthAxisX +" "+svgWidthAxisY+")");
 
 
-    var svgElement      = $(modelInstance.display.containerSVG);
+    var svgElement      = modelInstance.display.svg;
     var externalWidth   = svgElement.css("width");
     var externalHeight  = svgElement.css("height");
 
@@ -1234,7 +987,7 @@ thisEqualsThat.oop = function()
 
     var internalSize    = modelInstance.display.svgTranslatableG.getBBox();
 
-    aspectScaleRatio = Math.max(internalSize.width, internalSize.height);
+    var aspectScaleRatio = Math.max(internalSize.width, internalSize.height);
     var px20Height   = (aspectScaleRatio / 400.0) * 20;
 
     var viewBoxString   = internalSize.x        + " " +
@@ -1243,28 +996,19 @@ thisEqualsThat.oop = function()
                           (internalSize.height  + px20Height + (px20Height * 0.2));
 
     //debugLevel1//console.log(viewBoxString);
-    svgElement[0].setAttribute("viewBox", viewBoxString);
+    svgElement.get(0).setAttribute("viewBox", viewBoxString);
 
     d3.select(modelInstance.display.svgTextDescription)
         .attr("x", internalSize.x)
         .attr("y", internalSize.y + internalSize.height + px20Height)
         .attr("font-size", (px20Height)+"px");
-        //.attr("transform", "scale(")
-
-
-
-    //var modelInstance = $(this).data("thisEqualsThat")["modelInstance"];
-    //console.log(modelInstance);
-    //modelInstance.display.containerSVG.get()[0].setAttribute("viewBox", "0 0 1024 400");
-    //modelInstance.display.containerSVG.get()[0].setAttribute("preserveAspectRatio", "none");
-    //d3.select(modelInstance.display.containerSVG).attr("viewbox", "0 0 1024 400").attr("preserveAspectRatio", "none");
-    //console.log(modelInstance.display.containerSVG.attr("viewbox", "0 0 1024 400").attr("preserveAspectRatio", "none"));//+This.display.svgTranslatableG.
   }
+
   this.ModelInstance.prototype.animateSVG = function()
   { var svg3dConfiguration = this.svg3dDisplayJSON.svg3dConfiguration;
     var This = this;
 
-    var svgClonableG = $(this.display.svgClonableG);
+    var svgClonableG = this.display.svgClonableG;
     svg3d.sortAlgo = svg3d.ONE_TO_ALL;
 
     This.inputFieldHUD.renderHUD("preClone");
@@ -1285,42 +1029,30 @@ thisEqualsThat.oop = function()
                 //Add the Scale Axis to the right hand side of the clone group
                 //  hopefully this should deal with position and that by itself
                 This.display.svgHeightAxis.innerHTML="";
-                This.display.svgMeasureAxisY = d3.select(This.display.svgHeightAxis)
-                    .append("g").attr("id", "svgMeasureAxisY_"+this.id).node();
-                This.display.svgMeasureAxisX = d3.select(This.display.svgHeightAxis)
-                    .append("g").attr("id", "svgMeasureAxisX_"+this.id).node();
+                O.create( ["g",
+                            [ [ "g.svgMeasureAxisY", "path.svgMeasureY"],
+                            ],
+                            [ [ "g.svgMeasureAxisX", "path.svgMeasureX"],
+                            ],
+                          ],
+                          This.display,
+                          This.display.svgHeightAxis
+                        );
+
                 var axisBBox = This.display.svgVisualisationG  .getBBox();
-                //These threed coordinates do not seem to interact well with the SVG. They are also not translated by the translate3d code
-                //var yAxisD = "m"+(axisBBox.x + axisBBox.width + 10)+","+(axisBBox.y)+ ",0 l0,"+axisBBox.height+",0";
-                //This is the 2d version so it can be seen
-                //var yAxisD = "m"+(axisBBox.x + axisBBox.width + 10)+","+(axisBBox.y)+ "l0,"+axisBBox.height+"";
+
                 var yAxisD = "m0,0 "+ "l  0,"           +axisBBox.height+"";
-                var xAxisD = "m0,0 "+ "l"+axisBBox.width+",0";
-                //This.display.svgMeasureAxisY.setAttribute("transform", "translate("+(axisBBox.x + axisBBox.width + 10)+ " "+(axisBBox.y)+")");
-                //This.display.svgMeasureAxisX.setAttribute("transform", "translate("+(axisBBox.x)+                       " "+(axisBBox.y + axisBBox.height + 10)+")");
-                /*This.display.svgMeasureY = document.createElementNS("//www.w3.org/2000/svg", "path");
-                This.display.svgMeasureY.setAttribute("id", "svgMeasureY_"+This.id);
-                This.display.svgMeasureY.setAttribute("d", yAxisD);
-                This.display.svgMeasureY.setAttribute("stroke", "black");
-                This.display.svgMeasureY.setAttribute("z:threeD", "true");
-                This.display.svgMeasureAxis.appendChild(This.display.svgMeasureY);
-                */
-                This.display.svgMeasureY = d3.select(This.display.svgMeasureAxisY)
-                    .append("path")
-                        .attr("id", "svgMeasureY_"+this.id)
-                        .attr("d", yAxisD)
-                        //.attr("z:threeD", "true")
-                        .attr("stroke", "darkgrey")
-                    .node();
-                This.display.svgMeasureY.setAttribute("z:threeD", "true");
-                This.display.svgMeasureX = d3.select(This.display.svgMeasureAxisX)
-                    .append("path")
-                        .attr("id", "svgMeasureX_"+this.id)
-                        .attr("d", xAxisD)
-                        //.attr("z:threeD", "true")
-                        .attr("stroke", "darkgrey")
-                    .node();
-                This.display.svgMeasureX.setAttribute("z:threeD", "true");
+                var xAxisD = "m0,0 "+ "l" +axisBBox.width+",0";
+
+                This.display.svgMeasureY
+                    .attr("d", yAxisD)
+                    .attr("stroke", "darkgrey")
+                This.display.svgMeasureY.get(0).setAttribute("z:threeD", "true");
+                
+                This.display.svgMeasureX 
+                      .attr("d", xAxisD)
+                      .attr("stroke", "darkgrey")
+                This.display.svgMeasureX.get(0).setAttribute("z:threeD", "true");
 
                 var unitNormalisedHeight = This.svg3dDisplayJSON.svgRelativeHighness;
                 var unitNormalisedWidth  = (unitNormalisedHeight / axisBBox.height) * axisBBox.width
@@ -1353,7 +1085,7 @@ thisEqualsThat.oop = function()
                   widthUnit = "cm"
                 }
 
-                This.display.svgMeasureY_text = d3.select(This.display.svgMeasureAxisY)
+                This.display.svgMeasureY_text = d3.select(This.display.svgMeasureAxisY.get(0))
                     .append("text")
                     .attr("id", "svgYAxis_"+this.id)
                     .text(unitNormalisedHeight.toPrecision(3)+heightUnit)
@@ -1363,7 +1095,7 @@ thisEqualsThat.oop = function()
                     .attr("y", (axisBBox.height / 2))
                     .node();
 
-                 This.display.svgMeasureX_text = d3.select(This.display.svgMeasureAxisX)
+                 This.display.svgMeasureX_text = d3.select(This.display.svgMeasureAxisX.get(0))
                     .append("text")
                     .attr("id", "svgXAxis_"+this.id)
                     .text(unitNormalisedWidth.toPrecision(3)+widthUnit)
@@ -1375,7 +1107,7 @@ thisEqualsThat.oop = function()
                 This.display.svgMeasureX_text.setAttribute("x", ((axisBBox.width)/2 - (This.display.svgMeasureX_text.getBBox().width / 2)));
 
                 //Animate Clones/Main SVG
-                $(This.display.svgClonableG).animate(
+                This.display.svgClonableG.animate(
                 { "svg3d":{"translate3d": This.svg3dDisplayJSON.svg3dConfiguration.translate3d}
                 },
                 { "queue"   : This.id,
@@ -1388,7 +1120,7 @@ thisEqualsThat.oop = function()
 
                 //Animate Reference SVG
                 var svgVisualisationGBBox    = This.display.svgVisualisationG  .getBBox();
-                var svgReferenceGBBox        = This.display.svgReferenceG[0]   .getBBox();
+                var svgReferenceGBBox        = This.display.svgReferenceG      .getBBox();
 
 
                 var multiplier          = svgReferenceGBBox.height / ((thisEqualsThat.scene.referenceVisual.currentReferenceSVG.height / This.svg3dDisplayJSON.svgRelativeHighness) * (svgVisualisationGBBox["height"]));
@@ -1590,15 +1322,6 @@ thisEqualsThat.oop = function()
       );
     }
   };
-  /*this.ModelInstance.prototype.progress_translate3d = function(animation, progress, remainingMs)
-  { console.log(this.getBBox());
-    console.log(this);
-    var modelInstance = $(this).data("thisEqualsThat")["modelInstance"];
-    //modelInstance.display.containerSVG.get()[0].setAttribute("viewBox", "0 0 1024 400");
-    //modelInstance.display.containerSVG.get()[0].setAttribute("preserveAspectRatio", "none");
-    //d3.select(modelInstance.display.containerSVG).attr("viewbox", "0 0 1024 400").attr("preserveAspectRatio", "none");
-    //console.log(modelInstance.display.containerSVG.attr("viewbox", "0 0 1024 400").attr("preserveAspectRatio", "none"));//+This.display.svgTranslatableG.
-  }*/
   this.ModelInstance.prototype.displayCurrentOutput = function()
   { var outputField         = this.lastAlteredOutputField;
     var visualisationField  = this.lastAlteredVisualisationField;
@@ -1643,7 +1366,7 @@ thisEqualsThat.oop = function()
     this.display.modelOutputValue.html
     ( outputField.data.displayFieldAddress.toString()+": "+outputField.data.unitPrefix+thisEqualsThat.standardPrecision(Number(outputField.data.currentValue))+outputField.data.unitSuffix
     );
-    this.display.modelVisualisationValue.html
+    this.display.visualisationOutputValue.text
     ( visualisationField.data.displayFieldAddress.toString()+": "+visualisationField.data.unitPrefix+thisEqualsThat.standardPrecision(Number(visualisationField.data.currentValue) )+visualisationField.data.unitSuffix
     );
 
@@ -1967,9 +1690,10 @@ thisEqualsThat.oop = function()
   this.SVGHUD.prototype.display = function()
   { var modelInstance = this.modelInstance;
 
-    this.divForHUD                = modelInstance.display.svgHUD = $("<div class='svgHUD' />");
-    modelInstance.display.modelSvgOutput.prepend(this.divForHUD);
-    modelInstance.display.svgHUD  = this.divForHUD;
+    this.divForHUD = O.create( [ ".svgHUD" ], modelInstance.display, null )[0];
+    modelInstance.display.svgDiv.prepend(this.divForHUD);
+    
+    
   }
   this.SVGHUD.prototype.renderHUD = function(tagHook)
   { if (! this.hasOwnProperty("divForHUD") )
@@ -2145,68 +1869,6 @@ thisEqualsThat.oop = function()
     }
   }
 
-  // this.SVGHUD.prototype.colorPickers = function(svgHUD, context)
-  // { this.svgHUD     = svgHUD;
-  //   this.context    = context;
-  //   this.context.byVisualisation = {};
-  // }
-  // this.SVGHUD.prototype.colorPickers.prototype.display =function(colorPickersDict)
-  // { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
-  //   //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
-  //   var This = this;
-
-  //   this.context.colorPickersDiv = $("<div class='colorPickers hudCollection' />");
-  //   this.svgHUD.divForHUD.append(this.context.colorPickersDiv);
-
-  //   for (colorPickerSelector in colorPickersDict)
-  //   { var colorPickerData = colorPickersDict[colorPickerSelector];
-  //     console.log(colorPickerSelector, colorPickerData);
-
-  //     var colorPicker = $("<div class='colorPicker hudItem' />");
-  //     // var icon        = $("<img src='/static/graphics/thisEquals/svgHUD/colorPicker.png' />");
-
-  //     // colorPicker.append(icon);
-  //     this.context.colorPickersDiv.append(colorPicker);
-
-  //     var lastAlteredVisualisationField = this.svgHUD.modelInstance.lastAlteredVisualisationField.fullAddress;
-  //     if (! this.context.byVisualisation[lastAlteredVisualisationField])
-  //     { this.context.byVisualisation[lastAlteredVisualisationField] = {};
-  //       this.context.byVisualisation[lastAlteredVisualisationField].currentColorString = colorPickerData.initialColorString;
-  //     }
-
-  //     var rep_onColorChange = function(colorString)
-  //     { var pickedColor = $.Color(colorString);
-  //       var toReturn = null;
-
-  //       var modelInstanceID = This.svgHUD.modelInstance.id;
-
-  //       eval (colorPickerData.onColorChange);
-  //       $(This.svgHUD.modelInstance.display.containerSVG).find("style#onColorChange").html(toReturn);
-
-  //       This.context.byVisualisation[lastAlteredVisualisationField].currentColorString = colorString;
-  //     }
-
-  //     rep_onColorChange(this.context.byVisualisation[lastAlteredVisualisationField].currentColorString);
-
-  //     colorPicker.spectrum({
-  //         "color":            this.context.byVisualisation[lastAlteredVisualisationField].currentColorString,
-  //         "showAlpha":        true,
-  //         "preferredFormat": "rgba",
-  //         "show": function()
-  //         { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);
-  //           colorPicker.spectrum("set", This.context.byVisualisation[lastAlteredVisualisationField].currentColorString);
-  //         },
-  //         "hide": function()
-  //         { $(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", false);
-
-  //           This.svgHUD.modelInstance.svg_createSaveLink(This.svgHUD.modelInstance);
-  //         },
-  //         "move": function(spectrumOutput)
-  //         { rep_onColorChange(spectrumOutput.toRgbString());
-  //         },
-  //     });
-  //   }
-  // }
 
   this.SVGHUD.prototype.RandomiseClones= function(svgHUD, context)
   { this.svgHUD     = svgHUD;
@@ -2862,3 +2524,264 @@ $().ready(
     //     }
 
     // });
+
+
+
+
+// displayIntoTarget = function
+// display.customSVGPane =
+      //   $("<div />",
+      //     { "class": "customSVGPane makeDraggable customSVGList"
+      //     }
+      //   );
+      //   // display.customSVGPane.append(
+      //   //   $("<div class='customSVGPaneTitle'>Get SVG from File</div>"));
+      //   display.customSVGTitle =
+      //     $("<input />",
+      //        { "class" : 'custom_svgNameInput',
+      //          "type"  : 'file',
+      //          'placeholder' : 'Get SVG from File',
+      //          'accept' : 'image/svg+xml'
+      //        }
+      //       );
+      //   display.customSVGPane.append(display.customSVGTitle);
+
+      //   display.customSVGPane.append(
+      //     $("<div />",
+      //         { "class" : 'customSVGPaneSubmitButton btn'
+      //       }
+      //     ).on("click", function(event)
+      //       { var svgFile = $('input.custom_svgNameInput').val();
+
+      //        if( svgFile === "" || svgFile === undefined){
+      //          alert('.svg file not uploaded!');
+      //        } else {
+      //          alert(svgFile + ' ' + 'uploaded');
+      //        }
+      //         console.log($('input.custom_svgNameInput').val());
+      //       }
+      //     )
+      //   );
+      //   var referenceSVGSelectListContainer = $("<div class='referenceSVGSelectListContainer' />");
+      //   referenceSVGSelectListContainer.append(thisEqualsThat.scene.referenceVisual.svgSelectList.clone().show());
+      //   display.customSVGPane.append(referenceSVGSelectListContainer);
+      //   display.customSVGPane.on("click", ".referenceSVGSelectListItem",
+      //       function(clickEvent)
+      //       { var selectedDiv = $(clickEvent.currentTarget)
+      //         var fileHandle = selectedDiv.attr("thisequals_filehandle");
+      //         if (This.userSelectedReferenceSVG == fileHandle)
+      //         { This.userSelectedReferenceSVG = "";
+      //           // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
+
+      //         }
+      //         else
+      //         { This.userSelectedReferenceSVG = fileHandle;
+      //           // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
+      //           // selectedDiv.toggleClass("userSelectedReferenceSVG_selected");
+      //         }
+      //         This.displayCurrentOutput()
+
+      //       }
+      //   );
+
+      //   display.modelCustomSvg.append(display.customSVGPane);
+      //   display.modelOutputCtrl.append(display.bottomModelSelectDiv);
+
+      //   display.googleConnect =
+      //   $("<div />",
+      //     { "class": "customSVGPane googleConnect makeDraggable"
+      //     }
+      //   ).draggable().css({
+      //     'position' : 'absolute',
+      //     'top'      : '104%',
+      //     'left'     : '0',
+      //     'right'    : '0'
+      //   });
+
+      //   var wWidth = $(window).outerWidth();
+      //   if ( wWidth <= 768 )
+      //   {
+      //     display.googleConnect.draggable('disable')
+      //                          .css({
+      //                            'opacity': '1',
+      //                            'filter' : 'Alpha(Opacity=100)'
+      //                          });
+      //     display.topModelDiv.append(display.googleConnect);
+      //   }
+      //   else
+      //   {
+      //     display.modelSvgOutput.append(display.googleConnect);
+      //   }
+
+      //   display.googleConnect.append(
+      //     $("<div class='customSVGPaneTitle'>googleConnect</div>"));
+      //   display.googleConnect_email=
+      //     $("<input />",
+      //        { "class" : 'custom_svgNameInput',
+      //          "placeholder" : 'Placeholder text'
+      //        }
+      //     )
+      //     .val(Cookies.get("TET.googleConnect.email"))
+      //     .on("change", function(){Cookies.set("TET.googleConnect.email", display.googleConnect_email.val(), {"expires": 9999})})
+      //     ;
+      //   display.googleConnect.append(display.googleConnect_email);
+
+      //   display.googleConnect_loginButton =
+      //       $("<a class='googleConnect_loginButton'>Login to Google</a>")
+      //       .on("click",
+      //           function()
+      //           { var pollingComplete       = false;
+      //             var googleConnect_window  = false;
+      //             var emailAddress = display.googleConnect_email.val();
+      //             (function poll()
+      //                 { $.ajax(
+      //                   { "url": "/googleConnect/gotCredentials",
+      //                     "type": "POST",
+      //                     "data": {"emailAddress": emailAddress},
+
+      //                     "success": function(data)
+      //                     { console.log("polling", data);
+      //                       if (googleConnect_window == false)
+      //                       { googleConnect_window = PopupCenter("googleConnect/login?emailAddress="+display.googleConnect_email.val()+"", "googleConnect", 400,200);
+      //                       }
+      //                       else if (data.gotCredentials == true)
+      //                       { googleConnect_window.close();
+      //                         pollingComplete = true;
+      //                       }
+      //                     },
+      //                     "error": function(jqXHR ,textStatus, errorThrown){debugger;},
+      //                     "dataType": "json",
+      //                     "complete": function(){console.log("polling status: ", pollingComplete); if (!pollingComplete) setTimeout(poll, 2000)},
+      //                     "timeout": 2000,
+      //                   });
+      //                 }
+      //             )();
+      //           }
+      //        );
+
+      //   display.googleConnect.append(display.googleConnect_loginButton);
+
+      //   display.googleConnect_spreadsheetURL=
+      //       $("<input />",
+      //        { "class" : 'googleConnect spreadsheetURL'
+      //        }
+      //       )
+      //       .on("change",
+      //           function()
+      //           { alert("change spreadsheetURL");
+      //             var ajaxOptions =
+      //                 { "url":  "/googleConnect/getSheets",
+      //                   "type": "POST",
+      //                   "data": { "emailAddress":   display.googleConnect_email.val(),
+      //                             "spreadsheetURL": display.googleConnect_spreadsheetURL.val(),
+      //                           },
+      //                   "success" :
+      //                       function(data)
+      //                       { console.log(data);
+      //                         display.googleConnect_sheetSelect.empty()
+      //                         display.googleConnect_sheetSelect.append($("<option value='Select Sheet'>Select Sheet</option>"));
+      //                         $.each
+      //                         ( data.sheetNames,
+      //                           function(index)
+      //                           { display.googleConnect_sheetSelect.append($("<option value='"+index+"'>"+this+"</option>"));
+      //                           }
+      //                         )
+      //                       },
+      //                   "dataType": "json",
+      //                 }
+      //             $.ajax(ajaxOptions);
+      //           }
+      //       );
+      //   display.googleConnect.append(display.googleConnect_spreadsheetURL);
+
+      //   display.googleConnect_sheetSelect =
+      //       $("<select />",
+      //        { "class" : 'googleConnect spreadsheetURL'
+      //        }
+      //       );
+      //   display.googleConnect.append(display.googleConnect_sheetSelect);
+
+      //   display.googleConnect_cellRange =
+      //       $("<input />",
+      //         { "class": 'googleConnect cellRange',
+      //         }
+      //       )
+      //   display.googleConnect.append(display.googleConnect_cellRange);
+
+      //   display.googleConnect_requestRangeData =
+      //       $("<a />",
+      //         { "class": "googleConnect requestRangeData"
+      //         }
+      //       ).text("Request Range Data")
+      //       .on
+      //       ( "click",
+      //         function()
+      //         { alert("request range data");
+      //             var ajaxOptions =
+      //                 { "url":  "/googleConnect/getCellRange",
+      //                   "type": "POST",
+      //                   "data": { "emailAddress":   display.googleConnect_email.val(),
+      //                             "spreadsheetURL": display.googleConnect_spreadsheetURL.val(),
+      //                             "sheetName":      display.googleConnect_sheetSelect.val(),
+      //                             "cellRange":      display.googleConnect_cellRange.val(),
+      //                           },
+      //                   "success" :
+      //                       function(data)
+      //                       { console.log(data);
+      //                         // debugger;
+
+      //                         var dataRow     = data.cellRangeData.values[0];
+      //                         var colorRow    = data.cellRangeData.backgrounds[0];
+      //                         var columnCount = dataRow.length;
+      //                         ratioString     = dataRow.join("|");
+      //                         colorChangeString =
+      //                             $.map
+      //                             ( colorRow,
+      //                               function(hex, i)
+      //                               { rgb = hexToRgb(hex);
+      //                                 return "rgb("+(rgb.r-125)+","+(rgb.g-125)+","+(rgb.b-125)+")";
+      //                               }
+      //                             );
+      //                         colorChangeString = colorChangeString.join("|");
+      //                         This.inputFields['["colors"]'].uiValueText.val(colorChangeString);
+      //                         This.inputFields[ '["ratios"]'].uiValueText.val(ratioString)      ;
+
+      //                         var alterField = This.inputFields['["colors"]'];
+      //                         This.inputFieldAltered(
+      //                         { inputField: alterField.fullAddress,
+      //                           newValue:   alterField.uiValueText.val()
+      //                         },
+      //                         function()
+      //                         { var alterField = This.inputFields['["ratios"]'];
+      //                           This.inputFieldAltered(
+      //                               { inputField: alterField.fullAddress,
+      //                                 newValue:   alterField.uiValueText.val()
+      //                               }
+      //                           )
+      //                         },
+      //                         true
+      //                         );
+      //                       },
+      //                   "dataType": "json",
+      //                 }
+      //             $.ajax(ajaxOptions);
+      //         }
+      //       );
+      //   display.googleConnect.append(display.googleConnect_requestRangeData)
+
+          // on("click", function(event)
+          //   { var ajaxOptions =
+          //         { "url": "/googleConnect/login",
+          //           "data": {"emailAddress": display.googleConnect_email.val()},
+          //           "dataType": "json",
+          //           "method": "POST",
+          //           "success": function(data, a, b)
+          //                         { debugger;
+          //                           console.log(data);
+          //                         }
+          //         };
+          //     $.ajax(ajaxOptions);
+          //   }
+          // )
+        // );
+        //thisEqualsThat.scene.modelContainerDiv.append(display.customSVGPane);
