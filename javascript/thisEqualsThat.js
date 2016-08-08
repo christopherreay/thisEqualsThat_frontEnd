@@ -334,7 +334,7 @@ thisEqualsThat.oop = function()
     { var This = this;
 
       this.modelInstance = this.data;
-      this.modelInstance.display = $("<div class='iframeFullScreen'><iframe src="+this.data.src+"/></iframe>");
+      this.modelInstance.display = $("<div class='iframeFullScreen'><iframe src='"+this.data.src+"?cachebust="+Date.now()+"' /></iframe>");
       this.modelInstance.displayIntoTarget = function(target)
       { if (! This.modelInstance.appended )
         { $("body").append(This.modelInstance.display);
