@@ -156,6 +156,8 @@
 						update(1,contr.PPM1,contr.size1,contr.color1);
 						}
 				});
+        update(1,contr.PPM1,contr.size1,contr.color1)
+
 				
 		  var p2 = gui.addFolder('Oxygen');
 				p2.add(contr,"PPM2").onChange(function(value) {
@@ -175,6 +177,7 @@
 						update(2,contr.PPM2,contr.size2,contr.color2);
 						}
 				});
+                update(2,contr.PPM2,contr.size2,contr.color2)
 		  var p3 = gui.addFolder('CO2');
 				p3.add(contr,"PPM3").onChange(function(value) {
 				update(3,value,contr.size3,contr.color3);
@@ -193,6 +196,9 @@
 						update(3,contr.PPM3,contr.size3,contr.color3);
 						}
 				});
+                update(3,contr.PPM3,contr.size3,contr.color3)
+
+
 		};
 
 			init();
@@ -209,6 +215,7 @@ function boundingBox(){
 	boundingCube=new THREE.BoxHelper(cube);
 	boundingCube.material=new THREE.LineBasicMaterial({color:0x000000,transparent:true,opacity:0});
 	scene.add(boundingCube);
+
 }			
 function update(i,count,size,color){
 	addParticles(i,Math.round(count),size,color);
@@ -348,6 +355,7 @@ function addParticles(ini,count,size,color){
 				//window.addEventListener( 'mousedown', onDocumentTouchStart, false );
 				window.addEventListener( 'mouseup', onDocumentTouchEnd, false );
 				window.addEventListener( 'resize', onWindowResize, false );
+
 			}
 
 			function onWindowResize() {
