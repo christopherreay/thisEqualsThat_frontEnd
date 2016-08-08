@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+<meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+<meta http-equiv="pragma" content="no-cache" />
+		<title>Dev..</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				background-color: #ffffff;
+				margin: 0px;
+				overflow: hidden;
+			}
+	#logo{
+		position: absolute;
+		bottom: 1%;
+		height:10%;
+		width:100%;
+		z-index: 100;
+		display:block;
+	}
+	#logo1 {
+		position: relative;
+		bottom: 4%;
+		left:1%;
+		height:70%;
+		width:20%
+	}
+	#cright{
+    position: absolute;
+		bottom: 1%;
+		left:3%;
+    text-align: right;
+    color:black;
+    font-weight: regular;
+    font-family: sans-serif;
+    font-size: 13px;
+}
+		</style>
+	</head>
+	<body>
+<div>
+		<script src="lib/three.min.js"></script>
+		<script src="lib/Projector.js"></script>
+		<script src="lib/CanvasRenderer.js"></script>
+		<script src="lib/dat.gui.min.js"></script>
+		<script>
+			var container, stats, program,gui,anm=true, anmc=true,sprite;
+			var contr,n2=100,o2=100,co2=100;
+			//var cameraControl;
+			//var clock= new THREE.Clock();
+			var camera, scene, renderer, group, particle, camz=300,direction=0,touchstart=false;
+			var currentControlCounter = 3, cubesize=100,boundingCube;
+			var mouseX = 0, mouseY = 0;
+			var pg0=[], pg1=[],pg2=[],pg3=[],pg4=[],pg5=[],pg6=[],pg7=[],pg8=[],pg9=[],pg10=[];
+			var windowHalfX = window.innerWidth / 2;
+			var windowHalfY = window.innerHeight / 2;
+			
+		var Datcontrol = function() {
+		  this.User = 'Control';
+		  this.PPM1 =n2;this.size1 =1;this.color1 =  '#0000ff', this.HideParticle1=true;
+		  this.PPM2 =o2;this.size2 =1;this.color2 =  '#00ff00', this.HideParticle2=true;
+		  this.PPM3 =co2;this.size3 =1;this.color3 =  '#ff0000', this.HideParticle3=true;
+			this.PPM4 =10;this.size4 =1;this.color4 =  '#000000';
+			this.PPM5 =10;this.size5 =1;this.color5 =  '#000000';
+			this.PPM6 =10;this.size6 =1;this.color6 =  '#000000';
+			this.PPM7 =10;this.size7 =1;this.color7 =  '#000000';
+			this.PPM8 =10;this.size8 =1;this.color8 =  '#000000';
+			this.PPM9 =10;this.size9 =1;this.color9 =  '#000000';
+			this.PPM10 =10;this.size10 =1;this.color10 ='#000000';
+		  this.Name = 'Particle Name';
+		  this.Count =0.5;
+		  this.Size =2.5;
+		  this.Color =  '#000000';
+		  this.Add_New_Particle = false;
+		  
+		  this.AnimatePartical =true;
+		  this.AnimateCube =true;
+		  this.HideCube=true;
+		  this.Background =true;
+		  
+		};
+		
+		window.onload = function() {
+		  contr = new Datcontrol();
+		  gui = new dat.GUI();
+		  gui.add(contr, 'User');
+		  		  var p4 = gui.addFolder('New Particle');
+				p4.add(contr,"Name")
+		  		p4.add(contr,"Add_New_Particle").onChange(function(value) {
+				if(value==true){				 
+					var newFolder = gui.addFolder(contr.Name);
+					currentControlCounter++;
+					newFolder.add(contr,"PPM"+currentControlCounter).onChange(function() {
+						var c = currentControlCounter;
+						return function(value){
+							update(c,contr['PPM'+c],contr['size'+c],contr['color'+c]);
+						};
+						}());
+					newFolder.add(contr,"size"+currentControlCounter,0,10).onChange(function(value) {
+						var c = currentControlCounter;
+						return function(value){
+							update(c,contr['PPM'+c],contr['size'+c],contr['color'+c]);
+						};
+						}());
+					newFolder.addColor(contr,"color"+currentControlCounter).onChange(function(value) {
+						var c = currentControlCounter;
+						return function(value){
+							update(c,contr['PPM'+c],contr['size'+c],contr['color'+c]);
+						};
+						}());
+					}
+				});
+				var p7 = gui.add(contr,'Background').onChange(function(value) {
+					if(value)
+						scene.add( sprite );
+					else
+						scene.remove( sprite );
+				});
+				var p5 = gui.add(contr,'AnimatePartical').onChange(function(value) {
+				anm = value;
+				});
+				var p6 = gui.add(contr,'AnimateCube').onChange(function(value) {
+				anmc = value;
+				});
+
+				var p8 = gui.add(contr,'HideCube').onChange(function(value) {
+					if(value){
+						boundingCube.material=new THREE.MeshBasicMaterial( {transparent: true, opacity:0} );
+						cube.material=new THREE.MeshBasicMaterial( {transparent: true, opacity:0} );
+						}
+					else{
+						boundingCube.material=new THREE.LineBasicMaterial( {transparent: false, opacity:1, color:0xd2d2d2} );
+						cube.material=new THREE.MeshBasicMaterial({color:0x000000,transparent:false,opacity:0.1});
+						}
+				});
+		  var p1 = gui.addFolder('Nitrogen');
+				p1.add(contr,"PPM1").onChange(function(value) {
+				update(1,value,contr.size1,contr.color1);
+				});
+				p1.add(contr,"size1",0.5,5).onChange(function(value) {
+				update(1,contr.PPM1,value,contr.color1);
+				});
+				p1.addColor(contr,"color1").onChange(function(value) {
+				 update(1,contr.PPM1,contr.size1,value);
+				});	
+				p1.add(contr,'HideParticle1').onChange(function(value) {
+				console.log(value+"  "+contr.PPM1,contr.size1,contr.color1);
+					if(value)
+						update(1,0,contr.size1,contr.color1,contr.color1);
+					else{
+						update(1,contr.PPM1,contr.size1,contr.color1);
+						}
+				});
+				
+		  var p2 = gui.addFolder('Oxygen');
+				p2.add(contr,"PPM2").onChange(function(value) {
+				update(2,value,contr.size2,contr.color2);
+				});
+				p2.add(contr,"size2",1,5).onChange(function(value) {
+				update(2,contr.PPM2,value,contr.color2);
+				});
+				p2.addColor(contr,"color2").onChange(function(value) {
+				 console.log("color selected: "+value);
+				 update(2,contr.PPM2,contr.size2,value);
+				});
+								p2.add(contr,'HideParticle2').onChange(function(value) {
+					if(value)
+						update(2,0,contr.size2,contr.color2);
+					else{
+						update(2,contr.PPM2,contr.size2,contr.color2);
+						}
+				});
+		  var p3 = gui.addFolder('CO2');
+				p3.add(contr,"PPM3").onChange(function(value) {
+				update(3,value,contr.size3,contr.color3);
+				});
+				p3.add(contr,"size3",0,5).onChange(function(value) {
+				update(3,contr.PPM3,value,contr.color3);
+				});
+				p3.addColor(contr,"color3").onChange(function(value) {
+				 console.log("color selected: "+value);
+				 update(3,contr.PPM3,contr.size3,value);
+				});
+								p3.add(contr,'HideParticle3').onChange(function(value) {
+					if(value)
+						update(3,0,contr.size3,contr.color3);
+					else{
+						update(3,contr.PPM3,contr.size3,contr.color3);
+						}
+				});
+		};
+
+			init();
+			addLogo();
+			animate();
+			boundingBox();
+
+
+function boundingBox(){
+	var f=new THREE.CubeGeometry(cubesize+5,cubesize+5,cubesize+5);
+	var d=new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:0});
+	cube=new THREE.Mesh(f,d);
+	scene.add(cube);
+	boundingCube=new THREE.BoxHelper(cube);
+	boundingCube.material=new THREE.LineBasicMaterial({color:0x000000,transparent:true,opacity:0});
+	scene.add(boundingCube);
+}			
+function update(i,count,size,color){
+	addParticles(i,Math.round(count),size,color);
+}
+
+function addParticles(ini,count,size,color){
+				console.log("in addParticles");
+				var store;
+				//count = Math.round(count/400);
+				store = window['pg'+ini];
+				console.log("store.length "+store.length);
+				if(store.length>0){
+					for(var i=0;i<store.length;i++){
+						group.remove(store[i]);
+					}
+				}
+				switch(ini){
+				case 1:
+					pg1=[];store=pg1;break;
+				case 2:	
+					pg2=[];store=pg2;break;
+				case 3:
+					pg3=[];store=pg3; break;
+				case 4:
+					pg4=[];store=pg4; break;
+				case 5:
+					pg5=[];store=pg5; break;
+				case 6:
+					pg6=[];store=pg6; break;
+				case 7:
+					pg7=[];store=pg7; break;
+				case 8:
+					pg8=[];store=pg8; break;
+				case 9:
+					pg9=[];store=pg9; break;
+				case 10:
+					pg10=[];store=pg10; break;
+				default:
+				}		
+				
+			var material = new THREE.SpriteCanvasMaterial( {
+						color: color,
+						program: program
+					} );
+					
+				var blueposition = -cubesize/2;
+				if (ini==0){
+					for ( var ii = 0; ii < cubesize; ii++ ) {
+						particle = new THREE.Sprite( material );
+						particle.position.x = blueposition;
+						particle.position.y = 0;
+						particle.position.z = 0;
+						//particle.scale.x = particle.scale.y = Math.random() * 1 + r;
+						particle.scale.x = particle.scale.y =  size;
+						group.add( particle );
+						
+						//store.push(particle);
+						particle = new THREE.Sprite( material );
+						particle.position.x = 0;
+						particle.position.y = blueposition;
+						particle.position.z = 0;
+						//particle.scale.x = particle.scale.y = Math.random() * 1 + r;
+						particle.scale.x = particle.scale.y =  size;
+						group.add( particle );
+						//store.push(particle);
+						particle = new THREE.Sprite( material );
+						particle.position.x = 0;
+						particle.position.y = 0;
+						particle.position.z = blueposition;
+						//particle.scale.x = particle.scale.y = Math.random() * 1 + r;
+						particle.scale.x = particle.scale.y =  size;
+						group.add( particle );
+						//store.push(particle);
+						//console.log(particle.position.x);
+						blueposition=blueposition+1;
+						}
+					return;
+					}
+
+				for ( var ii = 0; ii < count; ii++ ) {
+					particle = new THREE.Sprite( material );
+					particle.position.x = Math.random() * cubesize - cubesize/2;
+					particle.position.y = Math.random() * cubesize - cubesize/2;
+					particle.position.z = Math.random() * cubesize - cubesize/2;
+					//particle.scale.x = particle.scale.y = Math.random() * 1 + r;
+					particle.scale.x = particle.scale.y =  size;
+					var velocity ={x:Math.random(),y:Math.random(),z:Math.random()};
+					particle.velocity = velocity;
+					group.add( particle );
+					store.push(particle);
+				}
+				console.log("out addParticles");
+}
+
+			function init() {
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				camera = new THREE.PerspectiveCamera( 25, window.innerWidth / window.innerHeight, 1, 5000 );
+				//camera.position.z = 0;
+				//camera.position.x = 400;
+				//camera.position.y = 400;
+
+				scene = new THREE.Scene();
+
+				var map = new THREE.TextureLoader().load( "img/fog-240075_1280.jpg" );
+                var material = new THREE.SpriteMaterial( { map: map, fog: false } );
+                sprite = new THREE.Sprite( material );
+				sprite.position.set(0,0,-1000);
+				sprite.scale.set(1500,1500,1500);
+				scene.add( sprite );
+				var PI2 = Math.PI * 2;
+				program = function ( context ) {
+
+					context.beginPath();
+					context.arc( 0, 0, 0.5, 0, PI2, true );
+					context.fill();
+
+				};
+
+				group = new THREE.Group();
+				
+				//addParticles(0,100,1,'#0000ff');
+				/*addParticles(1,n2,3,'#0000ff');
+				addParticles(2,o2,3,'#00ff00');
+				addParticles(3,co2,3,'#ff0000');*/
+				
+				scene.add( group );
+				//addParticles(4,0.5,2.5,'#000000');
+				renderer = new THREE.CanvasRenderer({ alpha: true });
+				//renderer.setClearColor( 0xa9db8b );
+				//renderer = new THREE.WebGLRenderer({ alpha: true });
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				//renderer.setSize( 200,100);
+				container.appendChild( renderer.domElement );
+				//window.addEventListener( 'mousedown', onDocumentTouchStart, false );
+				window.addEventListener( 'mouseup', onDocumentTouchEnd, false );
+				window.addEventListener( 'resize', onWindowResize, false );
+			}
+
+			function onWindowResize() {
+				windowHalfX = window.innerWidth / 2;
+				windowHalfY = window.innerHeight / 2;
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+			//
+			function onDocumentMouseMove( event ) {
+
+				mouseX = event.clientX - windowHalfX;
+				mouseY = event.clientY - windowHalfY;
+			}
+
+			function onDocumentTouchStart( event ) {
+			console.log("mouse down"+direction);
+				direction=(direction+1)%2;
+				touchstart=true;
+			}
+			function onDocumentTouchEnd( event ) {
+			console.log("mouse up");
+				touchstart=false
+			}
+			
+			function onDocumentClick( event ) {
+				event.preventDefault();
+				
+			}
+			function onDocumentTouchMove( event ) {
+				if ( event.touches.length === 1 ) {
+					event.preventDefault();
+					mouseX = event.touches[ 0 ].pageX - windowHalfX;
+					mouseY = event.touches[ 0 ].pageY - windowHalfY;
+				}
+			}
+			function animate() {
+			    //var delta = clock.getDelta();
+				requestAnimationFrame( animate );
+				//cameraControl.update(delta);
+							
+				render();
+			}
+			function render() {
+			    
+				//camera.position.x += ( mouseX - camera.position.x ) * 0.05;
+				//camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
+				camera.position.z = camz;
+				camera.lookAt( scene.position );
+				if(touchstart){
+					if(direction==1)
+						camz+=10;
+					else
+						camz-=10;
+				}
+				
+				if(anm){
+					updateVelocity();
+					}
+				if(anmc && boundingCube){
+					group.rotation.x += 0.005;
+					group.rotation.y += 0.005;
+					cube.rotation.x += 0.005;
+					cube.rotation.y += 0.005;
+					boundingCube.rotation.x += 0.005;
+					boundingCube.rotation.y += 0.005;
+				}
+				renderer.render( scene, camera );
+				
+			}
+function updateVelocity(){
+			//console.log("currentControlCounter "+currentControlCounter);
+			for(var ii=1;ii<=currentControlCounter;ii++){
+				var store = window['pg'+ii];
+				//console.log(store.length);
+				if(store.length>0){
+				
+					for (var j=0;j<store.length;j++){
+						store[j].position.set(store[j].position.x+store[j].velocity.x,store[j].position.y+store[j].velocity.y,store[j].position.z+store[j].velocity.z);
+						if (store[j].position.x>=cubesize/2) store[j].velocity.x=-store[j].velocity.x;
+						if (store[j].position.y>=cubesize/2) store[j].velocity.y=-store[j].velocity.y;
+						if (store[j].position.z>=cubesize/2) store[j].velocity.z=-store[j].velocity.z;
+						if (store[j].position.x<=-cubesize/2) store[j].velocity.x=-store[j].velocity.x;
+						if (store[j].position.y<=-cubesize/2) store[j].velocity.y=-store[j].velocity.y;
+						if (store[j].position.z<=-cubesize/2) store[j].velocity.z=-store[j].velocity.z;
+					}
+				}
+			}
+}
+		addEventListener('dblclick', function(event){ 
+			event.preventDefault();
+			console.log("dblclick");
+			direction=(direction+1)%2;
+			touchstart=true;
+			return false;
+		});	
+
+function addLogo(){
+    var logo1 = new Image();
+    logo1.src = "img/logo.png";
+    logo1.id = "logo1";
+    var newdiv = document.createElement('div');
+    newdiv.id = "logo";
+    newdiv.appendChild(logo1);
+    document.body.appendChild(newdiv);
+}		
+		</script>
+		</div>
+		<div id="cright">&copy;This Equals (ltd) 2016</div>
+	</body>
+</html>
