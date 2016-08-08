@@ -197,7 +197,7 @@ div.copyrightContainer> p {
     height: 60px;
     padding: 13px;
     padding-top: 20px;
-    background: transparent;
+    background: white;
     display: inline-block;
     cursor: pointer;
     font: inherit;
@@ -404,6 +404,20 @@ div.model {
     position: relative;
     margin-top: 20px;
 }
+
+.iframeFullScreen
+{ position: absolute;
+
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+.iframeFullScreen iframe
+{ width: 100%;
+  height: 100%;
+}
+
 div.modelInstance {
     width: 100%;
     position: relative;
@@ -1379,17 +1393,12 @@ input.ui-colorpicker-hex-input {
       left: 45px;
       top: 20px;
     }
-    #modelClassUL{
-      padding-top: 80px;
-    }
     .ripplelink {
       height: 80px;
       margin: 0;
       padding: 20px 0;
     }
-    .modelClassLI img {
-      width: 40px;
-    }
+    
     div.model_box_ctrl {
       position: relative;
       height: 60px;
@@ -1548,6 +1557,73 @@ input.ui-colorpicker-hex-input {
     }
 }
 
+@media screen and (max-height: 900px)
+{   
+    .ripplelink
+    { height: 70px;
+      padding: 0px;
+    }
+    .modelClassLI img {
+      width: 40px;
+    }
+}
+
+@media screen and (max-height: 800px)
+{   
+    .ripplelink
+    { height: 60px;
+    }
+    .modelClassLI img {
+      width: 35px;
+    }
+}
+
+@media screen and (max-height: 700px)
+{   
+    .ripplelink
+    { height: 50px;
+    }
+    .modelClassLI img {
+      width: 33px;
+    }
+}
+
+@media screen and (max-height: 600px)
+{   
+    .ripplelink
+    { height: 40px;
+    }
+    .modelClassLI img {
+      width: 25px;
+    }
+}
+
+@media screen and (max-height: 500px)
+{   
+    .ripplelink
+    { height: 30px;
+    }
+    .modelClassLI img {
+      width: 20px;
+    }
+}
+@media screen and (max-height: 400px)
+{   
+    .ripplelink
+    { height: 20px;
+    }
+    .modelClassLI img {
+      width: 12px;
+    }
+}
+@media screen and (max-height: 300px)
+{   .ripplelink
+    { height: 10px;
+    }
+    .modelClassLI img {
+      width: 8px;
+    }
+}
 
 
 .hudItem

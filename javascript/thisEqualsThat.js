@@ -233,16 +233,19 @@ thisEqualsThat.oop = function()
     { url: "getModelClasses",
       dataType: "json",
       success: function(data, status, request)
-      { console.log("Yogi 1 ", data, status, request);
-	console.log("yogi 1.1",  request);
-        $.each(data, function(index, value)
+      { $.each(data.standard, function(index, value)
           { This[value] = new ThisEqualsThat.ModelClass(value);
+          }
+        );
+        $.each
+        ( data.iframe, function(key, value)
+          { value["jsonKey"] = key;
+            This[key] = new ThisEqualsThat.ModelClass_iframe(value);
           }
         );
         This.display(This.thisEqualsThatScene)
       },
     };
-console.log("yogi 2 ", ajaxOptions.url);
     $.ajax(ajaxOptions);
 
   }
@@ -255,48 +258,22 @@ console.log("yogi 2 ", ajaxOptions.url);
       ).on("click", ".modelClassLI",
           function(event)
           { var modelClass = $(event.currentTarget).data("modelClass");
-            console.log("yogi 3 ",modelClass);
             modelClass.getModelInstance(thisEqualsThat.scene.setCurrentModel);
 
             $(this).addClass('active');
             $(this).siblings().removeClass('active');
-
-            // var ink, d, x, y;
-            //
-            //     if($(this).find(".ink").length === 0){
-            //         $(this).prepend("<span class='ink'></span>");
-            //     }
-            //
-            //     ink = $(this).find(".ink");
-            //     ink.removeClass("animate");
-            //
-            //     if(!ink.height() && !ink.width()){
-            //         d = Math.max($(this).outerWidth(), $(this).outerHeight());
-            //         ink.css({height: d, width: d});
-            //     }
-            //
-            //     x = event.pageX - $(this).offset().left - ink.width()/2;
-            //     y = event.pageY - $(this).offset().top - ink.height()/2;
-            //
-            //     ink.css({top: y+'px', left: x+'px'}).addClass("animate");
-
           }
         );
 
-    $.each( this,
-      function (modelClassName, modelClass)
-      { modelClassList.append(modelClass.modelClassListLI);
+    var modelClassOrder = ["HowMany", "VolMassDen", "LightBulb", "CO2", "Wood", "PeopleRatioPlay", "Earth", "Money", "Air Quality", "Seesaw"];
+
+    var This = this;
+    $.each( modelClassOrder,
+      function (index, key)
+      { modelClassList.append(This[key].modelClassListLI);
       }
     );
     modelClassesContainerDiv.append(modelClassList);
-    // MAP
-    // modelClassList.append('<div class="modelClassLI ripplelink cyan">' +
-    //           '<img src="/static/graphics/thisEquals/icons/map.svg">' +
-    //           '<h3>Map</h3>' +
-    //           '</div>'
-    //   ).on('click', function () {
-    //     console.debug('clicked on map');
-    //   });
   }
   this.ModelClass = function(modelClassName)
   { this.name = modelClassName;
@@ -336,6 +313,41 @@ console.log("yogi 2 ", ajaxOptions.url);
       }
       $.ajax(ajaxOptions);
     }
+  }
+
+  this.ModelClass_iframe = function(modelClassData)
+  { this.name     = modelClassData.name || modelClassData.jsonKey;
+    this.imageURL = this.imageBaseURL+modelClassData.icon;
+    this.data     = modelClassData;
+    this.modelClassListLI =
+      $("<li />",
+        { "class": "modelClassLI iframeModelClass ripplelink cyan",
+        }
+      ).data("modelClass", this)
+       .append( $('<h3>' + this.name + '</h3>' ).addClass('modelDesc') )
+       .append( $("<img />", { src: this.imageURL } ).addClass('modelImg') );
+
+  }
+  this.ModelClass_iframe.prototype.imageBaseURL =  "/static/graphics/thisEquals/icons/";
+  this.ModelClass_iframe.prototype.getModelInstance = function(successFunction)
+  { if (! this.hasOwnProperty("modelInstance" ) )
+    { var This = this;
+
+      this.modelInstance = this.data;
+      this.modelInstance.display = $("<div class='iframeFullScreen'><iframe src="+this.data.src+"/></iframe>");
+      this.modelInstance.displayIntoTarget = function(target)
+      { if (! This.modelInstance.appended )
+        { $("body").append(This.modelInstance.display);
+          This.modelInstance.appended = true;
+        }
+        This.modelInstance.display.show();   
+        return This.modelInstance;     
+      }
+      this.modelInstance.hide = function()
+      { This.modelInstance.display.hide();
+      }
+    } 
+    successFunction(this.modelInstance);
   }
 
   //REFERENCE VISUAL
