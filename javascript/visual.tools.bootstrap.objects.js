@@ -33,6 +33,7 @@ function($)
   { var toReturn = O.div().append(O.div);
   };
 
+  // this.regex_namespace    = /^([^:]+/;
   this.regex_elementType  = /^([^.#@]+)/;
   this.regex_id           = /#([^.@]+)/;
   this.regex_classes      = /\.([^@]+)/;
@@ -40,6 +41,11 @@ function($)
   this.regex_dot          = /\./g;
 
   this.elementDefSequence = {"elementType": "div", "id":"", "classes":""};
+
+  this.elementNamespaceDict = 
+  { "xhtml"     : "http://www.w3.org/1999/xhtml",
+    "svg"       : "http://www.w3.org/2000/svg",
+  }
 
   this.create =
   function(listContents, targetDict=null, current=null, depth=0)
@@ -69,14 +75,26 @@ function($)
         }
         elementDef.classes = $.trim(elementDef.classes.replace(this.regex_dot, " "));
 
+        elementTypeSplit = elementDef.elementType.split(":");
+        if (elementTypeSplit.length > 1)
+        { elementDef.elementType = elementTypeSplit[1];
+          elementDef.namespace   = elementTypeSplit[0];
+        }
+        else
+        { elementDef.namespace   = "xhtml"
+        }
         var elemOptions = {};
         if (elementDef.id) elemOptions.id = elementDef.id;
         if (elementDef.classes) elemOptions.class = elementDef.classes;
 
+        // var newElem = 
+        //     $("<"+elementDef.elementType+"/>",
+        //       elemOptions
+        //     );
+        
         var newElem = 
-            $("<"+elementDef.elementType+"/>",
-              elemOptions
-            );
+            $(document.createElementNS(O.elementNamespaceDict[elementDef.namespace], elementDef.elementType)).attr(elemOptions);
+
         var dictKey = elementDef.id || elementDef.classes.split(" ")[0];
 
         if (current === null) 

@@ -25,6 +25,10 @@ body
   transition-duration: 0.5s;
 }
 
+.cursor_pointer
+{ cursor: pointer;
+}
+
 .marginAuto
 { margin: auto;
 }

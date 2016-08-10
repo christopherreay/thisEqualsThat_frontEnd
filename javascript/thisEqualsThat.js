@@ -294,15 +294,14 @@ thisEqualsThat.oop = function()
     var blueprints = ThisEqualsThat.display.blueprintItems = {};
 
     O.create
-    ( [ ".blueprintItem.list-group-item.ripplelink.col-lg-4", 
-        [ [ ".row-action-primary", $(`<img class="blueprintIcon" src="${this.imageURL}" />`) ], 
+    ( [ ".blueprintItem.list-group-item.ripplelink.col-lg-4.cursor_pointer", 
+        [ [ ".row-action-primary", $("<img class='blueprintIcon' src='"+this.imageURL+"' />") ], 
           [ ".row-content", 
             [ [ ".list-group-item-heading" ,  $("<span>"+this.name+"</span>") ],
               [ ".list-group-item-text",      $("<span>Description Text</span>") ]
             ], 
           ],
         ],
-        ".list-group-separator",
       ],
       blueprints,
       ThisEqualsThat.display.constructBlueprint.constructBlueprintContainer
@@ -488,7 +487,7 @@ thisEqualsThat.oop = function()
         function(xml)
         {
               importedNode = document.importNode(xml.documentElement, true);
-              console.log("referenceVisual:" + referenceSVGData.fileHandle, importedNode);
+              console.log("referenceVisual:" + referenceSVGData.fileHandle);//, importedNode);
               var referenceRootG = $(importedNode).find("g").first();
               referenceVisualDefs.svgStore[referenceSVGData.fileHandle] = referenceRootG;
 
@@ -870,12 +869,12 @@ thisEqualsThat.oop = function()
                             .attr("z:zRatio",     "5")
 
                             .attr("class", "rootSVG id_"+this.id),
-                            [ [ "defs.svgDefs" ],
-                              [ "text.svgTextDescription" ],
-                              [ "g.svgTranslatableG" ,
-                                [ [ "g.svgHeightAxis"         ],
-                                  [ "g.svgVisualisationG"     ],
-                                  [ "g.svgReferenceG"         ],
+                            [ [ "svg:defs.svgDefs" ],
+                              [ "svg:text.svgTextDescription" ],
+                              [ "svg:g.svgTranslatableG" ,
+                                [ [ "svg:g.svgHeightAxis"         ],
+                                  [ "svg:g.svgVisualisationG"     ],
+                                  [ "svg:g.svgReferenceG"         ],
                                 ],
                               ],
                             ],
@@ -968,22 +967,22 @@ thisEqualsThat.oop = function()
     var svgWidthAxisX         = svgVisualisationGBBox.x + svgVisualisationGBBox.width  - svgWidthAxisBBox.width;
     var svgWidthAxisY         = svgVisualisationGBBox.y + svgVisualisationGBBox.height + (px20Height/2);
 
-    modelInstance.display.svgMeasureAxisY.setAttribute("transform", "translate("+svgHeightAxisX+" "+svgHeightAxisY+")");
-    modelInstance.display.svgMeasureAxisX.setAttribute("transform", "translate("+svgWidthAxisX +" "+svgWidthAxisY+")");
+    modelInstance.display.svgMeasureAxisY.attr("transform", "translate("+svgHeightAxisX+" "+svgHeightAxisY+")");
+    modelInstance.display.svgMeasureAxisX.attr("transform", "translate("+svgWidthAxisX +" "+svgWidthAxisY+")");
 
 
-    var svgElement      = modelInstance.display.svg;
+    var svgElement      = modelInstance.display.rootSVG;
     var externalWidth   = svgElement.css("width");
     var externalHeight  = svgElement.css("height");
 
 
     modelInstance.display.svgMeasureY_text.setAttribute("font-size", (px20Height * .75) + "px");
     modelInstance.display.svgMeasureY_text.setAttribute("x", (px20Height / 5) + "px");
-    modelInstance.display.svgMeasureY.setAttribute("stroke-width", (px20Height) / 10);
+    modelInstance.display.svgMeasureY.attr("stroke-width", (px20Height) / 10);
 
     modelInstance.display.svgMeasureX_text.setAttribute("font-size", (px20Height * .75) + "px");
     modelInstance.display.svgMeasureX_text.setAttribute("y", (px20Height *.75) + "px");
-    modelInstance.display.svgMeasureX.setAttribute("stroke-width", (px20Height) / 10);
+    modelInstance.display.svgMeasureX.attr("stroke-width", (px20Height) / 10);
 
     var internalSize    = modelInstance.display.svgTranslatableG.getBBox();
 
@@ -998,7 +997,7 @@ thisEqualsThat.oop = function()
     //debugLevel1//console.log(viewBoxString);
     svgElement.get(0).setAttribute("viewBox", viewBoxString);
 
-    d3.select(modelInstance.display.svgTextDescription)
+    d3.select(modelInstance.display.svgTextDescription.get(0))
         .attr("x", internalSize.x)
         .attr("y", internalSize.y + internalSize.height + px20Height)
         .attr("font-size", (px20Height)+"px");
@@ -1029,10 +1028,10 @@ thisEqualsThat.oop = function()
                 //Add the Scale Axis to the right hand side of the clone group
                 //  hopefully this should deal with position and that by itself
                 This.display.svgHeightAxis.innerHTML="";
-                O.create( ["g",
-                            [ [ "g.svgMeasureAxisY", "path.svgMeasureY"],
+                O.create( ["svg:g",
+                            [ [ "svg:g.svgMeasureAxisY", "svg:path.svgMeasureY"],
                             ],
-                            [ [ "g.svgMeasureAxisX", "path.svgMeasureX"],
+                            [ [ "svg:g.svgMeasureAxisX", "svg:path.svgMeasureX"],
                             ],
                           ],
                           This.display,
@@ -1287,10 +1286,10 @@ thisEqualsThat.oop = function()
     else
     { console.log("svg_createSaveLink", This);
 
-      var savableContainerSVG = $(This.display.containerSVG).clone();
+      var savableContainerSVG = $(This.display.rootSVG).clone();
       savableContainerSVG
-          .attr("width",          This.display.svgModelRoot.css("width"))
-          .attr("height",         This.display.svgModelRoot.css("height"))
+          .attr("width",          This.display.rootSVG.css("width"))
+          .attr("height",         This.display.rootSVG.css("height"))
       ;
       var removeTheseAttributes = ["xmlns:xlink", "xmlns:z", "z:xInfinite", "z:yInfinite", "z:zRatio"];
       for (attributeToRemove  of removeTheseAttributes)
