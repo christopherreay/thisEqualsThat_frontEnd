@@ -103,8 +103,8 @@ thisEqualsThat.oop = function()
         function(event)
         { var modelClass = $(event.currentTarget).data("thisEquals_blueprint");
           modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
-          ThisEqualsThat.scene.setCurrentModel(modelClass);
-          $(this).parent(".modal").modal("hide");
+          ThisEqualsThat.scene.setCurrentModelClass(modelClass);
+          $(this).closest(".modal").modal("hide");
         }
       );
   }
@@ -126,8 +126,8 @@ thisEqualsThat.oop = function()
               displayScene
             );
   }
-  this.ThisEqualsThatScene.prototype.setCurrentModel = function(modelClass)
-  { if (this.hasOwnProperty("currentModel"))
+  this.ThisEqualsThatScene.prototype.setCurrentModelClass = function(modelClass)
+  { if (this.hasOwnProperty("currentModelClass"))
     { this.currentModelClass.modelInstance.hide();
     }
     this.currentModelClass = modelClass;
@@ -168,19 +168,7 @@ thisEqualsThat.oop = function()
       function(passThrough, appendTo)
       { if (! this.hasOwnProperty("blueprintItem") )
         { this.blueprintItem = 
-              O.create
-              ( [ ".blueprintItem.list-group-item.ripplelink.col-lg-4.col-md-6.col-sm-6.col-xs-12.cursor_pointer", 
-                  [ [ ".row-action-primary", $("<img class='blueprintIcon' src='"+this.imageURL+"' />") ], 
-                    [ ".row-content", 
-                      [ [ ".list-group-item-heading" ,  $("<span>"+this.name+"</span>") ],
-                        [ ".list-group-item-text",      $("<span>Description Text</span>") ]
-                      ], 
-                    ],
-                  ],
-                ],
-                passThrough,
-                appendTo
-              );
+              O.listGroupItem( passThrough, appendTo, "button", ".blueprintItem.ripplelink", [4, 6, 6, 12], $("<img class='blueprintIcon' src='"+this.imageURL+"' />"), "", "@"+this.name, "@Description Text");
           passThrough.blueprintItem.data("thisEquals_blueprint", this);
         }
         return this.blueprintItem;
@@ -206,6 +194,9 @@ thisEqualsThat.oop = function()
         }
       }
       $.ajax(ajaxOptions);
+    }
+    else
+    { this.modelInstance.displayIntoTarget(displayContainer);
     }
   }
   
@@ -594,11 +585,11 @@ thisEqualsThat.oop = function()
 
                             .attr("class", "rootSVG id_"+this.id),
                             [ [ "svg:defs.svgDefs" ],
-                              [ "svg:text.svgTextDescription" ],
+                              [ "svg:text.svgTextDescription", "@Click to Enter Text" ],
                               [ "svg:g.svgTranslatableG" ,
                                 [ [ "svg:g.svgHeightAxis"         ],
                                   [ "svg:g.svgVisualisationG"     ],
-                                  [ "svg:g.svgReferenceGContainer", "svg:g.svgReferenceG"         ],
+                                  [ "svg:g.svgReferenceGContainer", "svg:g.svgReferenceG" ],
                                 ],
                               ],
                             ],
@@ -627,7 +618,7 @@ thisEqualsThat.oop = function()
         );
 
       display.svgTranslatableG.data("thisEqualsThat", {"modelInstance": this});
-      display.svgTextDescription.text("Hello World");
+      // display.svgTextDescription.text("Hello World");
       // display.svgTextInput.on("change", function() { display.svgTextDescription.text($(this).val()); This.svg_createSaveLink(This);});
 
       display.toggle =

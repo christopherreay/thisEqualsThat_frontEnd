@@ -51,7 +51,8 @@ function($)
   function(listContents, targetDict=null, current=null, depth=0)
   { var toReturn = [];
     for (item of listContents)
-    { 
+    { if (! item) continue;
+
       // if (typeof(item) == "string")
       // { var itemSequentialList = item.split(" ");
       //   if (itemSequentialList.length > 1)
@@ -59,9 +60,11 @@ function($)
       // }
 
       if ( typeof(item) == "string" )
-      { 
-        { 
+      { if ( item.startsWith("@") )
+        { current.text( item.substring(1) );
+          continue;
         }
+        
         var elementDef = {};
 
         for (elementParamName in this.elementDefSequence)
@@ -129,7 +132,6 @@ function($)
 
         toReturn.push(item);
       }
-
     }
     if (depth == 0) console.log("create", toReturn);
     return toReturn;
@@ -141,7 +143,7 @@ function($)
   { if (!navbarUniqueClass) navbarUniqueClass = "navbar-autoID-"+this.navbar_collapse_id_counter++;
     var toReturn =
         O.create( [".bs-component."+navbarUniqueClass, ".container-fluid", ".row", 
-                    [ [ ".col-xs-12.col-sm-12.col-lg-2" ,  "bs-component", ".navbar.navbar-default.navbar-fixed-side", ".navbar-fixed-side-container", 
+                    [ [ ".col-xs-12.col-sm-12.col-md-3.col-lg-2" ,  "bs-component", ".navbar.navbar-default.navbar-fixed-side", ".navbar-fixed-side-container", 
                         [ [ ".navbarHeader.navbar-header", 
                             [ [ $("<button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='."+navbarUniqueClass+"-collapse' aria-expanded='false'>"),
                                 [ [ "span.icon-bar" ],
@@ -160,21 +162,13 @@ function($)
                           ],
                         ],
                       ],
-                      [ ".col-xs-12.col-sm-12.col-lg-10",  mainContent ]
+                      [ ".col-xs-12.col-sm-12.col-md-9.col-lg-10",  mainContent ]
                     ]
                   ],
                   passThrough,
                   appendTo
                 );
     return toReturn[0];
-
-    /*<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Brand</a>*/
   } 
   
   this.modalUniqueCounter = 0;
@@ -237,6 +231,23 @@ function($)
   }
 
 
+  this.listGroupItem =
+  function(passThrough, appendTo, listGroupItem_element, itemPrependList, sizeList, actionPrimary, actionSecondary, heading, text, cursorStyle="pointer")
+  { O.create
+    ( [ listGroupItem_element+itemPrependList+".col-lg-"+sizeList[0]+".col-md-"+sizeList[1]+".col-sm-"+sizeList[2]+".col-xs-"+sizeList[3]+".list-group-item", 
+        [ [ ".row-action-primary", actionPrimary ], 
+          [ ".row-content", 
+            [ [ "action-secondary"          , actionSecondary ],
+              [ ".list-group-item-heading"  , heading         ],
+              [ ".list-group-item-text"     , text            ]
+            ], 
+          ],
+        ],
+      ],
+      passThrough,
+      appendTo
+    );
+  }
 
   this.listGroups =
   { /*<div class="bs-component">
