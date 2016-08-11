@@ -70,20 +70,20 @@ function($)
         // points in clockwise order starting from top left corner
         var obj         = {};
 
-        obj.newp        = newp; // array of corner points
-        obj.width       = $.pointToLineDist(newp[1], newp[2], newp[0]) || 0;
-        obj.height      = $.pointToLineDist(newp[2], newp[3], newp[0]) || 0;
-        obj.toplen      = $.dist(newp[0], newp[1]);
-        obj.rightlen    = $.dist(newp[1], newp[2]);
-        obj.bottomlen   = $.dist(newp[2], newp[3]);
-        obj.leftlen     = $.dist(newp[3], newp[0]);
+        obj.obj_newp        = newp; // array of corner points
+        obj.obj_width       = $.pointToLineDist(newp[1], newp[2], newp[0]) || 0;
+        obj.obj_height      = $.pointToLineDist(newp[2], newp[3], newp[0]) || 0;
+        obj.obj_toplen      = $.dist(newp[0], newp[1]);
+        obj.obj_rightlen    = $.dist(newp[1], newp[2]);
+        obj.obj_bottomlen   = $.dist(newp[2], newp[3]);
+        obj.obj_leftlen     = $.dist(newp[3], newp[0]);
         // The next refers to the transformed object's bounding box
-        obj.BBx         = minX;
-        obj.BBy         = minY;
-        obj.BBx2        = maxX;
-        obj.BBy2        = maxY;
-        obj.BBwidth     = maxX - minX;
-        obj.BBheight    = maxY - minY;
+        obj.x         = minX;
+        obj.y         = minY;
+        obj.x2        = maxX;
+        obj.y2        = maxY;
+        obj.width     = maxX - minX;
+        obj.height    = maxY - minY;
 
         return obj;
     }
