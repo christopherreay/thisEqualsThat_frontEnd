@@ -352,11 +352,11 @@ thisEqualsThat.oop = function()
               displayContainerDiv
             );
     
-    this.referenceVisual        = new ThisEqualsThat.ReferenceVisual();
+    this.referenceVisual        = new ThisEqualsThat.ReferenceVisual(this);
 
     this.modelClasses           = new ThisEqualsThat.ModelClasses(this);
 
-    this.componentCookieManager = new ThisEqualsThat.ComponentCookieManager();
+    this.componentCookieManager = new ThisEqualsThat.ComponentCookieManager(this);
   }
   this.ThisEqualsThatScene.prototype.setCurrentModel = function(modelInstance)
   { if (this.hasOwnProperty("currentModel"))
@@ -367,9 +367,11 @@ thisEqualsThat.oop = function()
 
 
   //REFERENCE VISUAL
-  this.ReferenceVisual = function()
+  this.ReferenceVisual = function(ThisEqualsThatScene)
   { var This = this;
+
     this.svgStore = {};
+    // O.create( [ ".
     this.masterReferenceSVGSelectList = $("<div class='masterReferenceSVGSelectList'/>");
     this.svgSelectList = $("<ul/>");
     this.masterReferenceSVGSelectList.append(this.svgSelectList);
@@ -874,12 +876,14 @@ thisEqualsThat.oop = function()
                               [ "svg:g.svgTranslatableG" ,
                                 [ [ "svg:g.svgHeightAxis"         ],
                                   [ "svg:g.svgVisualisationG"     ],
-                                  [ "svg:g.svgReferenceG"         ],
+                                  [ "svg:g.svgReferenceGContainer", "svg:g.svgReferenceG"         ],
                                 ],
                               ],
                             ],
                           ],
                           [ ".toggleFeatures.panel.panel-default.col-lg-12" ,
+                          ],
+                          [ ".svgSaveLink.panel.panel-default.col-lg-12" ,
                           ],
                         ],
                       ],
@@ -1027,7 +1031,7 @@ thisEqualsThat.oop = function()
 
                 //Add the Scale Axis to the right hand side of the clone group
                 //  hopefully this should deal with position and that by itself
-                This.display.svgHeightAxis.innerHTML="";
+                This.display.svgHeightAxis.empty();
                 O.create( ["svg:g",
                             [ [ "svg:g.svgMeasureAxisY", "svg:path.svgMeasureY"],
                             ],
@@ -1316,7 +1320,7 @@ thisEqualsThat.oop = function()
                         '
                     title     = 'svgRep.svg'
                     download  = '${This.display.modelOutputValue.text()}.svg'
-                />`
+                >Save SVG</a>`
           )
       );
     }
