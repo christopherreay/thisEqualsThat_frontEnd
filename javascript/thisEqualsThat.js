@@ -199,7 +199,7 @@ thisEqualsThat.oop = function()
     { this.modelInstance.displayIntoTarget(displayContainer);
     }
   }
-  
+ 
 
   this.ModelClass_iframe = function(modelClassData)
   { this.name     = modelClassData.name || modelClassData.jsonKey;
@@ -229,23 +229,6 @@ thisEqualsThat.oop = function()
   }
 
 
-  
-
-
-  
-  this.IFAQueue = function(modelInstance)
-  { this.modelInstnace = modelInstance;
-    this.state = "ready";
-  }
-  this.IFAQueue.prototype.ready = function()
-  { return this.state == "ready";
-  }
-  this.IFAQueue.prototype.enqueueItem = function(parameters)
-  { if (this.ready())
-    { this.modelInstance.inputFieldAltered(      );
-    }
-  }
-
   //MODEL INSTANCE
   this.ModelInstance = function(modelClass, modelInstanceData)
   { this.modelClass         = modelClass;
@@ -269,11 +252,6 @@ thisEqualsThat.oop = function()
 
     this.inputFieldHUD  = new ThisEqualsThat.InputFieldHUD(this);
     this.svgHUD         = new ThisEqualsThat.SVGHUD(this);
-
-  }
-  this.ModelInstance.prototype.getFieldData = function(fieldAddress)
-  { console.log("ModelInstance.getFieldData", fieldAddress);
-    return this.data.fields[fieldAddress];
   }
   this.ModelInstance.prototype.getInputFields = function()
   { if (! this.hasOwnProperty("inputFieldData"))
@@ -361,10 +339,6 @@ thisEqualsThat.oop = function()
 
             }
           );
-      /*This.visualisationFieldsSelect.append
-      ( ThisEqualsThat.ModelFieldVisualisation.prototype.getChooseVisualisationFieldDropDownItem()
-      );
-      */
       this.visualisationFieldsSelect.append($("<option value=''>Select Visualisation</option>"));
       $.each(
         this.data.fields,
@@ -463,14 +437,10 @@ thisEqualsThat.oop = function()
       this.ifa_queue.push(arguments);
     }
   }
-  this.ModelInstance.prototype.processInputFieldAlteredResponse = function(data)
-  { this.lastAlteredOutputField.data.currentValue = data.newValue;
-    this.lastAlteredVisualisationField.data.currentValue = data.svg3dDisplayJSON.svgFieldValue;
-    this.svg3dDisplayJSON = data.svg3dDisplayJSON;
-    this.displayCurrentOutput();
-  }
   this.ModelInstance.prototype.setChoosableFields = function(data, status, response)
-  { var currentOutputField = data.currentOutputField
+  { 
+
+    // var currentOutputField = data.currentOutputField
     if (! this.hasOwnProperty("choosableFields"))
       this.choosableFields = {};
     var choosableFields = this.choosableFields;
@@ -567,7 +537,7 @@ thisEqualsThat.oop = function()
                 [ [".col-lg-4",  ".modelSliders.panel.panel-default", this.getInputFields().inputFieldsSliders ],
                   [".col-lg-8",  
                     [ [ ".row", 
-                        [ [ ".visualisationFieldSelect.panel.panel-default.col-lg-6", this.getVisualisationFields().visualisationFieldSelect ],
+                        [ [ ".visualisationFieldSelect.panel.panel-default.col-lg-6", this.getVisualisationFields().visualisationFieldsSelect ],
                           [ ".visualisationOutputValue.panel.panel-default.col-lg-6" ],
                         ],
                       ],
@@ -1727,7 +1697,7 @@ thisEqualsThat.oop = function()
 
       localContext.memoisedElements   = {};
       for (var elementSelector in fillManagerData.fillSmasher)
-      { localContext.memoisedElements[elementSelector] = $(This.svgHUD.modelInstance.display.containerSVG).find(elementSelector);
+      { localContext.memoisedElements[elementSelector] = $(This.svgHUD.modelInstance.display.rootSVG).find(elementSelector);
       }
 
       localContext.rep_onColorChange(localContext.currentColor);
@@ -1893,7 +1863,7 @@ thisEqualsThat.oop = function()
             "showAlpha":        true,
             "preferredFormat": "rgba",
             "show": function()
-            { //$(This.svgHUD.modelInstance.display.containerSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);
+            { //$(This.svgHUD.modelInstance.display.rootSVG).find(colorPickerSelector).toggleClass("highlightSVGPath", true);
               randomiseItem.spectrum("set", `rgba(0,0,0, ${randomiseItem.data("localContext").degreeOfRandom / (randomiseItem.data("localContext").randomMultiplier || 32) })`);
             },
             "hide": function()
@@ -2400,6 +2370,19 @@ thisEqualsThat.oop = function()
     }
     else
     { return Cookies.get(componentCookieName+"."+cookieName, localContext.defaultCookieSettings);
+    }
+  }
+
+  this.IFAQueue = function(modelInstance)
+  { this.modelInstnace = modelInstance;
+    this.state = "ready";
+  }
+  this.IFAQueue.prototype.ready = function()
+  { return this.state == "ready";
+  }
+  this.IFAQueue.prototype.enqueueItem = function(parameters)
+  { if (this.ready())
+    { this.modelInstance.inputFieldAltered(      );
     }
   }
 }
