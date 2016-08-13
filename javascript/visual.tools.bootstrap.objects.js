@@ -40,7 +40,7 @@ function($)
   this.regex_chainCalls   = /@(.*)/;
   this.regex_dot          = /\./g;
 
-  this.elementDefSequence = {"elementType": "div", "id":"", "classes":""};
+  this.elementDefSequence = {"id":"", "classes":"", "elementType": "div"};
 
   this.elementNamespaceDict = 
   { "xhtml"     : "http://www.w3.org/1999/xhtml",
@@ -65,18 +65,22 @@ function($)
           continue;
         }
         
-        var elementDef = {};
+        var elementDef  = {};
+        var dictKey     = false;
 
         for (elementParamName in this.elementDefSequence)
         { var matchValue = item.match(this["regex_"+elementParamName]);
           if (matchValue !== null)
           { elementDef[elementParamName] = matchValue[1];
+            if (! dictKey) dictKey = matchValue[1].split(".")[0];
           }
           else
           { elementDef[elementParamName] = this.elementDefSequence[elementParamName];
           }
         }
         elementDef.classes = $.trim(elementDef.classes.replace(this.regex_dot, " "));
+        if (! dictKey) dictKey = "__blank";
+
 
         elementTypeSplit = elementDef.elementType.split(":");
         if (elementTypeSplit.length > 1)
@@ -97,8 +101,6 @@ function($)
         
         var newElem = 
             $(document.createElementNS(O.elementNamespaceDict[elementDef.namespace], elementDef.elementType)).attr(elemOptions);
-
-        var dictKey = elementDef.id || elementDef.classes.split(" ")[0];
 
         if (current === null) 
         { current = newElem;
@@ -126,7 +128,7 @@ function($)
         var dictKey = item.attr("id")
         var classAttr = item.attr("class")
         if (classAttr) classAttr = classAttr.split(" ")[0];
-        dictKey = dictKey || classAttr || "__blank";
+        dictKey = dictKey || classAttr || item.prop("nodeName").toLowerCase();
 
         targetDict[ dictKey ] = item;
 
@@ -290,6 +292,132 @@ function($)
             <div class="list-group-separator"></div>
           </div>
         </div>*/
+  }
+
+  this.hoverPanel = function()
+  { //invisible panel over the top of what is beneath.
+    //:hover z-indexes the panel to the back
+    //click: so does a click
+    //  click return bound to mouseout of parent container
+  }
+
+  this.carousel =
+  function(passThrough, appendTo, carouselUniqueClass, carouselPrependList, listOfSlides)
+  { O.create
+    ( [ carouselUniqueClass+itemPrependList+".crousel.slide", 
+        [ [ "ol.carousel-indicators"  ],
+          [ "carousel-inner"          ],
+        ],
+        passThrough,
+        appendTo
+      ]
+    );
+
+    // <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    //   <!-- Indicators -->
+    //   <ol class="carousel-indicators">
+    //     <li data-target="#myCarousel" data-slide-to="0" class=""></li>
+    //     <li data-target="#myCarousel" data-slide-to="1" class="active"></li>
+    //     <li data-target="#myCarousel" data-slide-to="2" class=""></li>
+    //   </ol>
+    //   <div class="carousel-inner" role="listbox">
+    //     <div class="item">
+    //       <img class="first-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
+    //       <div class="container">
+    //         <div class="carousel-caption">
+    //           <h1>Example headline.</h1>
+    //           <p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
+    //           <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+    //         </div>
+    //       </div>
+    //     </div>
+    //     <div class="item active">
+    //       <img class="second-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
+    //       <div class="container">
+    //         <div class="carousel-caption">
+    //           <h1>Another example headline.</h1>
+    //           <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+    //           <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+    //         </div>
+    //       </div>
+    //     </div>
+    //     <div class="item">
+    //       <img class="third-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
+    //       <div class="container">
+    //         <div class="carousel-caption">
+    //           <h1>One more for good measure.</h1>
+    //           <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+    //           <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    //   <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    //     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    //     <span class="sr-only">Previous</span>
+    //   </a>
+    //   <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    //     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    //     <span class="sr-only">Next</span>
+    //   </a>
+    // </div>
+  }
+  this.carouselItem =
+  function(passThrough, appendTo, itemUniqueClass, itemPrependList, slideImageSrc, slideImageClasList, carouselCaption)
+  { O.create
+    ( [ itemUniqueClass+itemPrependList+".item",
+        [ [ $("<img class='"+slideImageClasList+"' src='"+slideImageSrc+"' />") ],
+          [ "container",
+            [ [ "carousel-caption", carouselCaption ]
+            ],
+          ],
+        ],
+      ],
+      passThrough,
+      appendTo
+    );
+    // <div class="item">
+    //   <img class="first-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
+    //   <div class="container">
+    //     <div class="carousel-caption">
+    //       <h1>Example headline.</h1>
+    //       <p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
+    //       <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+    //     </div>
+    //   </div>
+    // </div>
+  }
+
+  this.dropdownUniqueCounter = 0;
+  this.dropdown =
+  function(passThrough={}, appendTo, dropdownUniqueSelector, buttonText)
+  { var uniqueID_dropdown     = "dropdown_"+this.dropdownUniqueCounter;
+    var uniqueID_dropdownMenu = "dropdownMenu_"+this.dropdownUniqueCounter;
+    this.dropdownUniqueCounter++;
+
+    O.create
+    ( [ dropdownUniqueSelector+".dropdown",
+        [ [ $('<button id="'+uniqueID_dropdown+'" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' ), "@"+buttonText, "span.caret" ],
+          [ "#"+uniqueID_dropdownMenu+".dropdown-menu", "ul.menuListItems" ],
+        ],
+      ],
+      passThrough,
+      appendTo
+    );
+    passThrough[uniqueID_dropdownMenu].attr("aria-labelledby", uniqueID_dropdown);
+    // <div class="dropdown">
+    //   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    //     Dropdown
+    //     <span class="caret"></span>
+    //   </button>
+    //   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    //     <li><a href="#">Action</a></li>
+    //     <li><a href="#">Another action</a></li>
+    //     <li><a href="#">Something else here</a></li>
+    //     <li role="separator" class="divider"></li>
+    //     <li><a href="#">Separated link</a></li>
+    //   </ul>
+    // </div>
   }
 
 }(jQuery);

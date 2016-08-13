@@ -40,6 +40,10 @@ body
 .fullHeight
 { height:   100%;
 }
+.width100
+{ width: 100%;
+}
+
 .height64
 { height: 64px;
 }

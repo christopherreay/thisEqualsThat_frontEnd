@@ -51,6 +51,7 @@ thisEqualsThat.oop = function()
 
     O.create( [ "#pageWrapper",
                 [ [ O.navbarFixedLeft(display.navbar, null, "mainNav", ".navLogo.centerBackgroundImage.visualToolsEye.inputFieldAlteredSpinner.panel", ".thisEqualsThatScene") ],
+                  //[ ".thisEqualsThatScene.panel.panel-default" ],
                   [ $("<div class='copyrightContainer' />").text("© This Equals ltd 2016") ],
                 ],
               ],
@@ -117,7 +118,6 @@ thisEqualsThat.oop = function()
               ""
             );
   }
-
 
   this.ThisEqualsThatScene = function(displayScene)
   { this.displayScene = displayScene;
@@ -257,10 +257,7 @@ thisEqualsThat.oop = function()
   { if (! this.hasOwnProperty("inputFieldData"))
     { var This = this;
       this.inputFieldData = {};
-      this.inputFieldsSliders = $("<div />",
-             {
-             }
-             ) ;
+      this.inputFieldsSliders = $("<div />");
       $.each(
         this.data.fields,
         function(fieldNameString, value)
@@ -282,25 +279,29 @@ thisEqualsThat.oop = function()
   { if (! this.hasOwnProperty("outputFieldData"))
     { var This = this;
       this.outputFieldData = {};
-      this.outputFieldsSelect =
-          $("<select />"
-          ).on(
-            "change",
-            function(event)
-            { console.log("outputFieldSelect ChangeEvent: ", event);
-              selectedField = $(event.currentTarget.selectedOptions[0]).data("thisEqualsOutputField");
-              This.lastAlteredOutputField = selectedField;
-              This.inputFieldAltered(
-                { outputField: selectedField.fullAddress
-                },
-                function(data, status, request)
-                { This.setChoosableFields(data);
-                }
-              );
+      this.outputFieldSelect = {};
 
-            }
-          );
-      this.outputFieldsSelect.append($("<option selected='selected' value=''>Select Output</option>"));
+      O.dropdown( this.outputFieldSelect, null, "outputFieldSelect", "What to Calculate?" );
+
+
+          // $("<select class='outputFieldSelect width100' />"
+          // ).on(
+          //   "change",
+          //   function(event)
+          //   { console.log("outputFieldSelect ChangeEvent: ", event);
+          //     selectedField = $(event.currentTarget.selectedOptions[0]).data("thisEqualsOutputField");
+          //     This.lastAlteredOutputField = selectedField;
+          //     This.inputFieldAltered(
+          //       { outputField: selectedField.fullAddress
+          //       },
+          //       function(data, status, request)
+          //       { This.setChoosableFields(data);
+          //       }
+          //     );
+
+          //   }
+          // );
+      // this.outputFieldSelect.append($("<option selected='selected' value=''>Select Output</option>"));
       $.each(
         this.data.fields,
         function(index, value)
@@ -309,7 +310,7 @@ thisEqualsThat.oop = function()
             var outputField = new ThisEqualsThat.ModelFieldOutput(This, value);
             This.outputFieldData[value.toString()] =
                 outputField;
-            This.outputFieldsSelect.append(outputField.getDropDownItem());
+            This.outputFieldSelect.menuListItems.append(outputField.getDropDownItem());
           }
         }
       );
@@ -440,7 +441,6 @@ thisEqualsThat.oop = function()
   this.ModelInstance.prototype.setChoosableFields = function(data, status, response)
   { 
 
-    // var currentOutputField = data.currentOutputField
     if (! this.hasOwnProperty("choosableFields"))
       this.choosableFields = {};
     var choosableFields = this.choosableFields;
@@ -528,13 +528,25 @@ thisEqualsThat.oop = function()
         ( [ ".modelInstanceDiv."+this.modelClass.name+"."+this.id,
             ".topModelDiv",
             [ //[ ".row", ".col-lg-12", ".panel.panel-default", ".visualisationOutputContainer.panel-body" ],
-              [ ".row", ".col-lg-12", ".panel.panel-default", 
-                [ [ ".modelOutputValue.panel-body" ],
-                  [ ".outputFieldsSelect", this.getOutputFields().outputFieldsSelect, ],
-                ],
-              ],
+              // [ ".row", ".col-lg-4", ".panel.panel-default", 
+              //   [ [ ".modelOutputValue.panel-body" ],
+              //     [ ".outputFieldSelect", this.getOutputFields().outputFieldSelect, ],
+              //   ],
+              // ],
               [ ".row", 
-                [ [".col-lg-4",  ".modelSliders.panel.panel-default", this.getInputFields().inputFieldsSliders ],
+                [ [".col-lg-4",  ".panel.panel-default", 
+                    [ [ ".panel-heading", ".panel-title", "@Calculation"],
+                      [ ".panel-body",
+                        [ [ ".row",
+                            [ [ ".row.width100", this.getOutputFields().outputFieldSelect ],
+                              [ ".modelOutputValue.row.width100" ],
+                              [ ".modelSliders.row.width100", ".inputFieldsSliders", this.getInputFields().inputFieldsSliders ],
+                            ],
+                          ],
+                        ],
+                      ],
+                    ],
+                  ],
                   [".col-lg-8",  
                     [ [ ".row", 
                         [ [ ".visualisationFieldSelect.panel.panel-default.col-lg-6", this.getVisualisationFields().visualisationFieldsSelect ],
@@ -627,9 +639,6 @@ thisEqualsThat.oop = function()
   }
   this.ModelInstance.prototype.hide = function()
   { this.display.modelInstanceDiv.hide();
-  }
-  this.ModelInstance.prototype.displayBottomModel = function()
-  { console.log("displayBottomModel");
   }
   this.ModelInstance.prototype.progress_translate3d = function(animation, progress, remainingMs, modelInstance)
   { //console.log(this, This);
@@ -2243,20 +2252,30 @@ thisEqualsThat.oop = function()
     return outputFieldOption;
   }
   this.ModelFieldOutput.prototype.getDropDownItem = function()
-  { var outputFieldOption =
-       $("<option />",
-          { value: this.fullAddress,
-            text:  this.data.displayFieldAddress
-          }
+  { var outputFieldLI = {};
+    O.create
+        ( ["li", "a", "@Calculate: ",
+            [ [ ".modelClass" ],
+              [ ".modelFieldInput" ],
+            ],
+          ],
+          outputFieldLI,
+          null
         );
+    outputFieldLI.a.attr("href", "#");
+       // $("<option />",
+       //    { value: this.fullAddress,
+       //      text:  "Calculate: "+this.data.displayFieldAddress
+       //    }
+       //  );
     if (this.data.defaultOutputField == true)
     { if (this.data['fullAddress'].indexOf(",") == -1)
-      { outputFieldOption.attr("selected", "selected");
+      { outputFieldLI.li.attr("selected", "selected");
         this.modelInstance.lastAlteredOutputField = this;
       }
     }
-    outputFieldOption.data("thisEqualsOutputField", this);
-    return outputFieldOption;
+    outputFieldLI.li.data("thisEqualsOutputField", this);
+    return outputFieldLI;
   }
 
   this.ModelFieldVisualisation = function(modelInstance, fieldData)
