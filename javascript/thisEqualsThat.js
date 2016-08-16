@@ -73,7 +73,7 @@ thisEqualsThat.oop = function()
                 [ 
                   [ ".square92.marginAuto", ".profilePic.panel.row.centerBackgroundImage"],
                   // [ ".square92.marginAuto", ".editProfile.panel.row"       ],
-                  [ ".square92.marginAuto", O.openModal_aTag(navbar, null, "constructBlueprint",                ".createConstruct.panel.row", ".createConstructImage") ],
+                  [ ".square92.marginAuto", O.openModal_aTag(navbar, null, "constructBlueprint",                ".createConstruct.panel.row", ".createConstructImage.square92") ],
                   [ ".square92.marginAuto", O.openModal_aTag(navbar, null, "constructBlueprint_inDevelopment",  ".createConstruct.panel.row", ".createConstructImage_inDevelopment") ],
                 ],
               ],
@@ -253,7 +253,7 @@ thisEqualsThat.oop = function()
     this.inputFieldHUD  = new ThisEqualsThat.InputFieldHUD(this);
     this.svgHUD         = new ThisEqualsThat.SVGHUD(this);
   }
-  this.ModelInstance.prototype.getInputFields = function()
+  this.ModelInstance.prototype.getInputFields = function(appendTo)
   { if (! this.hasOwnProperty("inputFieldData"))
     { var This = this;
       this.inputFieldData = {};
@@ -275,42 +275,55 @@ thisEqualsThat.oop = function()
     return this;
   }
 
-  this.ModelInstance.prototype.getOutputFields = function()
+  this.ModelInstance.prototype.getOutputFields = function(appendTo)
   { if (! this.hasOwnProperty("outputFieldData"))
     { var This = this;
       this.outputFieldData = {};
       this.outputFieldSelect = {};
+      
+      O.panelCollapsible( this.outputFieldSelect, appendTo, 
+        ".outputFieldSelectPanel.width100",
+        [ [ ".displayFlex.spaceBetween",
+            [ [ ".chooseOutputField", "@Current calculation: "], 
+              [ ".modelOutputValue" ],
+              [ ".panelCollapsibleCaret" ],
+            ]
+          ],
+        ],
+        ".menuListItems"
+      );
+      this.display.modelOutputValue = this.outputFieldSelect.modelOutputValue;
 
-      O.dropdown( this.outputFieldSelect, null, "outputFieldSelect", "What to Calculate?" );
+      // O.dropdown( this.outputFieldSelect, appendTo, "dropdown", "What to Calculate?" );
 
+      this.outputFieldSelect.menuListItems.on
+      ( "click",
+        "button",
+        function(event)
+        { var selectedField = $(event.currentTarget).data("thisEquals.modelFieldOutput");
+          This.lastAlteredOutputField = selectedField;
+          
+          This.outputFieldSelect.menuListItems.find(".dropdownItem").toggleClass("selected", false);
+          selectedField.display.dropdownItem.toggleClass("selected", true);
 
-          // $("<select class='outputFieldSelect width100' />"
-          // ).on(
-          //   "change",
-          //   function(event)
-          //   { console.log("outputFieldSelect ChangeEvent: ", event);
-          //     selectedField = $(event.currentTarget.selectedOptions[0]).data("thisEqualsOutputField");
-          //     This.lastAlteredOutputField = selectedField;
-          //     This.inputFieldAltered(
-          //       { outputField: selectedField.fullAddress
-          //       },
-          //       function(data, status, request)
-          //       { This.setChoosableFields(data);
-          //       }
-          //     );
+          This.inputFieldAltered
+          ( { outputField: selectedField.fullAddress
+            },
+            function(data, status, request)
+            { This.setChoosableFields(data);
+            }
+          );
+        }
+      );
 
-          //   }
-          // );
-      // this.outputFieldSelect.append($("<option selected='selected' value=''>Select Output</option>"));
       $.each(
         this.data.fields,
         function(index, value)
         { if (value["outputField"] == true)
           { console.log("modelInstance: outputField: ", This, value);
             var outputField = new ThisEqualsThat.ModelFieldOutput(This, value);
-            This.outputFieldData[value.toString()] =
-                outputField;
-            This.outputFieldSelect.menuListItems.append(outputField.getDropDownItem());
+            This.outputFieldData[value.toString()] = outputField;
+            outputField.getDropDownItem(This.outputFieldSelect.menuListItems);
           }
         }
       );
@@ -538,9 +551,9 @@ thisEqualsThat.oop = function()
                     [ [ ".panel-heading", ".panel-title", "@Calculation"],
                       [ ".panel-body",
                         [ [ ".row",
-                            [ [ ".row.width100", this.getOutputFields().outputFieldSelect ],
-                              [ ".modelOutputValue.row.width100" ],
-                              [ ".modelSliders.row.width100", ".inputFieldsSliders", this.getInputFields().inputFieldsSliders ],
+                            [ [ ".row.width100", this.getOutputFields().outputFieldSelect.outputFieldSelectPanel ],
+                              // [ ".modelOutputValue.row.width100" ],
+                              [ ".modelSliders.row.width100.displayBlock", this.getInputFields().inputFieldsSliders ],
                             ],
                           ],
                         ],
@@ -599,7 +612,31 @@ thisEqualsThat.oop = function()
           targetContainer
         );
 
+      display.modelSliders.on
+      (   "focusin", "input.inputFieldText",
+          function()
+          { var $this = $(this);
+            $this.val( $this.parent().data("thisEquals.modelFieldInput").data.currentValue );
+          }
+      );
+      display.modelSliders.on
+      (   "focusout", "input.inputFieldText",
+          function()
+          { var $this = $(this);
+            var modelFieldInput = $this.parent().data("thisEquals.modelFieldInput");
+            $this.val( modelFieldInput.unitsAroundOutput(modelFieldInput.data.currentValue) );
+          }
+      );
+
       display.svgTranslatableG.data("thisEqualsThat", {"modelInstance": this});
+      display.rootSVG.on
+      ( "blur focus focusin focusout load resize scroll unload click "        +
+        "dblclick mousedown mouseup mousemove mouseover mouseout mouseenter " + 
+        "mouseleave change select submit keydown keypress keyup error",
+        function(e)
+        { e.stopPropagation();
+        }
+      );
       // display.svgTextDescription.text("Hello World");
       // display.svgTextInput.on("change", function() { display.svgTextDescription.text($(this).val()); This.svg_createSaveLink(This);});
 
@@ -1960,6 +1997,13 @@ thisEqualsThat.oop = function()
     { this.data.currentValue = newValue;
       this.slider_ifaUpdatesCurrentValue();
     }
+
+    // if (fieldType == "text" || fieldType == "slider")
+    // { var uiInputText = this["uiValue_" + fieldType];
+    //   if (! uiInputText.is(":focus"))
+    //   { uiInputText.val( this.unitsAroundOutput(this.data.currentValue) );
+    //   }
+    // }
   }
   this.ModelFieldInput.prototype.inputFieldAltered = function()
   { this.modelInstance.inputFieldAltered
@@ -1967,6 +2011,9 @@ thisEqualsThat.oop = function()
         "newValue"  : this.data.currentValue,
       }
     );
+  }
+  this.ModelFieldInput.prototype.unitsAroundOutput = function(output)
+  { return this.data.unitPrefix+" "+output+" "+this.data.unitSuffix;
   }
 
   this.ModelFieldInput.prototype.getTag = function()
@@ -1978,29 +2025,29 @@ thisEqualsThat.oop = function()
          .addClass("type_"        + this.data.fieldType)
          .addClass("name_"        + this.data.name)
          .addClass("unit_"        + this.data.unit);
-      $("<h3/>").text(this.simpleName).appendTo(uiElement.find(".inputFieldLabel") );
+      
+      uiElement.data("thisEquals.modelFieldInput", this);
+      // $("<h3/>").text(this.simpleName).appendTo(uiElement.find(".inputFieldLabel") );
+      // uiElement.find(".inputFieldText")
+      //     .attr("unitprefix", this.data.unitPrefix)
+      //     .attr("unitsuffix", this.data.unitSuffix);
     }
     return this.uiElement;
   }
   this.ModelFieldInput.prototype.getTag_select = function()
   { var fieldData = this.data;
+    var display = this.display = {};
 
-    this.uiElement    =
-        $("<div />",
-          { "class": "inputFieldElement"
-          }
-        );
-      var uiLabelBg =
-        $("<div />",
-          { "class": "inputFieldLabelBg"
-          }
-        );
-      var uiLabel =
-        $("<div />",
-          { "class": "inputFieldLabel"
-          }
-        );
-        //  .append(this.data.displayFieldAddress);
+    O.create
+    ( [ ".inputFieldElement", 
+        [ [ ".inputFieldLabel" ],
+          [ O.dropdown(this.display, null, ".inputFieldSelect", this.simpleName) ],
+        ],
+      ],
+      this.display,
+      null
+    );
+    this.uiElement = this.display.inputFieldElement;
 
     var select = $("<select />", {"class": "inputFieldSelect"});
     select.data("ModelInputField", this);
@@ -2017,7 +2064,6 @@ thisEqualsThat.oop = function()
 
     this.uiValue_select = select;
 
-    this.uiElement.append(uiLabelBg);
     this.uiElement.append(uiLabel);
     this.uiElement.append(this.uiValue_select);
 
@@ -2040,11 +2086,6 @@ thisEqualsThat.oop = function()
           { "class": "inputFieldElement"
           }
         );
-      var uiLabelBg =
-        $("<div />",
-          { "class": "inputFieldLabelBg"
-          }
-        );
       var uiLabel =
         $("<div />",
           { "class": "inputFieldLabel"
@@ -2058,13 +2099,13 @@ thisEqualsThat.oop = function()
           }
         ).addClass("unit_"+this.data.unit);
 
-      uiValue_text.val(fieldData.defaultValue);
+      
+      uiValue_text.val(this.unitsAroundOutput( fieldData.defaultValue ));
       uiValue_text.data("thisEquals.modelField", this);
 
       uiValue_text.on("change", this, this.inputField_text_changeFunction);
       this.uiValue_text  = uiValue_text;
 
-      this.uiElement.append(uiLabelBg);
       this.uiElement.append(uiLabel);
       this.uiElement.append(uiValue_text);
 
@@ -2075,6 +2116,7 @@ thisEqualsThat.oop = function()
     This = event.data;
 
     This.data.currentValue = $(this).val();
+
 
     This.inputFieldAltered();
   }
@@ -2092,16 +2134,11 @@ thisEqualsThat.oop = function()
           { "class": "inputFieldElement"
           }
         );
-      var uiLabelBg =
-        $("<div />",
-          { "class": "inputFieldLabelBg"
-          }
-        );
       var uiLabel =
         $("<div />",
           { "class": "inputFieldLabel"
           }
-        ).append(this.simpleName);
+        )
       var uiValue_slider =
         $("<input />",
           { "class": "inputFieldText",
@@ -2115,7 +2152,7 @@ thisEqualsThat.oop = function()
         ).slider(sliderOptions);
       uiSlider    .data("thisEquals.modelField", this);
 
-      uiValue_slider.val(fieldData.defaultValue);
+      uiValue_slider.val(this.unitsAroundOutput(fieldData.defaultValue));
       uiValue_slider.data("thisEquals.modelField", this);
       uiValue_slider
           .on
@@ -2133,7 +2170,6 @@ thisEqualsThat.oop = function()
       this.uiValue_slider   = uiValue_slider;
       this.uiSlider         = uiSlider;
 
-      this.uiElement.append(uiLabelBg);
       this.uiElement.append(uiLabel);
       this.uiElement.append(this.uiValue_slider);
       this.uiElement.append(uiSlider);
@@ -2223,6 +2259,9 @@ thisEqualsThat.oop = function()
   }
   this.ModelFieldInput.prototype.slider_userUpdatesText = function()
   { this.uiSlider.slider("option", "value", this.actualToSlider());
+    if (! this.uiValue_slider.is(":focus") )
+    { this.uiValue_slider.val(this.unitsAroundOutput(this.uiValue_slider.val()));
+    }
   }
   this.ModelFieldInput.prototype.slider_sliderUpdatesText = function(slideOrChange)
   { if (this.data.hasOwnProperty("sliderRoundFunction") )
@@ -2232,7 +2271,7 @@ thisEqualsThat.oop = function()
     else
     { toReturn = thisEqualsThat.standardPrecision( Number(this.data.currentValue) );
     }
-    this.uiValue_slider.val(toReturn);
+    this.uiValue_slider.val(this.unitsAroundOutput(toReturn));
   }
 
   this.ModelFieldOutput = function(modelInstance, fieldData)
@@ -2241,28 +2280,26 @@ thisEqualsThat.oop = function()
     this.fullAddress    = this.data.fullAddress;
     modelInstance.outputFields[this.fullAddress.toString()] = this;
   }
-  this.ModelFieldOutput.prototype.getChooseOutputFieldDropDownItem = function()
-  { var outputFieldOption =
-       $("<option />",
-          { value: "__selectOutputField",
-            text:  "__selectOutputField"
-          }
-        );
-    outputFieldOption.data("thisEqualsOutputField", this);
-    return outputFieldOption;
-  }
-  this.ModelFieldOutput.prototype.getDropDownItem = function()
-  { var outputFieldLI = {};
+  this.ModelFieldOutput.prototype.getDropDownItem = function(appendTo)
+  { var outputFieldSelectButton = {};
     O.create
-        ( ["li", "a", "@Calculate: ",
-            [ [ ".modelClass" ],
-              [ ".modelFieldInput" ],
+        ( ["button.dropdownItem.modelFieldOutput.btn.displayFlex.width100", 
+            [ [ ".buttonText", "@" + this.data.name ],
+              [ "span.modelClassIndicator", 
+                [ [ ".square20" , "img.createConstructImage.centerBackgroundImage"  ], 
+                  [ "span"      , "@"+this.modelInstance.modelClass.name            ],
+                ],
+              ],
+              // [ "span.modelFieldInputIndicator",
+              //   [ [ ".square20", "img.modelField.centerBackgroundImage" ], 
+              //     [ "span", "@"+this.data.name ],
+              //   ],
+              // ],
             ],
           ],
-          outputFieldLI,
-          null
+          outputFieldSelectButton,
+          appendTo
         );
-    outputFieldLI.a.attr("href", "#");
        // $("<option />",
        //    { value: this.fullAddress,
        //      text:  "Calculate: "+this.data.displayFieldAddress
@@ -2270,12 +2307,13 @@ thisEqualsThat.oop = function()
        //  );
     if (this.data.defaultOutputField == true)
     { if (this.data['fullAddress'].indexOf(",") == -1)
-      { outputFieldLI.li.attr("selected", "selected");
+      { outputFieldSelectButton.dropdownItem.toggleClass("selected", true);
         this.modelInstance.lastAlteredOutputField = this;
       }
     }
-    outputFieldLI.li.data("thisEqualsOutputField", this);
-    return outputFieldLI;
+    outputFieldSelectButton.dropdownItem.data("thisEquals.modelFieldOutput", this);
+    this.display = outputFieldSelectButton;
+    return outputFieldSelectButton;
   }
 
   this.ModelFieldVisualisation = function(modelInstance, fieldData)

@@ -29,6 +29,16 @@ body
 { cursor: pointer;
 }
 
+.displayBlock
+{ display: block;
+}
+.displayFlex, .displayFlex *
+{ display: flex;
+}
+.spaceBetween
+{ justify-content: space-between;
+}
+
 .marginAuto
 { margin: auto;
 }
@@ -49,7 +59,15 @@ body
 }
 .square92
 { height: 92px;
-  width: 92px;
+  width:  92px;
+}
+.square20
+{ height: 20px;
+  width:  20px;
+}
+.squarePC100
+{ height: 100%;
+  width:  100%;
 }
 
 .bg_visualTools
@@ -58,6 +76,11 @@ body
 .bg_visualTools_dark
 { background-color: #18858e;
 }
+
+.selected
+{ background-color: rgba(35, 190, 204, 0.3);
+}
+
 .wrapper
 { padding:  20px;
   position: relative;
@@ -95,7 +118,6 @@ body
   background-repeat:    no-repeat;
   background-size:      contain;
 
-  
   height: 100%;
   width: 100%;
 
@@ -124,6 +146,37 @@ body
   max-width: 200px;
 }
 
+.createConstructImage
+{ background-image:     url(/static/graphics/thisEquals/icons/blueprint.svg);
+}
+
+/*#modals*/ .list-group-item .row-action-primary img
+{ height: 32px;
+  width:  32px;
+}
+
+/*component based content layout */
+
+a.collapsed .panelCollapsibleCaret::after
+{ font-family:'Glyphicons Halflings';
+  float: right;
+  color: grey;
+
+  content:"\e080";    
+}
+a .panelCollapsibleCaret::after
+{ content:"\e114";
+}
+
+
+.dropDownItem.modelFieldOutput
+{ justify-content: space-between;
+}
+/*.dropDownItem.modelFieldOutput .buttonText
+{ margin-right: 20%;
+}*/
+
+
 /*unique based content layout*/
 
 #welcomeOver
@@ -145,18 +198,9 @@ body
 
   border-radius: 50%;
 }
-.mainNav .createConstructImage
-{ height: 92px;
-  width:  92px;
 
-  background-image:     url(/static/graphics/thisEquals/icons/blueprint.svg);
-}
-.constructBlueprint .blueprintIcon
-{ height: 32px;
-  width:  32px;
-}
 .list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover
-{ background-color: #18858e;
+{ background-color: rgba(35, 190, 204, 0.1);
 }
 .constructBlueprint .list-group-item :first-child
 { margin-right: inherit;
@@ -184,6 +228,12 @@ body
     width:  1px !important;
 }
 
+.inputFieldText::before
+{ content: attr(unitprefix)
+}
+.inputFieldText::after
+{ content: attr(unitsuffix)
+}
 
 div.model {
     position: relative;
@@ -202,6 +252,8 @@ div.model {
 { width: 100%;
   height: 100%;
 }
+
+
 
 
 
