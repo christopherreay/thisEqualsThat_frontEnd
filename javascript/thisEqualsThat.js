@@ -8,10 +8,14 @@ thisEqualsThat.svgDefsStore = {};
 thisEqualsThat.memoise_normalDistribution = {};
 
 
+traverse = function(object, address)
+{ 
+}
+
 thisEqualsThat.standardPrecision = function(number)
 { return number.toPrecision(5);
 }
-
+.outputFieldSelect.outputFieldSelectPanel
 thisEqualsThat.oop = function()
 { this.init = function()
   { ThisEqualsThat.componentCookieManager = new ThisEqualsThat.ComponentCookieManager(this);
@@ -552,7 +556,6 @@ thisEqualsThat.oop = function()
                       [ ".panel-body",
                         [ [ ".row",
                             [ [ ".row.width100", this.getOutputFields().outputFieldSelect.outputFieldSelectPanel ],
-                              // [ ".modelOutputValue.row.width100" ],
                               [ ".modelSliders.row.width100.displayBlock", this.getInputFields().inputFieldsSliders ],
                             ],
                           ],
@@ -627,6 +630,21 @@ thisEqualsThat.oop = function()
             $this.val( modelFieldInput.unitsAroundOutput(modelFieldInput.data.currentValue) );
           }
       );
+
+
+      display.modelSliders
+        .on
+        ( "change", ".uiValue_slider",
+          function()
+          { var $this = $(this);
+            var modelField = $this.data("thisEquals.modelField");
+            modelField.data.currentValue = $this.val();
+            modelField.slider_userUpdatesText()
+
+            setImmediate(modelField.inputFieldAltered);
+          }
+        );
+
 
       display.svgTranslatableG.data("thisEqualsThat", {"modelInstance": this});
       display.rootSVG.on
@@ -2018,19 +2036,15 @@ thisEqualsThat.oop = function()
 
   this.ModelFieldInput.prototype.getTag = function()
   { if (! this.hasOwnProperty("uiElement"))
-    { var uiElement =
+    { this.uiElement =
           this["getTag_"+this.data.fieldType]()
-         .addClass("modelClass_"  + this.data.displayFieldAddress.split(":")[0])
-         .addClass("fullAddress_" + this.fullAddress)
-         .addClass("type_"        + this.data.fieldType)
-         .addClass("name_"        + this.data.name)
-         .addClass("unit_"        + this.data.unit);
-      
-      uiElement.data("thisEquals.modelFieldInput", this);
-      // $("<h3/>").text(this.simpleName).appendTo(uiElement.find(".inputFieldLabel") );
-      // uiElement.find(".inputFieldText")
-      //     .attr("unitprefix", this.data.unitPrefix)
-      //     .attr("unitsuffix", this.data.unitSuffix);
+             .addClass("modelClass_"  + this.data.displayFieldAddress.split(":")[0])
+             .addClass("fullAddress_" + this.fullAddress)
+             .addClass("type_"        + this.data.fieldType)
+             .addClass("name_"        + this.data.name)
+             .addClass("unit_"        + this.data.unit)
+             .data("thisEquals.modelFieldInput", this)
+             ;
     }
     return this.uiElement;
   }
@@ -2038,16 +2052,28 @@ thisEqualsThat.oop = function()
   { var fieldData = this.data;
     var display = this.display = {};
 
-    O.create
-    ( [ ".inputFieldElement", 
-        [ [ ".inputFieldLabel" ],
-          [ O.dropdown(this.display, null, ".inputFieldSelect", this.simpleName) ],
-        ],
-      ],
-      this.display,
-      null
-    );
-    this.uiElement = this.display.inputFieldElement;
+    // O.create
+    // ( [ ".inputFieldElement", 
+    //     [ [ ".inputFieldLabel", "@"+this.data.displayName ],
+    //       [ O.dropdown(this.display, null, ".inputFieldSelect", this.simpleName) ],
+    //     ],
+    //   ],
+    //   this.display,
+    //   null
+    // );
+    // this.uiElement = this.display.inputFieldElement;
+
+    this.uiElement    =
+        $("<div />",
+          { "class": "inputFieldElement"
+          }
+        );
+      var uiLabel =
+        $("<div />",
+          { "class": "inputFieldLabel"
+          }
+        ).text(this.data.displayName);
+        //  .append(this.data.displayFieldAddress);
 
     var select = $("<select />", {"class": "inputFieldSelect"});
     select.data("ModelInputField", this);
@@ -2090,7 +2116,7 @@ thisEqualsThat.oop = function()
         $("<div />",
           { "class": "inputFieldLabel"
           }
-        );
+        ).text(this.data.displayName);
         //  .append(this.data.displayFieldAddress);
       var uiValue_text =
         $("<input />",
@@ -2113,68 +2139,42 @@ thisEqualsThat.oop = function()
   }
   this.ModelFieldInput.prototype.inputField_text_changeFunction = function(event)
   { var This  = $(this).data("ModelInputField");
-    This = event.data;
+    This      = event.data;
 
     This.data.currentValue = $(this).val();
 
 
-    This.inputFieldAltered();
+    setImmediate(This.inputFieldAltered);
   }
-  this.ModelFieldInput.prototype.getTag_slider = function()
-  { var fieldData = this.data;
+  this.ModelFieldInput.prototype.getTag_slider = function(passThrough, appendTo)
+  { var sliderOptions             = this["slider_"+this.data.rangeType+"SliderOptions"]();
+    sliderOptions["orientation"]  = "horizontal",
+    sliderOptions["animate"]      = "fast",
+    sliderOptions["range"]        = "min"
 
-      var sliderOptions = this["slider_"+fieldData.rangeType+"SliderOptions"]();
-      sliderOptions["orientation"] = "horizontal",
-      sliderOptions["animate"] = "fast",
-      sliderOptions["range"] = "min"
-      console.debug("sliderOptions", sliderOptions);
+    O.create
+    ( [ ".inputFieldElement",
+        [ [ ".inputFieldLabel", ],
+          [ ".slideAndValue",
+            [ [ $("<input type='text' class='uiValue_slider inputFieldText' />"), ],
+              [ ".uiSlider.inputFieldSlider", ],
+            ],
+          ],
+        ],
+      ],
+      passThrough,
+      appendTo
+    );
 
-      this.uiElement    =
-        $("<div />",
-          { "class": "inputFieldElement"
-          }
-        );
-      var uiLabel =
-        $("<div />",
-          { "class": "inputFieldLabel"
-          }
-        )
-      var uiValue_slider =
-        $("<input />",
-          { "class": "inputFieldText",
-            type: "text",
-          }
-        );
-      var uiSlider =
-        $("<div />",
-          { "class": "inputFieldSlider"
-          }
-        ).slider(sliderOptions);
-      uiSlider    .data("thisEquals.modelField", this);
+    this.display = passThrough;
 
-      uiValue_slider.val(this.unitsAroundOutput(fieldData.defaultValue));
-      uiValue_slider.data("thisEquals.modelField", this);
-      uiValue_slider
-          .on
-          ( "change", 
-            function()
-            { var $this = $(this);
-              var modelField = $this.data("thisEquals.modelField");
-              modelField.data.currentValue = $this.val();
-              modelField.slider_userUpdatesText()
+    this.display.uiSlider.slider(sliderOptions);
+    this.display.uiSlider.data("thisEquals.modelField", this);
 
-              modelField.inputFieldAltered();
-            }
-          );
+    this.display.uiValue_slider.val(this.unitsAroundOutput(this.data.defaultValue));
+    this.display.uiValue_slider.data("thisEquals.modelField", this);
 
-      this.uiValue_slider   = uiValue_slider;
-      this.uiSlider         = uiSlider;
-
-      this.uiElement.append(uiLabel);
-      this.uiElement.append(this.uiValue_slider);
-      this.uiElement.append(uiSlider);
-
-    return this.uiElement
+    return this.inputFieldElement;
   }
   this.ModelFieldInput.prototype.slider_linearSliderOptions = function()
   { console.debug("linear");
