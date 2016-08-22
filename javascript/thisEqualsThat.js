@@ -2676,6 +2676,7 @@ thisEqualsThat.oop = function()
     this.modelInstance  = modelInstance;
     this.fullAddress    = data.fullAddress;
     this.simpleName     = this.fullAddress.replace(/[\[\]\",]/g, "");
+    this.simpleNameUnits = data.unitPrefix + " " + this.simpleName + " " + data.unitSuffix;
     this.data           = data;
     modelInstance.inputFields[data.fullAddress] = this;
   }
@@ -2730,11 +2731,11 @@ thisEqualsThat.oop = function()
           { "class": "inputFieldLabelBg"
           }
         );
-      var uiLabel =
+      var uiLabel = 
         $("<div />",
           { "class": "inputFieldLabel"
           }
-        );
+        ).append(this.simpleNameUnits);
         //  .append(this.data.displayFieldAddress);
 
     var select = $("<select />", {"class": "inputFieldSelect"});
@@ -2784,7 +2785,7 @@ thisEqualsThat.oop = function()
         $("<div />",
           { "class": "inputFieldLabel"
           }
-        );
+        ).append(this.simpleNameUnits);
         //  .append(this.data.displayFieldAddress);
       var uiValue_text =
         $("<input />",
@@ -2836,7 +2837,7 @@ thisEqualsThat.oop = function()
         $("<div />",
           { "class": "inputFieldLabel"
           }
-        ).append(this.simpleName);
+        ).append(this.simpleNameUnits);
       var uiValue_slider =
         $("<input />",
           { "class": "inputFieldText",
