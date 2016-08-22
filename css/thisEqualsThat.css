@@ -4,9 +4,15 @@
 { display: none !important;
 }
 
+div.chat
+{ width: 100%;
+  text-align: center;
+}
+
 html, body {
     height: 100%;
 }
+
 * { font-family: Roboto; }
 
 body {
@@ -514,11 +520,19 @@ div.inputFieldElement:hover div.inputFieldLabel {
     z-index: 999;
     opacity: 1;
 }
+@media screen and (max-width: 959px) {
+  div.inputFieldElement:hover div.inputFieldLabel 
+  { position: absolute;
+    top:      -60px;
+    left:     15%;
+    z-index:  999;
+    opacity:  1;
+  }
+}
 div.inputFieldLabel {
     position: absolute;
     top: -38px;
     left: 120%;
-    width: inherit;
     background: #ECEFF1;
     color: rgba(0,0,0,0.87);
     padding: 20px;

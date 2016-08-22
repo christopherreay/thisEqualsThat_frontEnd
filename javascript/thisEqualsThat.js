@@ -3123,6 +3123,49 @@ $().ready(
 $().ready(function(){
 
 
+    $("body").append($("<div class='chat' />").html(
+`Visual Tools : Pre-launch, Alpha release 0.6<br />
+<br />
+Visuals for your minds’aye :)<br />
+<br />
+Visualisation and data modelling tools<br />
+For communication, learning and fun <br />
+<br />
+For anyone interested in communicating information in visual form. <br />
+A cutting edge toolkit for when you would like to create information rich visuals.<br />
+<br />
+(For us, a visual tool is something that helps us unlock our understanding of something through a visual channel.)<br />
+<br />
+If you have a specific task in mind, or are interested explore and play around. Click on the menu icon, top left corner of this webpage, and have a play with our set of dynamic data visualisation blueprints. <br />
+<br />
+See how much coal you would need to burn to power x many lightbulbs, show amounts of money, numbers of particles, numbers of trees etc..<br />
+<br />
+Toolkit is in Alpha phase - the core behavior is solid, but there are a few (ONE!) glitches, and the interface is not yet as we want it, but we feel it is good enough to give people a sense of what could and can be done with data modelling and visualisation, and open up our development process to a wider community. Only select group of people have been invited to review and contribute. <br />
+<br />
+(For legal purposes, the toolkit should be considered for entertainment only at this stage. Quality assurance protocols are in development. <br />
+<br />
+Over about 5 years a data modelling toolkit has been twice fully rewritten and many, many times refined.  People have put time and effort into developing a set of data modelling and visualisation blueprints that people can use to stimulate engagement with important data that might otherwise be ignored completely or poorly presented.<br />
+<br />
+The tools are being developed with hope to support effective public engagement with important issues. There will soon be a proper forum as part of a website - for sharing of thoughts, data models, images and dynamic visualisation blueprints. Making it as easy as possible for easy, integrated design, data modelling and communications channels. Spreadseet hookup (googlesheets / socrata) and T= data modelling environment are already plugged in to the visual tools, but in the alpha release spreadsheet integration is not activated. <br />
+<br />
+BETA release coming soon.<br />
+<br />
+<strong>Get in contact:</strong><br />
+We hope to make this toolkit practical and of immediate value to people. <br />
+<br />
+You can use the tools for free if you are not trying to make a financial profit from them. Please get in contact in any event with: <br />
+ <a href='board@thisEquals.net'>board@thisequals.net</a> <br />
+ If you have any feedback, or would like to do some heavy lifting with us -  and further advance the tools get involved; or if you would like to discuss prospects of a commercial license.<br />
+<br />
+------<br />
+<br />
+Kudos and credit to Christopher Reay and John Kellas for design of the tools. And Nicolas Debessiat for SVG3D and various advices <br />
+<br />
+Love and Respect.<br />
+<br />
+And with thanks to the many people that have helped get it this far. <3
+Full credits page will be released at BETA launch!
+`));
 
     $('body').append('<div class="copyrightContainer"><p>© This Equals ltd 2016</div></p>')
              .append('<div class="open-menu"></div>');
