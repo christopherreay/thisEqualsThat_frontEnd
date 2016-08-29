@@ -1,5 +1,10 @@
 ThisEqualsThat = window.ThisEqualsThat || {};
 
+function isObject(val) {
+    if (val === null) { return false;}
+    return ( (typeof val === 'function') || (typeof val === 'object') );
+}
+
 ThisEqualsThat.BootstrapObjects = new
 function($)
 { O = this;
@@ -134,6 +139,15 @@ function($)
 
         toReturn.push(item);
       }
+      else if ( isObject(item) )
+      { for (functionName in item)
+        { var parametersListList = item[functionName];
+          for (parametersList of parametersListList)
+          { current[functionName](...parametersList);
+          }
+        }
+      }
+
     }
     if (depth == 0) console.log("create", toReturn);
     return toReturn;

@@ -8,14 +8,31 @@ thisEqualsThat.svgDefsStore = {};
 thisEqualsThat.memoise_normalDistribution = {};
 
 
-traverse = function(object, address)
-{ 
+traverse = function(object, address, defaultList=[{}])
+{ defaultCounter        = 0;
+  defaultListTestIndex  = defaultList.length -1;
+
+  var current = object;
+  address = address.split(".");
+  
+  for (var wayPoint of address)
+  { if (!current.hasOwnProperty(wayPoint) )
+    { current[wayPoint] =  defaultList[defaultCounter]
+    }
+    current = current[wayPoint];
+    
+    if (defaultCounter < defaultListTestIndex)
+    { defaultCounter ++;
+    }
+  }
+
+  return current;
 }
 
 thisEqualsThat.standardPrecision = function(number)
 { return number.toPrecision(5);
 }
-.outputFieldSelect.outputFieldSelectPanel
+
 thisEqualsThat.oop = function()
 { this.init = function()
   { ThisEqualsThat.componentCookieManager = new ThisEqualsThat.ComponentCookieManager(this);
@@ -2034,10 +2051,10 @@ thisEqualsThat.oop = function()
   { return this.data.unitPrefix+" "+output+" "+this.data.unitSuffix;
   }
 
-  this.ModelFieldInput.prototype.getTag = function()
+  this.ModelFieldInput.prototype.getTag = function(passThrough, appendTo)
   { if (! this.hasOwnProperty("uiElement"))
     { this.uiElement =
-          this["getTag_"+this.data.fieldType]()
+          this["getTag_"+this.data.fieldType](passThrough, appendTo)
              .addClass("modelClass_"  + this.data.displayFieldAddress.split(":")[0])
              .addClass("fullAddress_" + this.fullAddress)
              .addClass("type_"        + this.data.fieldType)
@@ -2048,7 +2065,7 @@ thisEqualsThat.oop = function()
     }
     return this.uiElement;
   }
-  this.ModelFieldInput.prototype.getTag_select = function()
+  this.ModelFieldInput.prototype.getTag_select = function(passThrough, appendTo)
   { var fieldData = this.data;
     var display = this.display = {};
 
@@ -2105,7 +2122,7 @@ thisEqualsThat.oop = function()
 
     This.inputFieldAltered();
   }
-  this.ModelFieldInput.prototype.getTag_text = function()
+  this.ModelFieldInput.prototype.getTag_text = function(passThrough, appendTo)
   {   var fieldData = this.data;
       this.uiElement    =
         $("<div />",
@@ -2162,11 +2179,9 @@ thisEqualsThat.oop = function()
           ],
         ],
       ],
-      passThrough,
-      appendTo
+      traverse(this, "display"),
+      null
     );
-
-    this.display = passThrough;
 
     this.display.uiSlider.slider(sliderOptions);
     this.display.uiSlider.data("thisEquals.modelField", this);
@@ -2174,7 +2189,7 @@ thisEqualsThat.oop = function()
     this.display.uiValue_slider.val(this.unitsAroundOutput(this.data.defaultValue));
     this.display.uiValue_slider.data("thisEquals.modelField", this);
 
-    return this.inputFieldElement;
+    return this.display.inputFieldElement;
   }
   this.ModelFieldInput.prototype.slider_linearSliderOptions = function()
   { console.debug("linear");
