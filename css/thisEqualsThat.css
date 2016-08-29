@@ -165,7 +165,7 @@ body
 
 /*component based content layout */
 
-a.collapsed .panelCollapsibleCaret::after
+/*a.collapsed .panelCollapsibleCaret::after
 { font-family:'Glyphicons Halflings';
   float: right;
   color: grey;
@@ -174,8 +174,39 @@ a.collapsed .panelCollapsibleCaret::after
 }
 a .panelCollapsibleCaret::after
 { content:"\e114";
+}*/
+
+.btn
+{ text-transform: none;
+  font-variant: small-caps;
 }
 
+.panelCollapsible .collapseControl
+{ text-decoration: none;
+}
+
+.panelCollapsibleArrow
+{ position: absolute;
+
+  left: 50%;
+  bottom: -8px;
+
+  height: 16px;
+  width: 16px;
+}
+
+.panelCollapsibleArrow.arrowClosed
+{ background-image: url(/static/graphics/visualTools/panel.downArrow.png);
+}
+.panelCollapsibleArrow.arrowOpen
+{ background-image: url(/static/graphics/visualTools/panel.upArrow.png);
+}
+a.collapsed .panelCollapsibleArrow.arrowOpen
+{ display: none;
+}
+a .panelCollapsibleArrow.arrowOpen
+{ display: block;
+}
 
 .dropDownItem.modelFieldOutput
 { justify-content: space-between;
@@ -217,6 +248,18 @@ a .panelCollapsibleCaret::after
 { margin-right: 8px;
 }
 
+.outputFieldSelectPanel
+{ position: relative;
+
+  width: calc(100% + 30px);
+
+  margin-right: -15px;
+  margin-left: -15px;
+  margin-top: -15px;
+  
+  border: none;
+}
+
 .copyrightContainer
 { position: fixed;
   bottom: 0px;
@@ -224,6 +267,9 @@ a .panelCollapsibleCaret::after
 
   z-index: 1;
 }
+
+
+
 
 
 .masterReferenceSVGSelectList {

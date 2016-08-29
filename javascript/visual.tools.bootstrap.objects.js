@@ -443,8 +443,13 @@ function($)
     var toReturn = 
     O.create
     ( [ panelCollapsiblePrependList+".panelCollapsible.panel.panel-default",
-        [ [ $("<a data-toggle='collapse' data-target='#"+uniqueID+"' href='#"+uniqueID+"' />"), ".panel-heading", ".panel-title", panelLinkTitle ],
-          [ "#"+uniqueID+".panel-collapse collapse"+(collapsed?"":" in"), ".panelBody.panel-body", panelBody ]
+        [ [ $("<a class='collapseControl' data-toggle='collapse' data-target='#"+uniqueID+"' href='#"+uniqueID+"' />"), 
+            [ [ ".arrowClosed.panelCollapsibleArrow.square20.centerBackgroundImage" ],
+              [ ".arrowOpen.panelCollapsibleArrow.square20.centerBackgroundImage"   ],
+              [ ".panel-heading", ".panel-title", panelLinkTitle ],
+            ],
+          ],
+          [ "#"+uniqueID+".panel-collapse collapse"+(collapsed?"":" in"), ".panelBody.panel-body", panelBody ],
         ],
       ],
       passThrough,
