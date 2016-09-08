@@ -272,6 +272,30 @@ a .panelCollapsibleArrow.arrowOpen
 { background-color: #fdfdfd;
 }
 
+.svgDiv
+{ position: relative;
+}
+.svgSaveLink
+{ position: absolute;
+  top: 0;
+  right: 0; 
+}
+.toggleFeatures
+{ position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+a.editableTextPlaceholder
+{ visibility: hidden;
+  position: absolute;
+}
+.editable-container.editable-inline
+{ position: absolute;
+
+  bottom: 0;
+  left: 0;
+}
 .copyrightContainer
 { position: fixed;
   bottom: 0px;

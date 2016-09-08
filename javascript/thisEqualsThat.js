@@ -660,30 +660,34 @@ thisEqualsThat.oop = function()
                       ],
                       [ ".row",
                         [ [ ".svgDiv.panel.panel-default.col-lg-12", 
-                            $(document.createElementNS(d3.ns.prefix.svg, "svg"))
-                            .attr("xmlns",        "http://www.w3.org/2000/svg")
-                            .attr("xmlns:xlink",  "http://www.w3.org/1999/xlink")
-                            .attr("xmlns:z",      "http://debeissat.nicolas.free.fr/svg3d/svg3d.rng")
-                            .attr("width",        "100%")
-                            .attr("height",       "100%")
-                            .attr("z:xInfinite",  "50")
-                            .attr("z:yInfinite",  "100")
-                            .attr("z:zRatio",     "5")
+                            [ [ $(document.createElementNS(d3.ns.prefix.svg, "svg"))
+                                .attr("xmlns",        "http://www.w3.org/2000/svg")
+                                .attr("xmlns:xlink",  "http://www.w3.org/1999/xlink")
+                                .attr("xmlns:z",      "http://debeissat.nicolas.free.fr/svg3d/svg3d.rng")
+                                .attr("width",        "100%")
+                                .attr("height",       "100%")
+                                .attr("z:xInfinite",  "50")
+                                .attr("z:yInfinite",  "100")
+                                .attr("z:zRatio",     "5")
 
-                            .attr("class", "rootSVG id_"+this.id),
-                            [ [ "svg:defs.svgDefs" ],
-                              [ "svg:text.svgTextDescription", "@Click to Enter Text" ],
-                              [ "svg:g.svgTranslatableG" ,
-                                [ [ "svg:g.svgHeightAxis"         ],
-                                  [ "svg:g.svgVisualisationG"     ],
-                                  [ "svg:g.svgReferenceGContainer", "svg:g.svgReferenceG" ],
+                                .attr("class", "rootSVG id_"+this.id),
+                                [ [ "svg:defs.svgDefs" ],
+                                  [ "svg:text.svgTextDescription", "@Click to Enter Text" ],
+                                  [ "svg:g.svgTranslatableG" ,
+                                    [ [ "svg:g.svgHeightAxis"         ],
+                                      [ "svg:g.svgVisualisationG"     ],
+                                      [ "svg:g.svgReferenceGContainer", "svg:g.svgReferenceG" ],
+                                    ],
+                                  ],
                                 ],
                               ],
+                              [ ".toggleFeatures" ,
+                              ],
+                              [ ".svgSaveLink" ,
+                              ],
+                              [ "a.editableTextPlaceholder", "@Click to Enter Text",
+                              ],
                             ],
-                          ],
-                          [ ".toggleFeatures.panel.panel-default.col-lg-12" ,
-                          ],
-                          [ ".svgSaveLink.panel.panel-default.col-lg-12" ,
                           ],
                         ],
                       ],
@@ -749,21 +753,21 @@ thisEqualsThat.oop = function()
       // display.svgTextInput.on("change", function() { display.svgTextDescription.text($(this).val()); This.svg_createSaveLink(This);});
 
       display.toggle =
-        { "axes":                 $("<input class='checkbox' id = 'toggle_axes_" + This.id + "' type='checkbox'  checked='checked'title='Show / Hide Axes' /><span class='checkbox_ui ch_axis'><span class='check'><i class='fa fa-check'></i></span></span>"),
+        { "axes":                 $("<input class='checkbox' id = 'toggle_axes_" + This.id + "' type='checkbox'  checked='checked'title='Show / Hide Axes' /></span>"),
           "axes.label":           $("<label/>").append('<div id="axis"></div>'),
           "axes.changeEvent"  :
               function(changeEvent)
               { display.svgHeightAxis.toggle();
                 This.svg_createSaveLink(This);
               },
-          "svgReferenceG":        $("<input class='checkbox' id  = 'toggle_svgReferenceG_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Frame of Reference'/><span class='checkbox_ui ch_reference'><span class='check'><i class='fa fa-check faAligned'></i></span></span>"),
+          "svgReferenceG":        $("<input class='checkbox' id  = 'toggle_svgReferenceG_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Frame of Reference'/></span>"),
           "svgReferenceG.label":  $("<label/>").append('<div id="reference"></div>'),
           "svgReferenceG.changeEvent":
               function(changeEvent)
               { display.svgReferenceG.toggle();
                 This.svg_createSaveLink(This);
               },
-          "svgTextDescription":        $("<input class='checkbox' id  = 'toggle_svgTextDescription_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Frame of Reference'/><span class='checkbox_ui ch_description'><span class='check'><i class='fa fa-check faAligned'></i></span></span>"),
+          "svgTextDescription":        $("<input class='checkbox' id  = 'toggle_svgTextDescription_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Text Description'/></span>"),
           "svgTextDescription.label":  $("<label/>").append('<div id="text_description"></div>'),
           "svgTextDescription.changeEvent":
               function(changeEvent)
@@ -778,6 +782,44 @@ thisEqualsThat.oop = function()
         display.toggleFeatures.append(display.toggle[name+".label"]);
       }
     }
+
+    this.display.editableTextPlaceholder
+        .editable
+        ( { type: 'text',
+            title: 'Enter Text',
+            "placement": "top",
+            "mode": "inline",
+            "toggle": "manual",
+            success: function(response, newValue) 
+            { if (newValue == "")
+              { setImmediate
+                ( function()
+                  { display.toggle.svgTextDescription[0].click();
+                  }
+                );
+                This.display.editableTextPlaceholder.editable("toggle");
+
+              }
+              else
+              { setImmediate
+                ( function()
+                  { This.display.svgTextDescription.text(newValue);
+                    This.svg_createSaveLink(This);
+                  }
+                );
+              }
+              
+            }
+        });
+    this.display.svgTextDescription.on
+    ( "click",
+      function(event)
+      { event.stopPropagation();
+        
+        This.display.editableTextPlaceholder.editable("toggle");
+      }
+    )
+
     this.display.modelInstanceDiv.show();
 
     return this;
