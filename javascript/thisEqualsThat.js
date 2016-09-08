@@ -28,6 +28,21 @@ traverse = function(object, address, defaultList=[{}])
 
   return current;
 }
+prettyPrint = function(field, value)
+  { var currentValue;
+    if (field.data.hasOwnProperty("fieldPrecisionFunction") )
+    { currentValue = value;
+      eval(field.data.fieldPrecisionFunction);
+    }
+    else
+    { toReturn = thisEqualsThat.standardPrecision(value);
+    }
+
+    return unitsAroundOutput(field, toReturn);
+  }
+  unitsAroundOutput = function(field, output)
+  { return field.data.unitPrefix+" "+output+" "+field.data.unitSuffix;
+  }
 
 thisEqualsThat.standardPrecision = function(number)
 { return Number(number).toPrecision(5);
@@ -305,13 +320,14 @@ thisEqualsThat.oop = function()
       O.panelCollapsible( this.outputFieldSelect, appendTo, 
         ".outputFieldSelectPanel.width100",
         [ [ ".displayFlex.spaceBetween",
-            [ [ ".chooseOutputField", "@Output: "], 
+            [ [ ".chooseOutputField.selectedField", "@Output: "], 
               [ ".modelOutputValue" ],
             ]
           ],
         ],
         ".menuListItems"
       );
+      this.display.modelOutputDisplayName = this.outputFieldSelect.chooseOutputField;
       this.display.modelOutputValue = this.outputFieldSelect.modelOutputValue;
 
       // O.dropdown( this.outputFieldSelect, appendTo, "dropdown", "What to Calculate?" );
@@ -351,44 +367,98 @@ thisEqualsThat.oop = function()
     return this;
   }
 
-  this.ModelInstance.prototype.getVisualisationFields = function()
+  this.ModelInstance.prototype.getVisualisationFields = function(appendTo)
   { if (! this.hasOwnProperty("visualisationFieldData"))
     { var This = this;
       this.visualisationFieldData = {};
-      this.visualisationFieldsSelect =
-          $("<select />"
-          ).on(
-            "change",
-            function(event)
-            { console.log("visualisationFieldSelect ChangeEvent: ", event);
-              selectedField = $(event.currentTarget.selectedOptions[0]).data("thisEqualsVisualisationField");
-              This.lastAlteredVisualisationField = selectedField;
-              This.inputFieldAltered(
-                { visualisationField: selectedField.fullAddress
-                },
-                function(data, status, request)
-                { //process SVG Datastuff;
-                }
-              );
+      this.visualisationFieldSelect = {};
+      
+      O.panelCollapsible( this.visualisationFieldSelect, appendTo, 
+        ".visualisationFieldSelectPanel.width100",
+        [ [ ".displayFlex.spaceBetween",
+            [ [ ".chooseVisualisationField.selectedField", "@Visualise: "], 
+              [ ".modelVisualisationValue" ],
+            ]
+          ],
+        ],
+        ".menuListItems"
+      );
+      this.display.modelVisualisationDisplayName  = this.visualisationFieldSelect.chooseVisualisationField;
+      this.display.modelVisualisationValue        = this.visualisationFieldSelect.modelVisualisationValue;
 
+      // O.dropdown( this.visualisationFieldSelect, appendTo, "dropdown", "What to Calculate?" );
+
+      this.visualisationFieldSelect.menuListItems.on
+      ( "click",
+        "button",
+        function(event)
+        { var selectedField = $(event.currentTarget).data("thisEquals.ModelFieldVisualisation");
+          This.lastAlteredVisualisationField = selectedField;
+          
+          This.visualisationFieldSelect.menuListItems.find(".dropdownItem").toggleClass("selected", false);
+          selectedField.display.dropdownItem.toggleClass("selected", true);
+
+          This.inputFieldAltered
+          ( { visualisationField: selectedField.fullAddress
+            },
+            function(data, status, request)
+            { //This.setChoosableFields(data);
             }
           );
-      this.visualisationFieldsSelect.append($("<option value=''>Select Visualisation</option>"));
+        }
+      );
+
       $.each(
         this.data.fields,
         function(index, value)
-        { if (value["visualisationField"] === true)
+        { if (value["visualisationField"] == true)
           { console.log("modelInstance: visualisationField: ", This, value);
             var visualisationField = new ThisEqualsThat.ModelFieldVisualisation(This, value);
-            This.visualisationFieldData[value.toString()] =
-                visualisationField;
-            This.visualisationFieldsSelect.append(visualisationField.getDropDownItem());
+            This.visualisationFieldData[value.toString()] = visualisationField;
+            visualisationField.getDropDownItem(This.visualisationFieldSelect.menuListItems);
           }
         }
       );
     }
-    //for Chaining of ModelInstance
     return this;
+
+    // if (! this.hasOwnProperty("visualisationFieldData"))
+    // { var This = this;
+    //   this.visualisationFieldData = {};
+    //   this.visualisationFieldsSelect =
+    //       $("<select />"
+    //       ).on(
+    //         "change",
+    //         function(event)
+    //         { console.log("visualisationFieldSelect ChangeEvent: ", event);
+    //           selectedField = $(event.currentTarget.selectedOptions[0]).data("thisEqualsVisualisationField");
+    //           This.lastAlteredVisualisationField = selectedField;
+    //           This.inputFieldAltered(
+    //             { visualisationField: selectedField.fullAddress
+    //             },
+    //             function(data, status, request)
+    //             { //process SVG Datastuff;
+    //             }
+    //           );
+
+    //         }
+    //       );
+    //   this.visualisationFieldsSelect.append($("<option value=''>Select Visualisation</option>"));
+    //   $.each(
+    //     this.data.fields,
+    //     function(index, value)
+    //     { if (value["visualisationField"] === true)
+    //       { console.log("modelInstance: visualisationField: ", This, value);
+    //         var visualisationField = new ThisEqualsThat.ModelFieldVisualisation(This, value);
+    //         This.visualisationFieldData[value.toString()] =
+    //             visualisationField;
+    //         This.visualisationFieldsSelect.append(visualisationField.getDropDownItem());
+    //       }
+    //     }
+    //   );
+    // }
+    // //for Chaining of ModelInstance
+    // return this;
   }
 
   this.ModelInstance.prototype.inputFieldAltered = function(fieldChangeData, successFunction, doNotUpdateUI)
@@ -579,10 +649,13 @@ thisEqualsThat.oop = function()
                       ],
                     ],
                   ],
-                  [".col-lg-8",  
-                    [ [ ".row", 
-                        [ [ ".visualisationFieldSelect.panel.panel-default.col-lg-6", this.getVisualisationFields().visualisationFieldsSelect ],
-                          [ ".visualisationOutputValue.panel.panel-default.col-lg-6" ],
+                  [".col-lg-8", ".panel.panel-default", 
+                    [ [ ".panel-heading", "panel-title", "@Visualisation"], 
+                      [ ".panel-body",
+                        [ [ ".row",
+                            [ [ ".row.width100", this.getVisualisationFields().visualisationFieldSelect.visualisationFieldSelectPanel ],
+                            ],
+                          ],
                         ],
                       ],
                       [ ".row",
@@ -644,7 +717,7 @@ thisEqualsThat.oop = function()
           function()
           { var $this = $(this);
             var modelFieldInput = $this.closest(".inputFieldElement").data("thisEquals.modelFieldInput");
-            $this.val( modelFieldInput.prettyPrint( $this.val() ) );
+            $this.val( prettyPrint( modelFieldInput, $this.val() ) );
           }
       );
 
@@ -1125,11 +1198,13 @@ thisEqualsThat.oop = function()
     var gTET = thisEqualsThat;
     //$("#document").append("<script type='text/javascript' src='/svg/rg1024_metal_barrel' />);
 
+    this.display.modelOutputDisplayName.html(outputField.data.displayName);
     this.display.modelOutputValue.html
-    ( outputField.prettyPrint(outputField.data.currentValue)
+    ( prettyPrint(outputField, outputField.data.currentValue)
     );
-    this.display.visualisationOutputValue.text
-    ( visualisationField.prettyPrint(visualisationField.data.currentValue)
+    this.display.modelVisualisationDisplayName.html(visualisationField.data.displayName);
+    this.display.modelVisualisationValue.html
+    ( prettyPrint(visualisationField, visualisationField.data.currentValue)
     );
 
     // Add HUD interface
@@ -2041,23 +2116,6 @@ thisEqualsThat.oop = function()
     //   }
     // }
   }
-  this.ModelFieldInput.prototype.prettyPrint = function(value)
-  { var toReturn = "";
-
-    var currentValue;
-    if (this.data.hasOwnProperty("fieldPrecisionFunction") )
-    { currentValue = value;
-      eval(this.data.fieldPrecisionFunction);
-    }
-    else
-    { currentValue = thisEqualsThat.standardPrecision(value);
-    }
-
-    return this.unitsAroundOutput(currentValue);
-  }
-  this.ModelFieldInput.prototype.unitsAroundOutput = function(output)
-  { return this.data.unitPrefix+" "+output+" "+this.data.unitSuffix;
-  }
   this.ModelFieldInput.prototype.inputFieldAltered = function()
   { this.modelInstance.inputFieldAltered
     ( { "inputField": this.fullAddress,
@@ -2160,7 +2218,7 @@ thisEqualsThat.oop = function()
         ).addClass("unit_"+this.data.unit);
 
       
-      uiValue_text.val(this.unitsAroundOutput( fieldData.defaultValue ));
+      uiValue_text.val(unitsAroundOutput( this, fieldData.defaultValue ));
       uiValue_text.data("thisEquals.modelField", this);
 
       uiValue_text.on("change", this, this.inputField_text_changeFunction);
@@ -2201,7 +2259,7 @@ thisEqualsThat.oop = function()
     this.display.uiSlider.slider(sliderOptions);
     this.display.uiSlider.data("thisEquals.modelField", this);
 
-    this.display.uiValue_slider.val(this.unitsAroundOutput(this.data.defaultValue));
+    this.display.uiValue_slider.val(unitsAroundOutput(this, this.data.defaultValue));
     this.display.uiValue_slider.data("thisEquals.modelField", this);
 
     return this.display.inputFieldElement;
@@ -2301,7 +2359,7 @@ thisEqualsThat.oop = function()
     else
     { toReturn = thisEqualsThat.standardPrecision( Number(this.data.currentValue) );
     }
-    this.display.uiValue_slider.val(this.unitsAroundOutput(toReturn));
+    this.display.uiValue_slider.val(unitsAroundOutput(this, toReturn));
   }
 
   this.ModelFieldOutput = function(modelInstance, fieldData)
@@ -2310,23 +2368,8 @@ thisEqualsThat.oop = function()
     this.fullAddress    = this.data.fullAddress;
     modelInstance.outputFields[this.fullAddress.toString()] = this;
   }
-  this.ModelFieldOutput.prototype.prettyPrint = function(value)
-  { var toReturn = "";
-
-    var currentValue;
-    if (this.data.hasOwnProperty("fieldPrecisionFunction") )
-    { currentValue = value;
-      eval(this.data.fieldPrecisionFunction);
-    }
-    else
-    { currentValue = thisEqualsThat.standardPrecision(value);
-    }
-
-    return this.unitsAroundOutput(currentValue);
-  }
-  this.ModelFieldOutput.prototype.unitsAroundOutput = function(output)
-  { return this.data.unitPrefix+" "+output+" "+this.data.unitSuffix;
-  }
+  
+  
   this.ModelFieldOutput.prototype.getDropDownItem = function(appendTo)
   { var outputFieldSelectButton = {};
     O.create
@@ -2379,31 +2422,56 @@ thisEqualsThat.oop = function()
     visualisationFieldOption.data("thisEqualsVisualisationField", this);
     return visualisationFieldOption;
   }
-  this.ModelFieldVisualisation.prototype.getDropDownItem = function()
-  { var visualisationFieldOption =
-       $("<option />",
-          { value: this.fullAddress,
-            text:  this.data.displayFieldAddress
-          }
+  this.ModelFieldVisualisation.prototype.getDropDownItem = function(appendTo)
+  { var visualisationFieldSelectButton = {};
+    O.create
+        ( ["button.dropdownItem.modelFieldVisualisation.btn.displayFlex.width100.spaceBetween", 
+            [ [ ".buttonText", "@" + this.data.displayName ],
+              [ "span.modelClassIndicator", 
+                [ [ ".square20" , "img.createConstructImage.centerBackgroundImage"  ], 
+                  [ "span"      , "@"+this.modelInstance.modelClass.name            ],
+                ],
+              ],
+              // [ "span.modelFieldInputIndicator",
+              //   [ [ ".square20", "img.modelField.centerBackgroundImage" ], 
+              //     [ "span", "@"+this.data.name ],
+              //   ],
+              // ],
+            ],
+          ],
+          visualisationFieldSelectButton,
+          appendTo
         );
+       // $("<option />",
+       //    { value: this.fullAddress,
+       //      text:  "Calculate: "+this.data.displayFieldAddress
+       //    }
+       //  );
     if (this.data.defaultVisualisationField == true)
     { if (this.data['fullAddress'].indexOf(",") == -1)
-      { visualisationFieldOption.attr("selected", "selected");
+      { visualisationFieldSelectButton.dropdownItem.toggleClass("selected", true);
         this.modelInstance.lastAlteredVisualisationField = this;
       }
     }
-    visualisationFieldOption.data("thisEqualsVisualisationField", this);
-    return visualisationFieldOption;
+    visualisationFieldSelectButton.dropdownItem.data("thisEquals.ModelFieldVisualisation", this);
+    this.display = visualisationFieldSelectButton;
+    return visualisationFieldSelectButton;
+
+    // var visualisationFieldOption =
+    //    $("<option />",
+    //       { value: this.fullAddress,
+    //         text:  this.data.displayFieldAddress
+    //       }
+    //     );
+    // if (this.data.defaultVisualisationField == true)
+    // { if (this.data['fullAddress'].indexOf(",") == -1)
+    //   { visualisationFieldOption.attr("selected", "selected");
+    //     this.modelInstance.lastAlteredVisualisationField = this;
+    //   }
+    // }
+    // visualisationFieldOption.data("thisEqualsVisualisationField", this);
+    // return visualisationFieldOption;
   }
-
-
-
-
-
-
-
-
-
 
 
   this.ComponentCookieManager = function()

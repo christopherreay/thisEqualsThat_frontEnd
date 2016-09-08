@@ -85,8 +85,12 @@ body
 { background-color: #18858e;
 }
 
-.selected
-{ background-color: rgba(35, 190, 204, 0.3);
+.selected.modelFieldOutput, .selected.modelFieldVisualisation
+{ 
+  /*background-color: rgba(35, 190, 204, 0.3);*/
+  border-left-style: solid;
+  border-left-width: 4px;
+  border-left-color: rgba(35, 190, 204, 0.3);
 }
 
 .wrapper
@@ -208,7 +212,7 @@ a .panelCollapsibleArrow.arrowOpen
 { display: block;
 }
 
-.dropDownItem.modelFieldOutput
+.dropDownItem.modelFieldOutput, .dropDownItem.modelFieldVisualisation
 { justify-content: space-between;
 }
 /*.dropDownItem.modelFieldOutput .buttonText
@@ -248,7 +252,10 @@ a .panelCollapsibleArrow.arrowOpen
 { margin-right: 8px;
 }
 
-.outputFieldSelectPanel
+.selectedField
+{ font-variant: small-caps;
+}
+.outputFieldSelectPanel, .visualisationFieldSelectPanel
 { position: relative;
 
   width: calc(100% + 30px);
@@ -258,6 +265,11 @@ a .panelCollapsibleArrow.arrowOpen
   margin-top: -15px;
   
   border: none;
+
+  background-color: #fafafa;
+}
+.outputFieldSelectPanel .panel-collapse, .visualisationFieldSelectPanel .panel-collapse
+{ background-color: #fdfdfd;
 }
 
 .copyrightContainer
