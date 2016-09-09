@@ -637,7 +637,7 @@ thisEqualsThat.oop = function()
               //   ],
               // ],
               [ ".row", 
-                [ [".col-lg-4.col-xs-12",  ".panel.panel-default", 
+                [ [".col-lg-4",  ".panel.panel-default", 
                     [ [ ".panel-heading", ".panel-title", "@Calculation"],
                       [ ".panel-body",
                         [ [ ".row",
@@ -649,7 +649,7 @@ thisEqualsThat.oop = function()
                       ],
                     ],
                   ],
-                  [".col-lg-8.col-xs-12", ".panel.panel-default", 
+                  [".col-lg-8", ".panel.panel-default", 
                     [ [ ".panel-heading", "panel-title", "@Visualisation"], 
                       [ ".panel-body",
                         [ [ ".row",
@@ -1841,7 +1841,6 @@ thisEqualsThat.oop = function()
     if (! context.hasOwnProperty("fillManagersDiv") )
     { this.display();
     }
-    var rootSVG = $(This.svgHUD.modelInstance.display.rootSVG);
 
     for (fillManagerSelector in fillManagersDict)
     { var fillManagerData = fillManagersDict[fillManagerSelector];
@@ -1887,7 +1886,7 @@ thisEqualsThat.oop = function()
 
               for (var elementSelector in fillManagerData.fillSmasher)
               { var pickedColor = tinycolor(color.toString("rgb"));
-                rootSVG.find(elementSelector).attr("fill", eval(fillManagerData.fillSmasher[elementSelector]) );
+                localContext.memoisedElements[elementSelector].attr("fill", eval(fillManagerData.fillSmasher[elementSelector]) );
               }
 
               localContext.currentColor = color;
@@ -1901,6 +1900,12 @@ thisEqualsThat.oop = function()
 
         selectorContext.fillManagerDiv.data("thisEquals.svgHUD.fillManager.localContext", localContext);
       }
+
+      localContext.memoisedElements = {};
+      for (var elementSelector in fillManagerData.fillSmasher)
+      { localContext.memoisedElements[elementSelector] = $(This.svgHUD.modelInstance.display.rootSVG).find(elementSelector);
+      }
+
       localContext.rep_onColorChange(localContext.currentColor);
     }
   }
