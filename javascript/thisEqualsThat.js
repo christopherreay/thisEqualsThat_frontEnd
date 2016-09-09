@@ -637,7 +637,7 @@ thisEqualsThat.oop = function()
               //   ],
               // ],
               [ ".row", 
-                [ [".col-lg-4",  ".panel.panel-default", 
+                [ [".col-lg-4.col-xs-12",  ".panel.panel-default", 
                     [ [ ".panel-heading", ".panel-title", "@Calculation"],
                       [ ".panel-body",
                         [ [ ".row",
@@ -649,7 +649,7 @@ thisEqualsThat.oop = function()
                       ],
                     ],
                   ],
-                  [".col-lg-8", ".panel.panel-default", 
+                  [".col-lg-8.col-xs-12", ".panel.panel-default", 
                     [ [ ".panel-heading", "panel-title", "@Visualisation"], 
                       [ ".panel-body",
                         [ [ ".row",
@@ -1841,10 +1841,11 @@ thisEqualsThat.oop = function()
     if (! context.hasOwnProperty("fillManagersDiv") )
     { this.display();
     }
+    var rootSVG = $(This.svgHUD.modelInstance.display.rootSVG);
 
     for (fillManagerSelector in fillManagersDict)
     { var fillManagerData = fillManagersDict[fillManagerSelector];
-      console.log(fillManagerSelector, fillManagerData);
+      console.log("fillManager", fillManagerSelector, fillManagerData);
 
       var selectorContext = null;
       if (! this.context.hasOwnProperty(fillManagerSelector) )
@@ -1852,6 +1853,23 @@ thisEqualsThat.oop = function()
 
         selectorContext.fillManagerDiv = $("<div class='fillManager hudItem' />");
         context.fillManagersDiv.append(selectorContext.fillManagerDiv);
+
+        var fillManagerDiv = selectorContext.fillManagerDiv;
+        fillManagerDiv
+          .spectrum
+          ({  "color":            tinycolor(fillManagerData.initialColorString),
+              "showAlpha":        true,
+              "preferredFormat": "rgba",
+              "show": function()
+              { fillManagerDiv.spectrum("set", fillManagerDiv.data("thisEquals.svgHUD.fillManager.localContext").currentColor);
+              },
+              "hide": function()
+              { This.svgHUD.modelInstance.svg_createSaveLink(This.svgHUD.modelInstance);
+              },
+              "move": function(spectrumOutput)
+              { fillManagerDiv.data("thisEquals.svgHUD.fillManager.localContext").rep_onColorChange(spectrumOutput);
+              },
+            });
       }
       else
       { selectorContext = context[fillManagerSelector];
@@ -1860,44 +1878,29 @@ thisEqualsThat.oop = function()
       var lastAlteredVisualisationField = this.svgHUD.modelInstance.lastAlteredVisualisationField.fullAddress;
       var localContext = null;
       if (! selectorContext.byVisualisation.hasOwnProperty(lastAlteredVisualisationField) )
-      { var localContext = selectorContext.byVisualisation[lastAlteredVisualisationField] = { "currentColor": tinycolor(fillManagerData.initialColorString) };
+      { localContext = selectorContext.byVisualisation[lastAlteredVisualisationField] = { "currentColor": tinycolor(fillManagerData.initialColorString) };
 
+        var fillManagerDiv = selectorContext.fillManagerDiv;
         localContext.rep_onColorChange =
             function(color)
             { var toReturn    = null;
 
               for (var elementSelector in fillManagerData.fillSmasher)
               { var pickedColor = tinycolor(color.toString("rgb"));
-                localContext.memoisedElements[elementSelector].attr("fill", eval(fillManagerData.fillSmasher[elementSelector]) );
+                rootSVG.find(elementSelector).attr("fill", eval(fillManagerData.fillSmasher[elementSelector]) );
               }
 
               localContext.currentColor = color;
             };
 
-        selectorContext.fillManagerDiv.spectrum({
-          "color":            localContext.currentColor,
-          "showAlpha":        true,
-          "preferredFormat": "rgba",
-          "show": function()
-          { selectorContext.fillManagerDiv.spectrum("set", localContext.currentColor);
-          },
-          "hide": function()
-          { This.svgHUD.modelInstance.svg_createSaveLink(This.svgHUD.modelInstance);
-          },
-          "move": function(spectrumOutput)
-          { localContext.rep_onColorChange(spectrumOutput);
-          },
-        });
+        selectorContext.fillManagerDiv.data("thisEquals.svgHUD.fillManager.localContext", localContext);
       }
       else
       { localContext = selectorContext.byVisualisation[lastAlteredVisualisationField];
-      }
+        console.log("localContext", localContext);
 
-      localContext.memoisedElements   = {};
-      for (var elementSelector in fillManagerData.fillSmasher)
-      { localContext.memoisedElements[elementSelector] = $(This.svgHUD.modelInstance.display.rootSVG).find(elementSelector);
+        selectorContext.fillManagerDiv.data("thisEquals.svgHUD.fillManager.localContext", localContext);
       }
-
       localContext.rep_onColorChange(localContext.currentColor);
     }
   }

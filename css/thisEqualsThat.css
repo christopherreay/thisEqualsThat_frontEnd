@@ -28,6 +28,14 @@ body
 { 
 }
 
+a, a:focus
+{ color: rgba(35, 190, 204, 1.0);
+  font-weight: bold;
+}
+a:focus:hover
+{ color: rgba(25, 130, 140, 1.0);
+}
+
 .smoothMove
 { -webkit-transition-duration: 0.5s; /* Safari */
   transition-duration: 0.5s;
@@ -90,7 +98,7 @@ body
   /*background-color: rgba(35, 190, 204, 0.3);*/
   border-left-style: solid;
   border-left-width: 4px;
-  border-left-color: rgba(35, 190, 204, 0.3);
+  border-left-color: rgba(35, 190, 204, 1.0);
 }
 
 .wrapper
