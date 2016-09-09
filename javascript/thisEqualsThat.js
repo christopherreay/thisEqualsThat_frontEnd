@@ -637,7 +637,7 @@ thisEqualsThat.oop = function()
               //   ],
               // ],
               [ ".row", 
-                [ [".col-lg-4",  ".panel.panel-default", 
+                [ [".col-lg-4.col-xs-12",  ".panel.panel-default", 
                     [ [ ".panel-heading", ".panel-title", "@Calculation"],
                       [ ".panel-body",
                         [ [ ".row",
@@ -649,7 +649,7 @@ thisEqualsThat.oop = function()
                       ],
                     ],
                   ],
-                  [".col-lg-8", ".panel.panel-default", 
+                  [".col-lg-8.col-xs-12", ".panel.panel-default", 
                     [ [ ".panel-heading", "panel-title", "@Visualisation"], 
                       [ ".panel-body",
                         [ [ ".row",
@@ -691,15 +691,15 @@ thisEqualsThat.oop = function()
                           ],
                         ],
                       ],
-                      [ ".row",
-                        [ [ ".bottomModelSelectDiv.col-lg-12", ".bottomModelSelectLable" ],
-                        ],
-                      ],
                     ],
                   ],
                 ],
               ],
-              [ ".row",
+              [ ".row.col-xs-12",
+                [ [ ".bottomModelSelectDiv.col-lg-12", ".bottomModelSelectLable" ],
+                ],
+              ],
+              [ ".row.col-xs-12",
                 ".bottomModelDiv.col-lg-12"
               ],
             ],
@@ -1879,7 +1879,6 @@ thisEqualsThat.oop = function()
       if (! selectorContext.byVisualisation.hasOwnProperty(lastAlteredVisualisationField) )
       { localContext = selectorContext.byVisualisation[lastAlteredVisualisationField] = { "currentColor": tinycolor(fillManagerData.initialColorString) };
 
-        var fillManagerDiv = selectorContext.fillManagerDiv;
         localContext.rep_onColorChange =
             function(color)
             { var toReturn    = null;
@@ -1891,14 +1890,10 @@ thisEqualsThat.oop = function()
 
               localContext.currentColor = color;
             };
-
-        selectorContext.fillManagerDiv.data("thisEquals.svgHUD.fillManager.localContext", localContext);
       }
       else
       { localContext = selectorContext.byVisualisation[lastAlteredVisualisationField];
         console.log("localContext", localContext);
-
-        selectorContext.fillManagerDiv.data("thisEquals.svgHUD.fillManager.localContext", localContext);
       }
 
       localContext.memoisedElements = {};
@@ -1906,6 +1901,7 @@ thisEqualsThat.oop = function()
       { localContext.memoisedElements[elementSelector] = $(This.svgHUD.modelInstance.display.rootSVG).find(elementSelector);
       }
 
+      selectorContext.fillManagerDiv.data("thisEquals.svgHUD.fillManager.localContext", localContext);
       localContext.rep_onColorChange(localContext.currentColor);
     }
   }

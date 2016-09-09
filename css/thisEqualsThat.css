@@ -36,6 +36,10 @@ a:focus:hover
 { color: rgba(25, 130, 140, 1.0);
 }
 
+svg.rootSVG
+{ max-height: 400px;
+}
+
 .smoothMove
 { -webkit-transition-duration: 0.5s; /* Safari */
   transition-duration: 0.5s;
