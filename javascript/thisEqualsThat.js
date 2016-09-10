@@ -1771,6 +1771,12 @@ thisEqualsThat.oop = function()
     { this.display();
     }
 
+    if (tagHook == "init")
+    { for ( hudComponent in this.plugins )
+      { this.plugins[hudComponent].hide();
+      }
+    }
+
     var defaultDict =
         { "svg3dCloneTimer.preClone.postColor":
           {
@@ -1785,6 +1791,7 @@ thisEqualsThat.oop = function()
       { this.contextData[hudComponent] = {};
         this.plugins[hudComponent] = new this[hudComponent](this, this.contextData[hudComponent], tagHook);
       }
+
       if ($.inArray(tagHook, hudTagHooks) >-1 )
       { this.plugins[hudComponent][tagHook](defaultDict[hudDescriptor], this.contextData[hudComponent]);
       }
@@ -1800,6 +1807,11 @@ thisEqualsThat.oop = function()
       if (! this.contextData.hasOwnProperty(hudComponent) )
       { this.contextData[hudComponent] = {};
         this.plugins[hudComponent] = new this[hudComponent](this, this.contextData[hudComponent], tagHook);
+      }
+      else
+      { if (tagHook == "init")
+        { this.plugins[hudComponent].hide();
+        }
       }
       if ($.inArray(tagHook, hudTagHooks) >-1 )
       { this.plugins[hudComponent][tagHook](svg3dDisplayJSON.svgHUD[hudDescriptor], this.contextData[hudComponent]);
@@ -1828,6 +1840,9 @@ thisEqualsThat.oop = function()
     //   { setTimeout(This.context.countDown, 50);
     //   }
     // }
+  }
+  this.SVGHUD.prototype.svg3dCloneTimer.prototype.hide = function()
+  { //do nothing... yet :)
   }
   this.SVGHUD.prototype.svg3dCloneTimer.prototype.preClone = function(svgHUD, context)
   { var representationName    = this.svgHUD.modelInstance.svg3dDisplayJSON.representationName;
@@ -1873,12 +1888,18 @@ thisEqualsThat.oop = function()
   { this.context.fillManagersDiv = $("<div class='fillManagers hudCollection' />");
     this.svgHUD.divForHUD.append(this.context.fillManagersDiv);
   }
+  this.SVGHUD.prototype.fillManager.prototype.hide      = function()
+  { if ( this.context.hasOwnProperty("fillManagersDiv") )
+    { this.context.fillManagersDiv.hide();
+    }
+  }
   this.SVGHUD.prototype.fillManager.prototype.postClone = function(fillManagersDict, context)
   { // html and behaviour a widget for a  fillManager widhet. Use the code defined in the fillManagerData to run when the fillManager exits.
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
     if (! context.hasOwnProperty("fillManagersDiv") )
     { this.display();
     }
+    this.context.fillManagersDiv.show();
 
     for (fillManagerSelector in fillManagersDict)
     { var fillManagerData = fillManagersDict[fillManagerSelector];
@@ -1949,6 +1970,9 @@ thisEqualsThat.oop = function()
   { this.svgHUD     = svgHUD;
     this.context    = context;
     this.context.byVisualisation = {};
+  }
+  this.SVGHUD.prototype.RandomiseClones.prototype.hide      = function()
+  { this.context.collectionDiv.hide();
   }
   this.SVGHUD.prototype.RandomiseClones.prototype.postColor = function(randomiseClonesDict, context)
   { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
@@ -2116,6 +2140,8 @@ thisEqualsThat.oop = function()
         });
       }
     }
+
+    this.context.collectionDiv.show();
 
     var processingOrder = ["randomisePosition", "randomiseColors", "randomiseColorsByGroup"];
 
