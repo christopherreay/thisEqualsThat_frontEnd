@@ -160,7 +160,7 @@ function($)
   { if (!navbarUniqueClass) navbarUniqueClass = "navbar-autoID-"+this.navbar_collapse_id_counter++;
     var toReturn =
         O.create( [".bs-component."+navbarUniqueClass, ".container-fluid", ".row", 
-                    [ [ ".col-xs-12.col-sm-12.col-md-3.col-lg-2" ,  "bs-component", ".navbar.navbar-default.navbar-fixed-side", ".navbar-fixed-side-container", 
+                    [ [ ".navBarColumn.col-xs-12.col-sm-12.col-md-3.col-lg-2" ,  "bs-component", ".navbar.navbar-default.navbar-fixed-side", ".navbar-fixed-side-container", 
                         [ [ ".navbarHeader.navbar-header", 
                             [ [ $("<button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='."+navbarUniqueClass+"-collapse' aria-expanded='false'>"),
                                 [ [ "span.icon-bar" ],
@@ -179,7 +179,7 @@ function($)
                           ],
                         ],
                       ],
-                      [ ".col-xs-12.col-sm-12.col-md-9.col-lg-10",  mainContent ]
+                      [ ".mainContentColumn.col-xs-12.col-sm-12.col-md-9.col-lg-10",  mainContent ]
                     ]
                   ],
                   passThrough,

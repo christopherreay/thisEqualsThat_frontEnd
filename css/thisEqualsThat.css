@@ -32,12 +32,8 @@ a, a:focus
 { color: rgba(35, 190, 204, 1.0);
   font-weight: bold;
 }
-a:focus:hover
+a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calculationPanel .panel-title:hover .modelOutputValue, .visualisationPanel .panel-title:hover div
 { color: rgba(25, 130, 140, 1.0);
-}
-
-svg.rootSVG
-{ max-height: 400px;
 }
 
 .smoothMove
@@ -52,15 +48,30 @@ svg.rootSVG
 .displayBlock
 { display: block;
 }
+.displayInlineBlock
+{ display: inline-block;
+}
 .displayFlex, .displayFlex *
 { display: flex;
 }
+
+.floatLeft
+{ float: left;
+}
+
 .spaceBetween
 { justify-content: space-between;
 }
 
 .marginAuto
 { margin: auto;
+}
+.marginZero
+{ margin: 0;
+}
+.paddingZero_v
+{ padding-top: 0;
+  padding-bottom: 0;
 }
 
 .opacityZero
@@ -90,6 +101,14 @@ svg.rootSVG
   width:  100%;
 }
 
+.smallCaps
+{ font-variant: small-caps;
+}
+
+.color_visualTools
+{ color: rgba(35, 190, 204, 1.0);
+  font-weight: bold;
+}
 .bg_visualTools
 { background-color: #23becc;
 }
@@ -217,6 +236,13 @@ a .panelCollapsibleCaret::after
 .panelCollapsibleArrow.arrowOpen
 { background-image: url(/static/graphics/visualTools/panel.upArrow.png);
 }
+.panelCollapsibleArrow.arrowClosed:hover
+{ background-image: url(/static/graphics/visualTools/panel.downArrow.hover.png);
+}
+.panelCollapsibleArrow.arrowOpen:hover
+{ background-image: url(/static/graphics/visualTools/panel.upArrow.hover.png);
+}
+
 a.collapsed .panelCollapsibleArrow.arrowOpen
 { display: none;
 }
@@ -264,9 +290,34 @@ a .panelCollapsibleArrow.arrowOpen
 { margin-right: 8px;
 }
 
+.mainContentColumn
+{ padding-right: 0px;
+}
+
+.calculationColumn
+{ margin-bottom: 30px;
+}
+.calculationPanel .panel-title i
+{ font-size: 20px;
+}
+.calculationPanel .panel-title .chooseOutputField, .visualisationPanel .panel-title .chooseVisualisationField
+{ margin-left: 8px;
+}
+
+
+/*.inputFieldsPanel
+{ margin-top: -20px;
+}*/
+.modelSliders
+{ margin-bottom: 15px;
+}
+
 .selectedField
 { font-variant: small-caps;
 }
+
+
+
 .outputFieldSelectPanel, .visualisationFieldSelectPanel
 { position: relative;
 
@@ -280,17 +331,48 @@ a .panelCollapsibleArrow.arrowOpen
 
   background-color: #fafafa;
 }
+.outputFieldSelectPanel
+{ margin-bottom: -25px;
+}
 .outputFieldSelectPanel .panel-collapse, .visualisationFieldSelectPanel .panel-collapse
 { background-color: #fdfdfd;
 }
 
+.visualisationColumn
+{ padding-right: 0px;
+}
+.visualisationPanel .panel-title img
+{ margin-top: 2px;
+  height: 18px;
+}
+
+svg.rootSVG
+{ max-height: 400px;
+}
 .svgDiv
 { position: relative;
+
+  width: 100%;
+  margin-top: 5px;
+  padding-left: 10px;
+  
+  border: none;
 }
+
+
 .svgSaveLink
 { position: absolute;
-  top: 0;
-  right: 0; 
+  top: 0px;
+  right: 4px; 
+  border-radius: 50%;
+
+  width: 31px;
+  height: 32px;
+  padding: 4px 4px;
+}
+.svgSaveLink > a > i
+{ color: white;
+  font-size: 24px;
 }
 .toggleFeatures
 { position: absolute;
@@ -305,9 +387,15 @@ a.editableTextPlaceholder
 .editable-container.editable-inline
 { position: absolute;
 
-  bottom: 0;
-  left: 0;
+  bottom: 5px;
+  left: 15px;
 }
+
+.visualisationOutputPanel
+{ margin-bottom: -35px;
+}
+
+
 .copyrightContainer
 { position: fixed;
   bottom: 0px;
@@ -356,8 +444,19 @@ div.model {
 }
 
 
+.inputFieldElement.groupHeader
+{ padding-bottom: 5px;
+  padding-top: 5px;
 
+  /*border-bottom: 1px solid black;*/
+}
 
+.inputFieldElement.inputField
+{ margin-left: 15px;
+  width: calc(100% - 30px);
+
+  padding-bottom: 5px;
+}
 
 div.inputFieldElement> select {
     float: right;
@@ -382,7 +481,11 @@ div.inputFieldElement:hover h3 {
     opacity: 1;
 }
 
-@media screen and (max-width: 959px) {
+.inputFieldElement:hover .inputFieldSlider
+{ box-shadow: 0px 0px 4px darkgrey;
+}
+
+/*@media screen and (max-width: 959px) {
   div.inputFieldElement:hover div.inputFieldLabel 
   { position: absolute;
     top:      -60px;
@@ -404,7 +507,7 @@ div.inputFieldLabel {
     box-shadow: 0px 3px 7px rgba(0, 0, 0, .6);
     -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
     transition: all .3s cubic-bezier(.4,0,.2,1);
-}
+}*/
 div.inputFieldSlider {
     height: 1px;
     border: 0;
@@ -414,10 +517,10 @@ div.inputFieldSlider {
     clear: both;
 }
 div.inputFieldSlider> .ui-state-default {
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
-    top: -10px;
+    top: -7px;
     background: #23becc;
     border: 0;
     outline: none;
@@ -516,7 +619,7 @@ input.inputFieldText[type=text] {
 .hudItem
 { display: inline-block;
   min-width: 32px;
-  margin-left: 10px;
+  margin-right: 10px;
 }
 .hudCollection
 { height: 32px;
@@ -632,15 +735,25 @@ path.highlight, .highlight path
 /* Animations */
 
 @keyframes spinner {
-    from {
+    25% {
+      -moz-transform: rotateY(20deg);
+      -ms-transform: rotateY(20deg);
+      transform: rotateY(20deg);
+    }
+    50% {
       -moz-transform: rotateY(0deg);
       -ms-transform: rotateY(0deg);
       transform: rotateY(0deg);
     }
-    to {
-      -moz-transform: rotateY(-360deg);
-      -ms-transform: rotateY(-360deg);
-      transform: rotateY(-360deg);
+    75% {
+      -moz-transform: rotateY(-20deg);
+      -ms-transform: rotateY(-20deg);
+      transform: rotateY(-20deg);
+    }
+    100% {
+      -moz-transform: rotateY(0deg);
+      -ms-transform: rotateY(0deg);
+      transform: rotateY(0deg);
     }
   }
 
@@ -656,12 +769,12 @@ body {
     -webkit-animation-name: spinner;
     -webkit-animation-timing-function: linear;
     -webkit-animation-iteration-count: infinite;
-    -webkit-animation-duration: 6s;
+    -webkit-animation-duration: 1.2s;
 
     animation-name: spinner;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
-    animation-duration: 6s;
+    animation-duration: 1.2s;
 
     -webkit-transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;

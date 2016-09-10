@@ -86,7 +86,7 @@ thisEqualsThat.oop = function()
   { display.navbar = {};
 
     O.create( [ "#pageWrapper",
-                [ [ O.navbarFixedLeft(display.navbar, null, "mainNav", ".navLogo.centerBackgroundImage.visualToolsEye.inputFieldAlteredSpinner.panel", ".thisEqualsThatScene") ],
+                [ [ O.navbarFixedLeft(display.navbar, null, "mainNav", ".navLogo.centerBackgroundImage.visualToolsEye.panel", ".thisEqualsThatScene") ],
                   //[ ".thisEqualsThatScene.panel.panel-default" ],
                   [ $("<div class='copyrightContainer' />").text("© This Equals ltd 2016") ],
                 ],
@@ -469,6 +469,7 @@ thisEqualsThat.oop = function()
     { this.ifa_currentlyProcessing = arguments;
       this.ifa_queueState = "Sending Request";
       $(".inputFieldAlteredSpinner").toggleClass("spinner", true);
+      $(".calculationSpinner").toggleClass("spinner", true);
 
       var This = this;
       fieldChangeData	= $.extend({modelInstanceID: this.id}, fieldChangeData);
@@ -528,8 +529,13 @@ thisEqualsThat.oop = function()
               }
               else
               { $(".inputFieldAlteredSpinner").toggleClass("spinner", false);
+                $(".calculationSpinner").toggleClass("spinner", false);
                 This.svg_createSaveLink(This)
               }
+            }
+            else
+            { $(".calculationSpinner").toggleClass("spinner", false);
+              $(".visualisationSpinner").toggleClass("spinner", true);
             }
           },
         };
@@ -637,25 +643,34 @@ thisEqualsThat.oop = function()
               //   ],
               // ],
               [ ".row", 
-                [ [".col-lg-4.col-xs-12",  ".panel.panel-default", 
-                    [ [ ".panel-heading", ".panel-title", "@Calculation"],
-                      [ ".panel-body",
+                [ [".calculationColumn.col-lg-4.col-xs-12", ".calculationPanel.panel.panel-default", 
+                    [ [ ".panel-heading", ".panel-title.displayFlex.spaceBetween", 
+                        [ [ "div.calculationSpinner", 
+                            [ [ $("<i class='fa fa-calculator' aria-hidden='true'></i>") ],
+                              [ ".chooseOutputField.smallCaps.color_visualTools" ],
+                            ],
+                          ],
+                          [ ".modelOutputValue.color_visualTools" ],
+                        ],
+                      ],
+                      [ ".panel-body.paddingZero_v",
                         [ [ ".row",
-                            [ [ ".row.width100", this.getOutputFields().outputFieldSelect.outputFieldSelectPanel ],
-                              [ ".modelSliders.row.width100.displayBlock", this.getInputFields().inputFieldsSliders ],
+                            [ [ ".modelSliders.row.width100.displayBlock", this.getInputFields().inputFieldsSliders ],
+                              [ ".row.width100", this.getOutputFields().outputFieldSelect.outputFieldSelectPanel ],
                             ],
                           ],
                         ],
                       ],
                     ],
                   ],
-                  [".col-lg-8.col-xs-12", ".panel.panel-default", 
-                    [ [ ".panel-heading", "panel-title", "@Visualisation"], 
-                      [ ".panel-body",
-                        [ [ ".row",
-                            [ [ ".row.width100", this.getVisualisationFields().visualisationFieldSelect.visualisationFieldSelectPanel ],
+                  [".visualisationColumn.col-lg-8.col-xs-12", ".visualisationPanel.panel.panel-default", 
+                    [ [ ".panel-heading", ".panel-title.displayFlex.spaceBetween", 
+                        [ [ "div.visualisationSpinner", 
+                            [ [ $("<img class='' src='/static/graphics/visualTools/visualise.height_18px.png'>") ],
+                              [ ".chooseVisualisationField.smallCaps.color_visualTools" ],
                             ],
                           ],
+                          [ ".modelVisualisationValue.color_visualTools" ],
                         ],
                       ],
                       [ ".row",
@@ -683,10 +698,17 @@ thisEqualsThat.oop = function()
                               ],
                               [ ".toggleFeatures" ,
                               ],
-                              [ ".svgSaveLink" ,
+                              [ ".svgSaveLink.bg_visualTools" ,
                               ],
                               [ "a.editableTextPlaceholder", "@Click to Enter Text",
                               ],
+                            ],
+                          ],
+                        ],
+                      ],
+                      [ ".visualisationOutputPanel.panel-body",
+                        [ [ ".row",
+                            [ [ ".row.width100", this.getVisualisationFields().visualisationFieldSelect.visualisationFieldSelectPanel ],
                             ],
                           ],
                         ],
@@ -707,6 +729,14 @@ thisEqualsThat.oop = function()
           display,
           targetContainer
         );
+
+      display.calculationPanel.on
+      ( "click", 
+        ".panel-title",
+        function()
+        { $(".outputFieldSelectPanel a").first().click();
+        }
+      );
 
       display.modelSliders.on
       (   "focusin", "input.inputFieldText",
@@ -739,6 +769,13 @@ thisEqualsThat.oop = function()
           }
         );
 
+      display.visualisationPanel.on
+      ( "click",
+        ".panel-title",
+        function()
+        { $(".visualisationFieldSelectPanel a").first().click();
+        }
+      );
 
       display.svgTranslatableG.data("thisEqualsThat", {"modelInstance": this});
       display.rootSVG.on
@@ -1126,6 +1163,7 @@ thisEqualsThat.oop = function()
                     { This.ifa_queueState = "ready";
                       $(".inputFieldAlteredSpinner").toggleClass("spinner", false);
                     }
+                    $(".visualisationSpinner").toggleClass("spinner", false);
 
                     This.svg_createSaveLink(This);
                   },
@@ -1192,9 +1230,9 @@ thisEqualsThat.oop = function()
                         ' data:image/svg+xml,\n
                           ${svgString}
                         '
-                    title     = 'svgRep.svg'
-                    download  = '${This.display.modelOutputValue.text()}.svg'
-                >Save SVG</a>`
+                    title     = 'Save SVG Image'
+                    download  = '${This.display.svgTextDescription.text()}_${This.display.modelOutputValue.text()}.svg'
+                ><i class="fa fa-download" aria-hidden="true"></i></a>`
           )
       );
     }
@@ -1240,12 +1278,12 @@ thisEqualsThat.oop = function()
     var gTET = thisEqualsThat;
     //$("#document").append("<script type='text/javascript' src='/svg/rg1024_metal_barrel' />);
 
-    this.display.modelOutputDisplayName.html(outputField.data.displayName);
-    this.display.modelOutputValue.html
+    $(".chooseOutputField").html(outputField.data.displayName);
+    $(".modelOutputValue").html
     ( prettyPrint(outputField, outputField.data.currentValue)
     );
-    this.display.modelVisualisationDisplayName.html(visualisationField.data.displayName);
-    this.display.modelVisualisationValue.html
+    $(".chooseVisualisationField").html(visualisationField.data.displayName);
+    $(".modelVisualisationValue").html
     ( prettyPrint(visualisationField, visualisationField.data.currentValue)
     );
 
@@ -2289,8 +2327,8 @@ thisEqualsThat.oop = function()
     sliderOptions["range"]        = "min"
 
     O.create
-    ( [ ".inputFieldElement",
-        [ [ ".inputFieldLabel", ],
+    ( [ ".inputFieldElement.inputField.displayInlineBlock.width100",
+        [ [ ".inputFieldLabel.floatLeft.smallCaps", "@"+this.data.displayName ],
           [ ".slideAndValue",
             [ [ $("<input type='text' class='uiValue_slider inputFieldText' />"), ],
               [ ".uiSlider.inputFieldSlider", ],
@@ -2423,7 +2461,7 @@ thisEqualsThat.oop = function()
             [ [ ".buttonText", "@" + this.data.displayName ],
               [ "span.modelClassIndicator", 
                 [ [ ".square20" , "img.createConstructImage.centerBackgroundImage"  ], 
-                  [ "span"      , "@"+this.modelInstance.modelClass.name            ],
+                  [ "span"      , "@"+this.data.modelClass            ],
                 ],
               ],
               // [ "span.modelFieldInputIndicator",
