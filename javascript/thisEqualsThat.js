@@ -468,8 +468,8 @@ thisEqualsThat.oop = function()
     if (this.ifa_queueState == "ready")
     { this.ifa_currentlyProcessing = arguments;
       this.ifa_queueState = "Sending Request";
-      $(".inputFieldAlteredSpinner").toggleClass("spinner", true);
-      $(".calculationSpinner").toggleClass("spinner", true);
+      this.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", true);
+      this.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", true);
 
       var This = this;
       fieldChangeData	= $.extend({modelInstanceID: this.id}, fieldChangeData);
@@ -528,14 +528,14 @@ thisEqualsThat.oop = function()
                 );
               }
               else
-              { $(".inputFieldAlteredSpinner").toggleClass("spinner", false);
-                $(".calculationSpinner").toggleClass("spinner", false);
+              { This.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", false);
+                This.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", false);
                 This.svg_createSaveLink(This)
               }
             }
             else
-            { $(".calculationSpinner").toggleClass("spinner", false);
-              $(".visualisationSpinner").toggleClass("spinner", true);
+            { This.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", false);
+              This.display.topModelDiv.find(".visualisationSpinner").toggleClass("spinner", true);
             }
           },
         };
@@ -1164,9 +1164,9 @@ thisEqualsThat.oop = function()
                     }
                     else
                     { This.ifa_queueState = "ready";
-                      $(".inputFieldAlteredSpinner").toggleClass("spinner", false);
+                      This.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", false);
                     }
-                    $(".visualisationSpinner").toggleClass("spinner", false);
+                    This.display.topModelDiv.find(".visualisationSpinner").toggleClass("spinner", false);
 
                     This.svg_createSaveLink(This);
                   },
