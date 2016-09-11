@@ -29,20 +29,20 @@ traverse = function(object, address, defaultList=[{}])
   return current;
 }
 prettyPrint = function(field, value)
-  { var currentValue;
-    if (field.data.hasOwnProperty("fieldPrecisionFunction") )
-    { currentValue = value;
-      eval(field.data.fieldPrecisionFunction);
-    }
-    else
-    { toReturn = thisEqualsThat.standardPrecision(value);
-    }
+{ var currentValue;
+  if (field.data.hasOwnProperty("fieldPrecisionFunction") )
+  { currentValue = value;
+    eval(field.data.fieldPrecisionFunction);
+  }
+  else
+  { toReturn = thisEqualsThat.standardPrecision(value);
+  }
 
-    return unitsAroundOutput(field, toReturn);
-  }
-  unitsAroundOutput = function(field, output)
-  { return field.data.unitPrefix+" "+output+" "+field.data.unitSuffix;
-  }
+  return unitsAroundOutput(field, toReturn);
+}
+unitsAroundOutput = function(field, output)
+{ return field.data.unitPrefix+" "+output+" "+field.data.unitSuffix;
+}
 
 thisEqualsThat.standardPrecision = function(number)
 { return Number(number).toPrecision(5);
@@ -624,6 +624,9 @@ thisEqualsThat.oop = function()
               { topModelInstance.bottomModelInstance.setChoosableFields(data);
               }
           );
+
+    topModelInstance.display.topModelDiv.toggleClass("bottomModelReshuffle", true);
+
     console.log(topModelInstance.bottomModelInstance);
   }
   this.ModelInstance.prototype.displayIntoTarget = function(targetContainer)
@@ -734,7 +737,7 @@ thisEqualsThat.oop = function()
       ( "click", 
         ".panel-title",
         function()
-        { $(".outputFieldSelectPanel a").first().click();
+        { display.outputFieldSelectPanel.find("a").first().click();
         }
       );
 
@@ -773,7 +776,7 @@ thisEqualsThat.oop = function()
       ( "click",
         ".panel-title",
         function()
-        { $(".visualisationFieldSelectPanel a").first().click();
+        { display.visualisationFieldSelectPanel.find("a").first().click();
         }
       );
 
@@ -1808,11 +1811,6 @@ thisEqualsThat.oop = function()
       { this.contextData[hudComponent] = {};
         this.plugins[hudComponent] = new this[hudComponent](this, this.contextData[hudComponent], tagHook);
       }
-      else
-      { if (tagHook == "init")
-        { this.plugins[hudComponent].hide();
-        }
-      }
       if ($.inArray(tagHook, hudTagHooks) >-1 )
       { this.plugins[hudComponent][tagHook](svg3dDisplayJSON.svgHUD[hudDescriptor], this.contextData[hudComponent]);
       }
@@ -1896,6 +1894,8 @@ thisEqualsThat.oop = function()
   this.SVGHUD.prototype.fillManager.prototype.postClone = function(fillManagersDict, context)
   { // html and behaviour a widget for a  fillManager widhet. Use the code defined in the fillManagerData to run when the fillManager exits.
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
+    var This = this;
+
     if (! context.hasOwnProperty("fillManagersDiv") )
     { this.display();
     }

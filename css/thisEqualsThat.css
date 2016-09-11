@@ -294,8 +294,9 @@ a .panelCollapsibleArrow.arrowOpen
 { padding-right: 0px;
 }
 
-.calculationColumn
-{ margin-bottom: 30px;
+.bottomModelDiv
+{ padding-left: 0px;
+  padding-right: 0px;
 }
 .calculationPanel .panel-title i
 { font-size: 20px;
@@ -341,6 +342,7 @@ a .panelCollapsibleArrow.arrowOpen
 .visualisationColumn
 { padding-right: 0px;
 }
+
 .visualisationPanel .panel-title img
 { margin-top: 2px;
   height: 18px;
@@ -395,6 +397,17 @@ a.editableTextPlaceholder
 { margin-bottom: -35px;
 }
 
+
+.bottomModelReshuffle .rootSVG
+{ max-height: 200px;
+}
+.bottomModelReshuffle .calculationPanel > .panel-body
+{ max-height: 310px;
+  overflow-y: scroll;
+}
+.bottomModelDiv .visualisationColumn
+{ margin-top: -30px;
+}
 
 .copyrightContainer
 { position: fixed;
