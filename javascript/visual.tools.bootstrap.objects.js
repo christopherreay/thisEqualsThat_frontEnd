@@ -250,11 +250,11 @@ function($)
 
   this.listGroupItem =
   function(passThrough, appendTo, listGroupItem_element, itemPrependList, sizeList, actionPrimary, actionSecondary, heading, text, cursorStyle="pointer")
-  { O.create
+  { var toReturn = O.create
     ( [ listGroupItem_element+itemPrependList+".col-lg-"+sizeList[0]+".col-md-"+sizeList[1]+".col-sm-"+sizeList[2]+".col-xs-"+sizeList[3]+".list-group-item", 
         [ [ ".row-action-primary", actionPrimary ], 
           [ ".row-content", 
-            [ [ "action-secondary"          , actionSecondary ],
+            [ [ ".action-secondary"          , actionSecondary ],
               [ ".list-group-item-heading"  , heading         ],
               [ ".list-group-item-text"     , text            ]
             ], 
@@ -264,6 +264,8 @@ function($)
       passThrough,
       appendTo
     );
+
+    return toReturn;
   }
 
   this.listGroups =

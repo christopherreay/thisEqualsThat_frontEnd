@@ -84,6 +84,11 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
 .width100
 { width: 100%;
 }
+.fullWidthPlusMargins
+{ width: calc(100% + 30px);
+  margin-left: -15px;
+  margin-right: -15px;
+}
 
 .height64
 { height: 64px;
@@ -147,6 +152,9 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
 }
 
 
+.navbar
+{ padding: 0px;
+}
 .navbar-fixed-side-container
 { width: 100%;
 }
@@ -168,6 +176,13 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
 }
 .visualToolsLogo
 { background-image:     url(/static/graphics/visualTools/visual.tools.logo.png);
+
+  min-height: 16px;
+  min-width: 16px;
+  max-width:            600px;
+}
+.visualToolsLogoWords
+{ background-image:     url(/static/graphics/visualTools/visual.tools.logo.words.png);
 
   min-height: 16px;
   min-width: 16px;
@@ -271,8 +286,8 @@ a .panelCollapsibleArrow.arrowOpen
 { align-items: flex-start;
 }
 .mainNav .navLogo
-{ min-width: 64px;
-  height:42px;
+{ min-width: 128px;
+  height:38px;
 }
 .mainNav .profilePic
 { margin-top: 10% !important;
@@ -283,13 +298,38 @@ a .panelCollapsibleArrow.arrowOpen
 .list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover
 { background-color: rgba(35, 190, 204, 0.1);
 }
-.constructBlueprint .list-group-item :first-child
+.list-group-item :first-child
 { margin-right: inherit;
 }
-.constructBlueprint .blueprintItem .row-action-primary
+.blueprintItem .row-action-primary
 { margin-right: 8px;
 }
-
+.blueprintItem
+{ position: relative;
+  overflow: hidden;
+}
+.blueprintItem .videoOverlay
+{   position: absolute;
+    height: 40px;
+    width: 40px;
+    right: -37px;
+    top: 0px;
+    background-image: url(/static/graphics/visualTools/educational-video.svg);
+    background-color: white;
+    background-repeat: no-repeat;
+    border-radius: 0px 0px 0px 100%;
+    box-shadow: 0px 0px 4px black;
+}
+.blueprintItem:hover .videoOverlay
+{   right: 0px;
+    background-color: #ff0909;
+}
+.blueprintItem .videoOverlay:hover
+{   box-shadow: 0px 0px 8px black;
+}
+.blueprintItem:hover .blueprintIcon
+{   box-shadow: 0px 0px 4px grey;
+}
 .mainContentColumn
 { padding-right: 0px;
 }
@@ -333,6 +373,10 @@ a .panelCollapsibleArrow.arrowOpen
 }
 .outputFieldSelectPanel .panel-collapse, .visualisationFieldSelectPanel .panel-collapse
 { background-color: #fdfdfd;
+}
+
+.bottomModelSelectDiv
+{ margin-top: 40px;
 }
 
 .visualisationColumn
@@ -406,19 +450,17 @@ a.editableTextPlaceholder
 }
 
 .bottomModelReshuffle .rootSVG
-{ max-height: 200px;
+{ height: 200px;
 }
-.bottomModelReshuffle .calculationPanel > .panel-body
-{ max-height: 310px;
-  overflow-y: scroll;
+.bottomModelReshuffle .modelSliders
+{ max-height: 200px;
+  overflow-y: auto;
 }
 .bottomModelDiv
 { padding-left: 0px;
   padding-right: 0px;
 }
-.bottomModelDiv .visualisationColumn
-{ margin-top: -30px;
-}
+
 .bottomModelDiv .bottomModelSelectDiv
 { display: none;
 }
@@ -511,6 +553,12 @@ div.inputFieldElement:hover h3 {
 { box-shadow: 0px 0px 4px darkgrey;
 }
 
+.inputFieldElement.type_select .slideAndValue
+{ width: 60%;
+}
+.inputFieldElement.type_select .slideAndValue .inputFieldSelect
+{ width: 100%;
+}
 /*@media screen and (max-width: 959px) {
   div.inputFieldElement:hover div.inputFieldLabel 
   { position: absolute;

@@ -86,7 +86,7 @@ thisEqualsThat.oop = function()
   { display.navbar = {};
 
     O.create( [ "#pageWrapper",
-                [ [ O.navbarFixedLeft(display.navbar, null, "mainNav", ".navLogo.centerBackgroundImage.visualToolsEye.panel", ".thisEqualsThatScene") ],
+                [ [ O.navbarFixedLeft(display.navbar, null, "mainNav", ".navLogo.centerBackgroundImage.visualToolsLogoWords", ".thisEqualsThatScene") ],
                   //[ ".thisEqualsThatScene.panel.panel-default" ],
                   [ $("<div class='copyrightContainer' />").text("© This Equals ltd 2016") ],
                 ],
@@ -107,10 +107,27 @@ thisEqualsThat.oop = function()
   this.mainNavigation = function(navbar)
   { O.create( [ ".bs-component",
                 [ 
-                  [ ".square92.marginAuto", ".profilePic.panel.row.centerBackgroundImage"],
+                  [ O.openModal_aTag
+                    ( navbar, null, "profileModal",                
+                        ".createConstruct.panel.row", 
+                        O.listGroupItem ( navbar,
+                                          null, 
+                                          "button", ".blueprintItem", [12, 12, 6, 6], $("<img class='blueprintIcon' src='/static/graphics/user/profilePic.jpg' />"), "", "@Profile", ""
+                                        )[0]
+                    )
+                  ],
                   // [ ".square92.marginAuto", ".editProfile.panel.row"       ],
-                  [ ".square92.marginAuto", O.openModal_aTag(navbar, null, "constructBlueprint",                ".createConstruct.panel.row", ".createConstructImage.square92") ],
-                  [ ".square92.marginAuto", O.openModal_aTag(navbar, null, "constructBlueprint_inDevelopment",  ".createConstruct.panel.row", ".createConstructImage_inDevelopment") ],
+                  [ O.openModal_aTag
+                    ( navbar, null, "constructBlueprint",                
+                        ".createConstruct.panel.row", 
+                        O.listGroupItem ( navbar,
+                                          null, 
+                                          "button", ".blueprintItem", [12, 12, 6, 6], $("<img class='blueprintIcon' src='/static/graphics/thisEquals/icons/blueprint.svg' />"), "", "@Construct", ""
+                                        )[0]
+                    )
+                  ],
+                                        // ".createConstructImage.square92") ],this.
+                  //[ ".square92.marginAuto", O.openModal_aTag(navbar, null, "constructBlueprint_inDevelopment",  ".createConstruct.panel.row", ".createConstructImage_inDevelopment") ],
                 ],
               ],
               navbar,
@@ -127,11 +144,16 @@ thisEqualsThat.oop = function()
               ""
             );
 
-    var modelClassOrder = ["HowMany", "VolMassDen", "LightBulb", "CO2", "Wood", "PeopleRatioPlay", "Earth", "Money", "Air Quality", "Seesaw"];
+    var modelClassOrder = [ "HowMany", "VolMassDen", "LightBulb", "CO2", "Wood", "PeopleRatioPlay", "Earth", "Money", "Air Quality", "Seesaw"];
+    var modelClassData  = { "HowMany": { "tutorialVideo": "/static/media/visualTools/tutorials/HowMany.ogv" } }
 
     $.each( modelClassOrder,
       function (index, key)
-      { ThisEqualsThat.modelClasses[key].getBlueprintItem(modals.constructBlueprint, modals.constructBlueprintContainer);
+      { var blueprintItem = ThisEqualsThat.modelClasses[key].getBlueprintItem(modals.constructBlueprint, modals.constructBlueprintContainer);
+        if ( modelClassData.hasOwnProperty(key) )
+        { O.create( [ ".videoOverlay.smoothMove" ], {}, blueprintItem[0] );
+          ThisEqualsThat.modelClasses[key].tutorialVideo = modelClassData[key].tutorialVideo;
+        }
       }
     );
 
@@ -142,6 +164,15 @@ thisEqualsThat.oop = function()
           modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
           ThisEqualsThat.scene.setCurrentModelClass(modelClass);
           $(this).closest(".modal").modal("hide");
+        }
+      );
+    modals.constructBlueprint
+    .on("click", ".videoOverlay",
+        function(event)
+        { var modelClass = $(event.currentTarget).closest(".blueprintItem").data("thisEquals_blueprint");
+          alert(modelClass.tutorialVideo);
+
+          event.stopPropagation();
         }
       );
   }
@@ -204,8 +235,12 @@ thisEqualsThat.oop = function()
       function(passThrough, appendTo)
       { if (! this.hasOwnProperty("blueprintItem") )
         { this.blueprintItem = 
-              O.listGroupItem( passThrough, appendTo, "button", ".blueprintItem.ripplelink", [4, 6, 6, 12], $("<img class='blueprintIcon' src='"+this.imageURL+"' />"), "", "@"+this.name, "@Description Text");
+              O.listGroupItem
+              ( passThrough, 
+                appendTo, 
+                "button", ".blueprintItem.ripplelink", [4, 6, 6, 12], $("<img class='blueprintIcon smoothMove' src='"+this.imageURL+"' />"), "", "@"+this.name, "@Description Text");
           passThrough.blueprintItem.data("thisEquals_blueprint", this);
+          //O.create( [ ".videoOverlay.smoothMove" ], passThrough, passThrough.blueprintItem );
         }
         return this.blueprintItem;
       }
@@ -559,7 +594,7 @@ thisEqualsThat.oop = function()
     }
     var bottomModelLinkFieldList = choosableFields[currentOutputFieldName];
     if (! bottomModelLinkFieldList.hasOwnProperty("select"))
-    { bottomModelLinkFieldList.select = $("<select />");
+    { bottomModelLinkFieldList.select = $("<select class='fullWidthPlusMargins' />" );
       var placeHolder = $("<option />",
                           {"value": "0",
                            "text" : "That Model"
@@ -664,6 +699,10 @@ thisEqualsThat.oop = function()
                           ],
                         ],
                       ],
+                      [ ".row.col-xs-12",
+                        [ [ ".bottomModelSelectDiv.col-lg-12", ".bottomModelSelectLable" ],
+                        ],
+                      ],
                     ],
                   ],
                   [".visualisationColumn.col-lg-8.col-xs-12", ".visualisationPanel.panel.panel-default", 
@@ -721,10 +760,6 @@ thisEqualsThat.oop = function()
                 ],
               ],
               [ ".row.col-xs-12",
-                [ [ ".bottomModelSelectDiv.col-lg-12", ".bottomModelSelectLable" ],
-                ],
-              ],
-              [ ".row.col-xs-12",
                 ".bottomModelDiv.col-lg-12"
               ],
             ],
@@ -768,7 +803,11 @@ thisEqualsThat.oop = function()
             modelField.data.currentValue = $this.val();
             modelField.slider_userUpdatesText()
 
-            setImmediate(modelField.inputFieldAltered);
+            setImmediate
+            ( function()
+              { modelField.inputFieldAltered();
+              }
+            );
           }
         );
 
@@ -1233,7 +1272,7 @@ thisEqualsThat.oop = function()
                         ' data:image/svg+xml,\n
                           ${svgString}
                         '
-                    title     = 'Save SVG Image'
+                    title     = 'Save SVG Image' 
                     download  = '${This.display.svgTextDescription.text()}_${This.display.modelOutputValue.text()}.svg'
                 ><i class="fa fa-download" aria-hidden="true"></i></a>`
           )
@@ -1281,12 +1320,12 @@ thisEqualsThat.oop = function()
     var gTET = thisEqualsThat;
     //$("#document").append("<script type='text/javascript' src='/svg/rg1024_metal_barrel' />);
 
-    $(".chooseOutputField").html(outputField.data.displayName);
-    $(".modelOutputValue").html
+    this.display.topModelDiv.find(".chooseOutputField").html(outputField.data.displayName);
+    this.display.topModelDiv.find(".modelOutputValue").html
     ( prettyPrint(outputField, outputField.data.currentValue)
     );
-    $(".chooseVisualisationField").html(visualisationField.data.displayName);
-    $(".modelVisualisationValue").html
+    this.display.topModelDiv.find(".chooseVisualisationField").html(visualisationField.data.displayName);
+    this.display.topModelDiv.find(".modelVisualisationValue").html
     ( prettyPrint(visualisationField, visualisationField.data.currentValue)
     );
 
@@ -2226,8 +2265,9 @@ thisEqualsThat.oop = function()
     //   }
     // }
   }
-  this.ModelFieldInput.prototype.inputFieldAltered = function()
-  { this.modelInstance.inputFieldAltered
+  this.ModelFieldInput.prototype.inputFieldAltered = function(This)
+  { if (!This) var This = this;
+    This.modelInstance.inputFieldAltered
     ( { "inputField": this.fullAddress,
         "newValue"  : this.data.currentValue,
       }
@@ -2253,6 +2293,7 @@ thisEqualsThat.oop = function()
   { var fieldData = this.data;
     var display = this.display = {};
 
+    var This = this;
     // O.create
     // ( [ ".inputFieldElement", 
     //     [ [ ".inputFieldLabel", "@"+this.data.displayName ],
@@ -2263,37 +2304,60 @@ thisEqualsThat.oop = function()
     //   null
     // );
     // this.uiElement = this.display.inputFieldElement;
+    O.create
+    ( [ ".uiElement.inputFieldElement.inputField.displayFlex.spaceBetween.width100",
+        [ [ ".inputFieldLabel.floatLeft.smallCaps", "@"+this.data.displayName ],
+          [ ".slideAndValue",
+            [ [ "select.uiValue_select.inputFieldSelect" ],
+            ],
+          ],
+        ],
+      ],
+      this,
+      appendTo
+    );
 
-    this.uiElement    =
-        $("<div />",
-          { "class": "inputFieldElement"
-          }
-        );
-      var uiLabel =
-        $("<div />",
-          { "class": "inputFieldLabel"
-          }
-        ).text(this.data.displayName);
+    
+    // ( [ ".uiElement.inputFieldElement.displayFlex.spaceBetween",
+    //     [ [ ".inputFieldLabel", "@"+this.data.displayName,
+    //         ,
+    //       ],
+    //     ],
+    //   ],
+    //   this,
+    //   appendTo
+    // );
+
+    // this.uiElement    =
+    //     $("<div />",
+    //       { "class": "inputFieldElement"
+    //       }
+    //     );
+    //   var uiLabel =
+    //     $("<div />",
+    //       { "class": "inputFieldLabel"
+    //       }
+    //     ).text(this.data.displayName);
 
         //  .append(this.data.displayFieldAddress);
 
-    var select = $("<select />", {"class": "inputFieldSelect"});
-    select.data("ModelInputField", this);
-    select.on("change", this, this.inputField_select_changeFunction);
+    // var select = $("<select />", {"class": "inputFieldSelect"});
+    this.uiValue_select.data("ModelInputField", this);
+    this.uiValue_select.on("change", this, this.inputField_select_changeFunction);
     $.each(fieldData.selectableValues,
                 function(optionText, optionValue)
                 { var selectOption = $("<option class='inputFieldSelectOption'value='"+optionValue+"'>"+optionText+"</option>");
                   if (fieldData.defaultValue == optionValue)
                   { selectOption.attr("selected", "selected");
                   }
-                  select.append(selectOption);
+                  This.uiValue_select.append(selectOption);
                 }
           )
 
-    this.uiValue_select = select;
+    // this.uiValue_select = select;
 
-    this.uiElement.append(uiLabel);
-    this.uiElement.append(this.uiValue_select);
+    // this.uiElement.append(uiLabel);
+    // this.uiElement.append(this.uiValue_select);
 
     return this.uiElement;
   }
@@ -2309,42 +2373,52 @@ thisEqualsThat.oop = function()
   }
   this.ModelFieldInput.prototype.getTag_text = function(passThrough, appendTo)
   {   var fieldData = this.data;
-      this.uiElement    =
-        $("<div />",
-          { "class": "inputFieldElement"
-          }
-        );
-      var uiLabel =
-        $("<div />",
-          { "class": "inputFieldLabel"
-          }
-        ).append(this.simpleNameUnits);
-        //  .append(this.data.displayFieldAddress);
-      var uiValue_text =
-        $("<input />",
-          { "class": "inputFieldText",
-            type: "text",
-          }
-        ).addClass("unit_"+this.data.unit);
+      O.create
+      ( [ ".uiElement.inputFieldElement.displayFlex.spaceBetween",
+          [ [ ".inputFieldLabel", "@"+this.displayName],
+            [ "input.uiValue_text.inputFieldText"+".unit_"+this.data.unit ],
+          ],
+        ],
+        this,
+        null
+      );
+
+      // this.uiElement    =
+      //   $("<div />",
+      //     { "class": "inputFieldElement"
+      //     }
+      //   );
+      // var uiLabel =
+      //   $("<div />",
+      //     { "class": "inputFieldLabel"
+      //     }
+      //   ).append(this.simpleNameUnits);
+      //   //  .append(this.data.displayFieldAddress);
+      // var uiValue_text =
+      //   $("<input />",
+      //     { "class": "inputFieldText",
+      //       type: "text",
+      //     }
+      //   ).addClass("unit_"+this.data.unit);
 
       
-      uiValue_text.val(unitsAroundOutput( this, fieldData.defaultValue ));
-      uiValue_text.data("thisEquals.modelField", this);
+      this.uiValue_text.val(unitsAroundOutput( this, fieldData.defaultValue ));
+      this.uiValue_text.data("thisEquals.modelField", this);
 
-      uiValue_text.on("change", this, this.inputField_text_changeFunction);
-      this.uiValue_text  = uiValue_text;
-
-      this.uiElement.append(uiLabel);
-      this.uiElement.append(uiValue_text);
+      this.uiValue_text.on("change", this.inputField_text_changeFunction);
 
     return this.uiElement
   }
   this.ModelFieldInput.prototype.inputField_text_changeFunction = function(event)
-  { var This  = $(this).data("ModelInputField");
+  { var This  = $(this).data("thisEquals.modelField");
     This      = event.data;
 
     This.data.currentValue = $(this).val();
-    setImmediate(This.inputFieldAltered);
+    setImmediate
+    ( function()
+      { This.inputFieldAltered(This);
+      }
+    );
   }
   this.ModelFieldInput.prototype.getTag_slider = function(passThrough, appendTo)
   { var sliderOptions             = this["slider_"+this.data.rangeType+"SliderOptions"]();
@@ -2392,7 +2466,7 @@ thisEqualsThat.oop = function()
           { if (! event.originalEvent) return true;
             This.currentValue = ui.value;
             This.slider_sliderUpdatesText;
-            This.inputFieldAltered();
+            This.inputFieldAltered(This);
         }
       };
     return sliderOptions;
@@ -2428,7 +2502,7 @@ thisEqualsThat.oop = function()
             This.data.currentValue = This.logSliderToValue(ui.value);
             This.slider_sliderUpdatesText();
 
-            This.inputFieldAltered();
+            This.inputFieldAltered(This);
           }
       };
 
@@ -2441,8 +2515,10 @@ thisEqualsThat.oop = function()
 
   this.ModelFieldInput.prototype.actualToSlider = function()
   { var currentValue = this.data.currentValue;
+    
+    var toReturn;
     if (this.hasOwnProperty("logSliderConstants") )
-    { lSC = this.logSliderConstants;
+    { var lSC = this.logSliderConstants;
       toReturn = (Math.log(currentValue)-lSC.minv) / lSC.scale + lSC.min;
     }
     else
