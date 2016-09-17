@@ -144,8 +144,21 @@ thisEqualsThat.oop = function()
               ""
             );
 
+    O.create( [ "#blueprintTutorialPlayer", "i.fafa-spinner" ], modals, modals["modal-content"] );
+    O.create( [ ".playerMenu", 
+                [ [ ".closeButton", "i.fa.fa-times" ],
+                  [ ".swipeButton", ],
+                ]
+              ],              
+              modals, 
+              modals["modal-content"] 
+            );
+
     var modelClassOrder = [ "HowMany", "VolMassDen", "LightBulb", "CO2", "Wood", "PeopleRatioPlay", "Earth", "Money", "Air Quality", "Seesaw"];
-    var modelClassData  = { "HowMany": { "tutorialVideo": "/static/media/visualTools/tutorials/HowMany.ogv" } }
+    var modelClassData  = { "HowMany"     : { "tutorialVideo": "je_M6gB8nZw" } , 
+                            "VolMassDen"  : { "tutorialVideo": "z0LKAOowf9c" } ,
+                            "LightBulb"   : { "tutorialVideo": "NnUqU9_hrrg" } ,
+                          };
 
     $.each( modelClassOrder,
       function (index, key)
@@ -166,15 +179,61 @@ thisEqualsThat.oop = function()
           $(this).closest(".modal").modal("hide");
         }
       );
+    
+
+    var tutorialPlayerStateChange =
+      function(event)
+      { console.log("tutorial player state change event", event);
+
+        if (event.data == 0) //ended
+        { $("body").toggleClass("playingTutorial", false);
+        }
+      }
     modals.constructBlueprint
     .on("click", ".videoOverlay",
         function(event)
         { var modelClass = $(event.currentTarget).closest(".blueprintItem").data("thisEquals_blueprint");
-          alert(modelClass.tutorialVideo);
+
+          if (! modals.constructBlueprint.hasOwnProperty("tutorialPlayer") )
+          { modals.constructBlueprint.tutorialPlayer
+              = new YT.Player
+              ( 'blueprintTutorialPlayer', 
+                { height: modals.blueprintTutorialPlayer.height()-15,
+                  width: modals.blueprintTutorialPlayer.width()-15,
+                  videoId: modelClass.tutorialVideo,
+                  events: 
+                  { // 'onReady': onPlayerReady,
+                    'onStateChange': tutorialPlayerStateChange
+                  }
+                }
+              );
+          }
+          else
+          { modals.constructBlueprint.tutorialPlayer.loadVideoById(modelClass.tutorialVideo)
+          }
+          $("body").toggleClass("playingTutorial", true);
+
+          modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
+          ThisEqualsThat.scene.setCurrentModelClass(modelClass);
 
           event.stopPropagation();
         }
       );
+    modals.constructBlueprint
+    .on
+    ( "hidden.bs.modal", 
+      function() 
+      {
+      } 
+    );
+    modals.closeButton
+    .on
+    ( "click",
+      function()
+      { $("body").toggleClass("playingTutorial", false);
+        modals.constructBlueprint.tutorialPlayer.pauseVideo();
+      }
+    );
   }
   this.constructBlueprint_inDevelopment = function(modals)
   { O.modal(  modals,

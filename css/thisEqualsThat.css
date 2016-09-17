@@ -212,6 +212,9 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
 { height: 32px;
   width:  32px;
 }
+.modal-content
+{ position: relative;
+}
 
 /*component based content layout */
 
@@ -330,6 +333,44 @@ a .panelCollapsibleArrow.arrowOpen
 .blueprintItem:hover .blueprintIcon
 {   box-shadow: 0px 0px 4px grey;
 }
+
+#blueprintTutorialPlayer
+{ position: absolute;
+  height: 100%;
+  width: 100%;
+
+  top: 0px;
+  left: 0px;
+
+  z-index: -1;
+
+  background-color: rgba(0,0,0, 0.1);
+}
+.playingTutorial #blueprintTutorialPlayer
+{ z-index: 100;
+}
+.playerMenu
+{ position: absolute;
+
+  top:      13px;
+  right:    50px;
+  z-index:  -1;
+}
+.playerMenu .closeButton i
+{ 
+  color: lightgrey;
+  font-size: 20px;
+}
+.playerMenu .closeButton:hover i
+{ 
+  color: white;
+  font-size: 20px;
+}
+
+.playingTutorial .playerMenu
+{ z-index: 100;
+}
+
 .mainContentColumn
 { padding-right: 0px;
 }
