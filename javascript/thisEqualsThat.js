@@ -162,11 +162,13 @@ thisEqualsThat.oop = function()
 
     $.each( modelClassOrder,
       function (index, key)
-      { var blueprintItem = ThisEqualsThat.modelClasses[key].getBlueprintItem(modals.constructBlueprint, modals.constructBlueprintContainer);
+      { var blueprintItem = ThisEqualsThat.modelClasses[key].getBlueprintItem(modals.constructBlueprint, modals.constructBlueprintContainer)[0];
+        var modelClass    = blueprintItem.data("thisEquals_blueprint");
         if ( modelClassData.hasOwnProperty(key) )
-        { O.create( [ ".videoOverlay.smoothMove" ], {}, blueprintItem[0] );
-          ThisEqualsThat.modelClasses[key].tutorialVideo = modelClassData[key].tutorialVideo;
+        { O.create( [ ".videoOverlay.smoothMove" ], {}, blueprintItem );
+          modelClass.tutorialVideo = modelClassData[key].tutorialVideo;
         }
+        modelClass.tutorialIndex = index;
       }
     );
 
@@ -198,18 +200,31 @@ thisEqualsThat.oop = function()
           { modals.constructBlueprint.tutorialPlayer
               = new YT.Player
               ( 'blueprintTutorialPlayer', 
-                { height: modals.blueprintTutorialPlayer.height()-15,
-                  width: modals.blueprintTutorialPlayer.width()-15,
-                  videoId: modelClass.tutorialVideo,
+                { height:   modals.blueprintTutorialPlayer.height() - 15,
+                  width:    modals.blueprintTutorialPlayer.width()  - 15,
+                  videoId:  modelClass.tutorialVideo,
                   events: 
-                  { // 'onReady': onPlayerReady,
+                  { 'onReady': 
+                      function()
+                      { modals.constructBlueprint.tutorialPlayer
+                            .loadPlaylist
+                            ( { "playlist": ["je_M6gB8nZw", "z0LKAOowf9c", "NnUqU9_hrrg"],
+                                "index":    modelClass.tutoralIndex, 
+                              }
+                            )
+                      },
                     'onStateChange': tutorialPlayerStateChange
                   }
                 }
               );
           }
           else
-          { modals.constructBlueprint.tutorialPlayer.loadVideoById(modelClass.tutorialVideo)
+          { modals.constructBlueprint.tutorialPlayer
+              .loadPlaylist
+              ( { "playlist": "PLvcKSclDckD0GLGEqdladfF0AS6wdysLk",
+                  "index":    modelClass.tutoralIndex, 
+                }
+              )
           }
           $("body").toggleClass("playingTutorial", true);
 
@@ -232,6 +247,7 @@ thisEqualsThat.oop = function()
       function()
       { $("body").toggleClass("playingTutorial", false);
         modals.constructBlueprint.tutorialPlayer.pauseVideo();
+        modals.constructBlueprint.toggleClass("force-redraw");
       }
     );
   }

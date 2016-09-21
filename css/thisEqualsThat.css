@@ -1,3 +1,7 @@
+.force-redraw::before {
+  content: "";
+}
+
 .displayNone
 { display: none !important;
 }
@@ -330,7 +334,7 @@ a .panelCollapsibleArrow.arrowOpen
 .blueprintItem .videoOverlay:hover
 {   box-shadow: 0px 0px 8px black;
 }
-.blueprintItem:hover .blueprintIcon
+.blueprintItem:hover
 {   box-shadow: 0px 0px 4px grey;
 }
 
