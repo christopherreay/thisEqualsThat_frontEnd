@@ -154,7 +154,7 @@ thisEqualsThat.oop = function()
               modals["modal-content"] 
             );
 
-    var modelClassOrder = [ "HowMany", "VolMassDen", "LightBulb", "CO2", "Wood", "PeopleRatioPlay", "Earth", "Money", "Air Quality", "Seesaw"];
+    var modelClassOrder = [ "HowMany", "VolMassDen", "LightBulb", "CO2", "Wood", "Coal", "PeopleRatioPlay", "Earth", "Money", "Air Quality", "Seesaw"];
     var modelClassData  = { "HowMany"     : { "tutorialVideo": "je_M6gB8nZw" } , 
                             "VolMassDen"  : { "tutorialVideo": "z0LKAOowf9c" } ,
                             "LightBulb"   : { "tutorialVideo": "NnUqU9_hrrg" } ,
