@@ -10,10 +10,12 @@ function($)
 { O = this;
   var $window = $(window);
 
-  this.windowResizeController = function()
-  { $("body").toggleClass("xs", $(window).width() < 400);
+  O.windowResizeController = function()
+  { var width = $window.width();
+    $("body").toggleClass("xs", width < 400);
+    $("body").toggleClass("sm", width < 768 && width > 400);
     $window.off("resize", O.windowResizeController);
-    setTimeout(function () {$window.on("resize", O.windowResizeController); } , 100);
+    setTimeout(function () {$window.on("resize", O.windowResizeController); } , 300);
   }
   $window.on("resize", O.windowResizeController);
 

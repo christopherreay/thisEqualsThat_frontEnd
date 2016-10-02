@@ -141,6 +141,14 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
 { padding:  10px;
 }
 
+.sm .mainContentColumn, .xs .mainContentColumn
+{ padding-left: 0px;
+  padding-top: 20px;
+}
+.sm .visualisationColumn, .xs .visualisationColumn
+{ padding-right: 15px;
+}
+
 .fullScreenOverlay
 { position: fixed;
   top: 0;

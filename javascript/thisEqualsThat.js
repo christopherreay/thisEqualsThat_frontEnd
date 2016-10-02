@@ -949,6 +949,7 @@ thisEqualsThat.oop = function()
               { setImmediate
                 ( function()
                   { display.toggle.svgTextDescription[0].click();
+                    This.svg_createSaveLink(This);
                   }
                 );
                 This.display.editableTextPlaceholder.editable("toggle");
