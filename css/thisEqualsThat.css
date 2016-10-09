@@ -82,7 +82,7 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
 { opacity: 0.0;
 }
 
-.fullHeight
+.fullHeight, .height100
 { height:   100%;
 }
 .width100
@@ -562,6 +562,9 @@ div.model {
 .iframeFullScreen iframe
 { width: 100%;
   height: 100%;
+}
+.iframeFullScreen.invisible
+{ visibility: hidden;
 }
 
 

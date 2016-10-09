@@ -85,7 +85,7 @@ thisEqualsThat.oop = function()
   this.displayInterface = function(display)
   { display.navbar = {};
 
-    O.create( [ "#pageWrapper",
+    O.create( [ "#pageWrapper.height100",
                 [ [ O.navbarFixedLeft(display.navbar, null, "mainNav", ".navLogo.centerBackgroundImage.visualToolsLogoWords", ".thisEqualsThatScene") ],
                   //[ ".thisEqualsThatScene.panel.panel-default" ],
                   [ $("<div class='copyrightContainer' />").text("© This Equals ltd 2016") ],
@@ -356,22 +356,22 @@ thisEqualsThat.oop = function()
   this.ModelClass_iframe.prototype.getBlueprintItem = 
       this.ModelClass.prototype.getBlueprintItem;
   this.ModelClass_iframe.prototype.getModelInstance = function(displayContainer)
-  { if (! this.hasOwnProperty("modelInstance" ) )
-    { var This = this;
+  { var This = this;
 
-      this.modelInstance = this.data;
+    if (! this.hasOwnProperty("modelInstance" ) )
+    { this.modelInstance = this.data;
       this.modelInstance.display = $("<div class='iframeFullScreen'><iframe src='"+this.data.src+"?nocache="+Date.now()+"' /></iframe>");
       
       if (! This.modelInstance.appended )
-      { $("body").append(This.modelInstance.display);
+      { $(".mainContentColumn").append(This.modelInstance.display);
         This.modelInstance.appended = true;
       }
 
       this.modelInstance.hide = function()
-      { This.modelInstance.display.hide();
+      { This.modelInstance.display.toggleClass("invisible", true);
       }
     } 
-    This.modelInstance.display.show();
+    this.modelInstance.display.toggleClass("invisible", false);
   }
 
 

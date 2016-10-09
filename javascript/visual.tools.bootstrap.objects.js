@@ -161,7 +161,7 @@ function($)
   function(passThrough, appendTo, navbarUniqueClass, logo=".navbar-brand-logo", mainContent)
   { if (!navbarUniqueClass) navbarUniqueClass = "navbar-autoID-"+this.navbar_collapse_id_counter++;
     var toReturn =
-        O.create( [".bs-component."+navbarUniqueClass, ".container-fluid", ".row", 
+        O.create( [".bs-component."+navbarUniqueClass+".height100", ".container-fluid.height100", ".row.height100", 
                     [ [ ".navBarColumn.col-xs-12.col-sm-12.col-md-3.col-lg-2" ,  "bs-component", ".navbar.navbar-default.navbar-fixed-side", ".navbar-fixed-side-container", 
                         [ [ ".navbarHeader.navbar-header", 
                             [ [ $("<button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='."+navbarUniqueClass+"-collapse' aria-expanded='false'>"),
