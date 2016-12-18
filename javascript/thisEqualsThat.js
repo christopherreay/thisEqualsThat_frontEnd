@@ -14,13 +14,13 @@ traverse = function(object, address, defaultList=[{}])
 
   var current = object;
   address = address.split(".");
-  
+
   for (var wayPoint of address)
   { if (!current.hasOwnProperty(wayPoint) )
     { current[wayPoint] =  defaultList[defaultCounter]
     }
     current = current[wayPoint];
-    
+
     if (defaultCounter < defaultListTestIndex)
     { defaultCounter ++;
     }
@@ -58,7 +58,7 @@ thisEqualsThat.oop = function()
   }
 
   this.Welcome = function(display)
-  { O.create( [ "#welcomeOver.wrapper.fullScreenOverlay.smoothMove", 
+  { O.create( [ "#welcomeOver.wrapper.fullScreenOverlay.smoothMove",
                 [ [ ".centerBackgroundImage.visualToolsLogo" ],
                 ],
               ],
@@ -67,9 +67,9 @@ thisEqualsThat.oop = function()
             );
 
     setTimeout
-    ( function() 
+    ( function()
       { display.welcomeOver.toggleClass("opacityZero", true);
- 
+
         setTimeout
         ( function()
           { ThisEqualsThat.displayInterface(display);
@@ -106,22 +106,22 @@ thisEqualsThat.oop = function()
 
   this.mainNavigation = function(navbar)
   { O.create( [ ".bs-component",
-                [ 
+                [
                   [ O.openModal_aTag
-                    ( navbar, null, "profileModal",                
-                        ".createConstruct.panel.row", 
+                    ( navbar, null, "profileModal",
+                        ".createConstruct.row",
                         O.listGroupItem ( navbar,
-                                          null, 
+                                          null,
                                           "button", ".blueprintItem", [12, 12, 6, 6], $("<img class='blueprintIcon' src='/static/graphics/user/profilePic.jpg' />"), "", "@Profile", ""
                                         )[0]
                     )
                   ],
                   // [ ".square92.marginAuto", ".editProfile.panel.row"       ],
                   [ O.openModal_aTag
-                    ( navbar, null, "constructBlueprint",                
-                        ".createConstruct.panel.row", 
+                    ( navbar, null, "constructBlueprint",
+                        ".createConstruct.row",
                         O.listGroupItem ( navbar,
-                                          null, 
+                                          null,
                                           "button", ".blueprintItem", [12, 12, 6, 6], $("<img class='blueprintIcon' src='/static/graphics/thisEquals/icons/blueprint.svg' />"), "", "@Construct", ""
                                         )[0]
                     )
@@ -145,17 +145,17 @@ thisEqualsThat.oop = function()
             );
 
     O.create( [ "#blueprintTutorialPlayer", "i.fafa-spinner" ], modals, modals["modal-content"] );
-    O.create( [ ".playerMenu", 
+    O.create( [ ".playerMenu",
                 [ [ ".closeButton", "i.fa.fa-times" ],
                   [ ".swipeButton", ],
                 ]
-              ],              
-              modals, 
-              modals["modal-content"] 
+              ],
+              modals,
+              modals["modal-content"]
             );
 
     var modelClassOrder = [ "HowMany", "VolMassDen", "LightBulb", "CO2", "Wood", "Coal", "PeopleRatioPlay", "Earth", "Money", "Air Quality", "Seesaw"];
-    var modelClassData  = { "HowMany"     : { "tutorialVideo": "je_M6gB8nZw" } , 
+    var modelClassData  = { "HowMany"     : { "tutorialVideo": "je_M6gB8nZw" } ,
                             "VolMassDen"  : { "tutorialVideo": "z0LKAOowf9c" } ,
                             "LightBulb"   : { "tutorialVideo": "NnUqU9_hrrg" } ,
                           };
@@ -181,7 +181,7 @@ thisEqualsThat.oop = function()
           $(this).closest(".modal").modal("hide");
         }
       );
-    
+
 
     var tutorialPlayerStateChange =
       function(event)
@@ -199,17 +199,17 @@ thisEqualsThat.oop = function()
           if (! modals.constructBlueprint.hasOwnProperty("tutorialPlayer") )
           { modals.constructBlueprint.tutorialPlayer
               = new YT.Player
-              ( 'blueprintTutorialPlayer', 
+              ( 'blueprintTutorialPlayer',
                 { height:   modals.blueprintTutorialPlayer.height() - 15,
                   width:    modals.blueprintTutorialPlayer.width()  - 15,
                   videoId:  modelClass.tutorialVideo,
-                  events: 
-                  { 'onReady': 
+                  events:
+                  { 'onReady':
                       function()
                       { modals.constructBlueprint.tutorialPlayer
                             .loadPlaylist
                             ( { "playlist": ["je_M6gB8nZw", "z0LKAOowf9c", "NnUqU9_hrrg"],
-                                "index":    modelClass.tutoralIndex, 
+                                "index":    modelClass.tutoralIndex,
                               }
                             )
                       },
@@ -222,7 +222,7 @@ thisEqualsThat.oop = function()
           { modals.constructBlueprint.tutorialPlayer
               .loadPlaylist
               ( { "playlist": "PLvcKSclDckD0GLGEqdladfF0AS6wdysLk",
-                  "index":    modelClass.tutoralIndex, 
+                  "index":    modelClass.tutoralIndex,
                 }
               )
           }
@@ -236,10 +236,10 @@ thisEqualsThat.oop = function()
       );
     modals.constructBlueprint
     .on
-    ( "hidden.bs.modal", 
-      function() 
+    ( "hidden.bs.modal",
+      function()
       {
-      } 
+      }
     );
     modals.closeButton
     .on
@@ -283,13 +283,13 @@ thisEqualsThat.oop = function()
     { url: "getModelClasses",
       dataType: "json",
       success: function(data, status, request)
-      { $.each(data.standard, 
+      { $.each(data.standard,
             function(index, value)
             { This[value] = new ThisEqualsThat.ModelClass(value);
             }
         );
         $.each
-        ( data.iframe, 
+        ( data.iframe,
             function(key, value)
             { value["jsonKey"] = key;
               This[key] = new ThisEqualsThat.ModelClass_iframe(value);
@@ -306,13 +306,13 @@ thisEqualsThat.oop = function()
     this.imageURL   = this.imageBaseURL+modelClassName+".svg";
   }
   this.ModelClass.prototype.imageBaseURL      = "/static/graphics/thisEquals/modelClasses/";
-  this.ModelClass.prototype.getBlueprintItem  = 
+  this.ModelClass.prototype.getBlueprintItem  =
       function(passThrough, appendTo)
       { if (! this.hasOwnProperty("blueprintItem") )
-        { this.blueprintItem = 
+        { this.blueprintItem =
               O.listGroupItem
-              ( passThrough, 
-                appendTo, 
+              ( passThrough,
+                appendTo,
                 "button", ".blueprintItem.ripplelink", [4, 6, 6, 12], $("<img class='blueprintIcon smoothMove' src='"+this.imageURL+"' />"), "", "@"+this.name, "@Description Text");
           passThrough.blueprintItem.data("thisEquals_blueprint", this);
           //O.create( [ ".videoOverlay.smoothMove" ], passThrough, passThrough.blueprintItem );
@@ -345,7 +345,7 @@ thisEqualsThat.oop = function()
     { this.modelInstance.displayIntoTarget(displayContainer);
     }
   }
- 
+
 
   this.ModelClass_iframe = function(modelClassData)
   { this.name     = modelClassData.name || modelClassData.jsonKey;
@@ -353,7 +353,7 @@ thisEqualsThat.oop = function()
     this.data     = modelClassData;
   }
   this.ModelClass_iframe.prototype.imageBaseURL =  "/static/graphics/thisEquals/icons/";
-  this.ModelClass_iframe.prototype.getBlueprintItem = 
+  this.ModelClass_iframe.prototype.getBlueprintItem =
       this.ModelClass.prototype.getBlueprintItem;
   this.ModelClass_iframe.prototype.getModelInstance = function(displayContainer)
   { var This = this;
@@ -361,7 +361,7 @@ thisEqualsThat.oop = function()
     if (! this.hasOwnProperty("modelInstance" ) )
     { this.modelInstance = this.data;
       this.modelInstance.display = $("<div class='iframeFullScreen'><iframe src='"+this.data.src+"?nocache="+Date.now()+"' /></iframe>");
-      
+
       if (! This.modelInstance.appended )
       { $(".mainContentColumn").append(This.modelInstance.display);
         This.modelInstance.appended = true;
@@ -370,7 +370,7 @@ thisEqualsThat.oop = function()
       this.modelInstance.hide = function()
       { This.modelInstance.display.toggleClass("invisible", true);
       }
-    } 
+    }
     this.modelInstance.display.toggleClass("invisible", false);
   }
 
@@ -426,11 +426,11 @@ thisEqualsThat.oop = function()
     { var This = this;
       this.outputFieldData = {};
       this.outputFieldSelect = {};
-      
-      O.panelCollapsible( this.outputFieldSelect, appendTo, 
+
+      O.panelCollapsible( this.outputFieldSelect, appendTo,
         ".outputFieldSelectPanel.width100",
         [ [ ".displayFlex.spaceBetween",
-            [ [ ".chooseOutputField.selectedField", "@Output: "], 
+            [ [ ".chooseOutputField.selectedField", "@Output: "],
               [ ".modelOutputValue" ],
             ]
           ],
@@ -448,7 +448,7 @@ thisEqualsThat.oop = function()
         function(event)
         { var selectedField = $(event.currentTarget).data("thisEquals.modelFieldOutput");
           This.lastAlteredOutputField = selectedField;
-          
+
           This.outputFieldSelect.menuListItems.find(".dropdownItem").toggleClass("selected", false);
           selectedField.display.dropdownItem.toggleClass("selected", true);
 
@@ -482,11 +482,11 @@ thisEqualsThat.oop = function()
     { var This = this;
       this.visualisationFieldData = {};
       this.visualisationFieldSelect = {};
-      
-      O.panelCollapsible( this.visualisationFieldSelect, appendTo, 
+
+      O.panelCollapsible( this.visualisationFieldSelect, appendTo,
         ".visualisationFieldSelectPanel.width100",
         [ [ ".displayFlex.spaceBetween",
-            [ [ ".chooseVisualisationField.selectedField", "@Visualise: "], 
+            [ [ ".chooseVisualisationField.selectedField", "@Visualise: "],
               [ ".modelVisualisationValue" ],
             ]
           ],
@@ -504,7 +504,7 @@ thisEqualsThat.oop = function()
         function(event)
         { var selectedField = $(event.currentTarget).data("thisEquals.ModelFieldVisualisation");
           This.lastAlteredVisualisationField = selectedField;
-          
+
           This.visualisationFieldSelect.menuListItems.find(".dropdownItem").toggleClass("selected", false);
           selectedField.display.dropdownItem.toggleClass("selected", true);
 
@@ -658,7 +658,7 @@ thisEqualsThat.oop = function()
     }
   }
   this.ModelInstance.prototype.setChoosableFields = function(data, status, response)
-  { 
+  {
 
     if (! this.hasOwnProperty("choosableFields"))
       this.choosableFields = {};
@@ -745,20 +745,20 @@ thisEqualsThat.oop = function()
       this.display = {};
       var display = this.display;
 
-      var toCreate = 
+      var toCreate =
         O.create
         ( [ ".modelInstanceDiv."+this.modelClass.name+"."+this.id,
             ".topModelDiv",
             [ //[ ".row", ".col-lg-12", ".panel.panel-default", ".visualisationOutputContainer.panel-body" ],
-              // [ ".row", ".col-lg-4", ".panel.panel-default", 
+              // [ ".row", ".col-lg-4", ".panel.panel-default",
               //   [ [ ".modelOutputValue.panel-body" ],
               //     [ ".outputFieldSelect", this.getOutputFields().outputFieldSelect, ],
               //   ],
               // ],
-              [ ".row", 
-                [ [".calculationColumn.col-lg-4.col-xs-12", ".calculationPanel.panel.panel-default", 
-                    [ [ ".panel-heading", ".panel-title.displayFlex.spaceBetween", 
-                        [ [ "div.calculationSpinner", 
+              [ ".row",
+                [ [".calculationColumn.col-lg-4.col-xs-12", ".calculationPanel.panel.panel-default",
+                    [ [ ".panel-heading", ".panel-title.displayFlex.spaceBetween",
+                        [ [ "div.calculationSpinner",
                             [ [ $("<i class='fa fa-calculator' aria-hidden='true'></i>") ],
                               [ ".chooseOutputField.smallCaps.color_visualTools" ],
                             ],
@@ -780,9 +780,9 @@ thisEqualsThat.oop = function()
                       ],
                     ],
                   ],
-                  [".visualisationColumn.col-lg-8.col-xs-12", ".visualisationPanel.panel.panel-default", 
-                    [ [ ".panel-heading", ".panel-title.displayFlex.spaceBetween", 
-                        [ [ "div.visualisationSpinner", 
+                  [".visualisationColumn.col-lg-8.col-xs-12", ".visualisationPanel.panel.panel-default",
+                    [ [ ".panel-heading", ".panel-title.displayFlex.spaceBetween",
+                        [ [ "div.visualisationSpinner",
                             [ [ $("<img class='' src='/static/graphics/visualTools/visualise.height_18px.png'>") ],
                               [ ".chooseVisualisationField.smallCaps.color_visualTools" ],
                             ],
@@ -791,7 +791,7 @@ thisEqualsThat.oop = function()
                         ],
                       ],
                       [ ".row",
-                        [ [ ".svgDiv.panel.panel-default.col-lg-12", 
+                        [ [ ".svgDiv.panel.panel-default.col-lg-12",
                             [ [ $(document.createElementNS(d3.ns.prefix.svg, "svg"))
                                 .attr("xmlns",        "http://www.w3.org/2000/svg")
                                 .attr("xmlns:xlink",  "http://www.w3.org/1999/xlink")
@@ -844,7 +844,7 @@ thisEqualsThat.oop = function()
         );
 
       display.calculationPanel.on
-      ( "click", 
+      ( "click",
         ".panel-title",
         function()
         { display.outputFieldSelectPanel.find("a").first().click();
@@ -897,7 +897,7 @@ thisEqualsThat.oop = function()
       display.svgTranslatableG.data("thisEqualsThat", {"modelInstance": this});
       display.rootSVG.on
       ( "blur focus focusin focusout load resize scroll unload click "        +
-        "dblclick mousedown mouseup mousemove mouseover mouseout mouseenter " + 
+        "dblclick mousedown mouseup mousemove mouseover mouseout mouseenter " +
         "mouseleave change select submit keydown keypress keyup error",
         function(e)
         { e.stopPropagation();
@@ -944,7 +944,7 @@ thisEqualsThat.oop = function()
             "placement": "top",
             "mode": "inline",
             "toggle": "manual",
-            success: function(response, newValue) 
+            success: function(response, newValue)
             { if (newValue == "")
               { setImmediate
                 ( function()
@@ -963,14 +963,14 @@ thisEqualsThat.oop = function()
                   }
                 );
               }
-              
+
             }
         });
     this.display.svgTextDescription.on
     ( "click",
       function(event)
       { event.stopPropagation();
-        
+
         This.display.editableTextPlaceholder.editable("toggle");
       }
     )
@@ -1080,8 +1080,8 @@ thisEqualsThat.oop = function()
                     .attr("d", yAxisD)
                     .attr("stroke", "darkgrey")
                 This.display.svgMeasureY.get(0).setAttribute("z:threeD", "true");
-                
-                This.display.svgMeasureX 
+
+                This.display.svgMeasureX
                       .attr("d", xAxisD)
                       .attr("stroke", "darkgrey")
                 This.display.svgMeasureX.get(0).setAttribute("z:threeD", "true");
@@ -1348,7 +1348,7 @@ thisEqualsThat.oop = function()
                         ' data:image/svg+xml,\n
                           ${svgString}
                         '
-                    title     = 'Save SVG Image' 
+                    title     = 'Save SVG Image'
                     download  = '${This.display.svgTextDescription.text()}_${This.display.modelOutputValue.text()}.svg'
                 ><i class="fa fa-download" aria-hidden="true"></i></a>`
           )
@@ -1438,7 +1438,7 @@ thisEqualsThat.oop = function()
 
     this.display.svgReferenceGContainer.html(this.display.svgReferenceG);
 
-    
+
   }
 
 //REFERENCE VISUAL
@@ -1447,7 +1447,7 @@ thisEqualsThat.oop = function()
 
     this.svgStore = {};
     // O.create( [ ".
-    
+
     this.masterReferenceSVGSelectList = $("<div class='masterReferenceSVGSelectList'/>");
     this.svgSelectList = $("<ul/>");
     this.masterReferenceSVGSelectList.append(this.svgSelectList);
@@ -1881,8 +1881,8 @@ thisEqualsThat.oop = function()
 
     this.divForHUD = O.create( [ ".svgHUD" ], modelInstance.display, null )[0];
     modelInstance.display.svgDiv.prepend(this.divForHUD);
-    
-    
+
+
   }
   this.SVGHUD.prototype.renderHUD = function(tagHook)
   { if (! this.hasOwnProperty("divForHUD") )
@@ -1961,10 +1961,10 @@ thisEqualsThat.oop = function()
   { var representationName    = this.svgHUD.modelInstance.svg3dDisplayJSON.representationName;
     var clonesToBeRendered    = this.svgHUD.modelInstance.svg3dDisplayJSON.svg3dConfiguration.clone3d.nb;
 
-    
+
     this.context.totalTimeTaken       = parseInt(this.context.cookieManager(representationName+".totalTimeTaken"     )) || this.context.totalTimeTaken;
     this.context.totalClonesRendered  = parseInt(this.context.cookieManager(representationName+".totalClonesRendered")) || this.context.totalClonesRendered;
-    
+
     var averageTimePerClone   = this.context.totalTimeTaken / this.context.totalClonesRendered;
     var estimatedTimeToRender = clonesToBeRendered * averageTimePerClone;
 
@@ -1983,7 +1983,7 @@ thisEqualsThat.oop = function()
   this.SVGHUD.prototype.svg3dCloneTimer.prototype.postColor = function(svgHUD, context)
   { this.context.totalTimeTaken += Date.now() - this.context.startTime;
 
-    
+
     var representationName      = this.svgHUD.modelInstance.svg3dDisplayJSON.representationName;
     this.context.cookieManager( representationName+".totalTimeTaken"     , this.context.totalTimeTaken       );
     this.context.cookieManager( representationName+".totalClonesRendered", this.context.totalClonesRendered  );
@@ -2349,7 +2349,7 @@ thisEqualsThat.oop = function()
       }
     );
   }
-  
+
 
   this.ModelFieldInput.prototype.getTag = function(passThrough, appendTo)
   { if (! this.hasOwnProperty("uiElement"))
@@ -2371,7 +2371,7 @@ thisEqualsThat.oop = function()
 
     var This = this;
     // O.create
-    // ( [ ".inputFieldElement", 
+    // ( [ ".inputFieldElement",
     //     [ [ ".inputFieldLabel", "@"+this.data.displayName ],
     //       [ O.dropdown(this.display, null, ".inputFieldSelect", this.simpleName) ],
     //     ],
@@ -2393,7 +2393,7 @@ thisEqualsThat.oop = function()
       appendTo
     );
 
-    
+
     // ( [ ".uiElement.inputFieldElement.displayFlex.spaceBetween",
     //     [ [ ".inputFieldLabel", "@"+this.data.displayName,
     //         ,
@@ -2477,7 +2477,7 @@ thisEqualsThat.oop = function()
       //     }
       //   ).addClass("unit_"+this.data.unit);
 
-      
+
       this.uiValue_text.val(unitsAroundOutput( this, fieldData.defaultValue ));
       this.uiValue_text.data("thisEquals.modelField", this);
 
@@ -2591,7 +2591,7 @@ thisEqualsThat.oop = function()
 
   this.ModelFieldInput.prototype.actualToSlider = function()
   { var currentValue = this.data.currentValue;
-    
+
     var toReturn;
     if (this.hasOwnProperty("logSliderConstants") )
     { var lSC = this.logSliderConstants;
@@ -2630,20 +2630,20 @@ thisEqualsThat.oop = function()
     this.fullAddress    = this.data.fullAddress;
     modelInstance.outputFields[this.fullAddress.toString()] = this;
   }
-  
-  
+
+
   this.ModelFieldOutput.prototype.getDropDownItem = function(appendTo)
   { var outputFieldSelectButton = {};
     O.create
-        ( ["button.dropdownItem.modelFieldOutput.btn.displayFlex.width100.spaceBetween", 
+        ( ["button.dropdownItem.modelFieldOutput.btn.displayFlex.width100.spaceBetween",
             [ [ ".buttonText", "@" + this.data.displayName ],
-              [ "span.modelClassIndicator", 
-                [ [ ".square20" , "img.createConstructImage.centerBackgroundImage"  ], 
+              [ "span.modelClassIndicator",
+                [ [ ".square20" , "img.createConstructImage.centerBackgroundImage"  ],
                   [ "span"      , "@"+this.data.modelClass            ],
                 ],
               ],
               // [ "span.modelFieldInputIndicator",
-              //   [ [ ".square20", "img.modelField.centerBackgroundImage" ], 
+              //   [ [ ".square20", "img.modelField.centerBackgroundImage" ],
               //     [ "span", "@"+this.data.name ],
               //   ],
               // ],
@@ -2687,15 +2687,15 @@ thisEqualsThat.oop = function()
   this.ModelFieldVisualisation.prototype.getDropDownItem = function(appendTo)
   { var visualisationFieldSelectButton = {};
     O.create
-        ( ["button.dropdownItem.modelFieldVisualisation.btn.displayFlex.width100.spaceBetween", 
+        ( ["button.dropdownItem.modelFieldVisualisation.btn.displayFlex.width100.spaceBetween",
             [ [ ".buttonText", "@" + this.data.displayName ],
-              [ "span.modelClassIndicator", 
-                [ [ ".square20" , "img.createConstructImage.centerBackgroundImage"  ], 
+              [ "span.modelClassIndicator",
+                [ [ ".square20" , "img.createConstructImage.centerBackgroundImage"  ],
                   [ "span"      , "@"+this.modelInstance.modelClass.name            ],
                 ],
               ],
               // [ "span.modelFieldInputIndicator",
-              //   [ [ ".square20", "img.modelField.centerBackgroundImage" ], 
+              //   [ [ ".square20", "img.modelField.centerBackgroundImage" ],
               //     [ "span", "@"+this.data.name ],
               //   ],
               // ],
@@ -2750,11 +2750,11 @@ thisEqualsThat.oop = function()
     { defaultCookieSettings = {};
     }
 
-    var localContext = this.context[componentName] = 
+    var localContext = this.context[componentName] =
         { "componentCookieName":    componentCookieName,
           "userPermissionGranted" : Cookies.get(componentCookieName) || false,
         };
-    
+
     var parameterDefaults =
         { "expires": 3650,
           "domain": null,
@@ -2762,11 +2762,11 @@ thisEqualsThat.oop = function()
         };
     for (parameterName in parameterDefaults )
     { eval
-      ( `if (${parameterName} !== null) 
+      ( `if (${parameterName} !== null)
           defaultCookieSettings.${parameterName} = ${parameterName}
-        ` 
+        `
       );
-      if (defaultCookieSettings[parameterName] == null) 
+      if (defaultCookieSettings[parameterName] == null)
         defaultCookieSettings[parameterName] = parameterDefaults[parameterName];
     }
 
@@ -2793,7 +2793,7 @@ thisEqualsThat.oop = function()
 
         Cookies.set(componentCookieName, true, localContext.defaultCookieSettings);
         Cookies.set(componentCookieName+".defaultCookieSettings", localContext.defaultCookieSettings);
-      } 
+      }
       if (localContext.userPermissionGranted)
       { Cookies.set(componentCookieName+"."+cookieName, value, localContext.defaultCookieSettings);
         return true;

@@ -17,8 +17,8 @@ html, body {
     height: 100%;
 }
 
-* 
-{ font-family: Roboto; 
+*
+{ font-family: Roboto;
 }
 
 
@@ -30,7 +30,7 @@ html, body{
 }
 
 body
-{ 
+{
 }
 
 a, a:focus
@@ -127,7 +127,7 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
 }
 
 .selected.modelFieldOutput, .selected.modelFieldVisualisation
-{ 
+{
   /*background-color: rgba(35, 190, 204, 0.3);*/
   border-left-style: solid;
   border-left-width: 4px;
@@ -165,14 +165,73 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
 }
 
 
-.navbar
-{ padding: 0px;
+.navbar-fixed-top
+{ height: 60px;
+  padding: 0;
+  display: block;
 }
 .navbar-fixed-side-container
 { width: 100%;
 }
 .navbar-fixed-side
 { margin-bottom: 0px !important;
+}
+.navbarHeader .navbar-brand
+{ padding: 13px 15px;
+  height: 60px;
+}
+.mainNav-collapse
+{ float: right;
+  width: 50%;
+  padding: 10px 0;
+}
+.navbarContent
+{ height: 40px;
+  width: 100%;
+}
+.createConstruct
+{ float: right;
+  margin-right: 50px;
+}
+ .createConstruct button.blueprintItem
+{ padding: 0;
+  box-shadow: 0 0 0;
+  overflow: visible;
+  transition: all .3s;
+}
+ .createConstruct .blueprintItem .row-content
+{ position: absolute;
+  width: 150px;
+  height: 200px;
+  right: 0;
+  padding: 0 15px;
+  background: #fff;
+  bottom: -230px;
+  opacity: 0;
+  z-index: -1;
+  transition: all .3s;
+  box-shadow: 1px 3px 6px rgba(0,0,0, .4);
+  border-radius: 3px;
+}
+.createConstruct .blueprintItem:hover > .row-content
+{ bottom: -210px;
+  opacity: 1;
+  z-index: 1;
+}
+.createConstruct .blueprintItem .row-content::before
+{ content: "";
+  position: absolute;
+  top: -3px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 3px;
+  transform: rotate(45deg);
+  box-shadow: -5px -5px 2px -4px rgba(0,0,0, .1);
+}
+.list-group-item-heading
+{ margin: 10px 0;
 }
 
 /* Tools */
@@ -222,8 +281,10 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
 }
 
 /*#modals*/ .list-group-item .row-action-primary img
-{ height: 32px;
-  width:  32px;
+{ height: 40px;
+  width:  40px;
+  margin: 0;
+  border-radius: 50%;
 }
 .modal-content
 { position: relative;
@@ -236,7 +297,7 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
   float: right;
   color: grey;
 
-  content:"\e080";    
+  content:"\e080";
 }
 a .panelCollapsibleCaret::after
 { content:"\e114";
@@ -318,7 +379,7 @@ a .panelCollapsibleArrow.arrowOpen
 { margin-right: inherit;
 }
 .blueprintItem .row-action-primary
-{ margin-right: 8px;
+{ margin-right: 0;
 }
 .blueprintItem
 { position: relative;
@@ -344,7 +405,7 @@ a .panelCollapsibleArrow.arrowOpen
 {   box-shadow: 0px 0px 8px black;
 }
 .blueprintItem:hover
-{   box-shadow: 0px 0px 4px grey;
+{
 }
 
 #blueprintTutorialPlayer
@@ -370,12 +431,12 @@ a .panelCollapsibleArrow.arrowOpen
   z-index:  -1;
 }
 .playerMenu .closeButton i
-{ 
+{
   color: lightgrey;
   font-size: 20px;
 }
 .playerMenu .closeButton:hover i
-{ 
+{
   color: white;
   font-size: 20px;
 }
@@ -417,7 +478,7 @@ a .panelCollapsibleArrow.arrowOpen
   margin-right: -15px;
   margin-left: -15px;
   margin-top: -15px;
-  
+
   border: none;
 
   background-color: #fafafa;
@@ -451,7 +512,7 @@ svg.rootSVG
   width: 100%;
   margin-top: 5px;
   padding-left: 10px;
-  
+
   border: none;
 }
 
@@ -459,7 +520,7 @@ svg.rootSVG
 .svgSaveLink
 { position: absolute;
   top: 0px;
-  right: 4px; 
+  right: 4px;
   border-radius: 50%;
 
   width: 31px;
@@ -617,7 +678,7 @@ div.inputFieldElement:hover h3 {
 { width: 100%;
 }
 /*@media screen and (max-width: 959px) {
-  div.inputFieldElement:hover div.inputFieldLabel 
+  div.inputFieldElement:hover div.inputFieldLabel
   { position: absolute;
     top:      -60px;
     left:     15%;
@@ -679,7 +740,7 @@ input.inputFieldText[type=text] {
 
 
 /*@media screen and (max-height: 900px)
-{   
+{
     .ripplelink
     { height: 70px;
       padding: 0px;
@@ -690,7 +751,7 @@ input.inputFieldText[type=text] {
 }
 
 @media screen and (max-height: 800px)
-{   
+{
     .ripplelink
     { height: 60px;
     }
@@ -700,7 +761,7 @@ input.inputFieldText[type=text] {
 }
 
 @media screen and (max-height: 700px)
-{   
+{
     .ripplelink
     { height: 50px;
     }
@@ -710,7 +771,7 @@ input.inputFieldText[type=text] {
 }
 
 @media screen and (max-height: 600px)
-{   
+{
     .ripplelink
     { height: 40px;
     }
@@ -720,7 +781,7 @@ input.inputFieldText[type=text] {
 }
 
 @media screen and (max-height: 500px)
-{   
+{
     .ripplelink
     { height: 30px;
     }
@@ -729,7 +790,7 @@ input.inputFieldText[type=text] {
     }
 }
 @media screen and (max-height: 400px)
-{   
+{
     .ripplelink
     { height: 20px;
     }
