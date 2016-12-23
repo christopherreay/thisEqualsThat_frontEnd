@@ -87,8 +87,8 @@ a.createConstruct
 .paddingZero_v
 { padding-top: 0;
   padding-bottom: 25px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .opacityZero
@@ -139,14 +139,36 @@ a.createConstruct
 { background-color: #18858e;
 }
 
-.selected.modelFieldOutput, .selected.modelFieldVisualisation
-{
-  /*background-color: rgba(35, 190, 204, 0.3);*/
-  border-left-style: solid;
-  border-left-width: 4px;
-  border-left-color: rgba(35, 190, 204, 1.0);
+.modelFieldOutput,
+.modelFieldVisualisation
+{ overflow: hidden;
+  transition: all .3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  padding: 15px 10px;
+  margin: 0;
 }
+.selected.modelFieldOutput,
+.selected.modelFieldVisualisation
+{ padding-left: 35px;
 
+}
+.modelFieldOutput::after,
+.modelFieldVisualisation::after
+{ content: "";
+  position: absolute;
+  top: 0;
+  left: -70px;
+  width: 50px;
+  height: 50px;
+  background: #23becc;
+  transform: rotate(45deg);
+  border-radius: 4px;
+  box-shadow: 1px 1px 3px rgba(0,0,0, .5);
+  transition: all .3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+.selected.modelFieldOutput::after,
+.selected.modelFieldVisualisation::after
+{ left: -36px;
+}
 .wrapper
 { padding:  20px;
   position: relative;
@@ -359,11 +381,13 @@ a .panelCollapsibleCaret::after
 .panelCollapsibleArrow
 { position: absolute;
 
-  left: 50%;
-  bottom: -8px;
+  top: 15px;
+  right: 12px;
 
   height: 16px;
   width: 16px;
+
+  transition: all .3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 .panelCollapsibleArrow.arrowClosed
@@ -380,10 +404,10 @@ a .panelCollapsibleCaret::after
 }
 
 a.collapsed .panelCollapsibleArrow.arrowOpen
-{ display: none;
+{ opacity: 0;
 }
 a .panelCollapsibleArrow.arrowOpen
-{ display: block;
+{ opacity: 1;
 }
 
 .dropDownItem.modelFieldOutput, .dropDownItem.modelFieldVisualisation
@@ -507,12 +531,14 @@ div.modal .blueprintItem .row-content
 }*/
 .modelSliders
 { margin-bottom: 15px;
+  padding: 0 10px  ;
 }
 
 .selectedField
 { font-variant: small-caps;
 }
-
+.panelBody.panel-body
+{ padding: 0;}
 
 
 .outputFieldSelectPanel, .visualisationFieldSelectPanel
@@ -525,11 +551,20 @@ div.modal .blueprintItem .row-content
   margin-top: -15px;
 
   border: none;
+  border-radius: 0;
+  box-shadow: none
 
   background-color: #fafafa;
 }
 .outputFieldSelectPanel
 { margin-bottom: -25px;
+}
+.outputFieldSelectPanel .panel-heading,
+.visualisationFieldSelectPanel .panel-heading
+{ border-top: 1px solid #ddd;
+  background: rgba(130,177,255, .2);
+  border-radius: 0;
+  padding-right: 40px;
 }
 .outputFieldSelectPanel .panel-collapse, .visualisationFieldSelectPanel .panel-collapse
 { background-color: #fdfdfd;
@@ -556,8 +591,9 @@ svg.rootSVG
 
   width: 100%;
   margin-top: 5px;
-  padding-left: 10px;
-
+  padding: 10px 30px;
+  padding-bottom: 50px;
+  margin-bottom: 10px;
   border: none;
 }
 
@@ -586,15 +622,23 @@ a.editableTextPlaceholder
 { visibility: hidden;
   position: absolute;
 }
+.editable-input input
+{ font-size: 31px;
+  border: 0;
+  outline: 0;
+}
 .editable-container.editable-inline
 { position: absolute;
 
-  bottom: 5px;
-  left: 15px;
+  bottom: 34px;
+  left: 29px;
 }
 
 .visualisationOutputPanel
 { margin-bottom: -35px;
+}
+.visualisationOutputPanel.panel-body
+{ padding: 0 15px;
 }
 
 
