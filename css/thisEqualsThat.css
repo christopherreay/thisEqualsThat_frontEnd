@@ -85,6 +85,7 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
 
 .fullHeight, .height100
 { height:   100%;
+  padding-top: 60px;
 }
 .width100
 { width: 100%;
@@ -193,13 +194,19 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
 { float: right;
   margin-right: 50px;
 }
- .createConstruct button.blueprintItem
+ .navbarContent button.profileBbtn
 { padding: 0;
   box-shadow: 0 0 0;
   overflow: visible;
   transition: all .3s;
 }
- .createConstruct .blueprintItem .row-content
+ .navbarContent button.blueprintItem
+{ padding: 0;
+  box-shadow: 0 0 0;
+  overflow: visible;
+  transition: all .3s;
+}
+.profileBbtn .row-content
 { position: absolute;
   width: 150px;
   height: 200px;
@@ -213,12 +220,12 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
   box-shadow: 1px 3px 6px rgba(0,0,0, .4);
   border-radius: 3px;
 }
-.createConstruct .blueprintItem:hover > .row-content
+.profileBbtn.active .row-content
 { bottom: -210px;
   opacity: 1;
   z-index: 1;
 }
-.createConstruct .blueprintItem .row-content::before
+.profileBbtn .row-content::before
 { content: "";
   position: absolute;
   top: -3px;
@@ -231,7 +238,7 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
   box-shadow: -5px -5px 2px -4px rgba(0,0,0, .1);
 }
 .list-group-item-heading
-{ margin: 10px 0;
+{ margin: 8px 0;
 }
 
 /* Tools */
@@ -280,16 +287,29 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
 { background-image:     url(/static/graphics/thisEquals/icons/blueprint.svg);
 }
 
-/*#modals*/ .list-group-item .row-action-primary img
+/*#modals*/
+.list-group-item .row-action-primary img
 { height: 40px;
   width:  40px;
   margin: 0;
-  border-radius: 50%;
 }
+.profileBbtn .row-action-primary img
+{ border-radius: 50%;
+}
+
 .modal-content
 { position: relative;
 }
 
+.constructBlueprint.modal .blueprintItem
+{ z-index: 0;
+  transition: all .3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+.constructBlueprint.modal .blueprintItem:hover
+{ background-color: #EDE;
+  z-index: 3;
+  box-shadow: 2px 3px 5px rgba(0,0,0, .5);
+}
 /*component based content layout */
 
 /*a.collapsed .panelCollapsibleCaret::after
@@ -379,7 +399,10 @@ a .panelCollapsibleArrow.arrowOpen
 { margin-right: inherit;
 }
 .blueprintItem .row-action-primary
-{ margin-right: 0;
+{ margin-right: 10px;
+}
+div.modal .blueprintItem .row-content
+{ margin-top: -8px;
 }
 .blueprintItem
 { position: relative;
@@ -387,22 +410,20 @@ a .panelCollapsibleArrow.arrowOpen
 }
 .blueprintItem .videoOverlay
 {   position: absolute;
-    height: 40px;
-    width: 40px;
-    right: -37px;
-    top: 0px;
-    background-image: url(/static/graphics/visualTools/educational-video.svg);
-    background-color: white;
+    height: 20px;
+    width: 24px;
+    right: 15px;
+    top: 13px;
+    opacity: .6;
+    background-image: url(/static/graphics/visualTools/youtube.svg);
     background-repeat: no-repeat;
-    border-radius: 0px 0px 0px 100%;
-    box-shadow: 0px 0px 4px black;
+    background-size: contain;
 }
 .blueprintItem:hover .videoOverlay
-{   right: 0px;
-    background-color: #ff0909;
+{   opacity: .8;
 }
 .blueprintItem .videoOverlay:hover
-{   box-shadow: 0px 0px 8px black;
+{   opacity: 1;
 }
 .blueprintItem:hover
 {
@@ -738,6 +759,15 @@ input.inputFieldText[type=text] {
     border-bottom: 0;
 }
 
+
+/*media*/
+
+@media(min-width: 992px)
+{ .modal-dialog
+  { max-width: 700px;
+  }
+
+}
 
 /*@media screen and (max-height: 900px)
 {

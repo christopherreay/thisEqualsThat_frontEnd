@@ -112,7 +112,7 @@ thisEqualsThat.oop = function()
                         ".createConstruct.row",
                         O.listGroupItem ( navbar,
                                           null,
-                                          "button", ".blueprintItem", [12, 12, 6, 6], $("<img class='blueprintIcon' src='/static/graphics/user/profilePic.jpg' />"), "", "@Profile", ""
+                                          "button", ".blueprintItem profileBbtn", [12, 12, 6, 6], $("<img class='blueprintIcon' src='/static/graphics/user/profilePic.jpg' />"), "", "@Profile", ""
                                         )[0]
                     )
                   ],
@@ -122,7 +122,7 @@ thisEqualsThat.oop = function()
                         ".createConstruct.row",
                         O.listGroupItem ( navbar,
                                           null,
-                                          "button", ".blueprintItem", [12, 12, 6, 6], $("<img class='blueprintIcon' src='/static/graphics/thisEquals/icons/blueprint.svg' />"), "", "@Construct", ""
+                                          "button", ".blueprintItem constructBtn", [12, 12, 6, 6], $("<img class='blueprintIcon' src='/static/graphics/thisEquals/icons/blueprint.svg' />"), "", "@Construct", ""
                                         )[0]
                     )
                   ],
@@ -134,6 +134,8 @@ thisEqualsThat.oop = function()
               navbar.navbarContent
             );
   };
+
+
 
   this.constructBlueprint               = function(modals)
   { O.modal(  modals,
@@ -181,7 +183,6 @@ thisEqualsThat.oop = function()
           $(this).closest(".modal").modal("hide");
         }
       );
-
 
     var tutorialPlayerStateChange =
       function(event)

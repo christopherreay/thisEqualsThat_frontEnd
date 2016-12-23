@@ -181,7 +181,7 @@ function($)
                           ],
                         ],
                       ],
-                      [ ".mainContentColumn.col-xs-12.col-sm-12.col-md-9.col-lg-10",  mainContent ]
+                      [ ".mainContentColumn.col-sm-offset-1.col-xs-12.col-sm-12.col-md-10",  mainContent ]
                     ]
                   ],
                   passThrough,
