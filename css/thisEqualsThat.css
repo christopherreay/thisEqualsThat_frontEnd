@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
 
 .force-redraw::before {
   content: "";
@@ -33,13 +33,23 @@ body
 {
 }
 
+/*
 a, a:focus
 { color: rgba(35, 190, 204, 1.0);
   font-weight: bold;
 }
 a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calculationPanel .panel-title:hover .modelOutputValue, .visualisationPanel .panel-title:hover div
 { color: rgba(25, 130, 140, 1.0);
+}*/
+
+a.collapseControl:hover,
+a.collapseControl:focus,
+a.collapseControl:active
+{ color: inherit;
+
 }
+a.createConstruct
+{ text-decoration: none;}
 
 .smoothMove
 { -webkit-transition-duration: 0.5s; /* Safari */
@@ -76,7 +86,9 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
 }
 .paddingZero_v
 { padding-top: 0;
-  padding-bottom: 0;
+  padding-bottom: 25px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .opacityZero
@@ -116,10 +128,10 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
 { font-variant: small-caps;
 }
 
-.color_visualTools
+/*.color_visualTools
 { color: rgba(35, 190, 204, 1.0);
   font-weight: bold;
-}
+}*/
 .bg_visualTools
 { background-color: #23becc;
 }
@@ -323,9 +335,21 @@ a .panelCollapsibleCaret::after
 { content:"\e114";
 }*/
 
+
+.panel-default > .panel-heading
+{ cursor: pointer;
+  background-color: #f5f5f5;
+}
+.panel-title
+{ color: #263238;
+  font-weight: 500;
+}
 .btn
 { text-transform: none;
-  font-variant: small-caps;
+}
+.inputFieldLabel.floatLeft
+{ font-weight: 300;
+  color: #000;
 }
 
 .panelCollapsible .collapseControl
@@ -652,17 +676,14 @@ div.model {
 
 
 .inputFieldElement.groupHeader
-{ padding-bottom: 5px;
-  padding-top: 5px;
-
-  /*border-bottom: 1px solid black;*/
+{ padding-bottom: 15px;
+  padding-top: 10px;
+  color: #424242;
+  font-weight: 500;
 }
 
 .inputFieldElement.inputField
-{ margin-left: 15px;
-  width: calc(100% - 30px);
-
-  padding-bottom: 5px;
+{ padding-bottom: 5px;
 }
 
 div.inputFieldElement> select {
@@ -688,8 +709,8 @@ div.inputFieldElement:hover h3 {
     opacity: 1;
 }
 
-.inputFieldElement:hover .inputFieldSlider
-{ box-shadow: 0px 0px 4px darkgrey;
+.inputFieldElement:hover div.inputFieldSlider .ui-slider-handle
+{ box-shadow: 0px 0px 6px #23becc;
 }
 
 .inputFieldElement.type_select .slideAndValue
@@ -743,6 +764,8 @@ div.inputFieldSlider .ui-slider-range {
 }
 div.inputFieldSlider .ui-slider-handle
 { background: #23becc;
+  cursor: pointer;
+  transition: all .3s;
 }
 
 input.inputFieldText[type=text] {

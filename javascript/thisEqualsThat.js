@@ -579,8 +579,8 @@ thisEqualsThat.oop = function()
     if (this.ifa_queueState == "ready")
     { this.ifa_currentlyProcessing = arguments;
       this.ifa_queueState = "Sending Request";
-      this.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", true);
-      this.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", true);
+      // this.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", true);
+      // this.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", true);
 
       var This = this;
       fieldChangeData	= $.extend({modelInstanceID: this.id}, fieldChangeData);
@@ -639,14 +639,16 @@ thisEqualsThat.oop = function()
                 );
               }
               else
-              { This.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", false);
-                This.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", false);
+              {
+                // This.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", false);
+                // This.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", false);
                 This.svg_createSaveLink(This)
               }
             }
             else
-            { This.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", false);
-              This.display.topModelDiv.find(".visualisationSpinner").toggleClass("spinner", true);
+            {
+              // This.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", false);
+              // This.display.topModelDiv.find(".visualisationSpinner").toggleClass("spinner", true);
             }
           },
         };
@@ -761,7 +763,7 @@ thisEqualsThat.oop = function()
                     [ [ ".panel-heading", ".panel-title.displayFlex.spaceBetween",
                         [ [ "div.calculationSpinner",
                             [ [ $("<i class='fa fa-calculator' aria-hidden='true'></i>") ],
-                              [ ".chooseOutputField.smallCaps.color_visualTools" ],
+                              [ ".chooseOutputField.color_visualTools" ],
                             ],
                           ],
                           [ ".modelOutputValue.color_visualTools" ],
@@ -2383,7 +2385,7 @@ thisEqualsThat.oop = function()
     // this.uiElement = this.display.inputFieldElement;
     O.create
     ( [ ".uiElement.inputFieldElement.inputField.displayFlex.spaceBetween.width100",
-        [ [ ".inputFieldLabel.floatLeft.smallCaps", "@"+this.data.displayName ],
+        [ [ ".inputFieldLabel.floatLeft", "@"+this.data.displayName ],
           [ ".slideAndValue",
             [ [ "select.uiValue_select.inputFieldSelect" ],
             ],
@@ -2505,7 +2507,7 @@ thisEqualsThat.oop = function()
 
     O.create
     ( [ ".inputFieldElement.inputField.displayInlineBlock.width100",
-        [ [ ".inputFieldLabel.floatLeft.smallCaps", "@"+this.data.displayName ],
+        [ [ ".inputFieldLabel.floatLeft", "@"+this.data.displayName ],
           [ ".slideAndValue",
             [ [ $("<input type='text' class='uiValue_slider inputFieldText' />"), ],
               [ ".uiSlider.inputFieldSlider", ],
