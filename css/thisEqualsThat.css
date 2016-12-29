@@ -616,25 +616,29 @@ svg.rootSVG
 { position: absolute;
   top: 10px;
   left: 75px;
-  height: 30px;
-  padding: 5px 20px;
+  height: 28px;
   border-left: 1px solid #555;
+}
+.toggleFeatures input
+{ visibility: hidden;
 }
 .toggleControl
 { position: relative;
-  width: 20px;
-  height: 30px;
-  margin: 0 10px;
+  width: 24px;
+  height: 28px;
+  margin-left: 15px;
 }
 .toggleControl::after
 { content: "";
   position: absolute;
-  top: 5px;
-  left: 10px;
-  width: 20px;
-  height: 20px;
+  top: 2px;
+  left: 0px;
+  width: 24px;
+  height: 24px;
   background-repeat: no-repeat;
   background-size: cover;
+  /*-webkit-filter: hue-rotate(140deg) saturate(150);
+  filter: hue-rotate(140deg) saturate(150);*/
 }
 #axis.toggleControl::after
 { background-image: url(/static/graphics/thisEquals/icons/axis.svg);
