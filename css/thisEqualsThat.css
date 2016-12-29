@@ -943,8 +943,8 @@ input.inputFieldText[type=text] {
 }
 
 .hudItem.colorPicker, .fillManager.hudItem
-{ height: 32px;
-  background-image: url('/static/graphics/thisEquals/svgHUD/colorPicker.png');
+{ height: 28px;
+  background-image: url('/static/graphics/thisEquals/svgHUD/colorPic.svg');
   background-size: contain;
   background-repeat: no-repeat;
 }
