@@ -619,34 +619,30 @@ svg.rootSVG
   height: 28px;
   border-left: 1px solid #555;
 }
-.toggleFeatures input
-{ visibility: hidden;
-}
-.toggleControl
+label .toggleControl
 { position: relative;
   width: 24px;
   height: 28px;
   margin-left: 15px;
-}
-.toggleControl::after
-{ content: "";
-  position: absolute;
-  top: 2px;
-  left: 0px;
-  width: 24px;
-  height: 24px;
+  transition: all .1s cubic-bezier(0.4, 0.0, 0.2, 1);
+  background-position: center center;
   background-repeat: no-repeat;
-  background-size: cover;
-  /*-webkit-filter: hue-rotate(140deg) saturate(150);
-  filter: hue-rotate(140deg) saturate(150);*/
+  background-size: contain;
 }
-#axis.toggleControl::after
+label.unchecked .toggleControl
+{ opacity: .5;
+  transform: scale(.9);
+}
+.toggleFeatures input
+{ visibility: hidden;
+}
+#axis.toggleControl
 { background-image: url(/static/graphics/thisEquals/icons/axis.svg);
 }
-#reference.toggleControl::after
+#reference.toggleControl
 { background-image: url(/static/graphics/thisEquals/icons/reference.svg);
 }
-#text_description.toggleControl::after
+#text_description.toggleControl
 { background-image: url(/static/graphics/thisEquals/icons/text_description.svg);
 }
 

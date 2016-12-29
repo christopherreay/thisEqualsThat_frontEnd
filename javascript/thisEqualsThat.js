@@ -915,6 +915,7 @@ thisEqualsThat.oop = function()
           "axes.changeEvent"  :
               function(changeEvent)
               { display.svgHeightAxis.toggle();
+                display.toggle['axes.label'].toggleClass('unchecked');
                 This.svg_createSaveLink(This);
               },
           "svgReferenceG":        $("<input class='checkbox' id  = 'toggle_svgReferenceG_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Frame of Reference'/></span>"),
@@ -922,6 +923,7 @@ thisEqualsThat.oop = function()
           "svgReferenceG.changeEvent":
               function(changeEvent)
               { display.svgReferenceG.toggle();
+                display.toggle['svgReferenceG.label'].toggleClass('unchecked');
                 This.svg_createSaveLink(This);
               },
           "svgTextDescription":        $("<input class='checkbox' id  = 'toggle_svgTextDescription_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Text Description'/></span>"),
@@ -929,6 +931,7 @@ thisEqualsThat.oop = function()
           "svgTextDescription.changeEvent":
               function(changeEvent)
               { display.svgTextDescription.toggle();
+                display.toggle['svgTextDescription.label'].toggleClass('unchecked');
                 This.svg_createSaveLink(This);
               },
         };
