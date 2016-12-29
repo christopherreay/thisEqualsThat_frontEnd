@@ -614,8 +614,36 @@ svg.rootSVG
 }
 .toggleFeatures
 { position: absolute;
-  bottom: 0;
-  right: 0;
+  top: 10px;
+  left: 75px;
+  height: 30px;
+  padding: 5px 20px;
+  border-left: 1px solid #555;
+}
+.toggleControl
+{ position: relative;
+  width: 20px;
+  height: 30px;
+  margin: 0 10px;
+}
+.toggleControl::after
+{ content: "";
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+#axis.toggleControl::after
+{ background-image: url(/static/graphics/thisEquals/icons/axis.svg);
+}
+#reference.toggleControl::after
+{ background-image: url(/static/graphics/thisEquals/icons/reference.svg);
+}
+#text_description.toggleControl::after
+{ background-image: url(/static/graphics/thisEquals/icons/text_description.svg);
 }
 
 a.editableTextPlaceholder

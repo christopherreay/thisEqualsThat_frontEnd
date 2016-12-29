@@ -911,21 +911,21 @@ thisEqualsThat.oop = function()
 
       display.toggle =
         { "axes":                 $("<input class='checkbox' id = 'toggle_axes_" + This.id + "' type='checkbox'  checked='checked'title='Show / Hide Axes' /></span>"),
-          "axes.label":           $("<label/>").append('<div id="axis"></div>'),
+          "axes.label":           $("<label/>").append('<div id="axis" class="toggleControl"></div>'),
           "axes.changeEvent"  :
               function(changeEvent)
               { display.svgHeightAxis.toggle();
                 This.svg_createSaveLink(This);
               },
           "svgReferenceG":        $("<input class='checkbox' id  = 'toggle_svgReferenceG_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Frame of Reference'/></span>"),
-          "svgReferenceG.label":  $("<label/>").append('<div id="reference"></div>'),
+          "svgReferenceG.label":  $("<label/>").append('<div id="reference" class="toggleControl"></div>'),
           "svgReferenceG.changeEvent":
               function(changeEvent)
               { display.svgReferenceG.toggle();
                 This.svg_createSaveLink(This);
               },
           "svgTextDescription":        $("<input class='checkbox' id  = 'toggle_svgTextDescription_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Text Description'/></span>"),
-          "svgTextDescription.label":  $("<label/>").append('<div id="text_description"></div>'),
+          "svgTextDescription.label":  $("<label/>").append('<div id="text_description" class="toggleControl"></div>'),
           "svgTextDescription.changeEvent":
               function(changeEvent)
               { display.svgTextDescription.toggle();
