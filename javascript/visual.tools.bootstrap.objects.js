@@ -441,13 +441,13 @@ function($)
 
   this.panelCollapsibleUniqueCounter = 0;
   this.panelCollapsible =
-  function(passThrough, appendTo, panelCollapsiblePrependList, panelLinkTitle, panelBody, collapsed=false)
+  function(passThrough, appendTo, panelCollapsiblePrependList, panelLinkTitle, panelBody, collapsed=true)
   { var uniqueID = "panelCollapsible_"+this.panelCollapsibleUniqueCounter;
     this.panelCollapsibleUniqueCounter ++;
     var toReturn =
     O.create
     ( [ panelCollapsiblePrependList+".panelCollapsible.panel.panel-default",
-        [ [ $("<a class='collapseControl' data-toggle='collapse' data-target='#"+uniqueID+"' href='#"+uniqueID+"' />"),
+        [ [ $("<a class='collapseControl collapsed' data-toggle='collapse' data-target='#"+uniqueID+"' href='#"+uniqueID+"' />"),
             [ [ ".arrowClosed.panelCollapsibleArrow.square20.centerBackgroundImage" ],
               [ ".arrowOpen.panelCollapsibleArrow.square20.centerBackgroundImage"   ],
               [ ".panel-heading", ".panel-title", panelLinkTitle ],
