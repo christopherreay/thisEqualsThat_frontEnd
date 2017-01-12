@@ -178,9 +178,33 @@ thisEqualsThat.oop = function()
     .on("click", ".blueprintItem",
         function(event)
         { var modelClass = $(event.currentTarget).data("thisEquals_blueprint");
+          var x = event.pageX;
+          var y = event.pageY;
+          var clickX = x - $(this).offset().left;
+          var clickY = y - $(this).offset().top;
+          var btn = this;
+
+          var setX = parseInt(clickX);
+          var setY = parseInt(clickY);
+
+          $(this).append('<svg><circle cx="'+setX+'" cy="'+setY+'" r="'+0+'"></circle></svg>');
+
+          var circle = $(btn).find("circle");
+          circle.animate({
+              "r": $(btn).outerWidth()
+          }, {
+              duration: 300,
+              step: function(val) {
+                  circle.attr("r", val);
+              }
+          });
+
           modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
           ThisEqualsThat.scene.setCurrentModelClass(modelClass);
-          $(this).closest(".modal").modal("hide");
+          setTimeout(function() {
+              $('.constructBlueprint.modal').modal('hide');
+              $('.modal svg').remove();
+          }, 500);
         }
       );
 
