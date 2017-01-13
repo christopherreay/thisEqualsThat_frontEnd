@@ -1,6 +1,7 @@
 window.thisEqualsThat = {};
 thisEqualsThat.graphicLoadVersion = "0.0.9.20160726.1639";
 
+$('body').append('<link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">');
 
 thisEqualsThat.svg          = {};
 thisEqualsThat.svgStore     = {};
@@ -338,7 +339,7 @@ thisEqualsThat.oop = function()
               O.listGroupItem
               ( passThrough,
                 appendTo,
-                "button", ".blueprintItem.ripplelink", [4, 6, 6, 12], $("<img class='blueprintIcon smoothMove' src='"+this.imageURL+"' />"), "", "@"+this.name, "@Description Text");
+                "button", ".blueprintItem.ripplelink", [3, 4, 4, 6], $("<img class='blueprintIcon smoothMove' src='"+this.imageURL+"' />"), "", "@"+this.name, "@Description Text");
           passThrough.blueprintItem.data("thisEquals_blueprint", this);
           //O.create( [ ".videoOverlay.smoothMove" ], passThrough, passThrough.blueprintItem );
         }
@@ -2859,8 +2860,6 @@ thisEqualsThat.oop = function()
     }
   }
 }
-
-
 
 $().ready(
   function()

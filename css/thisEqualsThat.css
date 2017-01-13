@@ -1,5 +1,42 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
 
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/static/iconfont/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url(/static/iconfont/MaterialIcons-Regular.woff2) format('woff2'),
+       url(/static/iconfont/MaterialIcons-Regular.woff) format('woff'),
+       url(/static/iconfont/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
 .force-redraw::before {
   content: "";
 }
@@ -361,6 +398,27 @@ a.createConstruct
 .modal circle
 { fill: rgba(0, 0, 0, .3);
 }
+
+
+.modal.fade .modal-dialog {
+	transform: scale(0.75);
+	top: 00px;
+	opacity: 0;
+	transition: all 0.25s cubic-bezier(0.2, 0.46, 0.25, 1);
+}
+.modal.fade.in .modal-dialog {
+	transform: scale(1);
+  top: 50px;
+	opacity: 1;
+}
+.fade
+{ opacity: 0;
+  -webkit-transition: opacity .25s linear;
+  transition: opacity .25s linear;
+}
+.modal-backdrop.in
+{ opacity: .5;
+}
 /*component based content layout */
 
 /*a.collapsed .panelCollapsibleCaret::after
@@ -377,10 +435,10 @@ a .panelCollapsibleCaret::after
 
 .panel-default > .panel-heading
 { cursor: pointer;
-  background-color: #f5f5f5;
+  background-color: #edeef0;
 }
 .panel-title
-{ color: #263238;
+{ color: #424242;
   font-weight: 500;
 }
 .btn
@@ -390,9 +448,16 @@ a .panelCollapsibleCaret::after
 { font-weight: 300;
   color: #000;
 }
-
 .panelCollapsible .collapseControl
 { text-decoration: none;
+}
+.collapsing
+{ -webkit-transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);;
+  transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);;
+  -webkit-transition-duration: .35s;
+  transition-duration: .35s;
+  -webkit-transition-property: height;
+  transition-property: height;
 }
 
 .panelCollapsibleArrow
@@ -404,7 +469,7 @@ a .panelCollapsibleCaret::after
   height: 16px;
   width: 16px;
 
-  transition: all .3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  transition: all .35s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 .panelCollapsibleArrow.arrowClosed
@@ -579,12 +644,17 @@ div.modal .blueprintItem .row-content
 .outputFieldSelectPanel .panel-heading,
 .visualisationFieldSelectPanel .panel-heading
 { border-top: 1px solid #ddd;
-  background: rgba(130,177,255, .2);
+  background: #757575;
   border-radius: 0;
   padding-right: 40px;
 }
-.outputFieldSelectPanel .panel-collapse, .visualisationFieldSelectPanel .panel-collapse
-{ background-color: #fdfdfd;
+.outputFieldSelectPanel .panel-title,
+.visualisationFieldSelectPanel .panel-title
+{ color: #FAFAFA;
+}
+.outputFieldSelectPanel .panel-collapse,
+.visualisationFieldSelectPanel .panel-collapse
+{ background-color: #EEEEEE;
 }
 
 .bottomModelSelectDiv
