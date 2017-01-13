@@ -829,6 +829,9 @@ div.inputFieldLabel {
     -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
     transition: all .3s cubic-bezier(.4,0,.2,1);
 }*/
+
+
+/* slider */
 div.inputFieldSlider {
     height: 2px;
     border: 0;
@@ -838,6 +841,7 @@ div.inputFieldSlider {
     margin: 6px 0;
     transform: scale(1);
 }
+/* handle */
 div.ui-slider span.ui-slider-handle
 { width: 12px;
   height: 12px;
@@ -856,6 +860,7 @@ div.ui-slider span.ui-slider-handle
 div.ui-slider .ui-slider-range
 { background: #23becc;
 }
+/* events style */
 div.ui-slider span.ui-slider-handle.ui-state-hover,
 div.ui-slider span.ui-slider-handle.ui-state-focus
 { box-shadow: 0px 0px 0px 6px rgba(35,190,204, .28);
@@ -865,6 +870,21 @@ div.ui-slider span.ui-slider-handle.ui-state-active
   transform: scale(1.5);
   transition-duration: .2s, .1s;
 }
+/* when handler in start position */
+div.ui-slider span.ui-slider-handle.ui-state-start
+{ background: #fff;
+  border: 2px solid #9E9E9E;
+}
+div.ui-slider span.ui-slider-handle.ui-state-start.ui-state-hover,
+div.ui-slider span.ui-slider-handle.ui-state-start.ui-state-focus
+{ box-shadow: 0px 0px 0px 6px rgba(158,158,158, .28);
+}
+div.ui-slider span.ui-slider-handle.ui-state-start.ui-state-active
+{ box-shadow: 0px 0px 0px 0px rgba(158,158,158, 0);
+  transform: scale(1.5);
+  transition-duration: .2s, .1s;
+}
+/* slider styles end*/
 input.inputFieldText[type=text] {
     float: right;
     background: transparent;

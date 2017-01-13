@@ -2574,7 +2574,6 @@ thisEqualsThat.oop = function()
             This.slider_sliderUpdatesText;
             This.inputFieldAltered(This);
         }
-        console.debug(ui.value);
       };
     return sliderOptions;
   }
@@ -2600,12 +2599,21 @@ thisEqualsThat.oop = function()
         min: min,
         value: this.actualToSlider(fieldData.currentValue),
         slide: function(event, ui)
-          { This.data.currentValue = This.logSliderToValue(ui.value);
+          { var uiVal = ui.value;
+            var handle = $(this).find('.ui-slider-handle');
+
+            This.data.currentValue = This.logSliderToValue(ui.value);
             This.slider_sliderUpdatesText();
+
+            // console.debug( uiVal );
+            if (uiVal === min) {
+                handle.addClass('ui-state-start');
+            } else {
+                handle.removeClass('ui-state-start');
+            }
           },
         change: function(event, ui)
           { if (! event.originalEvent) return true;
-
             This.data.currentValue = This.logSliderToValue(ui.value);
             This.slider_sliderUpdatesText();
 
