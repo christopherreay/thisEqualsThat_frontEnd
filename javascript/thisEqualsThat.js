@@ -2574,6 +2574,7 @@ thisEqualsThat.oop = function()
             This.slider_sliderUpdatesText;
             This.inputFieldAltered(This);
         }
+        console.debug(ui.value);
       };
     return sliderOptions;
   }

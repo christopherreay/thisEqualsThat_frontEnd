@@ -548,7 +548,7 @@ div.modal .blueprintItem .row-content
 }*/
 .modelSliders
 { margin-bottom: 15px;
-  padding: 0 10px  ;
+  padding: 15px 10px;
 }
 
 .selectedField
@@ -765,12 +765,14 @@ div.model {
 
 
 .inputFieldElement.groupHeader
-{ padding-bottom: 15px;
-  padding-top: 10px;
+{ padding-top: 15px;
+  padding-bottom: 3px;
   color: #424242;
   font-weight: 500;
 }
-
+.inputFieldElement.groupHeader:first-child
+{ padding-top: 0;
+}
 .inputFieldElement.inputField
 { padding-bottom: 5px;
 }
@@ -796,10 +798,6 @@ div.inputFieldElement:hover h3 {
     left: 104%;
     z-index: 999;
     opacity: 1;
-}
-
-.inputFieldElement:hover div.inputFieldSlider .ui-slider-handle
-{ box-shadow: 0px 0px 6px #23becc;
 }
 
 .inputFieldElement.type_select .slideAndValue
@@ -832,35 +830,46 @@ div.inputFieldLabel {
     transition: all .3s cubic-bezier(.4,0,.2,1);
 }*/
 div.inputFieldSlider {
-    height: 1px;
+    height: 2px;
     border: 0;
     background: #9E9E9E;
     width: 100%;
-    bottom: -1px;
     clear: both;
+    margin: 6px 0;
+    transform: scale(1);
 }
-div.inputFieldSlider> .ui-state-default {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    top: -7px;
-    background: #23becc;
-    border: 0;
-    outline: none;
-}
-div.inputFieldSlider .ui-slider-range {
-    background: #23becc;
-}
-div.inputFieldSlider .ui-slider-handle
-{ background: #23becc;
+div.ui-slider span.ui-slider-handle
+{ width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  top: -5px;
+  margin-left: -6px;
+  background: #23becc;
+  border: 0;
+  outline: none;
   cursor: pointer;
-  transition: all .3s;
+  transform: scale(1);
+  transition-property: transform, box-shadow;
+  transition-duration: .3s, .3s;
+  transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
 }
-
+div.ui-slider .ui-slider-range
+{ background: #23becc;
+}
+div.ui-slider span.ui-slider-handle.ui-state-hover,
+div.ui-slider span.ui-slider-handle.ui-state-focus
+{ box-shadow: 0px 0px 0px 6px rgba(35,190,204, .28);
+}
+div.ui-slider span.ui-slider-handle.ui-state-active
+{ box-shadow: 0px 0px 0px 0px rgba(35,190,204, 0);
+  transform: scale(1.5);
+  transition-duration: .2s, .1s;
+}
 input.inputFieldText[type=text] {
     float: right;
     background: transparent;
-    padding-top: 3px;
+    padding-top: 0px;
+    padding-bottom: 8px;
     border-top: 0;
     border-right: 0;
     border-left: 0;
