@@ -113,7 +113,7 @@ thisEqualsThat.oop = function()
                         ".createConstruct.row",
                         O.listGroupItem ( navbar,
                                           null,
-                                          "button", ".blueprintItem profileBbtn", [12, 12, 6, 6], $("<img class='blueprintIcon' src='/static/graphics/user/profilePic.jpg' />"), "", "@Profile", ""
+                                          "button", ".blueprintItem profileBbtn", [12, 12, 6, 6], $('<i class="material-icons">account_circle</i>'), "", "@Profile", ""
                                         )[0]
                     )
                   ],

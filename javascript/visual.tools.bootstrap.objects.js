@@ -448,8 +448,7 @@ function($)
     O.create
     ( [ panelCollapsiblePrependList+".panelCollapsible.panel.panel-default",
         [ [ $("<a class='collapseControl collapsed' data-toggle='collapse' data-target='#"+uniqueID+"' href='#"+uniqueID+"' />"),
-            [ [ ".arrowClosed.panelCollapsibleArrow.square20.centerBackgroundImage" ],
-              [ ".arrowOpen.panelCollapsibleArrow.square20.centerBackgroundImage"   ],
+            [ [ $('<i class="material-icons">expand_more</i>') ],
               [ ".panel-heading", ".panel-title", panelLinkTitle ],
             ],
           ],
