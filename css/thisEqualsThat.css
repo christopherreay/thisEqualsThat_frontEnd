@@ -176,6 +176,15 @@ a.createConstruct
 { background-color: #18858e;
 }
 
+.panel
+{ margin-bottom: 0;
+  border: 0;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+}
+.svgDiv.panel
+{ box-shadow: none;}
+
+
 .modelFieldOutput,
 .modelFieldVisualisation
 { overflow: hidden;
@@ -381,14 +390,31 @@ a.createConstruct
 .modal .blueprintItem:hover
 { background-color: #EDE;
   z-index: 3;
+  overflow: visible;
   box-shadow: 2px 3px 5px rgba(0,0,0, .5);
 }
 .modal .list-group-item-text
-{ opacity: 0;
-  transition: all .3s;
+{ position: absolute;
+  top: 0;
+  right: -130%;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  font-weight: 500;
+  background: #FAFAFA;
+  border-radius: 2px;
+  box-shadow: 1px 2px 5px rgba(0,0,0, .5);
+  opacity: 0;
+  transition: all .3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+.modal .blueprintItem .row-content
+{ margin-top: 5px;
+  text-align: center;
+  width: 100%;
 }
 .modal .blueprintItem:hover .list-group-item-text
 { opacity: 1;
+  right: -105%;
 }
 .modal svg
 { position: absolute;
@@ -454,15 +480,15 @@ a .panelCollapsibleCaret::after
 { text-decoration: none;
 }
 .collapsing
-{ -webkit-transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);;
-  transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);;
+{ -webkit-transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+  transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
   -webkit-transition-duration: .35s;
   transition-duration: .35s;
   -webkit-transition-property: height;
   transition-property: height;
 }
 
-.panelCollapsibleArrow
+/*.panelCollapsibleArrow
 { position: absolute;
 
   top: 15px;
@@ -485,13 +511,19 @@ a .panelCollapsibleCaret::after
 }
 .panelCollapsibleArrow.arrowOpen:hover
 { background-image: url(/static/graphics/visualTools/panel.upArrow.hover.png);
+}*/
+a.collapseControl .material-icons
+{ position: absolute;
+  top: 10px;
+  right: 8px;
+  color: #FAFAFA;
+  transition: all .35s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
-
-a.collapsed .panelCollapsibleArrow.arrowOpen
-{ opacity: 0;
+a.collapseControl.collapsed .material-icons
+{ transform: rotate(0deg);
 }
-a .panelCollapsibleArrow.arrowOpen
-{ opacity: 1;
+a.collapseControl .material-icons
+{ transform: rotate(180deg);
 }
 
 .dropDownItem.modelFieldOutput, .dropDownItem.modelFieldVisualisation
@@ -531,10 +563,10 @@ a .panelCollapsibleArrow.arrowOpen
 { margin-right: inherit;
 }
 .blueprintItem .row-action-primary
-{ margin-right: 10px;
+{ margin: 0 auto;
 }
-div.modal .blueprintItem .row-content
-{ margin-top: -8px;
+.blueprintItem .row-content
+{ margin-left: 8px;
 }
 .blueprintItem
 { position: relative;
@@ -618,9 +650,6 @@ div.modal .blueprintItem .row-content
   padding: 15px 10px;
 }
 
-.selectedField
-{ font-variant: small-caps;
-}
 .panelBody.panel-body
 { padding: 0;}
 
