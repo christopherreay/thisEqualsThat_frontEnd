@@ -286,10 +286,14 @@ a.createConstruct
   overflow: visible;
   transition: all .3s;
 }
+.constructBtn .material-icons,
 .profileBbtn .material-icons
-{ font-size: 40px;}
+{ font-size: 40px;
+}
 .profileBbtn .row-content
-{ position: absolute;
+{ display: none;
+
+  /*position: absolute;
   width: 150px;
   height: 200px;
   right: 0;
@@ -300,9 +304,9 @@ a.createConstruct
   z-index: -1;
   transition: all .3s;
   box-shadow: 1px 3px 6px rgba(0,0,0, .4);
-  border-radius: 3px;
+  border-radius: 3px;*/
 }
-.profileBbtn.active .row-content
+/*.profileBbtn.active .row-content
 { bottom: -210px;
   opacity: 1;
   z-index: 1;
@@ -318,7 +322,7 @@ a.createConstruct
   border-radius: 3px;
   transform: rotate(45deg);
   box-shadow: -5px -5px 2px -4px rgba(0,0,0, .1);
-}
+}*/
 .list-group-item-heading
 { margin: 8px 0;
 }
@@ -634,9 +638,6 @@ a.collapseControl .material-icons
 { padding-right: 0px;
 }
 
-.calculationPanel .panel-title i
-{ font-size: 20px;
-}
 .calculationPanel .panel-title .chooseOutputField, .visualisationPanel .panel-title .chooseVisualisationField
 { margin-left: 8px;
 }
@@ -718,17 +719,24 @@ svg.rootSVG
 
 .svgSaveLink
 { position: absolute;
-  top: 0px;
-  right: 4px;
+  top: 5px;
+  right: 16px;
   border-radius: 50%;
-
-  width: 31px;
-  height: 32px;
-  padding: 4px 4px;
+  width: 42px;
+  height: 42px;
+  box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+}
+.svgSaveLink > a
+{ position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 8px;
 }
 .svgSaveLink > a > i
-{ color: white;
-  font-size: 24px;
+{ color: #FAFAFA;
+  font-size: 26px;
 }
 .toggleFeatures
 { position: absolute;

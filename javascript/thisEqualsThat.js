@@ -101,6 +101,8 @@ thisEqualsThat.oop = function()
     this.constructBlueprint               (display.modals);
     this.constructBlueprint_inDevelopment (display.modals);
 
+    this.profileModal (display.modals);
+
     ThisEqualsThat.referenceVisual  = new ThisEqualsThat.ReferenceVisual    ( display.doubleBuffer);
     ThisEqualsThat.scene            = new ThisEqualsThat.ThisEqualsThatScene( display.navbar.thisEqualsThatScene );
   };
@@ -123,7 +125,7 @@ thisEqualsThat.oop = function()
                         ".createConstruct.row",
                         O.listGroupItem ( navbar,
                                           null,
-                                          "button", ".blueprintItem constructBtn", [12, 12, 6, 6], $("<img class='blueprintIcon' src='/static/graphics/thisEquals/icons/blueprint.svg' />"), "", "@Construct", ""
+                                          "button", ".blueprintItem constructBtn", [12, 12, 6, 6], $('<i class="material-icons">view_comfy</i>'), "", "@Construct", ""
                                         )[0]
                     )
                   ],
@@ -136,8 +138,18 @@ thisEqualsThat.oop = function()
             );
   };
 
+// profileModel
+  this.profileModal = function (modals)
+    { O.modal(  modals,
+                modals,
+                "profileModal",
+                $("<span>Your Profile test</span>"),
+                "profileModalContainer.row",
+                ""
+              );
+    }
 
-
+// blueprintItem
   this.constructBlueprint               = function(modals)
   { O.modal(  modals,
               modals,
@@ -787,7 +799,7 @@ thisEqualsThat.oop = function()
                 [ [".calculationColumn.col-lg-4.col-xs-12", ".calculationPanel.panel.panel-default",
                     [ [ ".panel-heading", ".panel-title.displayFlex.spaceBetween",
                         [ [ "div.calculationSpinner",
-                            [ [ $("<i class='fa fa-calculator' aria-hidden='true'></i>") ],
+                            [ [ $('<i class="material-icons">tune</i>') ],
                               [ ".chooseOutputField.color_visualTools" ],
                             ],
                           ],
@@ -811,7 +823,7 @@ thisEqualsThat.oop = function()
                   [".visualisationColumn.col-lg-8.col-xs-12", ".visualisationPanel.panel.panel-default",
                     [ [ ".panel-heading", ".panel-title.displayFlex.spaceBetween",
                         [ [ "div.visualisationSpinner",
-                            [ [ $("<img class='' src='/static/graphics/visualTools/visualise.height_18px.png'>") ],
+                            [ [ $('<i class="material-icons">visibility</i>') ],
                               [ ".chooseVisualisationField.smallCaps.color_visualTools" ],
                             ],
                           ],
