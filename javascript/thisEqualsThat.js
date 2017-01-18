@@ -149,6 +149,10 @@ thisEqualsThat.oop = function()
               );
     }
 
+// ripple effective
+
+
+
 // blueprintItem
   this.constructBlueprint               = function(modals)
   { O.modal(  modals,
@@ -232,7 +236,14 @@ thisEqualsThat.oop = function()
     modals.constructBlueprint
     .on("click", ".videoOverlay",
         function(event)
-        { var modelClass = $(event.currentTarget).closest(".blueprintItem").data("thisEquals_blueprint");
+        { if (!event) {
+            window.event.cancelBubble = true;
+          } else if (event.stopPropagation) {
+            event.stopPropagation();
+          } else {
+            event.stopPropagation();
+          }
+          var modelClass = $(event.currentTarget).closest(".blueprintItem").data("thisEquals_blueprint");
 
           if (! modals.constructBlueprint.hasOwnProperty("tutorialPlayer") )
           { modals.constructBlueprint.tutorialPlayer
@@ -266,10 +277,11 @@ thisEqualsThat.oop = function()
           }
           $("body").toggleClass("playingTutorial", true);
 
-          modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
-          ThisEqualsThat.scene.setCurrentModelClass(modelClass);
+          // modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
+          // ThisEqualsThat.scene.setCurrentModelClass(modelClass);
 
-          event.stopPropagation();
+          // event.stopPropagation();
+          // return false;
         }
       );
     modals.constructBlueprint
