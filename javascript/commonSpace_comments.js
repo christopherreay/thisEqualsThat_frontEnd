@@ -89,7 +89,10 @@ thisEqualsThat.oop = function()
           { if (currentlySelectedCommentSet) commentsList[currentlySelectedCommentSet].hide();
             commentsList[selectionID] = $("<div id='commentContainer_"+selectionID+"' class='commentContainer'> </div>");
             $("body").append(commentsList[selectionID]);
-            commentsList[selectionID].comments();
+            commentsList[selectionID].comments
+            ( { "enableSynthesis": true,
+              }
+            );
             
           }
           else if(currentlySelectedCommentSet != selectionID)
