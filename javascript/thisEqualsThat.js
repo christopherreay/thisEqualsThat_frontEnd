@@ -273,7 +273,7 @@ thisEqualsThat.oop = function()
       success: function(data, status, request)
       { $.each(data.standard, 
             function(index, value)
-            { This[value] = new ThisEqualsThat.ModelClass(value);
+            { This[value.name] = new ThisEqualsThat.ModelClass(value);
             }
         );
         $.each
@@ -303,19 +303,22 @@ thisEqualsThat.oop = function()
   }
 
 
-  this.ModelClass = function(modelClassName)
-  { this.name       = modelClassName;
-    this.imageURL   = this.imageBaseURL+modelClassName+".svg";
+  this.ModelClass = function(modelClass)
+  { this.name       = modelClass.name;
+    this.displayName = modelClass.displayName;
+
+    this.imageURL   = this.imageBaseURL+this.name+".svg";
   }
   this.ModelClass.prototype.imageBaseURL      = "/static/graphics/thisEquals/modelClasses/";
   this.ModelClass.prototype.getBlueprintItem  = 
       function(passThrough, appendTo)
       { if (! this.hasOwnProperty("blueprintItem") )
-        { this.blueprintItem = 
+        { var displayName = this.displayName || this.name;
+          this.blueprintItem = 
               O.listGroupItem
               ( passThrough, 
                 appendTo, 
-                "button", ".blueprintItem.ripplelink", [4, 6, 6, 12], $("<img class='blueprintIcon smoothMove' src='"+this.imageURL+"' />"), "", "@"+this.name, "@Description Text");
+                "button", ".blueprintItem.ripplelink", [4, 6, 6, 12], $("<img class='blueprintIcon smoothMove' src='"+this.imageURL+"' />"), "", "@"+displayName, "@Description Text");
           passThrough.blueprintItem.data("thisEquals_blueprint", this);
           //O.create( [ ".videoOverlay.smoothMove" ], passThrough, passThrough.blueprintItem );
         }
@@ -353,6 +356,7 @@ thisEqualsThat.oop = function()
   { this.name     = modelClassData.name || modelClassData.jsonKey;
     this.imageURL = this.imageBaseURL+modelClassData.icon;
     this.data     = modelClassData;
+    this.displayName = modelClassData.displayName || modelClassData.name
   }
   this.ModelClass_iframe.prototype.imageBaseURL =  "/static/graphics/thisEquals/icons/";
   this.ModelClass_iframe.prototype.getBlueprintItem = 
