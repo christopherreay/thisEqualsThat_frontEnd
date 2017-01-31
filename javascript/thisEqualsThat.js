@@ -65,21 +65,6 @@ thisEqualsThat.oop = function()
               display,
               display
             );
-
-    setTimeout
-    ( function() 
-      { display.welcomeOver.toggleClass("opacityZero", true);
- 
-        setTimeout
-        ( function()
-          { ThisEqualsThat.displayInterface(display);
-          },
-          500
-        );
-      },
-      // 2000
-      10
-    );
   }
 
   this.displayInterface = function(display)
@@ -167,6 +152,8 @@ thisEqualsThat.oop = function()
         if ( modelClassData.hasOwnProperty(key) )
         { O.create( [ ".videoOverlay.smoothMove" ], {}, blueprintItem );
           modelClass.tutorialVideo = modelClassData[key].tutorialVideo;
+
+
         }
         modelClass.tutorialIndex = index;
       }
@@ -232,6 +219,7 @@ thisEqualsThat.oop = function()
           ThisEqualsThat.scene.setCurrentModelClass(modelClass);
 
           event.stopPropagation();
+          return false;
         }
       );
     modals.constructBlueprint
@@ -269,7 +257,7 @@ thisEqualsThat.oop = function()
             );
   }
   this.ThisEqualsThatScene.prototype.setCurrentModelClass = function(modelClass)
-  { if (this.hasOwnProperty("currentModelClass"))
+  { if (this.hasOwnProperty("currentModelClass") && modelClass != this.currentModelClass)
     { this.currentModelClass.modelInstance.hide();
     }
     this.currentModelClass = modelClass;
@@ -294,6 +282,20 @@ thisEqualsThat.oop = function()
             { value["jsonKey"] = key;
               This[key] = new ThisEqualsThat.ModelClass_iframe(value);
             }
+        );
+        setTimeout
+        ( function() 
+          { ThisEqualsThat.display.welcomeOver.toggleClass("opacityZero", true);
+     
+            setTimeout
+            ( function()
+              { ThisEqualsThat.displayInterface(ThisEqualsThat.display);
+              },
+              500
+            );
+          },
+          // 2000
+          10
         );
       },
     };
@@ -2487,8 +2489,7 @@ thisEqualsThat.oop = function()
   }
   this.ModelFieldInput.prototype.inputField_text_changeFunction = function(event)
   { var This  = $(this).data("thisEquals.modelField");
-    This      = event.data;
-
+    
     This.data.currentValue = $(this).val();
     setImmediate
     ( function()
