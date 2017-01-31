@@ -318,7 +318,7 @@ thisEqualsThat.oop = function()
               O.listGroupItem
               ( passThrough, 
                 appendTo, 
-                "button", ".blueprintItem.ripplelink", [4, 6, 6, 12], $("<img class='blueprintIcon smoothMove' src='"+this.imageURL+"' />"), "", "@"+displayName, "@Description Text");
+                "button", ".blueprintItem.ripplelink", [4, 6, 6, 12], $("<img class='blueprintIcon smoothMove' src='"+this.imageURL+"' />"), "", "@"+displayName, "@");
           passThrough.blueprintItem.data("thisEquals_blueprint", this);
           //O.create( [ ".videoOverlay.smoothMove" ], passThrough, passThrough.blueprintItem );
         }
