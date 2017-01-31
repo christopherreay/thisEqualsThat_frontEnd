@@ -2392,7 +2392,7 @@ thisEqualsThat.oop = function()
     // this.uiElement = this.display.inputFieldElement;
     O.create
     ( [ ".uiElement.inputFieldElement.inputField.displayFlex.spaceBetween.width100",
-        [ [ ".inputFieldLabel.floatLeft.smallCaps", "@"+this.data.displayName ],
+        [ [ ".inputFieldLabel.floatLeft.smallCaps", "@"+fieldData.displayName ],
           [ ".slideAndValue",
             [ [ "select.uiValue_select.inputFieldSelect" ],
             ],
@@ -2461,7 +2461,7 @@ thisEqualsThat.oop = function()
   {   var fieldData = this.data;
       O.create
       ( [ ".uiElement.inputFieldElement.displayFlex.spaceBetween",
-          [ [ ".inputFieldLabel", "@"+this.displayName],
+          [ [ ".inputFieldLabel.smallCaps", "@"+fieldData.displayName],
             [ "input.uiValue_text.inputFieldText"+".unit_"+this.data.unit ],
           ],
         ],

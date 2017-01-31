@@ -833,14 +833,15 @@ path.highlight, .highlight path
 }
 
 .ratioColor .percentageSpinner
-{ position: absolute;
-  right: 140px;
-  top: 3px;
-  outline: none;
-  border-color: transparent;
-  font-size: 18px;
-  width: 80px;
-  text-align: right;
+{   position: absolute;
+    right: 150px;
+    top: 8px;
+    outline: none;
+
+    font-size: 18px;
+    width: 50px;
+    text-align: right;
+    height: 20px;
 }
 
 .ratioColor .percentLabel
