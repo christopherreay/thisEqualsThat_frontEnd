@@ -1661,6 +1661,10 @@ thisEqualsThat.oop = function()
         else if (orderItem.startsWith("groupHeader") )
         { elementList.push($(`<div class="inputFieldElement groupHeader">${orderItem.substring(12)}</div>` ) )
         }
+        else if (orderItem.startsWith("#fieldInfo_") )
+        { var fieldElement  = elementList[elementList.length -1]
+          O.tooltip( {}, fieldElement, ".fieldElementTooltip", orderItem.substring(11), {"html":true, "placement": "right", "container": This.inputFieldHUD.modelInstance.display.svgDiv});
+        }
         else
         { elementList.push(this.inputFieldHUD.modelInstance.inputFields[`["${orderItem.replace(", ", "\", \"")}"]`].uiElement); //"
         }

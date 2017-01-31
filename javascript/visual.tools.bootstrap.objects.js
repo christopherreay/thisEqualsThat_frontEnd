@@ -477,6 +477,24 @@ function($)
     return toReturn;
   }
 
+  this.tooltip =
+  function(passThrough, appendTo, tooltipPrependList, tooltipContents, tooltipOptions)
+  { var toReturn = 
+    O.create
+    ( [ tooltipPrependList+"",
+        [ [ $("<a href=='#' class='tooltip' data-toggle='tooltip' title='"+tooltipContents+"' />"), 
+          ],
+        ],
+      ],
+      passThrough,
+      appendTo
+    );
+
+    $(toReturn[1][0][0]).tooltip(tooltipOptions);
+
+    return toReturn;
+  }
+
 }(jQuery);
 
 window.O = ThisEqualsThat.BootstrapObjects;
