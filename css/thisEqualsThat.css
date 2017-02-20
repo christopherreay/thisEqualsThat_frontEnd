@@ -676,13 +676,13 @@ a.collapseControl .material-icons
 .outputFieldSelectPanel .panel-heading,
 .visualisationFieldSelectPanel .panel-heading
 { border-top: 1px solid #ddd;
-  background: #757575;
+  background: #CFD8DC;
   border-radius: 0;
   padding-right: 40px;
 }
 .outputFieldSelectPanel .panel-title,
 .visualisationFieldSelectPanel .panel-title
-{ color: #FAFAFA;
+{ color: #424242;
 }
 .outputFieldSelectPanel .panel-collapse,
 .visualisationFieldSelectPanel .panel-collapse

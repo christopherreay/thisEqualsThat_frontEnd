@@ -1405,7 +1405,7 @@ thisEqualsThat.oop = function()
                         '
                     title     = 'Save SVG Image'
                     download  = '${This.display.svgTextDescription.text()}_${This.display.modelOutputValue.text()}.svg'
-                ><i class="fa fa-download" aria-hidden="true"></i></a>`
+                ><i class="material-icons">file_download</i></a>`
           )
       );
     }
