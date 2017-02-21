@@ -633,8 +633,8 @@ thisEqualsThat.oop = function()
     if (this.ifa_queueState == "ready")
     { this.ifa_currentlyProcessing = arguments;
       this.ifa_queueState = "Sending Request";
-      // this.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", true);
-      // this.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", true);
+       this.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", true);
+       this.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", true);
 
       var This = this;
       fieldChangeData	= $.extend({modelInstanceID: this.id}, fieldChangeData);
@@ -694,15 +694,15 @@ thisEqualsThat.oop = function()
               }
               else
               {
-                // This.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", false);
-                // This.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", false);
+                This.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", false);
+                This.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", false);
                 This.svg_createSaveLink(This)
               }
             }
             else
             {
-              // This.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", false);
-              // This.display.topModelDiv.find(".visualisationSpinner").toggleClass("spinner", true);
+              This.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", false);
+              This.display.topModelDiv.find(".visualisationSpinner").toggleClass("spinner", true);
             }
           },
         };
@@ -870,8 +870,8 @@ thisEqualsThat.oop = function()
                                   ],
                                 ],
                               ],
-                              [ ".toggleFeatures" ,
-                              ],
+                              // [ ".toggleFeatures" ,
+                              // ],
                               [ ".svgSaveLink.bg_visualTools" ,
                               ],
                               [ "a.editableTextPlaceholder", "@Click to Enter Text",
@@ -962,39 +962,6 @@ thisEqualsThat.oop = function()
       );
       // display.svgTextDescription.text("Hello World");
       // display.svgTextInput.on("change", function() { display.svgTextDescription.text($(this).val()); This.svg_createSaveLink(This);});
-
-      display.toggle =
-        { "axes":                 $("<input class='checkbox' id = 'toggle_axes_" + This.id + "' type='checkbox'  checked='checked'title='Show / Hide Axes' /></span>"),
-          "axes.label":           $("<label/>").append('<div id="axis" class="toggleControl"></div>'),
-          "axes.changeEvent"  :
-              function(changeEvent)
-              { display.svgHeightAxis.toggle();
-                display.toggle['axes.label'].toggleClass('unchecked');
-                This.svg_createSaveLink(This);
-              },
-          "svgReferenceG":        $("<input class='checkbox' id  = 'toggle_svgReferenceG_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Frame of Reference'/></span>"),
-          "svgReferenceG.label":  $("<label/>").append('<div id="reference" class="toggleControl"></div>'),
-          "svgReferenceG.changeEvent":
-              function(changeEvent)
-              { display.svgReferenceG.toggle();
-                display.toggle['svgReferenceG.label'].toggleClass('unchecked');
-                This.svg_createSaveLink(This);
-              },
-          "svgTextDescription":        $("<input class='checkbox' id  = 'toggle_svgTextDescription_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Text Description'/></span>"),
-          "svgTextDescription.label":  $("<label/>").append('<div id="text_description" class="toggleControl"></div>'),
-          "svgTextDescription.changeEvent":
-              function(changeEvent)
-              { display.svgTextDescription.toggle();
-                display.toggle['svgTextDescription.label'].toggleClass('unchecked');
-                This.svg_createSaveLink(This);
-              },
-        };
-      var controlList = ["axes", "svgReferenceG", "svgTextDescription"];
-      for (var name of controlList)
-      { display.toggle[name].on("change", display.toggle[name+".changeEvent"]);
-        display.toggle[name].appendTo(display.toggle[name+".label"]);
-        display.toggleFeatures.append(display.toggle[name+".label"]);
-      }
     }
 
     this.display.editableTextPlaceholder
@@ -1537,7 +1504,7 @@ thisEqualsThat.oop = function()
           "MeganPeople3/_C5_manrunning",
           "MeganPeople3/_C2_manbored",
           "MeganPeople3/_C7_manbooks",
-          ["MeganPeople3/_C10_mansad", 0.9],
+          ["MeganPeople3/_C10_mansad",        0.9],
           "MeganPeople3/_C6_manidea",
 
           "MeganPeople4/D6_gransign",
@@ -1545,43 +1512,43 @@ thisEqualsThat.oop = function()
           "MeganPeople4/D4_granlookingup",
           "MeganPeople4/D1_granhappy",
           "MeganPeople4/D2_granchatting",
-          ["MeganPeople4/D9_granreading", 1.35],
+          ["MeganPeople4/D9_granreading",     1.35],
           "MeganPeople4/D10_granthinking",
-          ["MeganPeople4/D3_grannapping", 1.35],
+          ["MeganPeople4/D3_grannapping",     1.35],
           "MeganPeople4/D7_granworried",
-          ["MeganPeople4/D8_grancat", 1.68],
+          ["MeganPeople4/D8_grancat",         1.68],
 
-          ["MeganPeople2/_B3_boysign", 1.2],
-          ["MeganPeople2/_B10_boysearching", 1.0],
-          ["MeganPeople2/_B6_boyresting", 0.34],
-          ["MeganPeople2/_B1_boyhappy", 1.2],
-          ["MeganPeople2/_B9_boytantrum", 1.2],
-          ["MeganPeople2/_B2_boysad", 1.2],
-          ["MeganPeople2/_B7_boysuprised", 1.2],
-          ["MeganPeople2/_B5_boypointing", 1.2],
-          ["MeganPeople2/_B8_boylaughing", 1.2],
-          ["MeganPeople2/_B4_boyreading", 0.7],
+          ["MeganPeople2/_B3_boysign",        1.2],
+          ["MeganPeople2/_B10_boysearching",  1.0],
+          ["MeganPeople2/_B6_boyresting",     0.34],
+          ["MeganPeople2/_B1_boyhappy",       1.2],
+          ["MeganPeople2/_B9_boytantrum",     1.2],
+          ["MeganPeople2/_B2_boysad",         1.2],
+          ["MeganPeople2/_B7_boysuprised",    1.2],
+          ["MeganPeople2/_B5_boypointing",    1.2],
+          ["MeganPeople2/_B8_boylaughing",    1.2],
+          ["MeganPeople2/_B4_boyreading",     0.7],
 
-          ["MeganPeople5/E9_womanresting", 0.9],
+          ["MeganPeople5/E9_womanresting",    0.9],
           "MeganPeople5/E6_womansign",
           "MeganPeople5/E2_womanconfused",
           "MeganPeople5/E3_womanangry",
           "MeganPeople5/E1_womanhappy",
           "MeganPeople5/E7_womanchatting",
-          ["MeganPeople5/E10_womanpainting", 1.4],
-          ["MeganPeople5/E4_womantired", 1.65],
-          ["MeganPeople5/E5_womanreading", 0.6],
+          ["MeganPeople5/E10_womanpainting",  1.4],
+          ["MeganPeople5/E4_womantired",      1.65],
+          ["MeganPeople5/E5_womanreading",    0.6],
           "MeganPeople5/E8_womanyoga",
 
           "MeganPeople1/_A2_hippylaughing",
           "MeganPeople1/_A3_hippychatting",
           "MeganPeople1/_A7_hippyidea",
-          ["MeganPeople1/_A6_hippybored", 0.9],
+          ["MeganPeople1/_A6_hippybored",     0.9],
           "MeganPeople1/_A1_hippychuffed",
           "MeganPeople1/_A8_hippystressed",
-          ["MeganPeople1/_A4_hippycandle", 0.9],
+          ["MeganPeople1/_A4_hippycandle",    0.9],
           "MeganPeople1/_A5_hippyjuggling",
-          ["MeganPeople1/_A9_hippyworking", 0.9],
+          ["MeganPeople1/_A9_hippyworking",   0.9],
           "MeganPeople1/_A10_hippysign"
         ];
     for (var svg of peopleReferenceSVGs)
@@ -1962,6 +1929,9 @@ thisEqualsThat.oop = function()
     var defaultDict =
         { "svg3dCloneTimer.preClone.postColor":
           {
+          },
+          "toggleFeatures.preClone":
+          {
           }
         }
     for (hudDescriptor in defaultDict)
@@ -2054,6 +2024,58 @@ thisEqualsThat.oop = function()
 
 
     this.context.cancelCountdown = true;
+  }
+
+  this.SVGHUD.prototype.toggleFeatures = function(svgHUD, context)
+  { var This = this;
+
+    this.svgHUD                       = svgHUD;
+    this.context                      = context;
+
+    this.context.display              = $("<div class='toggleFeatures hudCollection' />");
+    this.context.display.appendTo(this.svgHUD.divForHUD);
+
+    var modelInstance = this.svgHUD.modelInstance;
+    var display       = modelInstance.display;
+
+    display.toggle =
+        { "axes":                 $("<input class='checkbox' id = 'toggle_axes_" + This.id + "' type='checkbox'  checked='checked'title='Show / Hide Axes' /></span>"),
+          "axes.label":           $("<label/>").append('<div id="axis" class="toggleControl"></div>'),
+          "axes.changeEvent"  :
+              function(changeEvent)
+              { display.svgHeightAxis.toggle();
+                display.toggle['axes.label'].toggleClass('unchecked');
+                modelInstance.svg_createSaveLink(modelInstance);
+              },
+          "svgReferenceG":        $("<input class='checkbox' id  = 'toggle_svgReferenceG_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Frame of Reference'/></span>"),
+          "svgReferenceG.label":  $("<label/>").append('<div id="reference" class="toggleControl"></div>'),
+          "svgReferenceG.changeEvent":
+              function(changeEvent)
+              { display.svgReferenceG.toggle();
+                display.toggle['svgReferenceG.label'].toggleClass('unchecked');
+                modelInstance.svg_createSaveLink(modelInstance);
+              },
+          "svgTextDescription":        $("<input class='checkbox' id  = 'toggle_svgTextDescription_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Text Description'/></span>"),
+          "svgTextDescription.label":  $("<label/>").append('<div id="text_description" class="toggleControl"></div>'),
+          "svgTextDescription.changeEvent":
+              function(changeEvent)
+              { display.svgTextDescription.toggle();
+                display.toggle['svgTextDescription.label'].toggleClass('unchecked');
+                modelInstance.svg_createSaveLink(modelInstance);
+              },
+        };
+      var controlList = ["axes", "svgReferenceG", "svgTextDescription"];
+      for (var name of controlList)
+      { display.toggle[name].on("change", display.toggle[name+".changeEvent"]);
+        display.toggle[name].appendTo(display.toggle[name+".label"]);
+        context.display.append(display.toggle[name+".label"]);
+      }
+  }
+  this.SVGHUD.prototype.toggleFeatures.prototype.hide = function()
+  { //do nothing... yet :)
+  }
+  this.SVGHUD.prototype.toggleFeatures.prototype.preClone = function(svgHUD, context)
+  { 
   }
 
 
