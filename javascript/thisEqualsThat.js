@@ -1,6 +1,7 @@
 window.thisEqualsThat = {};
 thisEqualsThat.graphicLoadVersion = "0.0.9.20160726.1639";
 
+$('body').append('<link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">');
 
 thisEqualsThat.svg          = {};
 thisEqualsThat.svgStore     = {};
@@ -14,13 +15,13 @@ traverse = function(object, address, defaultList=[{}])
 
   var current = object;
   address = address.split(".");
-  
+
   for (var wayPoint of address)
   { if (!current.hasOwnProperty(wayPoint) )
     { current[wayPoint] =  defaultList[defaultCounter]
     }
     current = current[wayPoint];
-    
+
     if (defaultCounter < defaultListTestIndex)
     { defaultCounter ++;
     }
@@ -58,7 +59,7 @@ thisEqualsThat.oop = function()
   }
 
   this.Welcome = function(display)
-  { O.create( [ "#welcomeOver.wrapper.fullScreenOverlay.smoothMove", 
+  { O.create( [ "#welcomeOver.wrapper.fullScreenOverlay.smoothMove",
                 [ [ ".centerBackgroundImage.visualToolsLogo" ],
                 ],
               ],
@@ -85,29 +86,31 @@ thisEqualsThat.oop = function()
     this.constructBlueprint               (display.modals);
     this.constructBlueprint_inDevelopment (display.modals);
 
+    this.profileModal (display.modals);
+
     ThisEqualsThat.referenceVisual  = new ThisEqualsThat.ReferenceVisual    ( display.doubleBuffer);
     ThisEqualsThat.scene            = new ThisEqualsThat.ThisEqualsThatScene( display.navbar.thisEqualsThatScene );
   };
 
   this.mainNavigation = function(navbar)
   { O.create( [ ".bs-component",
-                [ 
+                [
                   [ O.openModal_aTag
-                    ( navbar, null, "profileModal",                
-                        ".createConstruct.panel.row", 
+                    ( navbar, null, "profileModal",
+                        ".createConstruct.row",
                         O.listGroupItem ( navbar,
-                                          null, 
-                                          "button", ".blueprintItem", [12, 12, 6, 6], $("<img class='blueprintIcon' src='/static/graphics/user/profilePic.jpg' />"), "", "@Profile", ""
+                                          null,
+                                          "button", ".blueprintItem profileBbtn", [12, 12, 6, 6], $('<i class="material-icons">account_circle</i>'), "", "@Profile", ""
                                         )[0]
                     )
                   ],
                   // [ ".square92.marginAuto", ".editProfile.panel.row"       ],
                   [ O.openModal_aTag
-                    ( navbar, null, "constructBlueprint",                
-                        ".createConstruct.panel.row", 
+                    ( navbar, null, "constructBlueprint",
+                        ".createConstruct.row",
                         O.listGroupItem ( navbar,
-                                          null, 
-                                          "button", ".blueprintItem", [12, 12, 6, 6], $("<img class='blueprintIcon' src='/static/graphics/thisEquals/icons/blueprint.svg' />"), "", "@Construct", ""
+                                          null,
+                                          "button", ".blueprintItem constructBtn", [12, 12, 6, 6], $('<i class="material-icons">view_comfy</i>'), "", "@Construct", ""
                                         )[0]
                     )
                   ],
@@ -120,6 +123,22 @@ thisEqualsThat.oop = function()
             );
   };
 
+// profileModel
+  this.profileModal = function (modals)
+    { O.modal(  modals,
+                modals,
+                "profileModal",
+                $("<span>Your Profile test</span>"),
+                "profileModalContainer.row",
+                ""
+              );
+    }
+
+// ripple effective
+
+
+
+// blueprintItem
   this.constructBlueprint               = function(modals)
   { O.modal(  modals,
               modals,
@@ -130,17 +149,17 @@ thisEqualsThat.oop = function()
             );
 
     O.create( [ "#blueprintTutorialPlayer", "i.fafa-spinner" ], modals, modals["modal-content"] );
-    O.create( [ ".playerMenu", 
+    O.create( [ ".playerMenu",
                 [ [ ".closeButton", "i.fa.fa-times" ],
                   [ ".swipeButton", ],
                 ]
-              ],              
-              modals, 
-              modals["modal-content"] 
+              ],
+              modals,
+              modals["modal-content"]
             );
 
     var modelClassOrder = [ "HowMany", "VolMassDen", "LightBulb", "CO2", "Wood", "Coal", "PeopleRatioPlay", "Earth", "Money", "Air Quality", "Seesaw"];
-    var modelClassData  = { "HowMany"     : { "tutorialVideo": "je_M6gB8nZw" } , 
+    var modelClassData  = { "HowMany"     : { "tutorialVideo": "je_M6gB8nZw" } ,
                             "VolMassDen"  : { "tutorialVideo": "z0LKAOowf9c" } ,
                             "LightBulb"   : { "tutorialVideo": "NnUqU9_hrrg" } ,
                           };
@@ -163,12 +182,35 @@ thisEqualsThat.oop = function()
     .on("click", ".blueprintItem",
         function(event)
         { var modelClass = $(event.currentTarget).data("thisEquals_blueprint");
+          var x = event.pageX;
+          var y = event.pageY;
+          var clickX = x - $(this).offset().left;
+          var clickY = y - $(this).offset().top;
+          var btn = this;
+
+          var setX = parseInt(clickX);
+          var setY = parseInt(clickY);
+
+          $(this).append('<svg><circle cx="'+setX+'" cy="'+setY+'" r="'+0+'"></circle></svg>');
+
+          var circle = $(btn).find("circle");
+          circle.animate({
+              "r": $(btn).outerWidth()
+          }, {
+              duration: 300,
+              step: function(val) {
+                  circle.attr("r", val);
+              }
+          });
+
           modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
           ThisEqualsThat.scene.setCurrentModelClass(modelClass);
-          $(this).closest(".modal").modal("hide");
+          setTimeout(function() {
+              $('.constructBlueprint.modal').modal('hide');
+              $('.modal svg').remove();
+          }, 500);
         }
       );
-    
 
     var tutorialPlayerStateChange =
       function(event)
@@ -181,22 +223,29 @@ thisEqualsThat.oop = function()
     modals.constructBlueprint
     .on("click", ".videoOverlay",
         function(event)
-        { var modelClass = $(event.currentTarget).closest(".blueprintItem").data("thisEquals_blueprint");
+        { if (!event) {
+            window.event.cancelBubble = true;
+          } else if (event.stopPropagation) {
+            event.stopPropagation();
+          } else {
+            event.stopPropagation();
+          }
+          var modelClass = $(event.currentTarget).closest(".blueprintItem").data("thisEquals_blueprint");
 
           if (! modals.constructBlueprint.hasOwnProperty("tutorialPlayer") )
           { modals.constructBlueprint.tutorialPlayer
               = new YT.Player
-              ( 'blueprintTutorialPlayer', 
+              ( 'blueprintTutorialPlayer',
                 { height:   modals.blueprintTutorialPlayer.height() - 15,
                   width:    modals.blueprintTutorialPlayer.width()  - 15,
                   videoId:  modelClass.tutorialVideo,
-                  events: 
-                  { 'onReady': 
+                  events:
+                  { 'onReady':
                       function()
                       { modals.constructBlueprint.tutorialPlayer
                             .loadPlaylist
                             ( { "playlist": ["je_M6gB8nZw", "z0LKAOowf9c", "NnUqU9_hrrg"],
-                                "index":    modelClass.tutoralIndex, 
+                                "index":    modelClass.tutoralIndex,
                               }
                             )
                       },
@@ -209,14 +258,14 @@ thisEqualsThat.oop = function()
           { modals.constructBlueprint.tutorialPlayer
               .loadPlaylist
               ( { "playlist": "PLvcKSclDckD0GLGEqdladfF0AS6wdysLk",
-                  "index":    modelClass.tutoralIndex, 
+                  "index":    modelClass.tutoralIndex,
                 }
               )
           }
           $("body").toggleClass("playingTutorial", true);
 
-          modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
-          ThisEqualsThat.scene.setCurrentModelClass(modelClass);
+          // modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
+          // ThisEqualsThat.scene.setCurrentModelClass(modelClass);
 
           event.stopPropagation();
           return false;
@@ -224,10 +273,10 @@ thisEqualsThat.oop = function()
       );
     modals.constructBlueprint
     .on
-    ( "hidden.bs.modal", 
-      function() 
+    ( "hidden.bs.modal",
+      function()
       {
-      } 
+      }
     );
     modals.closeButton
     .on
@@ -271,13 +320,13 @@ thisEqualsThat.oop = function()
     { url: "getModelClasses",
       dataType: "json",
       success: function(data, status, request)
-      { $.each(data.standard, 
+      { $.each(data.standard,
             function(index, value)
             { This[value.name] = new ThisEqualsThat.ModelClass(value);
             }
         );
         $.each
-        ( data.iframe, 
+        ( data.iframe,
             function(key, value)
             { value["jsonKey"] = key;
               This[key] = new ThisEqualsThat.ModelClass_iframe(value);
@@ -310,7 +359,7 @@ thisEqualsThat.oop = function()
     this.imageURL   = this.imageBaseURL+this.name+".svg";
   }
   this.ModelClass.prototype.imageBaseURL      = "/static/graphics/thisEquals/modelClasses/";
-  this.ModelClass.prototype.getBlueprintItem  = 
+  this.ModelClass.prototype.getBlueprintItem  =
       function(passThrough, appendTo)
       { if (! this.hasOwnProperty("blueprintItem") )
         { var displayName = this.displayName || this.name;
@@ -350,7 +399,7 @@ thisEqualsThat.oop = function()
     { this.modelInstance.displayIntoTarget(displayContainer);
     }
   }
- 
+
 
   this.ModelClass_iframe = function(modelClassData)
   { this.name     = modelClassData.name || modelClassData.jsonKey;
@@ -359,7 +408,7 @@ thisEqualsThat.oop = function()
     this.displayName = modelClassData.displayName || modelClassData.name
   }
   this.ModelClass_iframe.prototype.imageBaseURL =  "/static/graphics/thisEquals/icons/";
-  this.ModelClass_iframe.prototype.getBlueprintItem = 
+  this.ModelClass_iframe.prototype.getBlueprintItem =
       this.ModelClass.prototype.getBlueprintItem;
   this.ModelClass_iframe.prototype.getModelInstance = function(displayContainer)
   { var This = this;
@@ -367,7 +416,7 @@ thisEqualsThat.oop = function()
     if (! this.hasOwnProperty("modelInstance" ) )
     { this.modelInstance = this.data;
       this.modelInstance.display = $("<div class='iframeFullScreen'><iframe src='"+this.data.src+"?nocache="+Date.now()+"' /></iframe>");
-      
+
       if (! This.modelInstance.appended )
       { $(".mainContentColumn").append(This.modelInstance.display);
         This.modelInstance.appended = true;
@@ -376,7 +425,7 @@ thisEqualsThat.oop = function()
       this.modelInstance.hide = function()
       { This.modelInstance.display.toggleClass("invisible", true);
       }
-    } 
+    }
     this.modelInstance.display.toggleClass("invisible", false);
   }
 
@@ -432,11 +481,11 @@ thisEqualsThat.oop = function()
     { var This = this;
       this.outputFieldData = {};
       this.outputFieldSelect = {};
-      
-      O.panelCollapsible( this.outputFieldSelect, appendTo, 
+
+      O.panelCollapsible( this.outputFieldSelect, appendTo,
         ".outputFieldSelectPanel.width100",
         [ [ ".displayFlex.spaceBetween",
-            [ [ ".chooseOutputField.selectedField", "@Output: "], 
+            [ [ ".chooseOutputField.selectedField", "@Output: "],
               [ ".modelOutputValue" ],
             ]
           ],
@@ -454,7 +503,7 @@ thisEqualsThat.oop = function()
         function(event)
         { var selectedField = $(event.currentTarget).data("thisEquals.modelFieldOutput");
           This.lastAlteredOutputField = selectedField;
-          
+
           This.outputFieldSelect.menuListItems.find(".dropdownItem").toggleClass("selected", false);
           selectedField.display.dropdownItem.toggleClass("selected", true);
 
@@ -488,11 +537,11 @@ thisEqualsThat.oop = function()
     { var This = this;
       this.visualisationFieldData = {};
       this.visualisationFieldSelect = {};
-      
-      O.panelCollapsible( this.visualisationFieldSelect, appendTo, 
+
+      O.panelCollapsible( this.visualisationFieldSelect, appendTo,
         ".visualisationFieldSelectPanel.width100",
         [ [ ".displayFlex.spaceBetween",
-            [ [ ".chooseVisualisationField.selectedField", "@Visualise: "], 
+            [ [ ".chooseVisualisationField.selectedField", "@Visualise: "],
               [ ".modelVisualisationValue" ],
             ]
           ],
@@ -510,7 +559,7 @@ thisEqualsThat.oop = function()
         function(event)
         { var selectedField = $(event.currentTarget).data("thisEquals.ModelFieldVisualisation");
           This.lastAlteredVisualisationField = selectedField;
-          
+
           This.visualisationFieldSelect.menuListItems.find(".dropdownItem").toggleClass("selected", false);
           selectedField.display.dropdownItem.toggleClass("selected", true);
 
@@ -584,8 +633,8 @@ thisEqualsThat.oop = function()
     if (this.ifa_queueState == "ready")
     { this.ifa_currentlyProcessing = arguments;
       this.ifa_queueState = "Sending Request";
-      this.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", true);
-      this.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", true);
+      // this.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", true);
+      // this.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", true);
 
       var This = this;
       fieldChangeData	= $.extend({modelInstanceID: this.id}, fieldChangeData);
@@ -644,14 +693,16 @@ thisEqualsThat.oop = function()
                 );
               }
               else
-              { This.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", false);
-                This.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", false);
+              {
+                // This.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", false);
+                // This.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", false);
                 This.svg_createSaveLink(This)
               }
             }
             else
-            { This.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", false);
-              This.display.topModelDiv.find(".visualisationSpinner").toggleClass("spinner", true);
+            {
+              // This.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", false);
+              // This.display.topModelDiv.find(".visualisationSpinner").toggleClass("spinner", true);
             }
           },
         };
@@ -664,7 +715,7 @@ thisEqualsThat.oop = function()
     }
   }
   this.ModelInstance.prototype.setChoosableFields = function(data, status, response)
-  { 
+  {
 
     if (! this.hasOwnProperty("choosableFields"))
       this.choosableFields = {};
@@ -751,22 +802,22 @@ thisEqualsThat.oop = function()
       this.display = {};
       var display = this.display;
 
-      var toCreate = 
+      var toCreate =
         O.create
         ( [ ".modelInstanceDiv."+this.modelClass.name+"."+this.id,
             ".topModelDiv",
             [ //[ ".row", ".col-lg-12", ".panel.panel-default", ".visualisationOutputContainer.panel-body" ],
-              // [ ".row", ".col-lg-4", ".panel.panel-default", 
+              // [ ".row", ".col-lg-4", ".panel.panel-default",
               //   [ [ ".modelOutputValue.panel-body" ],
               //     [ ".outputFieldSelect", this.getOutputFields().outputFieldSelect, ],
               //   ],
               // ],
-              [ ".row", 
-                [ [".calculationColumn.col-lg-4.col-xs-12", ".calculationPanel.panel.panel-default", 
-                    [ [ ".panel-heading", ".panel-title.displayFlex.spaceBetween", 
-                        [ [ "div.calculationSpinner", 
-                            [ [ $("<i class='fa fa-calculator' aria-hidden='true'></i>") ],
-                              [ ".chooseOutputField.smallCaps.color_visualTools" ],
+              [ ".row",
+                [ [".calculationColumn.col-lg-4.col-xs-12", ".calculationPanel.panel.panel-default",
+                    [ [ ".panel-heading", ".panel-title.displayFlex.spaceBetween",
+                        [ [ "div.calculationSpinner",
+                            [ [ $('<i class="material-icons">tune</i>') ],
+                              [ ".chooseOutputField.color_visualTools" ],
                             ],
                           ],
                           [ ".modelOutputValue.color_visualTools" ],
@@ -786,10 +837,10 @@ thisEqualsThat.oop = function()
                       ],
                     ],
                   ],
-                  [".visualisationColumn.col-lg-8.col-xs-12", ".visualisationPanel.panel.panel-default", 
-                    [ [ ".panel-heading", ".panel-title.displayFlex.spaceBetween", 
-                        [ [ "div.visualisationSpinner", 
-                            [ [ $("<img class='' src='/static/graphics/visualTools/visualise.height_18px.png'>") ],
+                  [".visualisationColumn.col-lg-8.col-xs-12", ".visualisationPanel.panel.panel-default",
+                    [ [ ".panel-heading", ".panel-title.displayFlex.spaceBetween",
+                        [ [ "div.visualisationSpinner",
+                            [ [ $('<i class="material-icons">visibility</i>') ],
                               [ ".chooseVisualisationField.smallCaps.color_visualTools" ],
                             ],
                           ],
@@ -797,7 +848,7 @@ thisEqualsThat.oop = function()
                         ],
                       ],
                       [ ".row",
-                        [ [ ".svgDiv.panel.panel-default.col-lg-12", 
+                        [ [ ".svgDiv.panel.panel-default.col-lg-12",
                             [ [ $(document.createElementNS(d3.ns.prefix.svg, "svg"))
                                 .attr("xmlns",        "http://www.w3.org/2000/svg")
                                 .attr("xmlns:xlink",  "http://www.w3.org/1999/xlink")
@@ -850,7 +901,7 @@ thisEqualsThat.oop = function()
         );
 
       display.calculationPanel.on
-      ( "click", 
+      ( "click",
         ".panel-title",
         function()
         { display.outputFieldSelectPanel.find("a").first().click();
@@ -903,7 +954,7 @@ thisEqualsThat.oop = function()
       display.svgTranslatableG.data("thisEqualsThat", {"modelInstance": this});
       display.rootSVG.on
       ( "blur focus focusin focusout load resize scroll unload click "        +
-        "dblclick mousedown mouseup mousemove mouseover mouseout mouseenter " + 
+        "dblclick mousedown mouseup mousemove mouseover mouseout mouseenter " +
         "mouseleave change select submit keydown keypress keyup error",
         function(e)
         { e.stopPropagation();
@@ -914,24 +965,27 @@ thisEqualsThat.oop = function()
 
       display.toggle =
         { "axes":                 $("<input class='checkbox' id = 'toggle_axes_" + This.id + "' type='checkbox'  checked='checked'title='Show / Hide Axes' /></span>"),
-          "axes.label":           $("<label/>").append('<div id="axis"></div>'),
+          "axes.label":           $("<label/>").append('<div id="axis" class="toggleControl"></div>'),
           "axes.changeEvent"  :
               function(changeEvent)
               { display.svgHeightAxis.toggle();
+                display.toggle['axes.label'].toggleClass('unchecked');
                 This.svg_createSaveLink(This);
               },
           "svgReferenceG":        $("<input class='checkbox' id  = 'toggle_svgReferenceG_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Frame of Reference'/></span>"),
-          "svgReferenceG.label":  $("<label/>").append('<div id="reference"></div>'),
+          "svgReferenceG.label":  $("<label/>").append('<div id="reference" class="toggleControl"></div>'),
           "svgReferenceG.changeEvent":
               function(changeEvent)
               { display.svgReferenceG.toggle();
+                display.toggle['svgReferenceG.label'].toggleClass('unchecked');
                 This.svg_createSaveLink(This);
               },
           "svgTextDescription":        $("<input class='checkbox' id  = 'toggle_svgTextDescription_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Text Description'/></span>"),
-          "svgTextDescription.label":  $("<label/>").append('<div id="text_description"></div>'),
+          "svgTextDescription.label":  $("<label/>").append('<div id="text_description" class="toggleControl"></div>'),
           "svgTextDescription.changeEvent":
               function(changeEvent)
               { display.svgTextDescription.toggle();
+                display.toggle['svgTextDescription.label'].toggleClass('unchecked');
                 This.svg_createSaveLink(This);
               },
         };
@@ -950,7 +1004,7 @@ thisEqualsThat.oop = function()
             "placement": "top",
             "mode": "inline",
             "toggle": "manual",
-            success: function(response, newValue) 
+            success: function(response, newValue)
             { if (newValue == "")
               { setImmediate
                 ( function()
@@ -969,14 +1023,14 @@ thisEqualsThat.oop = function()
                   }
                 );
               }
-              
+
             }
         });
     this.display.svgTextDescription.on
     ( "click",
       function(event)
       { event.stopPropagation();
-        
+
         This.display.editableTextPlaceholder.editable("toggle");
       }
     )
@@ -1086,8 +1140,8 @@ thisEqualsThat.oop = function()
                     .attr("d", yAxisD)
                     .attr("stroke", "darkgrey")
                 This.display.svgMeasureY.get(0).setAttribute("z:threeD", "true");
-                
-                This.display.svgMeasureX 
+
+                This.display.svgMeasureX
                       .attr("d", xAxisD)
                       .attr("stroke", "darkgrey")
                 This.display.svgMeasureX.get(0).setAttribute("z:threeD", "true");
@@ -1354,9 +1408,9 @@ thisEqualsThat.oop = function()
                         ' data:image/svg+xml,\n
                           ${svgString}
                         '
-                    title     = 'Save SVG Image' 
+                    title     = 'Save SVG Image'
                     download  = '${This.display.svgTextDescription.text()}_${This.display.modelOutputValue.text()}.svg'
-                ><i class="fa fa-download" aria-hidden="true"></i></a>`
+                ><i class="material-icons">file_download</i></a>`
           )
       );
     }
@@ -1444,7 +1498,7 @@ thisEqualsThat.oop = function()
 
     this.display.svgReferenceGContainer.html(this.display.svgReferenceG);
 
-    
+
   }
 
 //REFERENCE VISUAL
@@ -1453,7 +1507,7 @@ thisEqualsThat.oop = function()
 
     this.svgStore = {};
     // O.create( [ ".
-    
+
     this.masterReferenceSVGSelectList = $("<div class='masterReferenceSVGSelectList'/>");
     this.svgSelectList = $("<ul/>");
     this.masterReferenceSVGSelectList.append(this.svgSelectList);
@@ -1891,8 +1945,8 @@ thisEqualsThat.oop = function()
 
     this.divForHUD = O.create( [ ".svgHUD" ], modelInstance.display, null )[0];
     modelInstance.display.svgDiv.prepend(this.divForHUD);
-    
-    
+
+
   }
   this.SVGHUD.prototype.renderHUD = function(tagHook)
   { if (! this.hasOwnProperty("divForHUD") )
@@ -1971,10 +2025,10 @@ thisEqualsThat.oop = function()
   { var representationName    = this.svgHUD.modelInstance.svg3dDisplayJSON.representationName;
     var clonesToBeRendered    = this.svgHUD.modelInstance.svg3dDisplayJSON.svg3dConfiguration.clone3d.nb;
 
-    
+
     this.context.totalTimeTaken       = parseInt(this.context.cookieManager(representationName+".totalTimeTaken"     )) || this.context.totalTimeTaken;
     this.context.totalClonesRendered  = parseInt(this.context.cookieManager(representationName+".totalClonesRendered")) || this.context.totalClonesRendered;
-    
+
     var averageTimePerClone   = this.context.totalTimeTaken / this.context.totalClonesRendered;
     var estimatedTimeToRender = clonesToBeRendered * averageTimePerClone;
 
@@ -1993,7 +2047,7 @@ thisEqualsThat.oop = function()
   this.SVGHUD.prototype.svg3dCloneTimer.prototype.postColor = function(svgHUD, context)
   { this.context.totalTimeTaken += Date.now() - this.context.startTime;
 
-    
+
     var representationName      = this.svgHUD.modelInstance.svg3dDisplayJSON.representationName;
     this.context.cookieManager( representationName+".totalTimeTaken"     , this.context.totalTimeTaken       );
     this.context.cookieManager( representationName+".totalClonesRendered", this.context.totalClonesRendered  );
@@ -2359,7 +2413,7 @@ thisEqualsThat.oop = function()
       }
     );
   }
-  
+
 
   this.ModelFieldInput.prototype.getTag = function(passThrough, appendTo)
   { if (! this.hasOwnProperty("uiElement"))
@@ -2381,7 +2435,7 @@ thisEqualsThat.oop = function()
 
     var This = this;
     // O.create
-    // ( [ ".inputFieldElement", 
+    // ( [ ".inputFieldElement",
     //     [ [ ".inputFieldLabel", "@"+this.data.displayName ],
     //       [ O.dropdown(this.display, null, ".inputFieldSelect", this.simpleName) ],
     //     ],
@@ -2403,7 +2457,7 @@ thisEqualsThat.oop = function()
       appendTo
     );
 
-    
+
     // ( [ ".uiElement.inputFieldElement.displayFlex.spaceBetween",
     //     [ [ ".inputFieldLabel", "@"+this.data.displayName,
     //         ,
@@ -2487,7 +2541,7 @@ thisEqualsThat.oop = function()
       //     }
       //   ).addClass("unit_"+this.data.unit);
 
-      
+
       this.uiValue_text.val(unitsAroundOutput( this, fieldData.defaultValue ));
       this.uiValue_text.data("thisEquals.modelField", this);
 
@@ -2513,7 +2567,7 @@ thisEqualsThat.oop = function()
 
     O.create
     ( [ ".inputFieldElement.inputField.displayInlineBlock.width100",
-        [ [ ".inputFieldLabel.floatLeft.smallCaps", "@"+this.data.displayName ],
+        [ [ ".inputFieldLabel.floatLeft", "@"+this.data.displayName ],
           [ ".slideAndValue",
             [ [ $("<input type='text' class='uiValue_slider inputFieldText' />"), ],
               [ ".uiSlider.inputFieldSlider", ],
@@ -2578,12 +2632,21 @@ thisEqualsThat.oop = function()
         min: min,
         value: this.actualToSlider(fieldData.currentValue),
         slide: function(event, ui)
-          { This.data.currentValue = This.logSliderToValue(ui.value);
+          { var uiVal = ui.value;
+            var handle = $(this).find('.ui-slider-handle');
+
+            This.data.currentValue = This.logSliderToValue(ui.value);
             This.slider_sliderUpdatesText();
+
+            // console.debug( uiVal );
+            if (uiVal === min) {
+                handle.addClass('ui-state-start');
+            } else {
+                handle.removeClass('ui-state-start');
+            }
           },
         change: function(event, ui)
           { if (! event.originalEvent) return true;
-
             This.data.currentValue = This.logSliderToValue(ui.value);
             This.slider_sliderUpdatesText();
 
@@ -2600,7 +2663,7 @@ thisEqualsThat.oop = function()
 
   this.ModelFieldInput.prototype.actualToSlider = function()
   { var currentValue = this.data.currentValue;
-    
+
     var toReturn;
     if (this.hasOwnProperty("logSliderConstants") )
     { var lSC = this.logSliderConstants;
@@ -2639,20 +2702,20 @@ thisEqualsThat.oop = function()
     this.fullAddress    = this.data.fullAddress;
     modelInstance.outputFields[this.fullAddress.toString()] = this;
   }
-  
-  
+
+
   this.ModelFieldOutput.prototype.getDropDownItem = function(appendTo)
   { var outputFieldSelectButton = {};
     O.create
-        ( ["button.dropdownItem.modelFieldOutput.btn.displayFlex.width100.spaceBetween", 
+        ( ["button.dropdownItem.modelFieldOutput.btn.displayFlex.width100.spaceBetween",
             [ [ ".buttonText", "@" + this.data.displayName ],
-              [ "span.modelClassIndicator", 
-                [ [ ".square20" , "img.createConstructImage.centerBackgroundImage"  ], 
+              [ "span.modelClassIndicator",
+                [ [ ".square20" , "img.createConstructImage.centerBackgroundImage"  ],
                   [ "span"      , "@"+this.data.modelClass            ],
                 ],
               ],
               // [ "span.modelFieldInputIndicator",
-              //   [ [ ".square20", "img.modelField.centerBackgroundImage" ], 
+              //   [ [ ".square20", "img.modelField.centerBackgroundImage" ],
               //     [ "span", "@"+this.data.name ],
               //   ],
               // ],
@@ -2696,15 +2759,15 @@ thisEqualsThat.oop = function()
   this.ModelFieldVisualisation.prototype.getDropDownItem = function(appendTo)
   { var visualisationFieldSelectButton = {};
     O.create
-        ( ["button.dropdownItem.modelFieldVisualisation.btn.displayFlex.width100.spaceBetween", 
+        ( ["button.dropdownItem.modelFieldVisualisation.btn.displayFlex.width100.spaceBetween",
             [ [ ".buttonText", "@" + this.data.displayName ],
-              [ "span.modelClassIndicator", 
-                [ [ ".square20" , "img.createConstructImage.centerBackgroundImage"  ], 
+              [ "span.modelClassIndicator",
+                [ [ ".square20" , "img.createConstructImage.centerBackgroundImage"  ],
                   [ "span"      , "@"+this.modelInstance.modelClass.name            ],
                 ],
               ],
               // [ "span.modelFieldInputIndicator",
-              //   [ [ ".square20", "img.modelField.centerBackgroundImage" ], 
+              //   [ [ ".square20", "img.modelField.centerBackgroundImage" ],
               //     [ "span", "@"+this.data.name ],
               //   ],
               // ],
@@ -2759,11 +2822,11 @@ thisEqualsThat.oop = function()
     { defaultCookieSettings = {};
     }
 
-    var localContext = this.context[componentName] = 
+    var localContext = this.context[componentName] =
         { "componentCookieName":    componentCookieName,
           "userPermissionGranted" : Cookies.get(componentCookieName) || false,
         };
-    
+
     var parameterDefaults =
         { "expires": 3650,
           "domain": null,
@@ -2771,11 +2834,11 @@ thisEqualsThat.oop = function()
         };
     for (parameterName in parameterDefaults )
     { eval
-      ( `if (${parameterName} !== null) 
+      ( `if (${parameterName} !== null)
           defaultCookieSettings.${parameterName} = ${parameterName}
-        ` 
+        `
       );
-      if (defaultCookieSettings[parameterName] == null) 
+      if (defaultCookieSettings[parameterName] == null)
         defaultCookieSettings[parameterName] = parameterDefaults[parameterName];
     }
 
@@ -2802,7 +2865,7 @@ thisEqualsThat.oop = function()
 
         Cookies.set(componentCookieName, true, localContext.defaultCookieSettings);
         Cookies.set(componentCookieName+".defaultCookieSettings", localContext.defaultCookieSettings);
-      } 
+      }
       if (localContext.userPermissionGranted)
       { Cookies.set(componentCookieName+"."+cookieName, value, localContext.defaultCookieSettings);
         return true;
@@ -2829,8 +2892,6 @@ thisEqualsThat.oop = function()
     }
   }
 }
-
-
 
 $().ready(
   function()

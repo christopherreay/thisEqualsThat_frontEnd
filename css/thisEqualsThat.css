@@ -1,3 +1,42 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/static/iconfont/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url(/static/iconfont/MaterialIcons-Regular.woff2) format('woff2'),
+       url(/static/iconfont/MaterialIcons-Regular.woff) format('woff'),
+       url(/static/iconfont/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
 .force-redraw::before {
   content: "";
 }
@@ -15,9 +54,8 @@ html, body {
     height: 100%;
 }
 
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
-* 
-{ font-family: Roboto; 
+*
+{ font-family: Roboto;
 }
 
 
@@ -25,20 +63,30 @@ html, body{
     height: 100%;
     width: 100%;
 
-    background: #EEEEEE;
+    background: #edeef0;
 }
 
 body
-{ 
+{
 }
 
+/*
 a, a:focus
 { color: rgba(35, 190, 204, 1.0);
   font-weight: bold;
 }
 a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calculationPanel .panel-title:hover .modelOutputValue, .visualisationPanel .panel-title:hover div
 { color: rgba(25, 130, 140, 1.0);
+}*/
+
+a.collapseControl:hover,
+a.collapseControl:focus,
+a.collapseControl:active
+{ color: inherit;
+
 }
+a.createConstruct
+{ text-decoration: none;}
 
 .smoothMove
 { -webkit-transition-duration: 0.5s; /* Safari */
@@ -75,7 +123,9 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
 }
 .paddingZero_v
 { padding-top: 0;
-  padding-bottom: 0;
+  padding-bottom: 25px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .opacityZero
@@ -84,6 +134,7 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
 
 .fullHeight, .height100
 { height:   100%;
+  padding-top: 60px;
 }
 .width100
 { width: 100%;
@@ -114,10 +165,10 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
 { font-variant: small-caps;
 }
 
-.color_visualTools
+/*.color_visualTools
 { color: rgba(35, 190, 204, 1.0);
   font-weight: bold;
-}
+}*/
 .bg_visualTools
 { background-color: #23becc;
 }
@@ -125,14 +176,45 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
 { background-color: #18858e;
 }
 
-.selected.modelFieldOutput, .selected.modelFieldVisualisation
-{ 
-  /*background-color: rgba(35, 190, 204, 0.3);*/
-  border-left-style: solid;
-  border-left-width: 4px;
-  border-left-color: rgba(35, 190, 204, 1.0);
+.panel
+{ margin-bottom: 0;
+  border: 0;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
 }
+.svgDiv.panel
+{ box-shadow: none;}
 
+
+.modelFieldOutput,
+.modelFieldVisualisation
+{ overflow: hidden;
+  transition: all .3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  padding: 15px 10px;
+  margin: 0;
+}
+.selected.modelFieldOutput,
+.selected.modelFieldVisualisation
+{ padding-left: 35px;
+
+}
+.modelFieldOutput::after,
+.modelFieldVisualisation::after
+{ content: "";
+  position: absolute;
+  top: 0;
+  left: -70px;
+  width: 50px;
+  height: 50px;
+  background: #23becc;
+  transform: rotate(45deg);
+  border-radius: 4px;
+  box-shadow: 1px 1px 3px rgba(0,0,0, .5);
+  transition: all .3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+.selected.modelFieldOutput::after,
+.selected.modelFieldVisualisation::after
+{ left: -36px;
+}
 .wrapper
 { padding:  20px;
   position: relative;
@@ -164,14 +246,85 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
 }
 
 
-.navbar
-{ padding: 0px;
+.navbar-fixed-top
+{ height: 60px;
+  padding: 0;
+  display: block;
 }
 .navbar-fixed-side-container
 { width: 100%;
 }
 .navbar-fixed-side
 { margin-bottom: 0px !important;
+}
+.navbarHeader .navbar-brand
+{ padding: 13px 15px;
+  height: 60px;
+}
+.mainNav-collapse
+{ float: right;
+  width: 50%;
+  padding: 10px 0;
+}
+.navbarContent
+{ height: 40px;
+  width: 100%;
+}
+.createConstruct
+{ float: right;
+  margin-right: 50px;
+}
+ .navbarContent button.profileBbtn
+{ padding: 0;
+  box-shadow: 0 0 0;
+  overflow: visible;
+  transition: all .3s;
+}
+ .navbarContent button.blueprintItem
+{ padding: 0;
+  box-shadow: 0 0 0;
+  overflow: visible;
+  transition: all .3s;
+}
+.constructBtn .material-icons,
+.profileBbtn .material-icons
+{ font-size: 40px;
+}
+.profileBbtn .row-content
+{ display: none;
+
+  /*position: absolute;
+  width: 150px;
+  height: 200px;
+  right: 0;
+  padding: 0 15px;
+  background: #fff;
+  bottom: -230px;
+  opacity: 0;
+  z-index: -1;
+  transition: all .3s;
+  box-shadow: 1px 3px 6px rgba(0,0,0, .4);
+  border-radius: 3px;*/
+}
+/*.profileBbtn.active .row-content
+{ bottom: -210px;
+  opacity: 1;
+  z-index: 1;
+}
+.profileBbtn .row-content::before
+{ content: "";
+  position: absolute;
+  top: -3px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 3px;
+  transform: rotate(45deg);
+  box-shadow: -5px -5px 2px -4px rgba(0,0,0, .1);
+}*/
+.list-group-item-heading
+{ margin: 8px 0;
 }
 
 /* Tools */
@@ -220,14 +373,84 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
 { background-image:     url(/static/graphics/thisEquals/icons/blueprint.svg);
 }
 
-/*#modals*/ .list-group-item .row-action-primary img
-{ height: 32px;
-  width:  32px;
+/*#modals*/
+.list-group-item .row-action-primary img
+{ height: 40px;
+  width:  40px;
+  margin: 0;
 }
+.profileBbtn .row-action-primary img
+{ border-radius: 50%;
+}
+
 .modal-content
 { position: relative;
 }
 
+.modal .blueprintItem
+{ z-index: 0;
+  transition: all .3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+.modal .blueprintItem:hover
+{ background-color: #EDE;
+  z-index: 3;
+  overflow: visible;
+  box-shadow: 2px 3px 5px rgba(0,0,0, .5);
+}
+.modal .list-group-item-text
+{ position: absolute;
+  top: 0;
+  right: -130%;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  font-weight: 500;
+  background: #FAFAFA;
+  border-radius: 2px;
+  box-shadow: 1px 2px 5px rgba(0,0,0, .5);
+  opacity: 0;
+  transition: all .3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+.modal .blueprintItem .row-content
+{ margin-top: 5px;
+  text-align: center;
+  width: 100%;
+}
+.modal .blueprintItem:hover .list-group-item-text
+{ opacity: 1;
+  right: -105%;
+}
+.modal svg
+{ position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.modal circle
+{ fill: rgba(0, 0, 0, .3);
+}
+
+
+.modal.fade .modal-dialog {
+	transform: scale(0.75);
+	top: 00px;
+	opacity: 0;
+	transition: all 0.25s cubic-bezier(0.2, 0.46, 0.25, 1);
+}
+.modal.fade.in .modal-dialog {
+	transform: scale(1);
+  top: 50px;
+	opacity: 1;
+}
+.fade
+{ opacity: 0;
+  -webkit-transition: opacity .25s linear;
+  transition: opacity .25s linear;
+}
+.modal-backdrop.in
+{ opacity: .5;
+}
 /*component based content layout */
 
 /*a.collapsed .panelCollapsibleCaret::after
@@ -235,29 +458,50 @@ a:focus:hover, .calculationPanel .panel-title:hover .chooseOutputField, .calcula
   float: right;
   color: grey;
 
-  content:"\e080";    
+  content:"\e080";
 }
 a .panelCollapsibleCaret::after
 { content:"\e114";
 }*/
 
+
+.panel-default > .panel-heading
+{ cursor: pointer;
+  background-color: #edeef0;
+}
+.panel-title
+{ color: #424242;
+  font-weight: 500;
+}
 .btn
 { text-transform: none;
-  font-variant: small-caps;
 }
-
+.inputFieldLabel.floatLeft
+{ font-weight: 300;
+  color: #000;
+}
 .panelCollapsible .collapseControl
 { text-decoration: none;
 }
+.collapsing
+{ -webkit-transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+  transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+  -webkit-transition-duration: .35s;
+  transition-duration: .35s;
+  -webkit-transition-property: height;
+  transition-property: height;
+}
 
-.panelCollapsibleArrow
+/*.panelCollapsibleArrow
 { position: absolute;
 
-  left: 50%;
-  bottom: -8px;
+  top: 15px;
+  right: 12px;
 
   height: 16px;
   width: 16px;
+
+  transition: all .35s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 .panelCollapsibleArrow.arrowClosed
@@ -271,13 +515,19 @@ a .panelCollapsibleCaret::after
 }
 .panelCollapsibleArrow.arrowOpen:hover
 { background-image: url(/static/graphics/visualTools/panel.upArrow.hover.png);
+}*/
+a.collapseControl .material-icons
+{ position: absolute;
+  top: 10px;
+  right: 8px;
+  color: #FAFAFA;
+  transition: all .35s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
-
-a.collapsed .panelCollapsibleArrow.arrowOpen
-{ display: none;
+a.collapseControl.collapsed .material-icons
+{ transform: rotate(0deg);
 }
-a .panelCollapsibleArrow.arrowOpen
-{ display: block;
+a.collapseControl .material-icons
+{ transform: rotate(180deg);
 }
 
 .dropDownItem.modelFieldOutput, .dropDownItem.modelFieldVisualisation
@@ -317,7 +567,10 @@ a .panelCollapsibleArrow.arrowOpen
 { margin-right: inherit;
 }
 .blueprintItem .row-action-primary
-{ margin-right: 8px;
+{ margin: 0 auto;
+}
+.blueprintItem .row-content
+{ margin-left: 8px;
 }
 .blueprintItem
 { position: relative;
@@ -325,25 +578,23 @@ a .panelCollapsibleArrow.arrowOpen
 }
 .blueprintItem .videoOverlay
 {   position: absolute;
-    height: 40px;
-    width: 40px;
-    right: -37px;
-    top: 0px;
-    background-image: url(/static/graphics/visualTools/educational-video.svg);
-    background-color: white;
+    height: 20px;
+    width: 24px;
+    right: 15px;
+    top: 13px;
+    opacity: .6;
+    background-image: url(/static/graphics/visualTools/youtube.svg);
     background-repeat: no-repeat;
-    border-radius: 0px 0px 0px 100%;
-    box-shadow: 0px 0px 4px black;
+    background-size: contain;
 }
 .blueprintItem:hover .videoOverlay
-{   right: 0px;
-    background-color: #ff0909;
+{   opacity: .8;
 }
 .blueprintItem .videoOverlay:hover
-{   box-shadow: 0px 0px 8px black;
+{   opacity: 1;
 }
 .blueprintItem:hover
-{   box-shadow: 0px 0px 4px grey;
+{
 }
 
 #blueprintTutorialPlayer
@@ -369,12 +620,12 @@ a .panelCollapsibleArrow.arrowOpen
   z-index:  -1;
 }
 .playerMenu .closeButton i
-{ 
+{
   color: lightgrey;
   font-size: 20px;
 }
 .playerMenu .closeButton:hover i
-{ 
+{
   color: white;
   font-size: 20px;
 }
@@ -387,9 +638,6 @@ a .panelCollapsibleArrow.arrowOpen
 { padding-right: 0px;
 }
 
-.calculationPanel .panel-title i
-{ font-size: 20px;
-}
 .calculationPanel .panel-title .chooseOutputField, .visualisationPanel .panel-title .chooseVisualisationField
 { margin-left: 8px;
 }
@@ -400,12 +648,11 @@ a .panelCollapsibleArrow.arrowOpen
 }*/
 .modelSliders
 { margin-bottom: 15px;
+  padding: 15px 10px;
 }
 
-.selectedField
-{ font-variant: small-caps;
-}
-
+.panelBody.panel-body
+{ padding: 0;}
 
 
 .outputFieldSelectPanel, .visualisationFieldSelectPanel
@@ -416,16 +663,30 @@ a .panelCollapsibleArrow.arrowOpen
   margin-right: -15px;
   margin-left: -15px;
   margin-top: -15px;
-  
+
   border: none;
+  border-radius: 0;
+  box-shadow: none
 
   background-color: #fafafa;
 }
 .outputFieldSelectPanel
 { margin-bottom: -25px;
 }
-.outputFieldSelectPanel .panel-collapse, .visualisationFieldSelectPanel .panel-collapse
-{ background-color: #fdfdfd;
+.outputFieldSelectPanel .panel-heading,
+.visualisationFieldSelectPanel .panel-heading
+{ border-top: 1px solid #ddd;
+  background: #CFD8DC;
+  border-radius: 0;
+  padding-right: 40px;
+}
+.outputFieldSelectPanel .panel-title,
+.visualisationFieldSelectPanel .panel-title
+{ color: #424242;
+}
+.outputFieldSelectPanel .panel-collapse,
+.visualisationFieldSelectPanel .panel-collapse
+{ background-color: #EEEEEE;
 }
 
 .bottomModelSelectDiv
@@ -449,45 +710,89 @@ svg.rootSVG
 
   width: 100%;
   margin-top: 5px;
-  padding-left: 10px;
-  
+  padding: 10px 30px;
+  padding-bottom: 50px;
+  margin-bottom: 10px;
   border: none;
 }
 
 
 .svgSaveLink
 { position: absolute;
-  top: 0px;
-  right: 4px; 
+  top: 5px;
+  right: 16px;
   border-radius: 50%;
-
-  width: 31px;
-  height: 32px;
-  padding: 4px 4px;
+  width: 42px;
+  height: 42px;
+  box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+}
+.svgSaveLink > a
+{ position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 8px;
 }
 .svgSaveLink > a > i
-{ color: white;
-  font-size: 24px;
+{ color: #FAFAFA;
+  font-size: 26px;
 }
 .toggleFeatures
 { position: absolute;
-  bottom: 0;
-  right: 0;
+  top: 10px;
+  left: 75px;
+  height: 28px;
+  border-left: 1px solid #555;
+}
+label .toggleControl
+{ position: relative;
+  width: 24px;
+  height: 28px;
+  margin-left: 15px;
+  transition: all .1s cubic-bezier(0.4, 0.0, 0.2, 1);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+label.unchecked .toggleControl
+{ opacity: .5;
+  transform: scale(.9);
+}
+.toggleFeatures input
+{ visibility: hidden;
+}
+#axis.toggleControl
+{ background-image: url(/static/graphics/thisEquals/icons/axis.svg);
+}
+#reference.toggleControl
+{ background-image: url(/static/graphics/thisEquals/icons/reference.svg);
+}
+#text_description.toggleControl
+{ background-image: url(/static/graphics/thisEquals/icons/text_description.svg);
 }
 
 a.editableTextPlaceholder
 { visibility: hidden;
   position: absolute;
 }
+.editable-input input
+{ font-size: 31px;
+  border: 0;
+  outline: 0;
+}
 .editable-container.editable-inline
 { position: absolute;
 
-  bottom: 5px;
-  left: 15px;
+  bottom: 34px;
+  left: 29px;
 }
 
 .visualisationOutputPanel
 { margin-bottom: -35px;
+}
+.visualisationOutputPanel.panel-body
+{ padding: 0 15px;
 }
 
 
@@ -572,17 +877,16 @@ div.model {
 }
 
 .inputFieldElement.groupHeader
-{ padding-bottom: 5px;
-  padding-top: 5px;
-
-  /*border-bottom: 1px solid black;*/
+{ padding-top: 15px;
+  padding-bottom: 3px;
+  color: #424242;
+  font-weight: 500;
 }
-
+.inputFieldElement.groupHeader:first-child
+{ padding-top: 0;
+}
 .inputFieldElement.inputField
-{ margin-left: 15px;
-  width: calc(100% - 30px);
-
-  padding-bottom: 5px;
+{ padding-bottom: 5px;
 }
 
 .inputFieldElement .fieldElementTooltip
@@ -624,10 +928,6 @@ div.inputFieldElement:hover h3 {
     opacity: 1;
 }
 
-.inputFieldElement:hover .inputFieldSlider
-{ box-shadow: 0px 0px 4px darkgrey;
-}
-
 .inputFieldElement.type_select .slideAndValue
 { width: 60%;
 }
@@ -635,7 +935,7 @@ div.inputFieldElement:hover h3 {
 { width: 100%;
 }
 /*@media screen and (max-width: 959px) {
-  div.inputFieldElement:hover div.inputFieldLabel 
+  div.inputFieldElement:hover div.inputFieldLabel
   { position: absolute;
     top:      -60px;
     left:     15%;
@@ -657,34 +957,67 @@ div.inputFieldLabel {
     -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
     transition: all .3s cubic-bezier(.4,0,.2,1);
 }*/
+
+
+/* slider */
 div.inputFieldSlider {
-    height: 1px;
+    height: 2px;
     border: 0;
     background: #9E9E9E;
     width: 100%;
-    bottom: -1px;
     clear: both;
+    margin: 6px 0;
+    transform: scale(1);
 }
-div.inputFieldSlider> .ui-state-default {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    top: -7px;
-    background: #23becc;
-    border: 0;
-    outline: none;
+/* handle */
+div.ui-slider span.ui-slider-handle
+{ width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  top: -5px;
+  margin-left: -6px;
+  background: #23becc;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  transform: scale(1);
+  transition-property: transform, box-shadow;
+  transition-duration: .3s, .3s;
+  transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
 }
-div.inputFieldSlider .ui-slider-range {
-    background: #23becc;
-}
-div.inputFieldSlider .ui-slider-handle
+div.ui-slider .ui-slider-range
 { background: #23becc;
 }
-
+/* events style */
+div.ui-slider span.ui-slider-handle.ui-state-hover,
+div.ui-slider span.ui-slider-handle.ui-state-focus
+{ box-shadow: 0px 0px 0px 6px rgba(35,190,204, .28);
+}
+div.ui-slider span.ui-slider-handle.ui-state-active
+{ box-shadow: 0px 0px 0px 0px rgba(35,190,204, 0);
+  transform: scale(1.5);
+  transition-duration: .2s, .1s;
+}
+/* when handler in start position */
+div.ui-slider span.ui-slider-handle.ui-state-start
+{ background: #fff;
+  border: 2px solid #9E9E9E;
+}
+div.ui-slider span.ui-slider-handle.ui-state-start.ui-state-hover,
+div.ui-slider span.ui-slider-handle.ui-state-start.ui-state-focus
+{ box-shadow: 0px 0px 0px 6px rgba(158,158,158, .28);
+}
+div.ui-slider span.ui-slider-handle.ui-state-start.ui-state-active
+{ box-shadow: 0px 0px 0px 0px rgba(158,158,158, 0);
+  transform: scale(1.5);
+  transition-duration: .2s, .1s;
+}
+/* slider styles end*/
 input.inputFieldText[type=text] {
     float: right;
     background: transparent;
-    padding-top: 3px;
+    padding-top: 0px;
+    padding-bottom: 8px;
     border-top: 0;
     border-right: 0;
     border-left: 0;
@@ -696,8 +1029,17 @@ input.inputFieldText[type=text] {
 }
 
 
+/*media*/
+
+@media(min-width: 992px)
+{ .modal-dialog
+  { max-width: 700px;
+  }
+
+}
+
 /*@media screen and (max-height: 900px)
-{   
+{
     .ripplelink
     { height: 70px;
       padding: 0px;
@@ -708,7 +1050,7 @@ input.inputFieldText[type=text] {
 }
 
 @media screen and (max-height: 800px)
-{   
+{
     .ripplelink
     { height: 60px;
     }
@@ -718,7 +1060,7 @@ input.inputFieldText[type=text] {
 }
 
 @media screen and (max-height: 700px)
-{   
+{
     .ripplelink
     { height: 50px;
     }
@@ -728,7 +1070,7 @@ input.inputFieldText[type=text] {
 }
 
 @media screen and (max-height: 600px)
-{   
+{
     .ripplelink
     { height: 40px;
     }
@@ -738,7 +1080,7 @@ input.inputFieldText[type=text] {
 }
 
 @media screen and (max-height: 500px)
-{   
+{
     .ripplelink
     { height: 30px;
     }
@@ -747,7 +1089,7 @@ input.inputFieldText[type=text] {
     }
 }
 @media screen and (max-height: 400px)
-{   
+{
     .ripplelink
     { height: 20px;
     }
@@ -775,8 +1117,8 @@ input.inputFieldText[type=text] {
 }
 
 .hudItem.colorPicker, .fillManager.hudItem
-{ height: 32px;
-  background-image: url('/static/graphics/thisEquals/svgHUD/colorPicker.png');
+{ height: 28px;
+  background-image: url('/static/graphics/thisEquals/svgHUD/colorPic.svg');
   background-size: contain;
   background-repeat: no-repeat;
 }

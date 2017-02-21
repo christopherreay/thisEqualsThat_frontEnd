@@ -21,10 +21,10 @@ function($)
 
   this.onePageApp =
   function()
-  { 
+  {
   };
 
-  this.div = 
+  this.div =
   function(attributes)
   { var toReturn = null;
     if (typeof(attributes) == "string")
@@ -49,7 +49,7 @@ function($)
 
   this.elementDefSequence = {"id":"", "classes":"", "elementType": "div"};
 
-  this.elementNamespaceDict = 
+  this.elementNamespaceDict =
   { "xhtml"     : "http://www.w3.org/1999/xhtml",
     "svg"       : "http://www.w3.org/2000/svg",
   }
@@ -71,7 +71,7 @@ function($)
         { current.text( item.substring(1) );
           continue;
         }
-        
+
         var elementDef  = {};
         var dictKey     = false;
 
@@ -101,18 +101,18 @@ function($)
         if (elementDef.id) elemOptions.id = elementDef.id;
         if (elementDef.classes) elemOptions.class = elementDef.classes;
 
-        // var newElem = 
+        // var newElem =
         //     $("<"+elementDef.elementType+"/>",
         //       elemOptions
         //     );
-        
-        var newElem = 
+
+        var newElem =
             $(document.createElementNS(O.elementNamespaceDict[elementDef.namespace], elementDef.elementType)).attr(elemOptions);
 
-        if (current === null) 
+        if (current === null)
         { current = newElem;
         }
-        else 
+        else
         { current.append(newElem);
           current = newElem;
         }
@@ -131,7 +131,7 @@ function($)
       { if (current) current.append(item);
 
         current = item.slice(-1);
-        
+
         var dictKey = item.attr("id")
         var classAttr = item.attr("class")
         if (classAttr) classAttr = classAttr.split(" ")[0];
@@ -145,7 +145,7 @@ function($)
       { for (functionName in item)
         { var parametersListList = item[functionName];
           for (parametersList of parametersListList)
-          { 
+          {
             current[functionName](...parametersList);
           }
         }
@@ -161,12 +161,12 @@ function($)
   function(passThrough, appendTo, navbarUniqueClass, logo=".navbar-brand-logo", mainContent)
   { if (!navbarUniqueClass) navbarUniqueClass = "navbar-autoID-"+this.navbar_collapse_id_counter++;
     var toReturn =
-        O.create( [".bs-component."+navbarUniqueClass+".height100", ".container-fluid.height100", ".row.height100", 
-                    [ [ ".navBarColumn.col-xs-12.col-sm-12.col-md-3.col-lg-2" ,  "bs-component", ".navbar.navbar-default.navbar-fixed-side", ".navbar-fixed-side-container", 
-                        [ [ ".navbarHeader.navbar-header", 
+        O.create( [".bs-component."+navbarUniqueClass+".height100", ".container-fluid.height100", ".row.height100",
+                    [ [ ".navBarColumn" ,  "bs-component", ".navbar.navbar-default.navbar-fixed-top",
+                        [ [ ".navbarHeader.navbar-header",
                             [ [ $("<button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='."+navbarUniqueClass+"-collapse' aria-expanded='false'>"),
                                 [ [ "span.icon-bar" ],
-                                  [ "span.icon-bar" ], 
+                                  [ "span.icon-bar" ],
                                   [ "span.icon-bar" ],
                                 ],
                               ],
@@ -181,24 +181,24 @@ function($)
                           ],
                         ],
                       ],
-                      [ ".mainContentColumn.col-xs-12.col-sm-12.col-md-9.col-lg-10",  mainContent ]
+                      [ ".mainContentColumn.col-sm-offset-1.col-xs-12.col-sm-12.col-md-10",  mainContent ]
                     ]
                   ],
                   passThrough,
                   appendTo
                 );
     return toReturn[0];
-  } 
-  
+  }
+
   this.modalUniqueCounter = 0;
   this.modal =
   function(passThrough, appendTo, modalUniqueClass=null, modalHeader="", modalBody="", modalFooter="")
   { if (!modalUniqueClass) modalUniqueClass = "modal-autoID-"+this.modalUniqueCounter++;
     var toReturn =
         O.create
-        ( ["."+modalUniqueClass+".modal.fade", ".modal-dialog", 
+        ( ["."+modalUniqueClass+".modal.fade", ".modal-dialog",
             ".modal-content",
-            [ [ ".modal-header", 
+            [ [ ".modal-header",
                 [ [ $("<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>×</button>") ],
                   [ "h4.modal-title", modalHeader ],
                 ],
@@ -235,15 +235,15 @@ function($)
   { if (!modalUniqueClass) console.warn("openModal created without referenceID");
     var toReturn =
     O.create
-    ( [ $(`<a href="#" class='${openModalClassString.replace(this.regex_dot, " ")}' data-toggle='modal' data-target='.${modalUniqueClass}' />`), 
-        openModalContent 
+    ( [ $(`<a href="#" class='${openModalClassString.replace(this.regex_dot, " ")}' data-toggle='modal' data-target='.${modalUniqueClass}' />`),
+        openModalContent
       ],
       passThrough,
       appendTo
     );
 
-   //  <a href="#" class="btn btn-lg btn-success" 
-   // data-toggle="modal" 
+   //  <a href="#" class="btn btn-lg btn-success"
+   // data-toggle="modal"
    // data-target="#basicModal">Click to open Modal</a>
 
     return toReturn[0];
@@ -253,13 +253,13 @@ function($)
   this.listGroupItem =
   function(passThrough, appendTo, listGroupItem_element, itemPrependList, sizeList, actionPrimary, actionSecondary, heading, text, cursorStyle="pointer")
   { var toReturn = O.create
-    ( [ listGroupItem_element+itemPrependList+".col-lg-"+sizeList[0]+".col-md-"+sizeList[1]+".col-sm-"+sizeList[2]+".col-xs-"+sizeList[3]+".list-group-item", 
-        [ [ ".row-action-primary", actionPrimary ], 
-          [ ".row-content", 
+    ( [ listGroupItem_element+itemPrependList+".col-lg-"+sizeList[0]+".col-md-"+sizeList[1]+".col-sm-"+sizeList[2]+".col-xs-"+sizeList[3]+".list-group-item",
+        [ [ ".row-action-primary", actionPrimary ],
+          [ ".row-content",
             [ [ ".action-secondary"          , actionSecondary ],
               [ ".list-group-item-heading"  , heading         ],
               [ ".list-group-item-text"     , text            ]
-            ], 
+            ],
           ],
         ],
       ],
@@ -323,7 +323,7 @@ function($)
   this.carousel =
   function(passThrough, appendTo, carouselUniqueClass, carouselPrependList, listOfSlides)
   { O.create
-    ( [ carouselUniqueClass+itemPrependList+".crousel.slide", 
+    ( [ carouselUniqueClass+itemPrependList+".crousel.slide",
         [ [ "ol.carousel-indicators"  ],
           [ "carousel-inner"          ],
         ],
@@ -441,16 +441,15 @@ function($)
 
   this.panelCollapsibleUniqueCounter = 0;
   this.panelCollapsible =
-  function(passThrough, appendTo, panelCollapsiblePrependList, panelLinkTitle, panelBody, collapsed=false)
+  function(passThrough, appendTo, panelCollapsiblePrependList, panelLinkTitle, panelBody, collapsed=true)
   { var uniqueID = "panelCollapsible_"+this.panelCollapsibleUniqueCounter;
     this.panelCollapsibleUniqueCounter ++;
-    var toReturn = 
+    var toReturn =
     O.create
     ( [ panelCollapsiblePrependList+".panelCollapsible.panel.panel-default",
-        [ [ $("<a class='collapseControl' data-toggle='collapse' data-target='#"+uniqueID+"' href='#"+uniqueID+"' />"), 
-            [ [ ".arrowClosed.panelCollapsibleArrow.square20.centerBackgroundImage" ],
-              [ ".arrowOpen.panelCollapsibleArrow.square20.centerBackgroundImage"   ],
-              [ ".panel-heading", ".panel-title", panelLinkTitle ],
+        [ [ $("<a class='collapseControl collapsed' data-toggle='collapse' data-target='#"+uniqueID+"' href='#"+uniqueID+"' />"),
+            [ [ ".panel-heading", ".panel-title", panelLinkTitle ],
+              [ $('<i class="material-icons">expand_more</i>') ]
             ],
           ],
           [ "#"+uniqueID+".panel-collapse collapse"+(collapsed?"":" in"), ".panelBody.panel-body", panelBody ],
@@ -463,7 +462,7 @@ function($)
     // <div class="panel panel-default" id="panel1">
     //     <div class="panel-heading">
     //          <h4 class="panel-title">
-    //     <a data-toggle="collapse" data-target="#collapseOne" 
+    //     <a data-toggle="collapse" data-target="#collapseOne"
     //        href="#collapseOne">
     //       Collapsible Group Item #1
     //     </a>
@@ -498,5 +497,3 @@ function($)
 }(jQuery);
 
 window.O = ThisEqualsThat.BootstrapObjects;
-
-
