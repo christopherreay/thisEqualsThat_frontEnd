@@ -738,6 +738,24 @@ svg.rootSVG
 { color: #FAFAFA;
   font-size: 26px;
 }
+
+.referenceSVGSelectListPopover
+{ width:70%;
+}
+
+.referenceSVGSelectListContainer
+{ display:    inline-flex;
+  overflow-x: scroll;
+  max-width:  200px;
+}
+.referenceSVGSelectListContainer > li
+{ list-style-type: none;
+}
+.referenceSVGSelectListItem
+{ height:     64px;
+  max-width:  64px;
+}
+
 .toggleFeatures
 { 
   border-right: 1px solid #555;
@@ -1112,13 +1130,14 @@ input.inputFieldText[type=text] {
 .hudItem
 { display: inline-block;
   min-width: 32px;
+  height: 28px;
   margin-right: 10px;
 }
 .hudCollection
 { height: 32px;
 }
 
-.hudItem.colorPicker, .fillManager.hudItem
+.hudItem.colorPicker, .hudItem.fillManager
 { height: 28px;
   background-image: url('/static/graphics/thisEquals/svgHUD/colorPic.svg');
   background-size: contain;

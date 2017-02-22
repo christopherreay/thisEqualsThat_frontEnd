@@ -1930,9 +1930,12 @@ thisEqualsThat.oop = function()
         { "svg3dCloneTimer.preClone.postColor":
           {
           },
+          "referenceSVGSelect.preClone":
+          {
+          },
           "toggleFeatures.preClone":
           {
-          }
+          },
         }
     for (hudDescriptor in defaultDict)
     { var hudAddress    = hudDescriptor.split(".");
@@ -2024,6 +2027,67 @@ thisEqualsThat.oop = function()
 
 
     this.context.cancelCountdown = true;
+  }
+
+  this.SVGHUD.prototype.referenceSVGSelect = function(svgHUD, context)
+  { var This = this;
+
+    this.svgHUD                       = svgHUD;
+    this.context                      = context;
+
+    var modelInstance                 = this.svgHUD.modelInstance;
+    var display                       = modelInstance.display;
+
+    var referenceSVGSelectID          = "referenceSVGSelect_" + modelInstance.id;
+
+    this.context.display              = $("<div id='"+ referenceSVGSelectID + "' class='referenceSVGSelectButton hudCollection' />");
+    this.context.display.appendTo(this.svgHUD.divForHUD);
+
+    
+
+    
+    display.referenceSVGSelect = $("<div class='referenceSVGSelect hudItem' title='Select reference visual' />");
+    this.context.display.append(display.referenceSVGSelect);
+
+    if (! ThisEqualsThat.referenceVisual.popoverCreated)
+    { $(document).popover
+      ( { "selector":   ".referenceSVGSelect.hudItem",
+          "container":  "body", 
+          "html":       true, 
+          "title":      "Choose reference visual", 
+          "content":    "<div class='referenceSVGSelectListContainer'>"+ThisEqualsThat.referenceVisual.svgSelectList.html()+"</div>", 
+          "placement" : "bottom",
+          "trigger":    "click focus",
+          "template":   '<div class="popover referenceSVGSelectListPopover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+        } 
+      );
+      ThisEqualsThat.referenceVisual.popoverCreated = true;
+    }
+
+    // display.referenceSVGSelect.on("click", ".referenceSVGSelectListItem",
+    //     function(clickEvent)
+    //     { var selectedDiv = $(clickEvent.currentTarget)
+    //       var fileHandle = selectedDiv.attr("thisequals_filehandle");
+    //       if (This.userSelectedReferenceSVG == fileHandle)
+    //       { This.userSelectedReferenceSVG = "";
+    //         // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
+    //       }
+    //       else
+    //       { This.userSelectedReferenceSVG = fileHandle;
+    //         // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
+    //         // selectedDiv.toggleClass("userSelectedReferenceSVG_selected");
+    //       }
+    //       This.displayCurrentOutput()
+    //     }
+    // );
+
+
+  }
+  this.SVGHUD.prototype.referenceSVGSelect.prototype.hide = function()
+  { //do nothing... yet :)
+  }
+  this.SVGHUD.prototype.referenceSVGSelect.prototype.preClone = function(svgHUD, context)
+  { 
   }
 
   this.SVGHUD.prototype.toggleFeatures = function(svgHUD, context)
