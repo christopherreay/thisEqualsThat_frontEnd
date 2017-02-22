@@ -1112,13 +1112,14 @@ input.inputFieldText[type=text] {
 .hudItem
 { display: inline-block;
   min-width: 32px;
+  height: 28px;
   margin-right: 10px;
 }
 .hudCollection
 { height: 32px;
 }
 
-.hudItem.colorPicker, .fillManager.hudItem
+.hudItem.colorPicker, .hudItem.fillManager
 { height: 28px;
   background-image: url('/static/graphics/thisEquals/svgHUD/colorPic.svg');
   background-size: contain;
