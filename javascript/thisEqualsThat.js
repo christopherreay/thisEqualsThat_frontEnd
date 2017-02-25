@@ -36,7 +36,7 @@ prettyPrint = function(field, value)
     eval(field.data.fieldPrecisionFunction);
   }
   else
-  { toReturn = thisEqualsThat.standardPrecision(value);
+  { toReturn = standardPrecision(value);
   }
 
   return unitsAroundOutput(field, toReturn);
@@ -45,7 +45,7 @@ unitsAroundOutput = function(field, output)
 { return field.data.unitPrefix+" "+output+" "+field.data.unitSuffix;
 }
 
-thisEqualsThat.standardPrecision = function(number)
+standardPrecision = function(number)
 { return Number(number).toPrecision(5);
 }
 
@@ -396,7 +396,9 @@ thisEqualsThat.oop = function()
       $.ajax(ajaxOptions);
     }
     else
-    { this.modelInstance.displayIntoTarget(displayContainer);
+    { if (displayContainer == null) return this.modelInstance;
+      
+      this.modelInstance.displayIntoTarget(displayContainer);
     }
   }
 
@@ -2006,7 +2008,7 @@ thisEqualsThat.oop = function()
     var estimatedTimeToRender = clonesToBeRendered * averageTimePerClone;
 
     if (estimatedTimeToRender > 5000)
-    { var render = window.confirm("Estimated time to render: "+ thisEqualsThat.standardPrecision( (estimatedTimeToRender / 1000) ) +" seconds");
+    { var render = window.confirm("Estimated time to render: "+ standardPrecision( (estimatedTimeToRender / 1000) ) +" seconds");
       if (! render)
       { clonesToBeRendered = this.svgHUD.modelInstance.svg3dDisplayJSON.svg3dConfiguration.clone3d.nb = 1;
       }
@@ -2050,7 +2052,7 @@ thisEqualsThat.oop = function()
     this.context.display.append(display.referenceSVGSelect);
 
     if (! ThisEqualsThat.referenceVisual.popoverCreated)
-    { $(document).popover
+    { console.log("createPopoverReturns:", $(document).popover
       ( { "selector":   ".referenceSVGSelect.hudItem",
           "container":  "body", 
           "html":       true, 
@@ -2062,27 +2064,32 @@ thisEqualsThat.oop = function()
 
           "template" :  '<div class="popover referenceSVGSelectListPopover" role="tooltip"><div class="popover-arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
         } 
+      )
       );
+      
+      $("body").on
+          ("click", ".referenceSVGSelectListItem",
+            function(clickEvent)
+            { var modelInstance = ThisEqualsThat.scene.currentModelClass.getModelInstance();
+
+              var selectedDiv = $(clickEvent.currentTarget)
+              var fileHandle = selectedDiv.attr("thisequals_filehandle");
+              
+              if (This.userSelectedReferenceSVG == fileHandle)
+              { modelInstance.userSelectedReferenceSVG = "";
+                // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
+              }
+              else
+              { modelInstance.userSelectedReferenceSVG = fileHandle;
+                // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
+                // selectedDiv.toggleClass("userSelectedReferenceSVG_selected");
+              }
+              modelInstance.displayCurrentOutput()
+            }
+          );
+
       ThisEqualsThat.referenceVisual.popoverCreated = true;
     }
-
-    $("body").referenceSVGSelect.on("click", ".referenceSVGSelectListItem",
-        function(clickEvent)
-        { var selectedDiv = $(clickEvent.currentTarget)
-          var fileHandle = selectedDiv.attr("thisequals_filehandle");
-          if (This.userSelectedReferenceSVG == fileHandle)
-          { This.userSelectedReferenceSVG = "";
-            // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
-          }
-          else
-          { This.userSelectedReferenceSVG = fileHandle;
-            // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
-            // selectedDiv.toggleClass("userSelectedReferenceSVG_selected");
-          }
-          This.displayCurrentOutput()
-        }
-    );
-
 
   }
   this.SVGHUD.prototype.referenceSVGSelect.prototype.hide = function()
@@ -2779,7 +2786,7 @@ thisEqualsThat.oop = function()
       eval(this.data.fieldPrecisionFunction);
     }
     else
-    { toReturn = thisEqualsThat.standardPrecision( Number(this.data.currentValue) );
+    { toReturn = standardPrecision( Number(this.data.currentValue) );
     }
     this.display.uiValue_slider.val(unitsAroundOutput(this, toReturn));
   }
