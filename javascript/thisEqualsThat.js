@@ -2066,22 +2066,22 @@ thisEqualsThat.oop = function()
       ThisEqualsThat.referenceVisual.popoverCreated = true;
     }
 
-    // display.referenceSVGSelect.on("click", ".referenceSVGSelectListItem",
-    //     function(clickEvent)
-    //     { var selectedDiv = $(clickEvent.currentTarget)
-    //       var fileHandle = selectedDiv.attr("thisequals_filehandle");
-    //       if (This.userSelectedReferenceSVG == fileHandle)
-    //       { This.userSelectedReferenceSVG = "";
-    //         // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
-    //       }
-    //       else
-    //       { This.userSelectedReferenceSVG = fileHandle;
-    //         // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
-    //         // selectedDiv.toggleClass("userSelectedReferenceSVG_selected");
-    //       }
-    //       This.displayCurrentOutput()
-    //     }
-    // );
+    $("body").referenceSVGSelect.on("click", ".referenceSVGSelectListItem",
+        function(clickEvent)
+        { var selectedDiv = $(clickEvent.currentTarget)
+          var fileHandle = selectedDiv.attr("thisequals_filehandle");
+          if (This.userSelectedReferenceSVG == fileHandle)
+          { This.userSelectedReferenceSVG = "";
+            // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
+          }
+          else
+          { This.userSelectedReferenceSVG = fileHandle;
+            // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
+            // selectedDiv.toggleClass("userSelectedReferenceSVG_selected");
+          }
+          This.displayCurrentOutput()
+        }
+    );
 
 
   }

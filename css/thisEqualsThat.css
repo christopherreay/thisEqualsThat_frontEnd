@@ -740,13 +740,14 @@ svg.rootSVG
 }
 
 .referenceSVGSelectListPopover
-{ width:70%;
+{ width: 400px;
 }
 
 .referenceSVGSelectListContainer
-{ display:    inline-flex;
+{ display: -webkit-inline-box;
   overflow-x: scroll;
-  max-width:  200px;
+  /* max-width: 200px; */
+  overflow-y: hidden;
 }
 .referenceSVGSelectListContainer > li
 { list-style-type: none;
