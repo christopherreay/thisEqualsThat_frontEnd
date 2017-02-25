@@ -100,7 +100,7 @@ thisEqualsThat.oop = function()
                         ".createConstruct.row",
                         O.listGroupItem ( navbar,
                                           null,
-                                          "button", ".blueprintItem profileBbtn", [12, 12, 6, 6], $('<i class="material-icons">account_circle</i>'), "", "@Profile", ""
+                                          "button", ".blueprintItem profileBtn", [12, 12, 6, 6], $('<i class="material-icons">account_circle</i>'), "", "@Profile", ""
                                         )[0]
                     )
                   ],
@@ -397,7 +397,7 @@ thisEqualsThat.oop = function()
     }
     else
     { if (displayContainer == null) return this.modelInstance;
-      
+
       this.modelInstance.displayIntoTarget(displayContainer);
     }
   }
@@ -901,6 +901,8 @@ thisEqualsThat.oop = function()
           display,
           targetContainer
         );
+
+      display.modelInstanceDiv.data("thisEquals_modelInstance", this);
 
       display.calculationPanel.on
       ( "click",
@@ -1563,7 +1565,7 @@ thisEqualsThat.oop = function()
     }
 
     refKeys = Object.keys(this.svgReferenceDefsByName);
-    ThisEqualsThat.ReferenceVisualLoader(This, this.svgReferenceDefsByName, refKeys, this, refKeys.length-1);
+    ThisEqualsThat.ReferenceVisualLoader(This, this.svgReferenceDefsByName, refKeys, this, refKeys.length-1, this.svgSelectList);
 
     this.getSVGData = function(height)
     { for (var counter=0; counter < this.svgReferenceDefs.length; counter ++)
@@ -1580,16 +1582,21 @@ thisEqualsThat.oop = function()
     }
   }
   //this.ReferenceVisual.prototype.
-  this.ReferenceVisualLoader = function(referenceVisual, referenceSVGDataDict, refKeys, referenceVisualDefs, index)
+  this.ReferenceVisualLoader = function(referenceVisual, referenceSVGDataDict, refKeys, referenceVisualDefs, index, svgSelectList)
   { if (index == -1)
     { return;
     }
     else
-    { this.ReferenceVisualLoader(referenceVisual, referenceSVGDataDict, refKeys, referenceVisualDefs, index-1);
+    { ThisEqualsThat.ReferenceVisualLoader(referenceVisual, referenceSVGDataDict, refKeys, referenceVisualDefs, index-1, svgSelectList);
     }
 
     var referenceSVGData = referenceSVGDataDict[refKeys[index]];
     var importedNode;
+
+    var referenceSVGSelectListItemDiv = $("<div class='referenceSVGSelectListItem' />").attr("thisEquals_fileHandle", referenceSVGData.fileHandle);
+    var referenceSVGSelectListItemLI  = $("<li />");
+    svgSelectList.append(referenceSVGSelectListItemLI);
+
     d3.xml("/static/svg/referenceSVGs/"+referenceSVGData.fileHandle+".svg?ver=" + thisEqualsThat.graphicLoadVersion, 'image/svg+xml',
         function(xml)
         {
@@ -1597,9 +1604,7 @@ thisEqualsThat.oop = function()
               console.log("referenceVisual:" + referenceSVGData.fileHandle);//, importedNode);
               var referenceRootG = $(importedNode).find("g").first();
               referenceVisualDefs.svgStore[referenceSVGData.fileHandle] = referenceRootG;
-
-              var referenceSVGSelectListItemDiv = $("<div class='referenceSVGSelectListItem' />").attr("thisEquals_fileHandle", referenceSVGData.fileHandle);
-              var referenceSVGSelectListItemLI  = $("<li />");
+              
               var referenceSVGSelectListItemSVG = $(document.createElementNS(d3.ns.prefix.svg, "svg"))
                   .attr("xmlns",        "http://www.w3.org/2000/svg")
                   .attr("xmlns:xlink",  "http://www.w3.org/1999/xlink")
@@ -1609,8 +1614,6 @@ thisEqualsThat.oop = function()
               var clonedG = referenceRootG.clone().appendTo(referenceSVGSelectListItemSVG);
               referenceSVGSelectListItemDiv.append(referenceSVGSelectListItemSVG);
               referenceSVGSelectListItemLI.append(referenceSVGSelectListItemDiv);
-
-              referenceVisual.svgSelectList.append(referenceSVGSelectListItemLI);
 
               var internalSize    = clonedG[0].getBBox();
 
@@ -2048,11 +2051,13 @@ thisEqualsThat.oop = function()
     
 
     
-    display.referenceSVGSelect = $("<div class='referenceSVGSelect hudItem' title='Select reference visual' />");
+    display.referenceSVGSelect = $("<div class='referenceSVGSelect hudItem btn' title='Select reference visual' />");
     this.context.display.append(display.referenceSVGSelect);
 
+    display.referenceSVGSelect.on("click", function() { ThisEqualsThat.modelInstanceFocus = modelInstance; } );
+
     if (! ThisEqualsThat.referenceVisual.popoverCreated)
-    { console.log("createPopoverReturns:", $(document).popover
+    { $(document).popover
       ( { "selector":   ".referenceSVGSelect.hudItem",
           "container":  "body", 
           "html":       true, 
@@ -2065,15 +2070,13 @@ thisEqualsThat.oop = function()
           "template" :  '<div class="popover referenceSVGSelectListPopover" role="tooltip"><div class="popover-arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
         } 
       )
-      );
-      
+
       $("body").on
           ("click", ".referenceSVGSelectListItem",
             function(clickEvent)
-            { var modelInstance = ThisEqualsThat.scene.currentModelClass.getModelInstance();
-
-              var selectedDiv = $(clickEvent.currentTarget)
-              var fileHandle = selectedDiv.attr("thisequals_filehandle");
+            { var selectedDiv     = $(clickEvent.currentTarget)
+              var fileHandle      = selectedDiv.attr("thisequals_filehandle");
+              var modelInstance   = ThisEqualsThat.modelInstanceFocus;
               
               if (This.userSelectedReferenceSVG == fileHandle)
               { modelInstance.userSelectedReferenceSVG = "";
@@ -2084,11 +2087,18 @@ thisEqualsThat.oop = function()
                 // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
                 // selectedDiv.toggleClass("userSelectedReferenceSVG_selected");
               }
-              modelInstance.displayCurrentOutput()
+              selectedDiv.closest(".referenceSVGSelectListPopover").popover("hide");
+              setImmediate
+              ( function() 
+                { modelInstance.inputFieldAltered.call(modelInstance); 
+                  delete modelInstance.display.referenceSVGSelect.data("bs.popover")._activeTrigger.click; 
+                }
+              );
             }
           );
 
       ThisEqualsThat.referenceVisual.popoverCreated = true;
+
     }
 
   }
