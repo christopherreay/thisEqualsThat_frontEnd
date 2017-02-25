@@ -36,7 +36,7 @@ prettyPrint = function(field, value)
     eval(field.data.fieldPrecisionFunction);
   }
   else
-  { toReturn = thisEqualsThat.standardPrecision(value);
+  { toReturn = standardPrecision(value);
   }
 
   return unitsAroundOutput(field, toReturn);
@@ -45,7 +45,7 @@ unitsAroundOutput = function(field, output)
 { return field.data.unitPrefix+" "+output+" "+field.data.unitSuffix;
 }
 
-thisEqualsThat.standardPrecision = function(number)
+standardPrecision = function(number)
 { return Number(number).toPrecision(5);
 }
 
@@ -100,7 +100,7 @@ thisEqualsThat.oop = function()
                         ".createConstruct.row",
                         O.listGroupItem ( navbar,
                                           null,
-                                          "button", ".blueprintItem profileBbtn", [12, 12, 6, 6], $('<i class="material-icons">account_circle</i>'), "", "@Profile", ""
+                                          "button", ".blueprintItem profileBtn", [12, 12, 6, 6], $('<i class="material-icons">account_circle</i>'), "", "@Profile", ""
                                         )[0]
                     )
                   ],
@@ -396,7 +396,9 @@ thisEqualsThat.oop = function()
       $.ajax(ajaxOptions);
     }
     else
-    { this.modelInstance.displayIntoTarget(displayContainer);
+    { if (displayContainer == null) return this.modelInstance;
+
+      this.modelInstance.displayIntoTarget(displayContainer);
     }
   }
 
@@ -899,6 +901,8 @@ thisEqualsThat.oop = function()
           display,
           targetContainer
         );
+
+      display.modelInstanceDiv.data("thisEquals_modelInstance", this);
 
       display.calculationPanel.on
       ( "click",
@@ -1561,7 +1565,7 @@ thisEqualsThat.oop = function()
     }
 
     refKeys = Object.keys(this.svgReferenceDefsByName);
-    ThisEqualsThat.ReferenceVisualLoader(This, this.svgReferenceDefsByName, refKeys, this, refKeys.length-1);
+    ThisEqualsThat.ReferenceVisualLoader(This, this.svgReferenceDefsByName, refKeys, this, refKeys.length-1, this.svgSelectList);
 
     this.getSVGData = function(height)
     { for (var counter=0; counter < this.svgReferenceDefs.length; counter ++)
@@ -1578,16 +1582,21 @@ thisEqualsThat.oop = function()
     }
   }
   //this.ReferenceVisual.prototype.
-  this.ReferenceVisualLoader = function(referenceVisual, referenceSVGDataDict, refKeys, referenceVisualDefs, index)
+  this.ReferenceVisualLoader = function(referenceVisual, referenceSVGDataDict, refKeys, referenceVisualDefs, index, svgSelectList)
   { if (index == -1)
     { return;
     }
     else
-    { this.ReferenceVisualLoader(referenceVisual, referenceSVGDataDict, refKeys, referenceVisualDefs, index-1);
+    { ThisEqualsThat.ReferenceVisualLoader(referenceVisual, referenceSVGDataDict, refKeys, referenceVisualDefs, index-1, svgSelectList);
     }
 
     var referenceSVGData = referenceSVGDataDict[refKeys[index]];
     var importedNode;
+
+    var referenceSVGSelectListItemDiv = $("<div class='referenceSVGSelectListItem' />").attr("thisEquals_fileHandle", referenceSVGData.fileHandle);
+    var referenceSVGSelectListItemLI  = $("<li />");
+    svgSelectList.append(referenceSVGSelectListItemLI);
+
     d3.xml("/static/svg/referenceSVGs/"+referenceSVGData.fileHandle+".svg?ver=" + thisEqualsThat.graphicLoadVersion, 'image/svg+xml',
         function(xml)
         {
@@ -1595,9 +1604,7 @@ thisEqualsThat.oop = function()
               console.log("referenceVisual:" + referenceSVGData.fileHandle);//, importedNode);
               var referenceRootG = $(importedNode).find("g").first();
               referenceVisualDefs.svgStore[referenceSVGData.fileHandle] = referenceRootG;
-
-              var referenceSVGSelectListItemDiv = $("<div class='referenceSVGSelectListItem' />").attr("thisEquals_fileHandle", referenceSVGData.fileHandle);
-              var referenceSVGSelectListItemLI  = $("<li />");
+              
               var referenceSVGSelectListItemSVG = $(document.createElementNS(d3.ns.prefix.svg, "svg"))
                   .attr("xmlns",        "http://www.w3.org/2000/svg")
                   .attr("xmlns:xlink",  "http://www.w3.org/1999/xlink")
@@ -1607,8 +1614,6 @@ thisEqualsThat.oop = function()
               var clonedG = referenceRootG.clone().appendTo(referenceSVGSelectListItemSVG);
               referenceSVGSelectListItemDiv.append(referenceSVGSelectListItemSVG);
               referenceSVGSelectListItemLI.append(referenceSVGSelectListItemDiv);
-
-              referenceVisual.svgSelectList.append(referenceSVGSelectListItemLI);
 
               var internalSize    = clonedG[0].getBBox();
 
@@ -2006,7 +2011,7 @@ thisEqualsThat.oop = function()
     var estimatedTimeToRender = clonesToBeRendered * averageTimePerClone;
 
     if (estimatedTimeToRender > 5000)
-    { var render = window.confirm("Estimated time to render: "+ thisEqualsThat.standardPrecision( (estimatedTimeToRender / 1000) ) +" seconds");
+    { var render = window.confirm("Estimated time to render: "+ standardPrecision( (estimatedTimeToRender / 1000) ) +" seconds");
       if (! render)
       { clonesToBeRendered = this.svgHUD.modelInstance.svg3dDisplayJSON.svg3dConfiguration.clone3d.nb = 1;
       }
@@ -2043,42 +2048,56 @@ thisEqualsThat.oop = function()
     this.context.display              = $("<div id='"+ referenceSVGSelectID + "' class='referenceSVGSelectButton hudCollection' />");
     this.context.display.appendTo(this.svgHUD.divForHUD);
 
-    
 
-    
-    display.referenceSVGSelect = $("<div class='referenceSVGSelect hudItem' title='Select reference visual' />");
+    display.referenceSVGSelect = $("<div class='referenceSVGSelect hudItem btn' title='Select reference visual' />");
     this.context.display.append(display.referenceSVGSelect);
 
-    if (! display.referenceSVGSelectPopoverCreated )
-    {  $(document).popover
+    display.referenceSVGSelect.on("click", function() { ThisEqualsThat.modelInstanceFocus = modelInstance; } );
+
+    if (! ThisEqualsThat.referenceVisual.popoverCreated)
+    { $(document).popover
       ( { "selector":   ".referenceSVGSelect.hudItem",
-          "container":  "#"+referenceSVGSelectID, 
+          "container":  "body", 
           "html":       true, 
           "title":      "Choose reference visual", 
           "content":    "<div class='referenceSVGSelectListContainer'>"+ThisEqualsThat.referenceVisual.svgSelectList.html()+"</div>", 
-          "placement":  "bottom",
-          "trigger":    "focus",
+          "placement" : "bottom",
+          "trigger":    "click focus",
+          //"template":   '<div class="popover referenceSVGSelectListPopover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+
+          "template" :  '<div class="popover referenceSVGSelectListPopover" role="tooltip"><div class="popover-arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
         } 
-      );
+      )
+
+      $("body").on
+          ("click", ".referenceSVGSelectListItem",
+            function(clickEvent)
+            { var selectedDiv     = $(clickEvent.currentTarget)
+              var fileHandle      = selectedDiv.attr("thisequals_filehandle");
+              var modelInstance   = ThisEqualsThat.modelInstanceFocus;
+              
+              if (This.userSelectedReferenceSVG == fileHandle)
+              { modelInstance.userSelectedReferenceSVG = "";
+                // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
+              }
+              else
+              { modelInstance.userSelectedReferenceSVG = fileHandle;
+                // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
+                // selectedDiv.toggleClass("userSelectedReferenceSVG_selected");
+              }
+              selectedDiv.closest(".referenceSVGSelectListPopover").popover("hide");
+              setImmediate
+              ( function() 
+                { modelInstance.inputFieldAltered.call(modelInstance); 
+                  delete modelInstance.display.referenceSVGSelect.data("bs.popover")._activeTrigger.click; 
+                }
+              );
+            }
+          );
+
+      ThisEqualsThat.referenceVisual.popoverCreated = true;
+
     }
-
-    display.referenceSVGSelect.on("click", ".referenceSVGSelectListItem",
-        function(clickEvent)
-        { var selectedDiv = $(clickEvent.currentTarget)
-          var fileHandle = selectedDiv.attr("thisequals_filehandle");
-          if (This.userSelectedReferenceSVG == fileHandle)
-          { This.userSelectedReferenceSVG = "";
-            // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
-          }
-          else
-          { This.userSelectedReferenceSVG = fileHandle;
-            // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
-            // selectedDiv.toggleClass("userSelectedReferenceSVG_selected");
-          }
-          This.displayCurrentOutput()
-        }
-    );
-
 
   }
   this.SVGHUD.prototype.referenceSVGSelect.prototype.hide = function()
@@ -2775,7 +2794,7 @@ thisEqualsThat.oop = function()
       eval(this.data.fieldPrecisionFunction);
     }
     else
-    { toReturn = thisEqualsThat.standardPrecision( Number(this.data.currentValue) );
+    { toReturn = standardPrecision( Number(this.data.currentValue) );
     }
     this.display.uiValue_slider.val(unitsAroundOutput(this, toReturn));
   }

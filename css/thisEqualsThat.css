@@ -738,6 +738,25 @@ svg.rootSVG
 { color: #FAFAFA;
   font-size: 26px;
 }
+
+.referenceSVGSelectListPopover
+{ width: 400px;
+}
+
+.referenceSVGSelectListContainer
+{ display: -webkit-inline-box;
+  overflow-x: scroll;
+  /* max-width: 200px; */
+  overflow-y: hidden;
+}
+.referenceSVGSelectListContainer > li
+{ list-style-type: none;
+}
+.referenceSVGSelectListItem
+{ height:     64px;
+  max-width:  64px;
+}
+
 .toggleFeatures
 { 
   border-right: 1px solid #555;
