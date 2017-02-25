@@ -2058,7 +2058,9 @@ thisEqualsThat.oop = function()
           "content":    "<div class='referenceSVGSelectListContainer'>"+ThisEqualsThat.referenceVisual.svgSelectList.html()+"</div>", 
           "placement" : "bottom",
           "trigger":    "click focus",
-          "template":   '<div class="popover referenceSVGSelectListPopover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+          //"template":   '<div class="popover referenceSVGSelectListPopover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+
+          "template" :  '<div class="popover referenceSVGSelectListPopover" role="tooltip"><div class="popover-arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
         } 
       );
       ThisEqualsThat.referenceVisual.popoverCreated = true;
