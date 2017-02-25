@@ -957,7 +957,7 @@ thisEqualsThat.oop = function()
 
       display.svgTranslatableG.data("thisEqualsThat", {"modelInstance": this});
       display.rootSVG.on
-      ( "blur focus focusin focusout load resize scroll unload click "        +
+      ( "blur focus focusin focusout load resize scroll unload "        +
         "dblclick mousedown mouseup mousemove mouseover mouseout mouseenter " +
         "mouseleave change select submit keydown keypress keyup error",
         function(e)
@@ -1747,7 +1747,7 @@ thisEqualsThat.oop = function()
     localContext.initContainer = function(inputFieldHUD, localContext)
     { var container =
           $(` <div class='ratioColorTotal'>
-                <div class='inputFieldElement total hudCollection'          />
+                <div class='inputFieldElement total'          />
                 <div class='ratioColorList'     />
                 <div class='inputFieldElement addRatio hudItem fa fa-plus-circle'       />
               </div>
@@ -1931,6 +1931,10 @@ thisEqualsThat.oop = function()
       }
     }
 
+
+    var lastPlugin = this.plugins[hudComponent]
+
+
     var defaultDict =
         { "svg3dCloneTimer.preClone.postColor":
           {
@@ -1955,7 +1959,9 @@ thisEqualsThat.oop = function()
       if ($.inArray(tagHook, hudTagHooks) >-1 )
       { this.plugins[hudComponent][tagHook](defaultDict[hudDescriptor], this.contextData[hudComponent]);
       }
+      
     }
+    
 
     var svg3dDisplayJSON  = this.modelInstance.svg3dDisplayJSON;
 
@@ -1972,6 +1978,9 @@ thisEqualsThat.oop = function()
       { this.plugins[hudComponent][tagHook](svg3dDisplayJSON.svgHUD[hudDescriptor], this.contextData[hudComponent]);
       }
     }
+
+    this.divForHUD.find(".hudCollection").toggleClass("last", false).last().toggleClass("last", true);
+    this.divForHUD.find(".hudItem").toggleClass("btn", true);
   }
 
   this.SVGHUD.prototype.svg3dCloneTimer = function(svgHUD, context)
@@ -2121,7 +2130,7 @@ thisEqualsThat.oop = function()
 
     display.toggle =
         { "axes":                 $("<input class='checkbox' id = 'toggle_axes_" + This.id + "' type='checkbox'  checked='checked'title='Show / Hide Axes' /></span>"),
-          "axes.label":           $("<label/>").append('<div id="axis" class="toggleControl"></div>'),
+          "axes.label":           $("<label/>").append('<div id="axis" class="toggleControl hudItem"></div>'),
           "axes.changeEvent"  :
               function(changeEvent)
               { display.svgHeightAxis.toggle();
@@ -2129,7 +2138,7 @@ thisEqualsThat.oop = function()
                 modelInstance.svg_createSaveLink(modelInstance);
               },
           "svgReferenceG":        $("<input class='checkbox' id  = 'toggle_svgReferenceG_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Frame of Reference'/></span>"),
-          "svgReferenceG.label":  $("<label/>").append('<div id="reference" class="toggleControl"></div>'),
+          "svgReferenceG.label":  $("<label/>").append('<div id="reference" class="toggleControl hudItem"></div>'),
           "svgReferenceG.changeEvent":
               function(changeEvent)
               { display.svgReferenceG.toggle();
@@ -2137,7 +2146,7 @@ thisEqualsThat.oop = function()
                 modelInstance.svg_createSaveLink(modelInstance);
               },
           "svgTextDescription":        $("<input class='checkbox' id  = 'toggle_svgTextDescription_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Text Description'/></span>"),
-          "svgTextDescription.label":  $("<label/>").append('<div id="text_description" class="toggleControl"></div>'),
+          "svgTextDescription.label":  $("<label/>").append('<div id="text_description" class="toggleControl hudItem"></div>'),
           "svgTextDescription.changeEvent":
               function(changeEvent)
               { display.svgTextDescription.toggle();
@@ -2163,14 +2172,16 @@ thisEqualsThat.oop = function()
   this.SVGHUD.prototype.fillManager = function(svgHUD, context)
   { this.svgHUD     = svgHUD;
     this.context    = context;
+
+    this.context.display = $("<div class='fillManagers hudCollection' />");
+    this.svgHUD.divForHUD.append(this.context.display);
   }
   this.SVGHUD.prototype.fillManager.prototype.display   = function()
-  { this.context.fillManagersDiv = $("<div class='fillManagers hudCollection' />");
-    this.svgHUD.divForHUD.append(this.context.fillManagersDiv);
+  { 
   }
   this.SVGHUD.prototype.fillManager.prototype.hide      = function()
-  { if ( this.context.hasOwnProperty("fillManagersDiv") )
-    { this.context.fillManagersDiv.hide();
+  { if ( this.context.hasOwnProperty("display") )
+    { this.context.display.hide();
     }
   }
   this.SVGHUD.prototype.fillManager.prototype.postClone = function(fillManagersDict, context)
@@ -2178,10 +2189,10 @@ thisEqualsThat.oop = function()
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
     var This = this;
 
-    if (! context.hasOwnProperty("fillManagersDiv") )
+    if (! context.hasOwnProperty("display") )
     { this.display();
     }
-    this.context.fillManagersDiv.show();
+    this.context.display.show();
 
     for (fillManagerSelector in fillManagersDict)
     { var fillManagerData = fillManagersDict[fillManagerSelector];
@@ -2192,7 +2203,7 @@ thisEqualsThat.oop = function()
       { selectorContext = context[fillManagerSelector] = { "byVisualisation": {} };
 
         selectorContext.fillManagerDiv = $("<div class='fillManager hudItem' />");
-        context.fillManagersDiv.append(selectorContext.fillManagerDiv);
+        context.display.append(selectorContext.fillManagerDiv);
 
         var fillManagerDiv = selectorContext.fillManagerDiv;
         fillManagerDiv
@@ -2254,15 +2265,15 @@ thisEqualsThat.oop = function()
     this.context.byVisualisation = {};
   }
   this.SVGHUD.prototype.RandomiseClones.prototype.hide      = function()
-  { this.context.collectionDiv.hide();
+  { this.context.display.hide();
   }
   this.SVGHUD.prototype.RandomiseClones.prototype.postColor = function(randomiseClonesDict, context)
   { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
 
     if (! context.hasOwnProperty("hudItems") )
-    { context.collectionDiv = $("<div class='randomiseClones hudCollection' />");
-      this.svgHUD.divForHUD.append(this.context.collectionDiv);
+    { context.display = $("<div class='randomiseClones hudCollection' />");
+      this.svgHUD.divForHUD.append(this.context.display);
 
       context.hudItems = {};
 
@@ -2423,7 +2434,7 @@ thisEqualsThat.oop = function()
       }
     }
 
-    this.context.collectionDiv.show();
+    this.context.display.show();
 
     var processingOrder = ["randomisePosition", "randomiseColors", "randomiseColorsByGroup"];
 
@@ -2451,11 +2462,9 @@ thisEqualsThat.oop = function()
       var localContext = contextByVisualisation[randomiseProperty];
 
       if (! context.hudItems.hasOwnProperty(randomiseProperty) )
-      { var randomiseItem   = context.hudItems[randomiseProperty] =   $("<div class='randomiseProperty hudItem' />");
-        var icon            = $(`<img src='/static/graphics/thisEquals/svgHUD/${randomiseProperty}.png' />`);
+      { var randomiseItem   = context.hudItems[randomiseProperty] =   $("<div class='randomiseProperty "+randomiseProperty+" hudItem' />");
 
-        randomiseItem.append(icon);
-        context.collectionDiv.append(randomiseItem);
+        context.display.append(randomiseItem);
 
         context.hudItems[randomiseProperty].data("localContext", localContext);
         context.spectrumFunction(randomiseItem, context.randomiseFunctions[randomiseProperty]);

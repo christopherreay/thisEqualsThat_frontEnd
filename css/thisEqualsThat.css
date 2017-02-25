@@ -757,11 +757,6 @@ svg.rootSVG
   max-width:  64px;
 }
 
-.toggleFeatures
-{ 
-  border-right: 1px solid #555;
-  margin-right: 15px;
-}
 label .toggleControl
 { position: relative;
   width: 24px;
@@ -1133,19 +1128,36 @@ input.inputFieldText[type=text] {
   min-width: 32px;
   height: 28px;
   margin-right: 10px;
-}
-.hudCollection
-{ height: 32px;
-}
-
-.hudItem.colorPicker, .hudItem.fillManager
-{ height: 28px;
-  background-image: url('/static/graphics/thisEquals/svgHUD/colorPic.svg');
   background-size: contain;
   background-repeat: no-repeat;
 }
+.hudCollection
+{ height: 32px;
+
+  border-right: 1px solid #555;
+  margin-right: 15px;
+}
+.hudCollection.last
+{ height: 32px;
+
+  border-right: 0px solid #555;
+  margin-right: 0px;
+}
 
 
+.colorPicker, .fillManager
+{ background-image: url('/static/graphics/thisEquals/svgHUD/colorPic.svg');
+}
+
+.randomisePosition
+{ background-image: url('/static/graphics/thisEquals/svgHUD/randomisePosition.png');
+}
+.randomiseColors
+{ background-image: url('/static/graphics/thisEquals/svgHUD/randomiseColors.png');
+}
+.randomiseColorsByGroup
+{ background-image: url('/static/graphics/thisEquals/svgHUD/randomiseColorsByGroup.png');
+}
 
 @keyframes highlightSVGPath
 {  0% { stroke: "black";}
