@@ -165,6 +165,12 @@ a.createConstruct
 { font-variant: small-caps;
 }
 
+.colorRed
+{ color: red !important;  
+}
+.backgroundRed
+{ background-color: red !important;  
+}
 /*.color_visualTools
 { color: rgba(35, 190, 204, 1.0);
   font-weight: bold;
@@ -739,6 +745,10 @@ svg.rootSVG
   font-size: 26px;
 }
 
+.referenceSVGSelect.btn
+{ background-image: url(/static/graphics/thisEquals/icons/visualisation.svg);
+}
+
 .referenceSVGSelectListPopover
 { width: 400px;
 }
@@ -748,6 +758,7 @@ svg.rootSVG
   overflow-x: scroll;
   /* max-width: 200px; */
   overflow-y: hidden;
+  padding: 4px;
 }
 .referenceSVGSelectListContainer > li
 { list-style-type: none;
@@ -1146,7 +1157,7 @@ input.inputFieldText[type=text] {
 
 
 .colorPicker, .fillManager
-{ background-image: url('/static/graphics/thisEquals/svgHUD/colorPic.svg');
+{ background-image: url('/static/graphics/thisEquals/svgHUD/colorWheel.svg');
 }
 
 .randomisePosition
@@ -1189,8 +1200,10 @@ path.highlight, .highlight path
 .ratioColorTotal .sp-preview
 { height: 10px;
   width: 10px;
-  margin-left: 5px;
-  margin-top: 6px;
+  
+  margin-left: 4px;
+  margin-top: 4px;
+  border-radius: 50%;
 }
 .ratioColorTotal .sp-dd
 { display :none;
@@ -1210,26 +1223,27 @@ path.highlight, .highlight path
 
 .ratioColor .percentageSpinner
 {   position: absolute;
-    right: 150px;
+    right: 100px;
     top: 8px;
     outline: none;
 
     font-size: 18px;
-    width: 50px;
+    width: 76px;
     text-align: right;
     height: 20px;
 }
 
 .ratioColor .percentLabel
 { position: absolute;
-  right: 125px;
+  right: 75px;
   font-size: 18px;
   top: 6px;
   font-weight: bolder;
 }
 .ratioColor .sp-replacer
 { position: absolute;
-  right: 60px;
+  right: 10px;
+  top: 3px;
 }
 
 .ratioColor > .closeBox
@@ -1237,7 +1251,8 @@ path.highlight, .highlight path
   width: 10px;
 
   position: absolute;
-  right: 0px;
+  right: 4px;
+  top:   4px;
 
   color: darkgrey;
 }

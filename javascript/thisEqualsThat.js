@@ -1763,17 +1763,32 @@ thisEqualsThat.oop = function()
           function(event)
           { localContext.createRatioInput(0.1, tinycolor.random().setAlpha(0.7).saturate(50));
             localContext.writeChanges(true);
-
-            localContext.inputFieldHUD.modelInstance.doNotUpdateUI = true;
-            localContext.inputFieldHUD.modelInstance.inputFields[`["ratios"]` ].uiValue_text.trigger("change");
-            localContext.inputFieldHUD.modelInstance.inputFields[`["colors"]` ].uiValue_text.trigger("change");
           }
       );
       container.on("click", ".closeBox",
           function(event)
-          { debugger;
-            //get the target and find the hud_position and the $ of the original element.
-            localContext.destroyRatioInput($(this).parent(".ratioColor"));
+          { //get the target and find the hud_position and the $ of the original element.
+            inputFieldElement = $(this).parent(".ratioColor");
+            if (localContext.ratioColorList.children().length > 1)
+            { localContext.destroyRatioInput(inputFieldElement);
+              localContext.writeChanges(true);
+            }
+          }
+      );
+      container.on("mousedown", ".closeBox",
+          function(event)
+          { //get the target and find the hud_position and the $ of the original element.
+            if (localContext.ratioColorList.children().length == 1)
+            { $(event.target).toggleClass("colorRed", true);
+            }
+          }
+      );
+      container.on("mouseup mouseleave", ".closeBox",
+          function(event)
+          { //get the target and find the hud_position and the $ of the original element.
+            if (localContext.ratioColorList.children().length == 1)
+            { $(event.target).toggleClass("colorRed", false);
+            }
           }
       );
       container.on("change", ".percentageSpinner",
@@ -1801,15 +1816,15 @@ thisEqualsThat.oop = function()
 
           if (! localContext.hasOwnProperty("ratioInputFieldCount") )
           { localContext.ratioInputFieldCount = 0;
-            localContext.ratioInputFields     = [];
+            localContext.ratioItemList        = [];
           }
           var toReturn =
                 $(` <div class='ratioColor inputFieldElement'>
-                      <div    class="hudItem inputFieldLabel" />
-                      <input  class='hudItem percentageSpinner' type='number' min='0' max='100' step='0.1' value ='${initialRatio * 100}' />
-                      <div    class="hudItem textLabel percentLabel">%</div>
-                      <input  class='hudItem spectrumColorPickerInput' value='${initialColor.toString("rgb")}' />
-                      <span   class="hudItem closeBox    fa fa-times-circle" />
+                      <div    class="inputFieldLabel" />
+                      <input  class='percentageSpinner' type='number' min='0' max='100' step='0.1' value ='${initialRatio * 100}' />
+                      <div    class="textLabel percentLabel">%</div>
+                      <input  class='spectrumColorPickerInput' value='${initialColor.toString("rgb")}' />
+                      <span   class="closeBox    fa fa-times-circle" />
                     </div>
                   `
                  );
@@ -1838,10 +1853,10 @@ thisEqualsThat.oop = function()
         };
     localContext.destroyRatioInput =
         function(inputFieldElement)
-        { delete localContext.ratioInputFields[inputFieldElement.data("hud_position")];
-
-          inputFieldElement.remove();
-          localContext.markDirty();
+        { if (localContext.ratioColorList.children().length > 1)
+          { inputFieldElement.remove();
+            localContext.markDirty();
+          }
         };
     localContext.markDirty =
         function()
@@ -1863,7 +1878,11 @@ thisEqualsThat.oop = function()
           inputFieldHUD.modelInstance.inputFields[`["ratios"]` ].setValue(newRatiosValArray.join("|") );
           inputFieldHUD.modelInstance.inputFields[`["colors"]` ].setValue(newColorsValArray.join("|") );
 
-
+          if (triggerUpdate)
+          { localContext.inputFieldHUD.modelInstance.doNotUpdateUI = true;
+            localContext.inputFieldHUD.modelInstance.inputFields[`["ratios"]` ].uiValue_text.trigger("change");
+            localContext.inputFieldHUD.modelInstance.inputFields[`["colors"]` ].uiValue_text.trigger("change");
+          }
         };
     localContext.spectrumMove =
         function(color)
