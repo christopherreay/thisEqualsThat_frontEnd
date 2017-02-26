@@ -2090,6 +2090,7 @@ thisEqualsThat.oop = function()
           "title":      "Choose reference visual", 
           "content":    "<div class='referenceSVGSelectListContainer'>"+ThisEqualsThat.referenceVisual.svgSelectList.html()+"</div>", 
           "placement" : "bottom",
+          "viewport":   { "selector": "."+modelInstance.id+" .svgDiv", "padding": "10px" },
           "trigger":    "click focus",
           //"template":   '<div class="popover referenceSVGSelectListPopover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
 

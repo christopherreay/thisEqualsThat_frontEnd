@@ -1132,6 +1132,7 @@ input.inputFieldText[type=text] {
 
 .svgHUD
 { display: flex;
+  flex-wrap: wrap;
 }
 
 .hudItem
@@ -1230,7 +1231,8 @@ path.highlight, .highlight path
     font-size: 18px;
     width: 76px;
     text-align: right;
-    height: 20px;
+    height: 28px;
+    margin-top: -4px;
 }
 
 .ratioColor .percentLabel
@@ -1242,7 +1244,7 @@ path.highlight, .highlight path
 }
 .ratioColor .sp-replacer
 { position: absolute;
-  right: 10px;
+  right: 25px;
   top: 3px;
 }
 
