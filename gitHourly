@@ -1,0 +1,5 @@
+cd /home/sftpusers/yogesh/thisEqualsYogesh
+git add -A
+git commit -m "autoCommit"
+git push origin yogesh_autocommit_dev 
+touch ../autoCommit.git.touch

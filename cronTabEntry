@@ -1,0 +1,8 @@
+0 * * * * /home/sftpusers/bertonbeil/gitHourly
+0 * * * * /home/sftpusers/yogesh/gitHourly
+0 * * * * /home/sftpusers/production/gitHourly
+0 * * * * /home/sftpusers/testuser5/gitHourly
+0 * * * * /home/sftpusers/testuser6/gitHourly
+0 * * * * /home/sftpusers/holochain/gitHourly
+0 * * * * /home/sftpusers/holochain/gitHourly
+0 * * * * /home/sftpusers/yogesh/gitHourly
