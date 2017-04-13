@@ -36,7 +36,7 @@ prettyPrint = function(field, value)
     eval(field.data.fieldPrecisionFunction);
   }
   else
-  { toReturn = thisEqualsThat.standardPrecision(value);
+  { toReturn = standardPrecision(value);
   }
 
   return unitsAroundOutput(field, toReturn);
@@ -45,7 +45,7 @@ unitsAroundOutput = function(field, output)
 { return field.data.unitPrefix+" "+output+" "+field.data.unitSuffix;
 }
 
-thisEqualsThat.standardPrecision = function(number)
+standardPrecision = function(number)
 { return Number(number).toPrecision(5);
 }
 
@@ -100,7 +100,7 @@ thisEqualsThat.oop = function()
                         ".createConstruct.row",
                         O.listGroupItem ( navbar,
                                           null,
-                                          "button", ".blueprintItem profileBbtn", [12, 12, 6, 6], $('<i class="material-icons">account_circle</i>'), "", "@Profile", ""
+                                          "button", ".blueprintItem profileBtn", [12, 12, 6, 6], $('<i class="material-icons">account_circle</i>'), "", "@Profile", ""
                                         )[0]
                     )
                   ],
@@ -396,7 +396,9 @@ thisEqualsThat.oop = function()
       $.ajax(ajaxOptions);
     }
     else
-    { this.modelInstance.displayIntoTarget(displayContainer);
+    { if (displayContainer == null) return this.modelInstance;
+
+      this.modelInstance.displayIntoTarget(displayContainer);
     }
   }
 
@@ -900,6 +902,8 @@ thisEqualsThat.oop = function()
           targetContainer
         );
 
+      display.modelInstanceDiv.data("thisEquals_modelInstance", this);
+
       display.calculationPanel.on
       ( "click",
         ".panel-title",
@@ -953,7 +957,7 @@ thisEqualsThat.oop = function()
 
       display.svgTranslatableG.data("thisEqualsThat", {"modelInstance": this});
       display.rootSVG.on
-      ( "blur focus focusin focusout load resize scroll unload click "        +
+      ( "blur focus focusin focusout load resize scroll unload "        +
         "dblclick mousedown mouseup mousemove mouseover mouseout mouseenter " +
         "mouseleave change select submit keydown keypress keyup error",
         function(e)
@@ -1561,7 +1565,7 @@ thisEqualsThat.oop = function()
     }
 
     refKeys = Object.keys(this.svgReferenceDefsByName);
-    ThisEqualsThat.ReferenceVisualLoader(This, this.svgReferenceDefsByName, refKeys, this, refKeys.length-1);
+    ThisEqualsThat.ReferenceVisualLoader(This, this.svgReferenceDefsByName, refKeys, this, refKeys.length-1, this.svgSelectList);
 
     this.getSVGData = function(height)
     { for (var counter=0; counter < this.svgReferenceDefs.length; counter ++)
@@ -1578,16 +1582,21 @@ thisEqualsThat.oop = function()
     }
   }
   //this.ReferenceVisual.prototype.
-  this.ReferenceVisualLoader = function(referenceVisual, referenceSVGDataDict, refKeys, referenceVisualDefs, index)
+  this.ReferenceVisualLoader = function(referenceVisual, referenceSVGDataDict, refKeys, referenceVisualDefs, index, svgSelectList)
   { if (index == -1)
     { return;
     }
     else
-    { this.ReferenceVisualLoader(referenceVisual, referenceSVGDataDict, refKeys, referenceVisualDefs, index-1);
+    { ThisEqualsThat.ReferenceVisualLoader(referenceVisual, referenceSVGDataDict, refKeys, referenceVisualDefs, index-1, svgSelectList);
     }
 
     var referenceSVGData = referenceSVGDataDict[refKeys[index]];
     var importedNode;
+
+    var referenceSVGSelectListItemDiv = $("<div class='referenceSVGSelectListItem' />").attr("thisEquals_fileHandle", referenceSVGData.fileHandle);
+    var referenceSVGSelectListItemLI  = $("<li />");
+    svgSelectList.append(referenceSVGSelectListItemLI);
+
     d3.xml("/static/svg/referenceSVGs/"+referenceSVGData.fileHandle+".svg?ver=" + thisEqualsThat.graphicLoadVersion, 'image/svg+xml',
         function(xml)
         {
@@ -1595,9 +1604,7 @@ thisEqualsThat.oop = function()
               console.log("referenceVisual:" + referenceSVGData.fileHandle);//, importedNode);
               var referenceRootG = $(importedNode).find("g").first();
               referenceVisualDefs.svgStore[referenceSVGData.fileHandle] = referenceRootG;
-
-              var referenceSVGSelectListItemDiv = $("<div class='referenceSVGSelectListItem' />").attr("thisEquals_fileHandle", referenceSVGData.fileHandle);
-              var referenceSVGSelectListItemLI  = $("<li />");
+              
               var referenceSVGSelectListItemSVG = $(document.createElementNS(d3.ns.prefix.svg, "svg"))
                   .attr("xmlns",        "http://www.w3.org/2000/svg")
                   .attr("xmlns:xlink",  "http://www.w3.org/1999/xlink")
@@ -1607,8 +1614,6 @@ thisEqualsThat.oop = function()
               var clonedG = referenceRootG.clone().appendTo(referenceSVGSelectListItemSVG);
               referenceSVGSelectListItemDiv.append(referenceSVGSelectListItemSVG);
               referenceSVGSelectListItemLI.append(referenceSVGSelectListItemDiv);
-
-              referenceVisual.svgSelectList.append(referenceSVGSelectListItemLI);
 
               var internalSize    = clonedG[0].getBBox();
 
@@ -1742,7 +1747,7 @@ thisEqualsThat.oop = function()
     localContext.initContainer = function(inputFieldHUD, localContext)
     { var container =
           $(` <div class='ratioColorTotal'>
-                <div class='inputFieldElement total hudCollection'          />
+                <div class='inputFieldElement total'          />
                 <div class='ratioColorList'     />
                 <div class='inputFieldElement addRatio hudItem fa fa-plus-circle'       />
               </div>
@@ -1758,17 +1763,32 @@ thisEqualsThat.oop = function()
           function(event)
           { localContext.createRatioInput(0.1, tinycolor.random().setAlpha(0.7).saturate(50));
             localContext.writeChanges(true);
-
-            localContext.inputFieldHUD.modelInstance.doNotUpdateUI = true;
-            localContext.inputFieldHUD.modelInstance.inputFields[`["ratios"]` ].uiValue_text.trigger("change");
-            localContext.inputFieldHUD.modelInstance.inputFields[`["colors"]` ].uiValue_text.trigger("change");
           }
       );
       container.on("click", ".closeBox",
           function(event)
-          { debugger;
-            //get the target and find the hud_position and the $ of the original element.
-            localContext.destroyRatioInput($(this).parent(".ratioColor"));
+          { //get the target and find the hud_position and the $ of the original element.
+            inputFieldElement = $(this).parent(".ratioColor");
+            if (localContext.ratioColorList.children().length > 1)
+            { localContext.destroyRatioInput(inputFieldElement);
+              localContext.writeChanges(true);
+            }
+          }
+      );
+      container.on("mousedown", ".closeBox",
+          function(event)
+          { //get the target and find the hud_position and the $ of the original element.
+            if (localContext.ratioColorList.children().length == 1)
+            { $(event.target).toggleClass("colorRed", true);
+            }
+          }
+      );
+      container.on("mouseup mouseleave", ".closeBox",
+          function(event)
+          { //get the target and find the hud_position and the $ of the original element.
+            if (localContext.ratioColorList.children().length == 1)
+            { $(event.target).toggleClass("colorRed", false);
+            }
           }
       );
       container.on("change", ".percentageSpinner",
@@ -1796,15 +1816,15 @@ thisEqualsThat.oop = function()
 
           if (! localContext.hasOwnProperty("ratioInputFieldCount") )
           { localContext.ratioInputFieldCount = 0;
-            localContext.ratioInputFields     = [];
+            localContext.ratioItemList        = [];
           }
           var toReturn =
                 $(` <div class='ratioColor inputFieldElement'>
-                      <div    class="hudItem inputFieldLabel" />
-                      <input  class='hudItem percentageSpinner' type='number' min='0' max='100' step='0.1' value ='${initialRatio * 100}' />
-                      <div    class="hudItem textLabel percentLabel">%</div>
-                      <input  class='hudItem spectrumColorPickerInput' value='${initialColor.toString("rgb")}' />
-                      <span   class="hudItem closeBox    fa fa-times-circle" />
+                      <div    class="inputFieldLabel" />
+                      <input  class='percentageSpinner' type='number' min='0' max='100' step='0.1' value ='${initialRatio * 100}' />
+                      <div    class="textLabel percentLabel">%</div>
+                      <input  class='spectrumColorPickerInput' value='${initialColor.toString("rgb")}' />
+                      <span   class="closeBox    fa fa-times-circle" />
                     </div>
                   `
                  );
@@ -1833,10 +1853,10 @@ thisEqualsThat.oop = function()
         };
     localContext.destroyRatioInput =
         function(inputFieldElement)
-        { delete localContext.ratioInputFields[inputFieldElement.data("hud_position")];
-
-          inputFieldElement.remove();
-          localContext.markDirty();
+        { if (localContext.ratioColorList.children().length > 1)
+          { inputFieldElement.remove();
+            localContext.markDirty();
+          }
         };
     localContext.markDirty =
         function()
@@ -1858,7 +1878,11 @@ thisEqualsThat.oop = function()
           inputFieldHUD.modelInstance.inputFields[`["ratios"]` ].setValue(newRatiosValArray.join("|") );
           inputFieldHUD.modelInstance.inputFields[`["colors"]` ].setValue(newColorsValArray.join("|") );
 
-
+          if (triggerUpdate)
+          { localContext.inputFieldHUD.modelInstance.doNotUpdateUI = true;
+            localContext.inputFieldHUD.modelInstance.inputFields[`["ratios"]` ].uiValue_text.trigger("change");
+            localContext.inputFieldHUD.modelInstance.inputFields[`["colors"]` ].uiValue_text.trigger("change");
+          }
         };
     localContext.spectrumMove =
         function(color)
@@ -1926,13 +1950,20 @@ thisEqualsThat.oop = function()
       }
     }
 
+
+    var lastPlugin = this.plugins[hudComponent]
+
+
     var defaultDict =
         { "svg3dCloneTimer.preClone.postColor":
           {
           },
+          "referenceSVGSelect.preClone":
+          {
+          },
           "toggleFeatures.preClone":
           {
-          }
+          },
         }
     for (hudDescriptor in defaultDict)
     { var hudAddress    = hudDescriptor.split(".");
@@ -1947,7 +1978,9 @@ thisEqualsThat.oop = function()
       if ($.inArray(tagHook, hudTagHooks) >-1 )
       { this.plugins[hudComponent][tagHook](defaultDict[hudDescriptor], this.contextData[hudComponent]);
       }
+      
     }
+    
 
     var svg3dDisplayJSON  = this.modelInstance.svg3dDisplayJSON;
 
@@ -1964,6 +1997,9 @@ thisEqualsThat.oop = function()
       { this.plugins[hudComponent][tagHook](svg3dDisplayJSON.svgHUD[hudDescriptor], this.contextData[hudComponent]);
       }
     }
+
+    this.divForHUD.find(".hudCollection").toggleClass("last", false).last().toggleClass("last", true);
+    this.divForHUD.find(".hudItem").toggleClass("btn", true);
   }
 
   this.SVGHUD.prototype.svg3dCloneTimer = function(svgHUD, context)
@@ -2003,7 +2039,7 @@ thisEqualsThat.oop = function()
     var estimatedTimeToRender = clonesToBeRendered * averageTimePerClone;
 
     if (estimatedTimeToRender > 5000)
-    { var render = window.confirm("Estimated time to render: "+ thisEqualsThat.standardPrecision( (estimatedTimeToRender / 1000) ) +" seconds");
+    { var render = window.confirm("Estimated time to render: "+ standardPrecision( (estimatedTimeToRender / 1000) ) +" seconds");
       if (! render)
       { clonesToBeRendered = this.svgHUD.modelInstance.svg3dDisplayJSON.svg3dConfiguration.clone3d.nb = 1;
       }
@@ -2026,6 +2062,80 @@ thisEqualsThat.oop = function()
     this.context.cancelCountdown = true;
   }
 
+  this.SVGHUD.prototype.referenceSVGSelect = function(svgHUD, context)
+  { var This = this;
+
+    this.svgHUD                       = svgHUD;
+    this.context                      = context;
+
+    var modelInstance                 = this.svgHUD.modelInstance;
+    var display                       = modelInstance.display;
+
+    var referenceSVGSelectID          = "referenceSVGSelect_" + modelInstance.id;
+
+    this.context.display              = $("<div id='"+ referenceSVGSelectID + "' class='referenceSVGSelectButton hudCollection' />");
+    this.context.display.appendTo(this.svgHUD.divForHUD);
+
+
+    display.referenceSVGSelect = $("<div class='referenceSVGSelect hudItem btn' title='Select reference visual' />");
+    this.context.display.append(display.referenceSVGSelect);
+
+    display.referenceSVGSelect.on("click", function() { ThisEqualsThat.modelInstanceFocus = modelInstance; } );
+
+    if (! ThisEqualsThat.referenceVisual.popoverCreated)
+    { $(document).popover
+      ( { "selector":   ".referenceSVGSelect.hudItem",
+          "container":  "body", 
+          "html":       true, 
+          "title":      "Choose reference visual", 
+          "content":    "<div class='referenceSVGSelectListContainer'>"+ThisEqualsThat.referenceVisual.svgSelectList.html()+"</div>", 
+          "placement" : "bottom",
+          "viewport":   { "selector": "."+modelInstance.id+" .svgDiv", "padding": "10px" },
+          "trigger":    "click focus",
+          //"template":   '<div class="popover referenceSVGSelectListPopover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+
+          "template" :  '<div class="popover referenceSVGSelectListPopover" role="tooltip"><div class="popover-arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
+        } 
+      )
+
+      $("body").on
+          ("click", ".referenceSVGSelectListItem",
+            function(clickEvent)
+            { var selectedDiv     = $(clickEvent.currentTarget)
+              var fileHandle      = selectedDiv.attr("thisequals_filehandle");
+              var modelInstance   = ThisEqualsThat.modelInstanceFocus;
+              
+              if (This.userSelectedReferenceSVG == fileHandle)
+              { modelInstance.userSelectedReferenceSVG = "";
+                // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
+              }
+              else
+              { modelInstance.userSelectedReferenceSVG = fileHandle;
+                // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
+                // selectedDiv.toggleClass("userSelectedReferenceSVG_selected");
+              }
+              selectedDiv.closest(".referenceSVGSelectListPopover").popover("hide");
+              setImmediate
+              ( function() 
+                { modelInstance.inputFieldAltered.call(modelInstance); 
+                  delete modelInstance.display.referenceSVGSelect.data("bs.popover")._activeTrigger.click; 
+                }
+              );
+            }
+          );
+
+      ThisEqualsThat.referenceVisual.popoverCreated = true;
+
+    }
+
+  }
+  this.SVGHUD.prototype.referenceSVGSelect.prototype.hide = function()
+  { //do nothing... yet :)
+  }
+  this.SVGHUD.prototype.referenceSVGSelect.prototype.preClone = function(svgHUD, context)
+  { 
+  }
+
   this.SVGHUD.prototype.toggleFeatures = function(svgHUD, context)
   { var This = this;
 
@@ -2040,7 +2150,7 @@ thisEqualsThat.oop = function()
 
     display.toggle =
         { "axes":                 $("<input class='checkbox' id = 'toggle_axes_" + This.id + "' type='checkbox'  checked='checked'title='Show / Hide Axes' /></span>"),
-          "axes.label":           $("<label/>").append('<div id="axis" class="toggleControl"></div>'),
+          "axes.label":           $("<label/>").append('<div id="axis" class="toggleControl hudItem"></div>'),
           "axes.changeEvent"  :
               function(changeEvent)
               { display.svgHeightAxis.toggle();
@@ -2048,7 +2158,7 @@ thisEqualsThat.oop = function()
                 modelInstance.svg_createSaveLink(modelInstance);
               },
           "svgReferenceG":        $("<input class='checkbox' id  = 'toggle_svgReferenceG_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Frame of Reference'/></span>"),
-          "svgReferenceG.label":  $("<label/>").append('<div id="reference" class="toggleControl"></div>'),
+          "svgReferenceG.label":  $("<label/>").append('<div id="reference" class="toggleControl hudItem"></div>'),
           "svgReferenceG.changeEvent":
               function(changeEvent)
               { display.svgReferenceG.toggle();
@@ -2056,7 +2166,7 @@ thisEqualsThat.oop = function()
                 modelInstance.svg_createSaveLink(modelInstance);
               },
           "svgTextDescription":        $("<input class='checkbox' id  = 'toggle_svgTextDescription_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Text Description'/></span>"),
-          "svgTextDescription.label":  $("<label/>").append('<div id="text_description" class="toggleControl"></div>'),
+          "svgTextDescription.label":  $("<label/>").append('<div id="text_description" class="toggleControl hudItem"></div>'),
           "svgTextDescription.changeEvent":
               function(changeEvent)
               { display.svgTextDescription.toggle();
@@ -2082,14 +2192,16 @@ thisEqualsThat.oop = function()
   this.SVGHUD.prototype.fillManager = function(svgHUD, context)
   { this.svgHUD     = svgHUD;
     this.context    = context;
+
+    this.context.display = $("<div class='fillManagers hudCollection' />");
+    this.svgHUD.divForHUD.append(this.context.display);
   }
   this.SVGHUD.prototype.fillManager.prototype.display   = function()
-  { this.context.fillManagersDiv = $("<div class='fillManagers hudCollection' />");
-    this.svgHUD.divForHUD.append(this.context.fillManagersDiv);
+  { 
   }
   this.SVGHUD.prototype.fillManager.prototype.hide      = function()
-  { if ( this.context.hasOwnProperty("fillManagersDiv") )
-    { this.context.fillManagersDiv.hide();
+  { if ( this.context.hasOwnProperty("display") )
+    { this.context.display.hide();
     }
   }
   this.SVGHUD.prototype.fillManager.prototype.postClone = function(fillManagersDict, context)
@@ -2097,10 +2209,10 @@ thisEqualsThat.oop = function()
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
     var This = this;
 
-    if (! context.hasOwnProperty("fillManagersDiv") )
+    if (! context.hasOwnProperty("display") )
     { this.display();
     }
-    this.context.fillManagersDiv.show();
+    this.context.display.show();
 
     for (fillManagerSelector in fillManagersDict)
     { var fillManagerData = fillManagersDict[fillManagerSelector];
@@ -2111,7 +2223,7 @@ thisEqualsThat.oop = function()
       { selectorContext = context[fillManagerSelector] = { "byVisualisation": {} };
 
         selectorContext.fillManagerDiv = $("<div class='fillManager hudItem' />");
-        context.fillManagersDiv.append(selectorContext.fillManagerDiv);
+        context.display.append(selectorContext.fillManagerDiv);
 
         var fillManagerDiv = selectorContext.fillManagerDiv;
         fillManagerDiv
@@ -2173,15 +2285,15 @@ thisEqualsThat.oop = function()
     this.context.byVisualisation = {};
   }
   this.SVGHUD.prototype.RandomiseClones.prototype.hide      = function()
-  { this.context.collectionDiv.hide();
+  { this.context.display.hide();
   }
   this.SVGHUD.prototype.RandomiseClones.prototype.postColor = function(randomiseClonesDict, context)
   { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
 
     if (! context.hasOwnProperty("hudItems") )
-    { context.collectionDiv = $("<div class='randomiseClones hudCollection' />");
-      this.svgHUD.divForHUD.append(this.context.collectionDiv);
+    { context.display = $("<div class='randomiseClones hudCollection' />");
+      this.svgHUD.divForHUD.append(this.context.display);
 
       context.hudItems = {};
 
@@ -2342,7 +2454,7 @@ thisEqualsThat.oop = function()
       }
     }
 
-    this.context.collectionDiv.show();
+    this.context.display.show();
 
     var processingOrder = ["randomisePosition", "randomiseColors", "randomiseColorsByGroup"];
 
@@ -2370,11 +2482,9 @@ thisEqualsThat.oop = function()
       var localContext = contextByVisualisation[randomiseProperty];
 
       if (! context.hudItems.hasOwnProperty(randomiseProperty) )
-      { var randomiseItem   = context.hudItems[randomiseProperty] =   $("<div class='randomiseProperty hudItem' />");
-        var icon            = $(`<img src='/static/graphics/thisEquals/svgHUD/${randomiseProperty}.png' />`);
+      { var randomiseItem   = context.hudItems[randomiseProperty] =   $("<div class='randomiseProperty "+randomiseProperty+" hudItem' />");
 
-        randomiseItem.append(icon);
-        context.collectionDiv.append(randomiseItem);
+        context.display.append(randomiseItem);
 
         context.hudItems[randomiseProperty].data("localContext", localContext);
         context.spectrumFunction(randomiseItem, context.randomiseFunctions[randomiseProperty]);
@@ -2713,7 +2823,7 @@ thisEqualsThat.oop = function()
       eval(this.data.fieldPrecisionFunction);
     }
     else
-    { toReturn = thisEqualsThat.standardPrecision( Number(this.data.currentValue) );
+    { toReturn = standardPrecision( Number(this.data.currentValue) );
     }
     this.display.uiValue_slider.val(unitsAroundOutput(this, toReturn));
   }
