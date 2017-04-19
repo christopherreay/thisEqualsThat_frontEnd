@@ -635,10 +635,8 @@ thisEqualsThat.oop = function()
     if (this.ifa_queueState == "ready")
     { this.ifa_currentlyProcessing = arguments;
       this.ifa_queueState = "Sending Request";
-      this.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", true);
-      this.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", true);
-      this.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", true);
-      this.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", true);
+       this.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", true);
+       this.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", true);
 
       var This = this;
       fieldChangeData	= $.extend({modelInstanceID: this.id}, fieldChangeData);
