@@ -1,7 +1,6 @@
 window.thisEqualsThat = {};
 thisEqualsThat.graphicLoadVersion = "0.0.9.20160726.1639";
 
-$('body').append('<link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">');
 
 thisEqualsThat.svg          = {};
 thisEqualsThat.svgStore     = {};
@@ -15,13 +14,13 @@ traverse = function(object, address, defaultList=[{}])
 
   var current = object;
   address = address.split(".");
-
+  
   for (var wayPoint of address)
   { if (!current.hasOwnProperty(wayPoint) )
     { current[wayPoint] =  defaultList[defaultCounter]
     }
     current = current[wayPoint];
-
+    
     if (defaultCounter < defaultListTestIndex)
     { defaultCounter ++;
     }
@@ -36,7 +35,7 @@ prettyPrint = function(field, value)
     eval(field.data.fieldPrecisionFunction);
   }
   else
-  { toReturn = standardPrecision(value);
+  { toReturn = thisEqualsThat.standardPrecision(value);
   }
 
   return unitsAroundOutput(field, toReturn);
@@ -45,27 +44,94 @@ unitsAroundOutput = function(field, output)
 { return field.data.unitPrefix+" "+output+" "+field.data.unitSuffix;
 }
 
-standardPrecision = function(number)
+thisEqualsThat.standardPrecision = function(number)
 { return Number(number).toPrecision(5);
 }
 
 thisEqualsThat.oop = function()
 { this.init = function()
-  { ThisEqualsThat.componentCookieManager = new ThisEqualsThat.ComponentCookieManager(this);
-    ThisEqualsThat.modelClasses           = new ThisEqualsThat.ModelClasses(this);
+  { //ThisEqualsThat.componentCookieManager = new ThisEqualsThat.ComponentCookieManager(this);
+    // ThisEqualsThat.modelClasses           = new ThisEqualsThat.ModelClasses(this);
 
-    ThisEqualsThat.display                = $("body");
-    ThisEqualsThat.welcome                = new ThisEqualsThat.Welcome(ThisEqualsThat.display);
+    // ThisEqualsThat.display                = $("body");
+    // ThisEqualsThat.welcome                = new ThisEqualsThat.Welcome(ThisEqualsThat.display);
+    var highlighter = rangy.createHighlighter();
+    
+    var highlightApplier = rangy.createClassApplier("highlight");
+    highlighter.addClassApplier(highlightApplier);
+
+    commentsList = [];
+    currentlySelectedCommentSet = null;
+
+    $(".mainContent").on("mouseup", 
+      function(event) 
+      { var selection = document.getSelection();
+        console.log(selection);
+
+        var selection;
+        if (selection.anchorOffset == selection.focusOffset)
+        { console.log("event", event)
+          selection = highlighter.getHighlightForElement(event.target);
+        }
+        else
+        { selection = highlighter.highlightSelection("highlight", {"containerElementId": "mainContent"} )[0];
+        }
+
+        console.log("selection", selection);
+
+        if (selection)
+        { debugger;
+          var selectionID = selection.id
+          var currentCommentSet = commentsList[selectionID];
+
+          console.log(currentCommentSet);
+          if (! currentCommentSet)
+          { if (currentlySelectedCommentSet) commentsList[currentlySelectedCommentSet].hide();
+            commentsList[selectionID] = $("<div id='commentContainer_"+selectionID+"' class='commentContainer'> </div>");
+            $("body").append(commentsList[selectionID]);
+            commentsList[selectionID].comments
+            ( { "enableSynthesis": true,
+              }
+            );
+            
+          }
+          else if(currentlySelectedCommentSet != selectionID)
+          { commentsList[currentlySelectedCommentSet].hide();
+            commentsList[selectionID].show();
+          }
+
+          currentlySelectedCommentSet = selectionID; 
+        } 
+        
+        
+      } 
+    );
+
   }
 
   this.Welcome = function(display)
-  { O.create( [ "#welcomeOver.wrapper.fullScreenOverlay.smoothMove",
+  { O.create( [ "#welcomeOver.wrapper.fullScreenOverlay.smoothMove", 
                 [ [ ".centerBackgroundImage.visualToolsLogo" ],
                 ],
               ],
               display,
               display
             );
+
+    setTimeout
+    ( function() 
+      { display.welcomeOver.toggleClass("opacityZero", true);
+ 
+        setTimeout
+        ( function()
+          { ThisEqualsThat.displayInterface(display);
+          },
+          500
+        );
+      },
+      // 2000
+      10
+    );
   }
 
   this.displayInterface = function(display)
@@ -86,31 +152,29 @@ thisEqualsThat.oop = function()
     this.constructBlueprint               (display.modals);
     this.constructBlueprint_inDevelopment (display.modals);
 
-    this.profileModal (display.modals);
-
     ThisEqualsThat.referenceVisual  = new ThisEqualsThat.ReferenceVisual    ( display.doubleBuffer);
     ThisEqualsThat.scene            = new ThisEqualsThat.ThisEqualsThatScene( display.navbar.thisEqualsThatScene );
   };
 
   this.mainNavigation = function(navbar)
   { O.create( [ ".bs-component",
-                [
+                [ 
                   [ O.openModal_aTag
-                    ( navbar, null, "profileModal",
-                        ".createConstruct.row",
+                    ( navbar, null, "profileModal",                
+                        ".createConstruct.panel.row", 
                         O.listGroupItem ( navbar,
-                                          null,
-                                          "button", ".blueprintItem profileBtn", [12, 12, 6, 6], $('<i class="material-icons">account_circle</i>'), "", "@Profile", ""
+                                          null, 
+                                          "button", ".blueprintItem", [12, 12, 6, 6], $("<img class='blueprintIcon' src='/static/graphics/user/profilePic.jpg' />"), "", "@Profile", ""
                                         )[0]
                     )
                   ],
                   // [ ".square92.marginAuto", ".editProfile.panel.row"       ],
                   [ O.openModal_aTag
-                    ( navbar, null, "constructBlueprint",
-                        ".createConstruct.row",
+                    ( navbar, null, "constructBlueprint",                
+                        ".createConstruct.panel.row", 
                         O.listGroupItem ( navbar,
-                                          null,
-                                          "button", ".blueprintItem constructBtn", [12, 12, 6, 6], $('<i class="material-icons">view_comfy</i>'), "", "@Construct", ""
+                                          null, 
+                                          "button", ".blueprintItem", [12, 12, 6, 6], $("<img class='blueprintIcon' src='/static/graphics/thisEquals/icons/blueprint.svg' />"), "", "@Construct", ""
                                         )[0]
                     )
                   ],
@@ -123,22 +187,6 @@ thisEqualsThat.oop = function()
             );
   };
 
-// profileModel
-  this.profileModal = function (modals)
-    { O.modal(  modals,
-                modals,
-                "profileModal",
-                $("<span>Your Profile test</span>"),
-                "profileModalContainer.row",
-                ""
-              );
-    }
-
-// ripple effective
-
-
-
-// blueprintItem
   this.constructBlueprint               = function(modals)
   { O.modal(  modals,
               modals,
@@ -149,17 +197,17 @@ thisEqualsThat.oop = function()
             );
 
     O.create( [ "#blueprintTutorialPlayer", "i.fafa-spinner" ], modals, modals["modal-content"] );
-    O.create( [ ".playerMenu",
+    O.create( [ ".playerMenu", 
                 [ [ ".closeButton", "i.fa.fa-times" ],
                   [ ".swipeButton", ],
                 ]
-              ],
-              modals,
-              modals["modal-content"]
+              ],              
+              modals, 
+              modals["modal-content"] 
             );
 
     var modelClassOrder = [ "HowMany", "VolMassDen", "LightBulb", "CO2", "Wood", "Coal", "PeopleRatioPlay", "Earth", "Money", "Air Quality", "Seesaw"];
-    var modelClassData  = { "HowMany"     : { "tutorialVideo": "je_M6gB8nZw" } ,
+    var modelClassData  = { "HowMany"     : { "tutorialVideo": "je_M6gB8nZw" } , 
                             "VolMassDen"  : { "tutorialVideo": "z0LKAOowf9c" } ,
                             "LightBulb"   : { "tutorialVideo": "NnUqU9_hrrg" } ,
                           };
@@ -171,8 +219,6 @@ thisEqualsThat.oop = function()
         if ( modelClassData.hasOwnProperty(key) )
         { O.create( [ ".videoOverlay.smoothMove" ], {}, blueprintItem );
           modelClass.tutorialVideo = modelClassData[key].tutorialVideo;
-
-
         }
         modelClass.tutorialIndex = index;
       }
@@ -182,35 +228,12 @@ thisEqualsThat.oop = function()
     .on("click", ".blueprintItem",
         function(event)
         { var modelClass = $(event.currentTarget).data("thisEquals_blueprint");
-          var x = event.pageX;
-          var y = event.pageY;
-          var clickX = x - $(this).offset().left;
-          var clickY = y - $(this).offset().top;
-          var btn = this;
-
-          var setX = parseInt(clickX);
-          var setY = parseInt(clickY);
-
-          $(this).append('<svg><circle cx="'+setX+'" cy="'+setY+'" r="'+0+'"></circle></svg>');
-
-          var circle = $(btn).find("circle");
-          circle.animate({
-              "r": $(btn).outerWidth()
-          }, {
-              duration: 300,
-              step: function(val) {
-                  circle.attr("r", val);
-              }
-          });
-
           modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
           ThisEqualsThat.scene.setCurrentModelClass(modelClass);
-          setTimeout(function() {
-              $('.constructBlueprint.modal').modal('hide');
-              $('.modal svg').remove();
-          }, 500);
+          $(this).closest(".modal").modal("hide");
         }
       );
+    
 
     var tutorialPlayerStateChange =
       function(event)
@@ -223,29 +246,22 @@ thisEqualsThat.oop = function()
     modals.constructBlueprint
     .on("click", ".videoOverlay",
         function(event)
-        { if (!event) {
-            window.event.cancelBubble = true;
-          } else if (event.stopPropagation) {
-            event.stopPropagation();
-          } else {
-            event.stopPropagation();
-          }
-          var modelClass = $(event.currentTarget).closest(".blueprintItem").data("thisEquals_blueprint");
+        { var modelClass = $(event.currentTarget).closest(".blueprintItem").data("thisEquals_blueprint");
 
           if (! modals.constructBlueprint.hasOwnProperty("tutorialPlayer") )
           { modals.constructBlueprint.tutorialPlayer
               = new YT.Player
-              ( 'blueprintTutorialPlayer',
+              ( 'blueprintTutorialPlayer', 
                 { height:   modals.blueprintTutorialPlayer.height() - 15,
                   width:    modals.blueprintTutorialPlayer.width()  - 15,
                   videoId:  modelClass.tutorialVideo,
-                  events:
-                  { 'onReady':
+                  events: 
+                  { 'onReady': 
                       function()
                       { modals.constructBlueprint.tutorialPlayer
                             .loadPlaylist
                             ( { "playlist": ["je_M6gB8nZw", "z0LKAOowf9c", "NnUqU9_hrrg"],
-                                "index":    modelClass.tutoralIndex,
+                                "index":    modelClass.tutoralIndex, 
                               }
                             )
                       },
@@ -258,25 +274,24 @@ thisEqualsThat.oop = function()
           { modals.constructBlueprint.tutorialPlayer
               .loadPlaylist
               ( { "playlist": "PLvcKSclDckD0GLGEqdladfF0AS6wdysLk",
-                  "index":    modelClass.tutoralIndex,
+                  "index":    modelClass.tutoralIndex, 
                 }
               )
           }
           $("body").toggleClass("playingTutorial", true);
 
-          // modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
-          // ThisEqualsThat.scene.setCurrentModelClass(modelClass);
+          modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
+          ThisEqualsThat.scene.setCurrentModelClass(modelClass);
 
           event.stopPropagation();
-          return false;
         }
       );
     modals.constructBlueprint
     .on
-    ( "hidden.bs.modal",
-      function()
+    ( "hidden.bs.modal", 
+      function() 
       {
-      }
+      } 
     );
     modals.closeButton
     .on
@@ -306,7 +321,7 @@ thisEqualsThat.oop = function()
             );
   }
   this.ThisEqualsThatScene.prototype.setCurrentModelClass = function(modelClass)
-  { if (this.hasOwnProperty("currentModelClass") && modelClass != this.currentModelClass)
+  { if (this.hasOwnProperty("currentModelClass"))
     { this.currentModelClass.modelInstance.hide();
     }
     this.currentModelClass = modelClass;
@@ -320,31 +335,17 @@ thisEqualsThat.oop = function()
     { url: "getModelClasses",
       dataType: "json",
       success: function(data, status, request)
-      { $.each(data.standard,
+      { $.each(data.standard, 
             function(index, value)
-            { This[value.name] = new ThisEqualsThat.ModelClass(value);
+            { This[value] = new ThisEqualsThat.ModelClass(value);
             }
         );
         $.each
-        ( data.iframe,
+        ( data.iframe, 
             function(key, value)
             { value["jsonKey"] = key;
               This[key] = new ThisEqualsThat.ModelClass_iframe(value);
             }
-        );
-        setTimeout
-        ( function() 
-          { ThisEqualsThat.display.welcomeOver.toggleClass("opacityZero", true);
-     
-            setTimeout
-            ( function()
-              { ThisEqualsThat.displayInterface(ThisEqualsThat.display);
-              },
-              500
-            );
-          },
-          // 2000
-          10
         );
       },
     };
@@ -352,22 +353,19 @@ thisEqualsThat.oop = function()
   }
 
 
-  this.ModelClass = function(modelClass)
-  { this.name       = modelClass.name;
-    this.displayName = modelClass.displayName;
-
-    this.imageURL   = this.imageBaseURL+this.name+".svg";
+  this.ModelClass = function(modelClassName)
+  { this.name       = modelClassName;
+    this.imageURL   = this.imageBaseURL+modelClassName+".svg";
   }
   this.ModelClass.prototype.imageBaseURL      = "/static/graphics/thisEquals/modelClasses/";
-  this.ModelClass.prototype.getBlueprintItem  =
+  this.ModelClass.prototype.getBlueprintItem  = 
       function(passThrough, appendTo)
       { if (! this.hasOwnProperty("blueprintItem") )
-        { var displayName = this.displayName || this.name;
-          this.blueprintItem = 
+        { this.blueprintItem = 
               O.listGroupItem
               ( passThrough, 
                 appendTo, 
-                "button", ".blueprintItem.ripplelink", [4, 6, 6, 12], $("<img class='blueprintIcon smoothMove' src='"+this.imageURL+"' />"), "", "@"+displayName, "@");
+                "button", ".blueprintItem.ripplelink", [4, 6, 6, 12], $("<img class='blueprintIcon smoothMove' src='"+this.imageURL+"' />"), "", "@"+this.name, "@Description Text");
           passThrough.blueprintItem.data("thisEquals_blueprint", this);
           //O.create( [ ".videoOverlay.smoothMove" ], passThrough, passThrough.blueprintItem );
         }
@@ -396,21 +394,18 @@ thisEqualsThat.oop = function()
       $.ajax(ajaxOptions);
     }
     else
-    { if (displayContainer == null) return this.modelInstance;
-
-      this.modelInstance.displayIntoTarget(displayContainer);
+    { this.modelInstance.displayIntoTarget(displayContainer);
     }
   }
-
+ 
 
   this.ModelClass_iframe = function(modelClassData)
   { this.name     = modelClassData.name || modelClassData.jsonKey;
     this.imageURL = this.imageBaseURL+modelClassData.icon;
     this.data     = modelClassData;
-    this.displayName = modelClassData.displayName || modelClassData.name
   }
   this.ModelClass_iframe.prototype.imageBaseURL =  "/static/graphics/thisEquals/icons/";
-  this.ModelClass_iframe.prototype.getBlueprintItem =
+  this.ModelClass_iframe.prototype.getBlueprintItem = 
       this.ModelClass.prototype.getBlueprintItem;
   this.ModelClass_iframe.prototype.getModelInstance = function(displayContainer)
   { var This = this;
@@ -418,7 +413,7 @@ thisEqualsThat.oop = function()
     if (! this.hasOwnProperty("modelInstance" ) )
     { this.modelInstance = this.data;
       this.modelInstance.display = $("<div class='iframeFullScreen'><iframe src='"+this.data.src+"?nocache="+Date.now()+"' /></iframe>");
-
+      
       if (! This.modelInstance.appended )
       { $(".mainContentColumn").append(This.modelInstance.display);
         This.modelInstance.appended = true;
@@ -427,7 +422,7 @@ thisEqualsThat.oop = function()
       this.modelInstance.hide = function()
       { This.modelInstance.display.toggleClass("invisible", true);
       }
-    }
+    } 
     this.modelInstance.display.toggleClass("invisible", false);
   }
 
@@ -483,11 +478,11 @@ thisEqualsThat.oop = function()
     { var This = this;
       this.outputFieldData = {};
       this.outputFieldSelect = {};
-
-      O.panelCollapsible( this.outputFieldSelect, appendTo,
+      
+      O.panelCollapsible( this.outputFieldSelect, appendTo, 
         ".outputFieldSelectPanel.width100",
         [ [ ".displayFlex.spaceBetween",
-            [ [ ".chooseOutputField.selectedField", "@Output: "],
+            [ [ ".chooseOutputField.selectedField", "@Output: "], 
               [ ".modelOutputValue" ],
             ]
           ],
@@ -505,7 +500,7 @@ thisEqualsThat.oop = function()
         function(event)
         { var selectedField = $(event.currentTarget).data("thisEquals.modelFieldOutput");
           This.lastAlteredOutputField = selectedField;
-
+          
           This.outputFieldSelect.menuListItems.find(".dropdownItem").toggleClass("selected", false);
           selectedField.display.dropdownItem.toggleClass("selected", true);
 
@@ -539,11 +534,11 @@ thisEqualsThat.oop = function()
     { var This = this;
       this.visualisationFieldData = {};
       this.visualisationFieldSelect = {};
-
-      O.panelCollapsible( this.visualisationFieldSelect, appendTo,
+      
+      O.panelCollapsible( this.visualisationFieldSelect, appendTo, 
         ".visualisationFieldSelectPanel.width100",
         [ [ ".displayFlex.spaceBetween",
-            [ [ ".chooseVisualisationField.selectedField", "@Visualise: "],
+            [ [ ".chooseVisualisationField.selectedField", "@Visualise: "], 
               [ ".modelVisualisationValue" ],
             ]
           ],
@@ -561,7 +556,7 @@ thisEqualsThat.oop = function()
         function(event)
         { var selectedField = $(event.currentTarget).data("thisEquals.ModelFieldVisualisation");
           This.lastAlteredVisualisationField = selectedField;
-
+          
           This.visualisationFieldSelect.menuListItems.find(".dropdownItem").toggleClass("selected", false);
           selectedField.display.dropdownItem.toggleClass("selected", true);
 
@@ -637,8 +632,6 @@ thisEqualsThat.oop = function()
       this.ifa_queueState = "Sending Request";
       this.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", true);
       this.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", true);
-      this.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", true);
-      this.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", true);
 
       var This = this;
       fieldChangeData	= $.extend({modelInstanceID: this.id}, fieldChangeData);
@@ -697,15 +690,13 @@ thisEqualsThat.oop = function()
                 );
               }
               else
-              {
-                This.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", false);
+              { This.display.topModelDiv.find(".inputFieldAlteredSpinner").toggleClass("spinner", false);
                 This.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", false);
                 This.svg_createSaveLink(This)
               }
             }
             else
-            {
-              This.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", false);
+            { This.display.topModelDiv.find(".calculationSpinner").toggleClass("spinner", false);
               This.display.topModelDiv.find(".visualisationSpinner").toggleClass("spinner", true);
             }
           },
@@ -719,7 +710,7 @@ thisEqualsThat.oop = function()
     }
   }
   this.ModelInstance.prototype.setChoosableFields = function(data, status, response)
-  {
+  { 
 
     if (! this.hasOwnProperty("choosableFields"))
       this.choosableFields = {};
@@ -806,22 +797,22 @@ thisEqualsThat.oop = function()
       this.display = {};
       var display = this.display;
 
-      var toCreate =
+      var toCreate = 
         O.create
         ( [ ".modelInstanceDiv."+this.modelClass.name+"."+this.id,
             ".topModelDiv",
             [ //[ ".row", ".col-lg-12", ".panel.panel-default", ".visualisationOutputContainer.panel-body" ],
-              // [ ".row", ".col-lg-4", ".panel.panel-default",
+              // [ ".row", ".col-lg-4", ".panel.panel-default", 
               //   [ [ ".modelOutputValue.panel-body" ],
               //     [ ".outputFieldSelect", this.getOutputFields().outputFieldSelect, ],
               //   ],
               // ],
-              [ ".row",
-                [ [".calculationColumn.col-lg-4.col-xs-12", ".calculationPanel.panel.panel-default",
-                    [ [ ".panel-heading", ".panel-title.displayFlex.spaceBetween",
-                        [ [ "div.calculationSpinner",
-                            [ [ $('<i class="material-icons">tune</i>') ],
-                              [ ".chooseOutputField.color_visualTools" ],
+              [ ".row", 
+                [ [".calculationColumn.col-lg-4.col-xs-12", ".calculationPanel.panel.panel-default", 
+                    [ [ ".panel-heading", ".panel-title.displayFlex.spaceBetween", 
+                        [ [ "div.calculationSpinner", 
+                            [ [ $("<i class='fa fa-calculator' aria-hidden='true'></i>") ],
+                              [ ".chooseOutputField.smallCaps.color_visualTools" ],
                             ],
                           ],
                           [ ".modelOutputValue.color_visualTools" ],
@@ -841,10 +832,10 @@ thisEqualsThat.oop = function()
                       ],
                     ],
                   ],
-                  [".visualisationColumn.col-lg-8.col-xs-12", ".visualisationPanel.panel.panel-default",
-                    [ [ ".panel-heading", ".panel-title.displayFlex.spaceBetween",
-                        [ [ "div.visualisationSpinner",
-                            [ [ $('<i class="material-icons">visibility</i>') ],
+                  [".visualisationColumn.col-lg-8.col-xs-12", ".visualisationPanel.panel.panel-default", 
+                    [ [ ".panel-heading", ".panel-title.displayFlex.spaceBetween", 
+                        [ [ "div.visualisationSpinner", 
+                            [ [ $("<img class='' src='/static/graphics/visualTools/visualise.height_18px.png'>") ],
                               [ ".chooseVisualisationField.smallCaps.color_visualTools" ],
                             ],
                           ],
@@ -852,7 +843,7 @@ thisEqualsThat.oop = function()
                         ],
                       ],
                       [ ".row",
-                        [ [ ".svgDiv.panel.panel-default.col-lg-12",
+                        [ [ ".svgDiv.panel.panel-default.col-lg-12", 
                             [ [ $(document.createElementNS(d3.ns.prefix.svg, "svg"))
                                 .attr("xmlns",        "http://www.w3.org/2000/svg")
                                 .attr("xmlns:xlink",  "http://www.w3.org/1999/xlink")
@@ -874,8 +865,8 @@ thisEqualsThat.oop = function()
                                   ],
                                 ],
                               ],
-                              // [ ".toggleFeatures" ,
-                              // ],
+                              [ ".toggleFeatures" ,
+                              ],
                               [ ".svgSaveLink.bg_visualTools" ,
                               ],
                               [ "a.editableTextPlaceholder", "@Click to Enter Text",
@@ -904,10 +895,8 @@ thisEqualsThat.oop = function()
           targetContainer
         );
 
-      display.modelInstanceDiv.data("thisEquals_modelInstance", this);
-
       display.calculationPanel.on
-      ( "click",
+      ( "click", 
         ".panel-title",
         function()
         { display.outputFieldSelectPanel.find("a").first().click();
@@ -959,8 +948,8 @@ thisEqualsThat.oop = function()
 
       display.svgTranslatableG.data("thisEqualsThat", {"modelInstance": this});
       display.rootSVG.on
-      ( "blur focus focusin focusout load resize scroll unload "        +
-        "dblclick mousedown mouseup mousemove mouseover mouseout mouseenter " +
+      ( "blur focus focusin focusout load resize scroll unload click "        +
+        "dblclick mousedown mouseup mousemove mouseover mouseout mouseenter " + 
         "mouseleave change select submit keydown keypress keyup error",
         function(e)
         { e.stopPropagation();
@@ -968,6 +957,36 @@ thisEqualsThat.oop = function()
       );
       // display.svgTextDescription.text("Hello World");
       // display.svgTextInput.on("change", function() { display.svgTextDescription.text($(this).val()); This.svg_createSaveLink(This);});
+
+      display.toggle =
+        { "axes":                 $("<input class='checkbox' id = 'toggle_axes_" + This.id + "' type='checkbox'  checked='checked'title='Show / Hide Axes' /></span>"),
+          "axes.label":           $("<label/>").append('<div id="axis"></div>'),
+          "axes.changeEvent"  :
+              function(changeEvent)
+              { display.svgHeightAxis.toggle();
+                This.svg_createSaveLink(This);
+              },
+          "svgReferenceG":        $("<input class='checkbox' id  = 'toggle_svgReferenceG_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Frame of Reference'/></span>"),
+          "svgReferenceG.label":  $("<label/>").append('<div id="reference"></div>'),
+          "svgReferenceG.changeEvent":
+              function(changeEvent)
+              { display.svgReferenceG.toggle();
+                This.svg_createSaveLink(This);
+              },
+          "svgTextDescription":        $("<input class='checkbox' id  = 'toggle_svgTextDescription_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Text Description'/></span>"),
+          "svgTextDescription.label":  $("<label/>").append('<div id="text_description"></div>'),
+          "svgTextDescription.changeEvent":
+              function(changeEvent)
+              { display.svgTextDescription.toggle();
+                This.svg_createSaveLink(This);
+              },
+        };
+      var controlList = ["axes", "svgReferenceG", "svgTextDescription"];
+      for (var name of controlList)
+      { display.toggle[name].on("change", display.toggle[name+".changeEvent"]);
+        display.toggle[name].appendTo(display.toggle[name+".label"]);
+        display.toggleFeatures.append(display.toggle[name+".label"]);
+      }
     }
 
     this.display.editableTextPlaceholder
@@ -977,7 +996,7 @@ thisEqualsThat.oop = function()
             "placement": "top",
             "mode": "inline",
             "toggle": "manual",
-            success: function(response, newValue)
+            success: function(response, newValue) 
             { if (newValue == "")
               { setImmediate
                 ( function()
@@ -996,14 +1015,14 @@ thisEqualsThat.oop = function()
                   }
                 );
               }
-
+              
             }
         });
     this.display.svgTextDescription.on
     ( "click",
       function(event)
       { event.stopPropagation();
-
+        
         This.display.editableTextPlaceholder.editable("toggle");
       }
     )
@@ -1113,8 +1132,8 @@ thisEqualsThat.oop = function()
                     .attr("d", yAxisD)
                     .attr("stroke", "darkgrey")
                 This.display.svgMeasureY.get(0).setAttribute("z:threeD", "true");
-
-                This.display.svgMeasureX
+                
+                This.display.svgMeasureX 
                       .attr("d", xAxisD)
                       .attr("stroke", "darkgrey")
                 This.display.svgMeasureX.get(0).setAttribute("z:threeD", "true");
@@ -1381,9 +1400,9 @@ thisEqualsThat.oop = function()
                         ' data:image/svg+xml,\n
                           ${svgString}
                         '
-                    title     = 'Save SVG Image'
+                    title     = 'Save SVG Image' 
                     download  = '${This.display.svgTextDescription.text()}_${This.display.modelOutputValue.text()}.svg'
-                ><i class="material-icons">file_download</i></a>`
+                ><i class="fa fa-download" aria-hidden="true"></i></a>`
           )
       );
     }
@@ -1471,7 +1490,7 @@ thisEqualsThat.oop = function()
 
     this.display.svgReferenceGContainer.html(this.display.svgReferenceG);
 
-
+    
   }
 
 //REFERENCE VISUAL
@@ -1480,7 +1499,7 @@ thisEqualsThat.oop = function()
 
     this.svgStore = {};
     // O.create( [ ".
-
+    
     this.masterReferenceSVGSelectList = $("<div class='masterReferenceSVGSelectList'/>");
     this.svgSelectList = $("<ul/>");
     this.masterReferenceSVGSelectList.append(this.svgSelectList);
@@ -1510,7 +1529,7 @@ thisEqualsThat.oop = function()
           "MeganPeople3/_C5_manrunning",
           "MeganPeople3/_C2_manbored",
           "MeganPeople3/_C7_manbooks",
-          ["MeganPeople3/_C10_mansad",        0.9],
+          ["MeganPeople3/_C10_mansad", 0.9],
           "MeganPeople3/_C6_manidea",
 
           "MeganPeople4/D6_gransign",
@@ -1518,43 +1537,43 @@ thisEqualsThat.oop = function()
           "MeganPeople4/D4_granlookingup",
           "MeganPeople4/D1_granhappy",
           "MeganPeople4/D2_granchatting",
-          ["MeganPeople4/D9_granreading",     1.35],
+          ["MeganPeople4/D9_granreading", 1.35],
           "MeganPeople4/D10_granthinking",
-          ["MeganPeople4/D3_grannapping",     1.35],
+          ["MeganPeople4/D3_grannapping", 1.35],
           "MeganPeople4/D7_granworried",
-          ["MeganPeople4/D8_grancat",         1.68],
+          ["MeganPeople4/D8_grancat", 1.68],
 
-          ["MeganPeople2/_B3_boysign",        1.2],
-          ["MeganPeople2/_B10_boysearching",  1.0],
-          ["MeganPeople2/_B6_boyresting",     0.34],
-          ["MeganPeople2/_B1_boyhappy",       1.2],
-          ["MeganPeople2/_B9_boytantrum",     1.2],
-          ["MeganPeople2/_B2_boysad",         1.2],
-          ["MeganPeople2/_B7_boysuprised",    1.2],
-          ["MeganPeople2/_B5_boypointing",    1.2],
-          ["MeganPeople2/_B8_boylaughing",    1.2],
-          ["MeganPeople2/_B4_boyreading",     0.7],
+          ["MeganPeople2/_B3_boysign", 1.2],
+          ["MeganPeople2/_B10_boysearching", 1.0],
+          ["MeganPeople2/_B6_boyresting", 0.34],
+          ["MeganPeople2/_B1_boyhappy", 1.2],
+          ["MeganPeople2/_B9_boytantrum", 1.2],
+          ["MeganPeople2/_B2_boysad", 1.2],
+          ["MeganPeople2/_B7_boysuprised", 1.2],
+          ["MeganPeople2/_B5_boypointing", 1.2],
+          ["MeganPeople2/_B8_boylaughing", 1.2],
+          ["MeganPeople2/_B4_boyreading", 0.7],
 
-          ["MeganPeople5/E9_womanresting",    0.9],
+          ["MeganPeople5/E9_womanresting", 0.9],
           "MeganPeople5/E6_womansign",
           "MeganPeople5/E2_womanconfused",
           "MeganPeople5/E3_womanangry",
           "MeganPeople5/E1_womanhappy",
           "MeganPeople5/E7_womanchatting",
-          ["MeganPeople5/E10_womanpainting",  1.4],
-          ["MeganPeople5/E4_womantired",      1.65],
-          ["MeganPeople5/E5_womanreading",    0.6],
+          ["MeganPeople5/E10_womanpainting", 1.4],
+          ["MeganPeople5/E4_womantired", 1.65],
+          ["MeganPeople5/E5_womanreading", 0.6],
           "MeganPeople5/E8_womanyoga",
 
           "MeganPeople1/_A2_hippylaughing",
           "MeganPeople1/_A3_hippychatting",
           "MeganPeople1/_A7_hippyidea",
-          ["MeganPeople1/_A6_hippybored",     0.9],
+          ["MeganPeople1/_A6_hippybored", 0.9],
           "MeganPeople1/_A1_hippychuffed",
           "MeganPeople1/_A8_hippystressed",
-          ["MeganPeople1/_A4_hippycandle",    0.9],
+          ["MeganPeople1/_A4_hippycandle", 0.9],
           "MeganPeople1/_A5_hippyjuggling",
-          ["MeganPeople1/_A9_hippyworking",   0.9],
+          ["MeganPeople1/_A9_hippyworking", 0.9],
           "MeganPeople1/_A10_hippysign"
         ];
     for (var svg of peopleReferenceSVGs)
@@ -1567,7 +1586,7 @@ thisEqualsThat.oop = function()
     }
 
     refKeys = Object.keys(this.svgReferenceDefsByName);
-    ThisEqualsThat.ReferenceVisualLoader(This, this.svgReferenceDefsByName, refKeys, this, refKeys.length-1, this.svgSelectList);
+    ThisEqualsThat.ReferenceVisualLoader(This, this.svgReferenceDefsByName, refKeys, this, refKeys.length-1);
 
     this.getSVGData = function(height)
     { for (var counter=0; counter < this.svgReferenceDefs.length; counter ++)
@@ -1584,21 +1603,16 @@ thisEqualsThat.oop = function()
     }
   }
   //this.ReferenceVisual.prototype.
-  this.ReferenceVisualLoader = function(referenceVisual, referenceSVGDataDict, refKeys, referenceVisualDefs, index, svgSelectList)
+  this.ReferenceVisualLoader = function(referenceVisual, referenceSVGDataDict, refKeys, referenceVisualDefs, index)
   { if (index == -1)
     { return;
     }
     else
-    { ThisEqualsThat.ReferenceVisualLoader(referenceVisual, referenceSVGDataDict, refKeys, referenceVisualDefs, index-1, svgSelectList);
+    { this.ReferenceVisualLoader(referenceVisual, referenceSVGDataDict, refKeys, referenceVisualDefs, index-1);
     }
 
     var referenceSVGData = referenceSVGDataDict[refKeys[index]];
     var importedNode;
-
-    var referenceSVGSelectListItemDiv = $("<div class='referenceSVGSelectListItem' />").attr("thisEquals_fileHandle", referenceSVGData.fileHandle);
-    var referenceSVGSelectListItemLI  = $("<li />");
-    svgSelectList.append(referenceSVGSelectListItemLI);
-
     d3.xml("/static/svg/referenceSVGs/"+referenceSVGData.fileHandle+".svg?ver=" + thisEqualsThat.graphicLoadVersion, 'image/svg+xml',
         function(xml)
         {
@@ -1606,7 +1620,9 @@ thisEqualsThat.oop = function()
               console.log("referenceVisual:" + referenceSVGData.fileHandle);//, importedNode);
               var referenceRootG = $(importedNode).find("g").first();
               referenceVisualDefs.svgStore[referenceSVGData.fileHandle] = referenceRootG;
-              
+
+              var referenceSVGSelectListItemDiv = $("<div class='referenceSVGSelectListItem' />").attr("thisEquals_fileHandle", referenceSVGData.fileHandle);
+              var referenceSVGSelectListItemLI  = $("<li />");
               var referenceSVGSelectListItemSVG = $(document.createElementNS(d3.ns.prefix.svg, "svg"))
                   .attr("xmlns",        "http://www.w3.org/2000/svg")
                   .attr("xmlns:xlink",  "http://www.w3.org/1999/xlink")
@@ -1616,6 +1632,8 @@ thisEqualsThat.oop = function()
               var clonedG = referenceRootG.clone().appendTo(referenceSVGSelectListItemSVG);
               referenceSVGSelectListItemDiv.append(referenceSVGSelectListItemSVG);
               referenceSVGSelectListItemLI.append(referenceSVGSelectListItemDiv);
+
+              referenceVisual.svgSelectList.append(referenceSVGSelectListItemLI);
 
               var internalSize    = clonedG[0].getBBox();
 
@@ -1689,10 +1707,6 @@ thisEqualsThat.oop = function()
         else if (orderItem.startsWith("groupHeader") )
         { elementList.push($(`<div class="inputFieldElement groupHeader">${orderItem.substring(12)}</div>` ) )
         }
-        else if (orderItem.startsWith("#fieldInfo_") )
-        { var fieldElement  = elementList[elementList.length -1]
-          O.tooltip( {}, fieldElement, ".fieldElementTooltip", orderItem.substring(11), {"html":true, "placement": "right", "container": This.inputFieldHUD.modelInstance.display.svgDiv});
-        }
         else
         { elementList.push(this.inputFieldHUD.modelInstance.inputFields[`["${orderItem.replace(", ", "\", \"")}"]`].uiElement); //"
         }
@@ -1749,7 +1763,7 @@ thisEqualsThat.oop = function()
     localContext.initContainer = function(inputFieldHUD, localContext)
     { var container =
           $(` <div class='ratioColorTotal'>
-                <div class='inputFieldElement total'          />
+                <div class='inputFieldElement total hudCollection'          />
                 <div class='ratioColorList'     />
                 <div class='inputFieldElement addRatio hudItem fa fa-plus-circle'       />
               </div>
@@ -1765,32 +1779,17 @@ thisEqualsThat.oop = function()
           function(event)
           { localContext.createRatioInput(0.1, tinycolor.random().setAlpha(0.7).saturate(50));
             localContext.writeChanges(true);
+
+            localContext.inputFieldHUD.modelInstance.doNotUpdateUI = true;
+            localContext.inputFieldHUD.modelInstance.inputFields[`["ratios"]` ].uiValue_text.trigger("change");
+            localContext.inputFieldHUD.modelInstance.inputFields[`["colors"]` ].uiValue_text.trigger("change");
           }
       );
       container.on("click", ".closeBox",
           function(event)
-          { //get the target and find the hud_position and the $ of the original element.
-            inputFieldElement = $(this).parent(".ratioColor");
-            if (localContext.ratioColorList.children().length > 1)
-            { localContext.destroyRatioInput(inputFieldElement);
-              localContext.writeChanges(true);
-            }
-          }
-      );
-      container.on("mousedown", ".closeBox",
-          function(event)
-          { //get the target and find the hud_position and the $ of the original element.
-            if (localContext.ratioColorList.children().length == 1)
-            { $(event.target).toggleClass("colorRed", true);
-            }
-          }
-      );
-      container.on("mouseup mouseleave", ".closeBox",
-          function(event)
-          { //get the target and find the hud_position and the $ of the original element.
-            if (localContext.ratioColorList.children().length == 1)
-            { $(event.target).toggleClass("colorRed", false);
-            }
+          { debugger;
+            //get the target and find the hud_position and the $ of the original element.
+            localContext.destroyRatioInput($(this).parent(".ratioColor"));
           }
       );
       container.on("change", ".percentageSpinner",
@@ -1818,15 +1817,15 @@ thisEqualsThat.oop = function()
 
           if (! localContext.hasOwnProperty("ratioInputFieldCount") )
           { localContext.ratioInputFieldCount = 0;
-            localContext.ratioItemList        = [];
+            localContext.ratioInputFields     = [];
           }
           var toReturn =
                 $(` <div class='ratioColor inputFieldElement'>
-                      <div    class="inputFieldLabel" />
-                      <input  class='percentageSpinner' type='number' min='0' max='100' step='0.1' value ='${initialRatio * 100}' />
-                      <div    class="textLabel percentLabel">%</div>
-                      <input  class='spectrumColorPickerInput' value='${initialColor.toString("rgb")}' />
-                      <span   class="closeBox    fa fa-times-circle" />
+                      <div    class="hudItem inputFieldLabel" />
+                      <input  class='hudItem percentageSpinner' type='number' min='0' max='100' step='0.1' value ='${initialRatio * 100}' />
+                      <div    class="hudItem textLabel percentLabel">%</div>
+                      <input  class='hudItem spectrumColorPickerInput' value='${initialColor.toString("rgb")}' />
+                      <span   class="hudItem closeBox    fa fa-times-circle" />
                     </div>
                   `
                  );
@@ -1855,10 +1854,10 @@ thisEqualsThat.oop = function()
         };
     localContext.destroyRatioInput =
         function(inputFieldElement)
-        { if (localContext.ratioColorList.children().length > 1)
-          { inputFieldElement.remove();
-            localContext.markDirty();
-          }
+        { delete localContext.ratioInputFields[inputFieldElement.data("hud_position")];
+
+          inputFieldElement.remove();
+          localContext.markDirty();
         };
     localContext.markDirty =
         function()
@@ -1880,11 +1879,7 @@ thisEqualsThat.oop = function()
           inputFieldHUD.modelInstance.inputFields[`["ratios"]` ].setValue(newRatiosValArray.join("|") );
           inputFieldHUD.modelInstance.inputFields[`["colors"]` ].setValue(newColorsValArray.join("|") );
 
-          if (triggerUpdate)
-          { localContext.inputFieldHUD.modelInstance.doNotUpdateUI = true;
-            localContext.inputFieldHUD.modelInstance.inputFields[`["ratios"]` ].uiValue_text.trigger("change");
-            localContext.inputFieldHUD.modelInstance.inputFields[`["colors"]` ].uiValue_text.trigger("change");
-          }
+
         };
     localContext.spectrumMove =
         function(color)
@@ -1938,8 +1933,8 @@ thisEqualsThat.oop = function()
 
     this.divForHUD = O.create( [ ".svgHUD" ], modelInstance.display, null )[0];
     modelInstance.display.svgDiv.prepend(this.divForHUD);
-
-
+    
+    
   }
   this.SVGHUD.prototype.renderHUD = function(tagHook)
   { if (! this.hasOwnProperty("divForHUD") )
@@ -1952,20 +1947,10 @@ thisEqualsThat.oop = function()
       }
     }
 
-
-    var lastPlugin = this.plugins[hudComponent]
-
-
     var defaultDict =
         { "svg3dCloneTimer.preClone.postColor":
           {
-          },
-          "referenceSVGSelect.preClone":
-          {
-          },
-          "toggleFeatures.preClone":
-          {
-          },
+          }
         }
     for (hudDescriptor in defaultDict)
     { var hudAddress    = hudDescriptor.split(".");
@@ -1980,9 +1965,7 @@ thisEqualsThat.oop = function()
       if ($.inArray(tagHook, hudTagHooks) >-1 )
       { this.plugins[hudComponent][tagHook](defaultDict[hudDescriptor], this.contextData[hudComponent]);
       }
-      
     }
-    
 
     var svg3dDisplayJSON  = this.modelInstance.svg3dDisplayJSON;
 
@@ -1999,9 +1982,6 @@ thisEqualsThat.oop = function()
       { this.plugins[hudComponent][tagHook](svg3dDisplayJSON.svgHUD[hudDescriptor], this.contextData[hudComponent]);
       }
     }
-
-    this.divForHUD.find(".hudCollection").toggleClass("last", false).last().toggleClass("last", true);
-    this.divForHUD.find(".hudItem").toggleClass("btn", true);
   }
 
   this.SVGHUD.prototype.svg3dCloneTimer = function(svgHUD, context)
@@ -2033,15 +2013,15 @@ thisEqualsThat.oop = function()
   { var representationName    = this.svgHUD.modelInstance.svg3dDisplayJSON.representationName;
     var clonesToBeRendered    = this.svgHUD.modelInstance.svg3dDisplayJSON.svg3dConfiguration.clone3d.nb;
 
-
+    
     this.context.totalTimeTaken       = parseInt(this.context.cookieManager(representationName+".totalTimeTaken"     )) || this.context.totalTimeTaken;
     this.context.totalClonesRendered  = parseInt(this.context.cookieManager(representationName+".totalClonesRendered")) || this.context.totalClonesRendered;
-
+    
     var averageTimePerClone   = this.context.totalTimeTaken / this.context.totalClonesRendered;
     var estimatedTimeToRender = clonesToBeRendered * averageTimePerClone;
 
     if (estimatedTimeToRender > 5000)
-    { var render = window.confirm("Estimated time to render: "+ standardPrecision( (estimatedTimeToRender / 1000) ) +" seconds");
+    { var render = window.confirm("Estimated time to render: "+ thisEqualsThat.standardPrecision( (estimatedTimeToRender / 1000) ) +" seconds");
       if (! render)
       { clonesToBeRendered = this.svgHUD.modelInstance.svg3dDisplayJSON.svg3dConfiguration.clone3d.nb = 1;
       }
@@ -2055,7 +2035,7 @@ thisEqualsThat.oop = function()
   this.SVGHUD.prototype.svg3dCloneTimer.prototype.postColor = function(svgHUD, context)
   { this.context.totalTimeTaken += Date.now() - this.context.startTime;
 
-
+    
     var representationName      = this.svgHUD.modelInstance.svg3dDisplayJSON.representationName;
     this.context.cookieManager( representationName+".totalTimeTaken"     , this.context.totalTimeTaken       );
     this.context.cookieManager( representationName+".totalClonesRendered", this.context.totalClonesRendered  );
@@ -2064,146 +2044,18 @@ thisEqualsThat.oop = function()
     this.context.cancelCountdown = true;
   }
 
-  this.SVGHUD.prototype.referenceSVGSelect = function(svgHUD, context)
-  { var This = this;
-
-    this.svgHUD                       = svgHUD;
-    this.context                      = context;
-
-    var modelInstance                 = this.svgHUD.modelInstance;
-    var display                       = modelInstance.display;
-
-    var referenceSVGSelectID          = "referenceSVGSelect_" + modelInstance.id;
-
-    this.context.display              = $("<div id='"+ referenceSVGSelectID + "' class='referenceSVGSelectButton hudCollection' />");
-    this.context.display.appendTo(this.svgHUD.divForHUD);
-
-
-    display.referenceSVGSelect = $("<div class='referenceSVGSelect hudItem btn' title='Select reference visual' />");
-    this.context.display.append(display.referenceSVGSelect);
-
-    display.referenceSVGSelect.on("click", function() { ThisEqualsThat.modelInstanceFocus = modelInstance; } );
-
-    if (! ThisEqualsThat.referenceVisual.popoverCreated)
-    { $(document).popover
-      ( { "selector":   ".referenceSVGSelect.hudItem",
-          "container":  "body", 
-          "html":       true, 
-          "title":      "Choose reference visual", 
-          "content":    "<div class='referenceSVGSelectListContainer'>"+ThisEqualsThat.referenceVisual.svgSelectList.html()+"</div>", 
-          "placement" : "bottom",
-          "viewport":   { "selector": "."+modelInstance.id+" .svgDiv", "padding": "10px" },
-          "trigger":    "click focus",
-          //"template":   '<div class="popover referenceSVGSelectListPopover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
-
-          "template" :  '<div class="popover referenceSVGSelectListPopover" role="tooltip"><div class="popover-arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
-        } 
-      )
-
-      $("body").on
-          ("click", ".referenceSVGSelectListItem",
-            function(clickEvent)
-            { var selectedDiv     = $(clickEvent.currentTarget)
-              var fileHandle      = selectedDiv.attr("thisequals_filehandle");
-              var modelInstance   = ThisEqualsThat.modelInstanceFocus;
-              
-              if (This.userSelectedReferenceSVG == fileHandle)
-              { modelInstance.userSelectedReferenceSVG = "";
-                // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
-              }
-              else
-              { modelInstance.userSelectedReferenceSVG = fileHandle;
-                // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
-                // selectedDiv.toggleClass("userSelectedReferenceSVG_selected");
-              }
-              selectedDiv.closest(".referenceSVGSelectListPopover").popover("hide");
-              setImmediate
-              ( function() 
-                { modelInstance.inputFieldAltered.call(modelInstance); 
-                  delete modelInstance.display.referenceSVGSelect.data("bs.popover")._activeTrigger.click; 
-                }
-              );
-            }
-          );
-
-      ThisEqualsThat.referenceVisual.popoverCreated = true;
-
-    }
-
-  }
-  this.SVGHUD.prototype.referenceSVGSelect.prototype.hide = function()
-  { //do nothing... yet :)
-  }
-  this.SVGHUD.prototype.referenceSVGSelect.prototype.preClone = function(svgHUD, context)
-  { 
-  }
-
-  this.SVGHUD.prototype.toggleFeatures = function(svgHUD, context)
-  { var This = this;
-
-    this.svgHUD                       = svgHUD;
-    this.context                      = context;
-
-    this.context.display              = $("<div class='toggleFeatures hudCollection' />");
-    this.context.display.appendTo(this.svgHUD.divForHUD);
-
-    var modelInstance = this.svgHUD.modelInstance;
-    var display       = modelInstance.display;
-
-    display.toggle =
-        { "axes":                 $("<input class='checkbox' id = 'toggle_axes_" + This.id + "' type='checkbox'  checked='checked'title='Show / Hide Axes' /></span>"),
-          "axes.label":           $("<label/>").append('<div id="axis" class="toggleControl hudItem"></div>'),
-          "axes.changeEvent"  :
-              function(changeEvent)
-              { display.svgHeightAxis.toggle();
-                display.toggle['axes.label'].toggleClass('unchecked');
-                modelInstance.svg_createSaveLink(modelInstance);
-              },
-          "svgReferenceG":        $("<input class='checkbox' id  = 'toggle_svgReferenceG_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Frame of Reference'/></span>"),
-          "svgReferenceG.label":  $("<label/>").append('<div id="reference" class="toggleControl hudItem"></div>'),
-          "svgReferenceG.changeEvent":
-              function(changeEvent)
-              { display.svgReferenceG.toggle();
-                display.toggle['svgReferenceG.label'].toggleClass('unchecked');
-                modelInstance.svg_createSaveLink(modelInstance);
-              },
-          "svgTextDescription":        $("<input class='checkbox' id  = 'toggle_svgTextDescription_"   + This.id + "' type='checkbox'   checked='checked'   title='Show / Hide Text Description'/></span>"),
-          "svgTextDescription.label":  $("<label/>").append('<div id="text_description" class="toggleControl hudItem"></div>'),
-          "svgTextDescription.changeEvent":
-              function(changeEvent)
-              { display.svgTextDescription.toggle();
-                display.toggle['svgTextDescription.label'].toggleClass('unchecked');
-                modelInstance.svg_createSaveLink(modelInstance);
-              },
-        };
-      var controlList = ["axes", "svgReferenceG", "svgTextDescription"];
-      for (var name of controlList)
-      { display.toggle[name].on("change", display.toggle[name+".changeEvent"]);
-        display.toggle[name].appendTo(display.toggle[name+".label"]);
-        context.display.append(display.toggle[name+".label"]);
-      }
-  }
-  this.SVGHUD.prototype.toggleFeatures.prototype.hide = function()
-  { //do nothing... yet :)
-  }
-  this.SVGHUD.prototype.toggleFeatures.prototype.preClone = function(svgHUD, context)
-  { 
-  }
-
 
   this.SVGHUD.prototype.fillManager = function(svgHUD, context)
   { this.svgHUD     = svgHUD;
     this.context    = context;
-
-    this.context.display = $("<div class='fillManagers hudCollection' />");
-    this.svgHUD.divForHUD.append(this.context.display);
   }
   this.SVGHUD.prototype.fillManager.prototype.display   = function()
-  { 
+  { this.context.fillManagersDiv = $("<div class='fillManagers hudCollection' />");
+    this.svgHUD.divForHUD.append(this.context.fillManagersDiv);
   }
   this.SVGHUD.prototype.fillManager.prototype.hide      = function()
-  { if ( this.context.hasOwnProperty("display") )
-    { this.context.display.hide();
+  { if ( this.context.hasOwnProperty("fillManagersDiv") )
+    { this.context.fillManagersDiv.hide();
     }
   }
   this.SVGHUD.prototype.fillManager.prototype.postClone = function(fillManagersDict, context)
@@ -2211,10 +2063,10 @@ thisEqualsThat.oop = function()
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
     var This = this;
 
-    if (! context.hasOwnProperty("display") )
+    if (! context.hasOwnProperty("fillManagersDiv") )
     { this.display();
     }
-    this.context.display.show();
+    this.context.fillManagersDiv.show();
 
     for (fillManagerSelector in fillManagersDict)
     { var fillManagerData = fillManagersDict[fillManagerSelector];
@@ -2225,7 +2077,7 @@ thisEqualsThat.oop = function()
       { selectorContext = context[fillManagerSelector] = { "byVisualisation": {} };
 
         selectorContext.fillManagerDiv = $("<div class='fillManager hudItem' />");
-        context.display.append(selectorContext.fillManagerDiv);
+        context.fillManagersDiv.append(selectorContext.fillManagerDiv);
 
         var fillManagerDiv = selectorContext.fillManagerDiv;
         fillManagerDiv
@@ -2287,15 +2139,15 @@ thisEqualsThat.oop = function()
     this.context.byVisualisation = {};
   }
   this.SVGHUD.prototype.RandomiseClones.prototype.hide      = function()
-  { this.context.display.hide();
+  { this.context.collectionDiv.hide();
   }
   this.SVGHUD.prototype.RandomiseClones.prototype.postColor = function(randomiseClonesDict, context)
   { // html and behaviour a widget for a  colorPicker widhet. Use the code defined in the colorPickerData to run when the colorPicker exits.
     //    it defines code which generates CSS to change the colors of shit in a visualisation specific way.
 
     if (! context.hasOwnProperty("hudItems") )
-    { context.display = $("<div class='randomiseClones hudCollection' />");
-      this.svgHUD.divForHUD.append(this.context.display);
+    { context.collectionDiv = $("<div class='randomiseClones hudCollection' />");
+      this.svgHUD.divForHUD.append(this.context.collectionDiv);
 
       context.hudItems = {};
 
@@ -2456,7 +2308,7 @@ thisEqualsThat.oop = function()
       }
     }
 
-    this.context.display.show();
+    this.context.collectionDiv.show();
 
     var processingOrder = ["randomisePosition", "randomiseColors", "randomiseColorsByGroup"];
 
@@ -2484,9 +2336,11 @@ thisEqualsThat.oop = function()
       var localContext = contextByVisualisation[randomiseProperty];
 
       if (! context.hudItems.hasOwnProperty(randomiseProperty) )
-      { var randomiseItem   = context.hudItems[randomiseProperty] =   $("<div class='randomiseProperty "+randomiseProperty+" hudItem' />");
+      { var randomiseItem   = context.hudItems[randomiseProperty] =   $("<div class='randomiseProperty hudItem' />");
+        var icon            = $(`<img src='/static/graphics/thisEquals/svgHUD/${randomiseProperty}.png' />`);
 
-        context.display.append(randomiseItem);
+        randomiseItem.append(icon);
+        context.collectionDiv.append(randomiseItem);
 
         context.hudItems[randomiseProperty].data("localContext", localContext);
         context.spectrumFunction(randomiseItem, context.randomiseFunctions[randomiseProperty]);
@@ -2547,7 +2401,7 @@ thisEqualsThat.oop = function()
       }
     );
   }
-
+  
 
   this.ModelFieldInput.prototype.getTag = function(passThrough, appendTo)
   { if (! this.hasOwnProperty("uiElement"))
@@ -2569,7 +2423,7 @@ thisEqualsThat.oop = function()
 
     var This = this;
     // O.create
-    // ( [ ".inputFieldElement",
+    // ( [ ".inputFieldElement", 
     //     [ [ ".inputFieldLabel", "@"+this.data.displayName ],
     //       [ O.dropdown(this.display, null, ".inputFieldSelect", this.simpleName) ],
     //     ],
@@ -2580,7 +2434,7 @@ thisEqualsThat.oop = function()
     // this.uiElement = this.display.inputFieldElement;
     O.create
     ( [ ".uiElement.inputFieldElement.inputField.displayFlex.spaceBetween.width100",
-        [ [ ".inputFieldLabel.floatLeft.smallCaps", "@"+fieldData.displayName ],
+        [ [ ".inputFieldLabel.floatLeft.smallCaps", "@"+this.data.displayName ],
           [ ".slideAndValue",
             [ [ "select.uiValue_select.inputFieldSelect" ],
             ],
@@ -2591,7 +2445,7 @@ thisEqualsThat.oop = function()
       appendTo
     );
 
-
+    
     // ( [ ".uiElement.inputFieldElement.displayFlex.spaceBetween",
     //     [ [ ".inputFieldLabel", "@"+this.data.displayName,
     //         ,
@@ -2649,7 +2503,7 @@ thisEqualsThat.oop = function()
   {   var fieldData = this.data;
       O.create
       ( [ ".uiElement.inputFieldElement.displayFlex.spaceBetween",
-          [ [ ".inputFieldLabel.smallCaps", "@"+fieldData.displayName],
+          [ [ ".inputFieldLabel", "@"+this.displayName],
             [ "input.uiValue_text.inputFieldText"+".unit_"+this.data.unit ],
           ],
         ],
@@ -2675,7 +2529,7 @@ thisEqualsThat.oop = function()
       //     }
       //   ).addClass("unit_"+this.data.unit);
 
-
+      
       this.uiValue_text.val(unitsAroundOutput( this, fieldData.defaultValue ));
       this.uiValue_text.data("thisEquals.modelField", this);
 
@@ -2685,7 +2539,8 @@ thisEqualsThat.oop = function()
   }
   this.ModelFieldInput.prototype.inputField_text_changeFunction = function(event)
   { var This  = $(this).data("thisEquals.modelField");
-    
+    This      = event.data;
+
     This.data.currentValue = $(this).val();
     setImmediate
     ( function()
@@ -2701,7 +2556,7 @@ thisEqualsThat.oop = function()
 
     O.create
     ( [ ".inputFieldElement.inputField.displayInlineBlock.width100",
-        [ [ ".inputFieldLabel.floatLeft", "@"+this.data.displayName ],
+        [ [ ".inputFieldLabel.floatLeft.smallCaps", "@"+this.data.displayName ],
           [ ".slideAndValue",
             [ [ $("<input type='text' class='uiValue_slider inputFieldText' />"), ],
               [ ".uiSlider.inputFieldSlider", ],
@@ -2766,21 +2621,12 @@ thisEqualsThat.oop = function()
         min: min,
         value: this.actualToSlider(fieldData.currentValue),
         slide: function(event, ui)
-          { var uiVal = ui.value;
-            var handle = $(this).find('.ui-slider-handle');
-
-            This.data.currentValue = This.logSliderToValue(ui.value);
+          { This.data.currentValue = This.logSliderToValue(ui.value);
             This.slider_sliderUpdatesText();
-
-            // console.debug( uiVal );
-            if (uiVal === min) {
-                handle.addClass('ui-state-start');
-            } else {
-                handle.removeClass('ui-state-start');
-            }
           },
         change: function(event, ui)
           { if (! event.originalEvent) return true;
+
             This.data.currentValue = This.logSliderToValue(ui.value);
             This.slider_sliderUpdatesText();
 
@@ -2797,7 +2643,7 @@ thisEqualsThat.oop = function()
 
   this.ModelFieldInput.prototype.actualToSlider = function()
   { var currentValue = this.data.currentValue;
-
+    
     var toReturn;
     if (this.hasOwnProperty("logSliderConstants") )
     { var lSC = this.logSliderConstants;
@@ -2825,7 +2671,7 @@ thisEqualsThat.oop = function()
       eval(this.data.fieldPrecisionFunction);
     }
     else
-    { toReturn = standardPrecision( Number(this.data.currentValue) );
+    { toReturn = thisEqualsThat.standardPrecision( Number(this.data.currentValue) );
     }
     this.display.uiValue_slider.val(unitsAroundOutput(this, toReturn));
   }
@@ -2836,20 +2682,20 @@ thisEqualsThat.oop = function()
     this.fullAddress    = this.data.fullAddress;
     modelInstance.outputFields[this.fullAddress.toString()] = this;
   }
-
-
+  
+  
   this.ModelFieldOutput.prototype.getDropDownItem = function(appendTo)
   { var outputFieldSelectButton = {};
     O.create
-        ( ["button.dropdownItem.modelFieldOutput.btn.displayFlex.width100.spaceBetween",
+        ( ["button.dropdownItem.modelFieldOutput.btn.displayFlex.width100.spaceBetween", 
             [ [ ".buttonText", "@" + this.data.displayName ],
-              [ "span.modelClassIndicator",
-                [ [ ".square20" , "img.createConstructImage.centerBackgroundImage"  ],
+              [ "span.modelClassIndicator", 
+                [ [ ".square20" , "img.createConstructImage.centerBackgroundImage"  ], 
                   [ "span"      , "@"+this.data.modelClass            ],
                 ],
               ],
               // [ "span.modelFieldInputIndicator",
-              //   [ [ ".square20", "img.modelField.centerBackgroundImage" ],
+              //   [ [ ".square20", "img.modelField.centerBackgroundImage" ], 
               //     [ "span", "@"+this.data.name ],
               //   ],
               // ],
@@ -2893,15 +2739,15 @@ thisEqualsThat.oop = function()
   this.ModelFieldVisualisation.prototype.getDropDownItem = function(appendTo)
   { var visualisationFieldSelectButton = {};
     O.create
-        ( ["button.dropdownItem.modelFieldVisualisation.btn.displayFlex.width100.spaceBetween",
+        ( ["button.dropdownItem.modelFieldVisualisation.btn.displayFlex.width100.spaceBetween", 
             [ [ ".buttonText", "@" + this.data.displayName ],
-              [ "span.modelClassIndicator",
-                [ [ ".square20" , "img.createConstructImage.centerBackgroundImage"  ],
+              [ "span.modelClassIndicator", 
+                [ [ ".square20" , "img.createConstructImage.centerBackgroundImage"  ], 
                   [ "span"      , "@"+this.modelInstance.modelClass.name            ],
                 ],
               ],
               // [ "span.modelFieldInputIndicator",
-              //   [ [ ".square20", "img.modelField.centerBackgroundImage" ],
+              //   [ [ ".square20", "img.modelField.centerBackgroundImage" ], 
               //     [ "span", "@"+this.data.name ],
               //   ],
               // ],
@@ -2956,11 +2802,11 @@ thisEqualsThat.oop = function()
     { defaultCookieSettings = {};
     }
 
-    var localContext = this.context[componentName] =
+    var localContext = this.context[componentName] = 
         { "componentCookieName":    componentCookieName,
           "userPermissionGranted" : Cookies.get(componentCookieName) || false,
         };
-
+    
     var parameterDefaults =
         { "expires": 3650,
           "domain": null,
@@ -2968,11 +2814,11 @@ thisEqualsThat.oop = function()
         };
     for (parameterName in parameterDefaults )
     { eval
-      ( `if (${parameterName} !== null)
+      ( `if (${parameterName} !== null) 
           defaultCookieSettings.${parameterName} = ${parameterName}
-        `
+        ` 
       );
-      if (defaultCookieSettings[parameterName] == null)
+      if (defaultCookieSettings[parameterName] == null) 
         defaultCookieSettings[parameterName] = parameterDefaults[parameterName];
     }
 
@@ -2999,7 +2845,7 @@ thisEqualsThat.oop = function()
 
         Cookies.set(componentCookieName, true, localContext.defaultCookieSettings);
         Cookies.set(componentCookieName+".defaultCookieSettings", localContext.defaultCookieSettings);
-      }
+      } 
       if (localContext.userPermissionGranted)
       { Cookies.set(componentCookieName+"."+cookieName, value, localContext.defaultCookieSettings);
         return true;
@@ -3026,6 +2872,8 @@ thisEqualsThat.oop = function()
     }
   }
 }
+
+
 
 $().ready(
   function()
