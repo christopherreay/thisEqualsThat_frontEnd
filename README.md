@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/christopherreay/thisEqualsThat_frontEnd.png?label=ready&title=Ready)](https://waffle.io/christopherreay/thisEqualsThat_frontEnd)
 # visual.tools
 
 Visual Tools is a live, collaborative framework for developing full stack, embedable visualisations. Our space combines technologies to create a pipeline from data acquisition through to presentation.
