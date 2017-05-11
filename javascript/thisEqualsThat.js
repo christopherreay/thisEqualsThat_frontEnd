@@ -90,6 +90,24 @@ thisEqualsThat.oop = function()
 
     ThisEqualsThat.referenceVisual  = new ThisEqualsThat.ReferenceVisual    ( display.doubleBuffer);
     ThisEqualsThat.scene            = new ThisEqualsThat.ThisEqualsThatScene( display.navbar.thisEqualsThatScene );
+
+    // debugger;
+
+    var re = /^\/blueprint\/([^/]*)$/;
+    var directBlueprintLink = window.location.pathname.match(re);
+    if (directBlueprintLink != null)
+    { var modelClassName = directBlueprintLink[1];
+      var modelClassAlternateMaps = 
+          { "HowMuch": "VolMassDen",
+          }
+      if ( modelClassAlternateMaps.hasOwnProperty(modelClassName) ) 
+      { modelClassName = modelClassAlternateMaps[modelClassName];
+      }
+      var modelClass = ThisEqualsThat.modelClasses[modelClassName];
+      modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
+      ThisEqualsThat.scene.setCurrentModelClass(modelClass);    
+    }
+    
   };
 
   this.mainNavigation = function(navbar)
