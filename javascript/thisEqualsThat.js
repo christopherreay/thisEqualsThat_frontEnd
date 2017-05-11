@@ -98,7 +98,12 @@ thisEqualsThat.oop = function()
     if (directBlueprintLink != null)
     { var modelClassName = directBlueprintLink[1];
       var modelClassAlternateMaps = 
-          { "HowMuch": "VolMassDen",
+          { "HowMuch":      "VolMassDen",
+            
+            "Particulate":  "Particle",
+            
+            "Ratio":        "PeopleRatioPlay",
+            "Percentage":   "PeopleRatioPlay",
           }
       if ( modelClassAlternateMaps.hasOwnProperty(modelClassName) ) 
       { modelClassName = modelClassAlternateMaps[modelClassName];
@@ -176,7 +181,7 @@ thisEqualsThat.oop = function()
               modals["modal-content"]
             );
 
-    var modelClassOrder = [ "HowMany", "VolMassDen", "LightBulb", "CO2", "Wood", "Coal", "PeopleRatioPlay", "Earth", "Money", "Air Quality", "Seesaw"];
+    var modelClassOrder = [ "HowMany", "VolMassDen", "LightBulb", "CO2", "Wood", "Coal", "PeopleRatioPlay", "Earth", "Money", "Particle", "Seesaw"];
     var modelClassData  = { "HowMany"     : { "tutorialVideo": "je_M6gB8nZw" } ,
                             "VolMassDen"  : { "tutorialVideo": "z0LKAOowf9c" } ,
                             "LightBulb"   : { "tutorialVideo": "NnUqU9_hrrg" } ,
