@@ -643,7 +643,7 @@ thisEqualsThat.oop = function()
       var This = this;
       fieldChangeData	= $.extend({modelInstanceID: this.id}, fieldChangeData);
       var ajaxOptions =
-        { "url": "inputFieldAltered",
+        { "url": "/inputFieldAltered",
           "dataType": "json",
           "data": fieldChangeData,
           "success": function (data, status, request)
