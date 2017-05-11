@@ -317,7 +317,7 @@ thisEqualsThat.oop = function()
   { var This = this;
 
     var ajaxOptions =
-    { url: "getModelClasses",
+    { url: "/getModelClasses",
       dataType: "json",
       success: function(data, status, request)
       { $.each(data.standard,
@@ -377,7 +377,7 @@ thisEqualsThat.oop = function()
   { if (! this.hasOwnProperty("modelInstance"))
     { var This = this;
       var ajaxOptions =
-      { url: "getClassInstance",
+      { url: "/getClassInstance",
         data: { modelClassName: this.name},
         success: function(data, status, request)
         { console.log("getInstance:", this.name);
@@ -760,7 +760,7 @@ thisEqualsThat.oop = function()
     console.log(event, bottomModelLinkField);
     if (! bottomModelLinkField.hasOwnProperty("setBottomModelAjaxOptions"))
     { bottomModelLinkField.setBottomModelAjaxOptions =
-      { url: "setBottomModel",
+      { url: "/setBottomModel",
         dataType: "json",
         data:
           { topModelID: bottomModelLinkField.modelInstance.id,
