@@ -37,8 +37,15 @@ The Architect is coded in Python. Any data accessible to Python code (basically 
 e.g. A power station burns coal to produce energy, with some efficiency
 Another power station might burn gas with some efficiency.
 
-The efficiency % defines a relationship between the energy output through combustion and the usable electrical energy output by the power station
-The Architect automates the construction of the sequence of calculations that allow, e.g. the total amount of CO2 output by the combustion of Coal (defined inside the Coal blueprint), by defining the Kilowatt Hours output by the factory.
+The efficiency % defines a relationship between the energy output *by the fuel*
+  and the *usable electrical energy* output by the power station
+
+The Architect allows the user to ask the question:
+  *If I need 100 KwH of energy, how much CO2 will that produce*
+through relating the two Blueprints through the efficiency
+
+The Architect automates the construction of the sequence of calculations that allow
+the total amount of CO2 output by the combustion of Coal (defined inside the Coal blueprint), by defining the Kilowatt Hours output by the factory.
 Composition of Blueprints allows for the modelling of complex systems, e.g. an entire energy grid, or a transportation network.
 The point is not to provide a *store* for such data (there are plenty of those). The point is to represent the relationships between the data, such that the user may interactively explore those relationships ("fiddle with them");
 
