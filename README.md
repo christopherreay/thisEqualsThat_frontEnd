@@ -10,6 +10,7 @@ At visual.tools we believe that for the World to evolve properly, everybody must
 * Raw data import
 * Blueprints built as models of relations between datapoints
 * Blueprints may be constructed as relations between other Blueprints
+* Exploration of data spaces by dyanmic linking of Blueprints
 * Meta data for presentation of Fields (Field HUD)
 * Meta data for presentation of the results of calculations (SVGVisualisationDef)
 * Meta data for manipulation of generated visualisations (SVG HUD)
@@ -34,21 +35,27 @@ The Architect is coded in Python. Any data accessible to Python code (basically 
 * The data store code is designed to be extensible, with focus on easy import of data from any existing source into Blueprint format
 
 ### Blueprints as compositions of other Blueprints
-e.g. A power station burns coal to produce energy, with some efficiency
-Another power station might burn gas with some efficiency.
+By Example:
+> A power station burns coal to produce energy, with some efficiency<br>
+Another power station might burn gas with some efficiency.<br>
+<br>
+The efficiency % defines a relationship between the energy output *by the fuel*<br>
+  and the *usable electrical energy* output by the power stationv
+<br>
+The Architect allows the user to ask the question:<br>
+  *If I need 100 KwH of energy, how much CO2 will that produce*<br>
+through defining the efficiency relation between the two blueprints<br>
+<br>
 
-The efficiency % defines a relationship between the energy output *by the fuel*
-  and the *usable electrical energy* output by the power station
+### Linking Blueprints through Units
+By example:
+100 lightbulbs, each of 100 Watts, burning for 1 hour = 10,000 KwH
 
-The Architect allows the user to ask the question:
-  *If I need 100 KwH of energy, how much CO2 will that produce*
-through relating the two Blueprints through the efficiency
+*Any other Blueprint that defines a KwH field (e.g. a power station) can be plugged into the output*
 
-The Architect automates the construction of the sequence of calculations that allow
-the total amount of CO2 output by the combustion of Coal (defined inside the Coal blueprint), by defining the Kilowatt Hours output by the factory.
-Composition of Blueprints allows for the modelling of complex systems, e.g. an entire energy grid, or a transportation network.
-The point is not to provide a *store* for such data (there are plenty of those). The point is to represent the relationships between the data, such that the user may interactively explore those relationships ("fiddle with them");
-
+Therefore it is possible for the user to ask the question:
+> If I leave my bathroom light on overnight, how much CO2 will that produce.<br>
+(The fun part of this is including data like Which energy tarriff am I using from Which supplier)
 
 ### The presentation pipeline
 About 3000 lines of javascript code provide a series of tools for building interactive user interfaces based on t
