@@ -10,8 +10,8 @@ At visual.tools we believe that for the World to evolve properly, everybody must
 ### Data Acquisition
 * Each collection in the visual.tools data store is called a "blueprint"
   * Blueprints encode three significant sets of data
-    > Relationships between fields
-        > e.g. Volume = Mass * Density; CO2 = emissionsPerKM * Distance; etc
+    > Relationships between fields<br>
+    e.g. Volume = Mass * Density; CO2 = emissionsPerKM * Distance; etc
     
     > How to visualise those interactions to the user
         > e.g. the volume of a cube of CO2 against the Eiffel Tower; the size of a piece of wood against an ant
