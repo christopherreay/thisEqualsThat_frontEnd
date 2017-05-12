@@ -13,11 +13,11 @@ At visual.tools we believe that for the World to evolve properly, everybody must
     > Relationships between fields<br>
     e.g. Volume = Mass * Density; CO2 = emissionsPerKM * Distance; etc
     
-    > How to visualise those interactions to the user
-        > e.g. the volume of a cube of CO2 against the Eiffel Tower; the size of a piece of wood against an ant
+    > How to visualise those interactions to the user<br>
+    e.g. the volume of a cube of CO2 against the Eiffel Tower; the size of a piece of wood against an ant
   
-    > How to build an interface to allow the user to interact naturally with the relationships
-        > e.g. readable field names; descriptions of fields; sensible defaults and limits on values
+    > How to build an interface to allow the user to interact naturally with the relationships<br>
+    e.g. readable field names; descriptions of fields; sensible defaults and limits on values
   
  
  
