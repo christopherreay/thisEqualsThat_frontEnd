@@ -21,7 +21,7 @@ The Architect is coded in Python. Any data accessible to Python code (basically 
 * Each collection in the visual.tools data store is called a "blueprint"
   * Blueprints encode three significant sets of data
     > Relationships between fields<br>
-    e.g. Volume = Mass * Density; CO2 = emissionsPerKM * Distance; etc<br>
+    e.g. Volume = Mass * Density; CO2 = emissionsPerKM * Distance; etc<br><br>
     equations can be entered in a relatively simple format, and the architect will build sequences of calculations to implement them sufficiently to allow users to "fiddle with them"
     
     > How to visualise those interactions to the user<br>
@@ -34,7 +34,9 @@ The Architect is coded in Python. Any data accessible to Python code (basically 
 * The data store code is designed to be extensible, with focus on easy import of data from any existing source into Blueprint format
 
 ### Blueprints as compositions of other Blueprints
-e.g. A power station burns coal to produce energy, with some efficiency. Another power station might burn gas with some efficiency.
+e.g. A power station burns coal to produce energy, with some efficiency
+Another power station might burn gas with some efficiency.
+
 The efficiency % defines a relationship between the energy output through combustion and the usable electrical energy output by the power station
 The Architect automates the construction of the sequence of calculations that allow, e.g. the total amount of CO2 output by the combustion of Coal (defined inside the Coal blueprint), by defining the Kilowatt Hours output by the factory.
 Composition of Blueprints allows for the modelling of complex systems, e.g. an entire energy grid, or a transportation network.
