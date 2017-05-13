@@ -48,11 +48,11 @@ The Architect is coded in Python. Any data accessible to Python code (basically 
 By Example:
 > A power station burns coal to produce energy, with efficiency 70%<br>
   Another power station might burn gas with some efficiency 73%<br>
-  <br>
-  The efficiency % defines a relationship between the energy output *by the fuel*<br>
+
+> The efficiency % defines a relationship between the energy output *by the fuel*<br>
     and the *usable electrical energy* output by the power station<br>
-  <br>
-  The Architect allows the user to ask the question:<br>
+
+> The Architect allows the user to ask the question:<br>
     *If I need 100 KwH of energy, how much CO2 will that produce*<br>
   through defining the efficiency relation between the two blueprints (e.g. power station and coal)<br>
 
