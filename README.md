@@ -87,10 +87,18 @@ About 3000 lines of (well written) javascript code provide a series of tools for
 The pipeline is designed to be pluggable, extensible, etc. all the buzz words. Basically the project caters for coder/designers looking to create novel ways of presenting and interacting with data, so that they in turn can cater for individuals and organisations engaged in social informatics, who can in turn empower social groups, community organisations, political discourse, news publishers, manufacturers, etc.
 
 #### Presentation of Fields
-By default, the base code presents all input fields defined by a blueprint, in random order (since they are python dict keys), with their computer readable names (the python dict keys), and a slider, select list or input box as a control.
+By default, the base code presents:
+* all input fields defined by a blueprint, each in a row
+* in random order (since they are python dict keys)
+* with their computer readable names (the python dict keys)
+* a slider, select list or input box as a control
+  * the slider input style also has an input box to allow typing of specific values
+* display of the unit for the field
+
+Any manipulation of the input field values is immediately sent to the Architect, which performs calculations and returns the results. Changes that take place before the Architect returns the values are placed in a queue, and sent one by one, each sending waiting for the Architect to return the new values In general (not necessarily) the results returned from the Architect cause the SVG Visualisation to update.
 
 #### SVG Visualisation Component
-The SVG Visualisation component provides major functionality for visual.tools
+The SVG Visualisation Component provides major functionality for visual.tools
 
 > Dyanmically generates, in real time, 2.5D, SVG Infographics
 
@@ -100,10 +108,10 @@ The SVG Visualisation component provides major functionality for visual.tools
 
 > Provides tools to save and share generated visualisations
 
+#### The Input Field HUD and the SVG HUD
+Both the InputField and the SVG HUD plugin infrastructures use the pattern of "hooks", and allow javascript code to arbitrarily alter the default generated output. 
 
-
-#### Existing Plugins
-Both the InputField and the SVG HUD plugin infrastructures use the pattern of "hooks". Currently there are 5 hooks implemented in the code base, but there is no structural reason not to add more wherever useful. There are two or three InputFieldHUD plugins implemented and five or six SVGHUD plugins implemented. Especially the InputFieldHUD plugins have some fairly complex patterns implemented which allow them to interact predictably as the user fiddles with the infogram.
+Currently there are 5 hooks implemented in the code base, but there is no structural reasons or limitations to add more wherever useful. There are currently three InputFieldHUD plugins implemented and five or six SVGHUD plugins implemented. Especially the InputFieldHUD plugins have some fairly complex patterns implemented which allow them to interact predictably as the user fiddles with the infogram.
 
 The (current) HUD hooks are:
 1. init
@@ -125,16 +133,16 @@ The (current) HUD hooks are:
   * this plugin creates the controls specifically for the Percentage widget (https://visual.tools/blueprint/Percentage)
   * It interacts with the VisualisationSVG in realtime, and memoises various data as the user reloads content from the Architect.
 
-> The Ration Color plugin contains techniques/patterns which can be used to build many complex and interesting tools for interactive data visualisation
-
-
-
-
+> The `Ratio Color plugin` contains techniques/patterns which can be used to build many complex and interesting tools for interactive data visualisation
 
 ### SVG HUD
-By default, the base code presents the output of the current input field settings using 2.5D SVG. There are various basic settings
 
-    
+
+
+
+
+
+
 
 
 The focus of visual tools is not so much on data acquisition and homogonisation, but on presentation. We seek to enable individuals and businesses to create effective, impactful visualisations of systems of equations, or linked data, or any other source of valuable knowledge.
