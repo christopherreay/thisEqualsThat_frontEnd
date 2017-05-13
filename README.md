@@ -1,6 +1,4 @@
 # visual.tools
-https://visual.tools
-
 Visual Tools is a complete pipeline for the presentation of complex data as interactive infographics.
 
 > The project caters for coder/designers looking to create novel ways of presenting and interacting with data
@@ -8,6 +6,8 @@ Visual Tools is a complete pipeline for the presentation of complex data as inte
 > so that they in turn can cater for individuals and organisations engaged in social informatics
 
 > who can in turn empower social groups, community organisations, political discourse, news publishers, manufacturers, etc.
+
+> current production version: https://visual.tools
 
 ## Justification
 
