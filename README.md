@@ -131,10 +131,10 @@ In general (not necessarily) the results returned from the Architect cause the S
 The SVG Visualisation Component provides major functionality for visual.tools
 
 > Dyanmically generates, in real time, 2.5D, SVG Infographics<br>
-  <br>
-  the graphic generally consists of the main visualisation; a reference visualisation (ant, person, eiffel tower, etc); axis   with size indicator; a text description<br>
-  <br>
-  This is just the list of stuff it does now. There are a huge range of possibilities for visualisation techniques. The existing implementations allow for represetation of: volume; number (scalar values); ratio, but not, for example: Time; or Geographical Location. The pipeline as a whole is designed to make it simple to implement new SVG Visualisation styles, and add them to blueprint metadata.
+> <br>
+> the graphic generally consists of the main visualisation; a reference visualisation (ant, person, eiffel tower, etc); axis with size indicator; a text description<br>
+> <br>
+> This is just the list of stuff it does now. There are a huge range of possibilities for visualisation techniques. The existing implementations allow for represetation of: volume; number (scalar values); ratio, but not, for example: Time; or Geographical Location. The pipeline as a whole is designed to make it simple to implement new SVG Visualisation styles, and add them to blueprint metadata.
 
 > Allows blueprints to specify as metadata how to generate the visualisation
 
