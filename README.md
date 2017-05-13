@@ -1,4 +1,4 @@
-# visual.tools
+# visual.tools - (current production version: https://visual.tools)
 
 Visual Tools is a complete pipeline for the presentation of complex data as interactive infographics.
 
@@ -203,11 +203,3 @@ The (current) HUD hooks are:
   * This plugin is often used automatically by blueprints to give a more organic feel to the generated images
   * I thought it was nuts, but its actually really good
     * you can fiddle with it here: (https://visual.tools/blueprint/HowMany). When the page loads you can see that each tree is slightly off centre from perfect layout, each branch is a slightly different color in detail, and each tree has an overall slightly different hue. Cool. And you can do silly things with it :)
-  
-
-
-The focus of visual tools is not so much on data acquisition and homogonisation, but on presentation. We seek to enable individuals and businesses to create effective, impactful visualisations of systems of equations, or linked data, or any other source of valuable knowledge.
-
-A working demo can be found here: https://visual.tools
-
-If you have any questions about usage or developing more tools into the pipeline, please drop us a line. Documentation will follow... by maybe Spring 2017
