@@ -62,7 +62,7 @@ By example:
 
 *Any other Blueprint that defines a KwH field (e.g. a power station) can be plugged into the output*
 
-Links between any two fields that carry the same `unit` can be created dynamically by the Architect at any time, by a social informatic, as part of a campaign, or by any end user as part of open exploration.
+The Architect can create links between any two blueprints, if the blueprints contain any two fields with matching `unit` definition. The Architect at any time, by a social informatic, as part of a campaign, or by any end user as part of open exploration.
 
 Therefore it is possible for the user to ask the question:
 > *If I leave my bathroom light on overnight, how much CO2 will that produce.*<br>
