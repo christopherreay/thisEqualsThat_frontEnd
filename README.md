@@ -2,6 +2,12 @@
 
 Visual Tools is a complete pipeline for the presentation of complex data as interactive infographics.
 
+> The project caters for coder/designers looking to create novel ways of presenting and interacting with data
+
+> so that they in turn can cater for individuals and organisations engaged in social informatics
+
+> who can in turn empower social groups, community organisations, political discourse, news publishers, manufacturers, etc.
+
 ## Justification
 
 At visual.tools we believe that for the World to evolve properly, everybody must have access to accurate data, and to tools with which they can understand and communicate information relevant to their lives.
@@ -9,11 +15,12 @@ At visual.tools we believe that for the World to evolve properly, everybody must
 ## Pipeline Design
 * Data Store (lovingly called *The Architect*)
   * Raw data import
-  * Blueprints built as models of relations between datapoints
+  * Blueprints built as models of relations between sets of data.
   * Blueprints may be constructed as relations between other Blueprints (composability)
-  * Exploration of data spaces by dyanmic linking of Blueprints
+  * Open exploration of data spaces by dynamic linking of Blueprints
   * Summary of data store
 * The presentation pipeline
+  * Extensibility
   * Meta data for presentation of Fields (Field HUD)
   * Meta data for presentation of the results of calculations (SVGVisualisationDef)
   * Meta data for manipulation of generated visualisations (SVG HUD)
@@ -66,6 +73,11 @@ The Architect is designed to be fast at answering questions about relationships 
 
 ### The presentation pipeline
 About 3000 lines of (well written) javascript code provide a series of tools for building interactive user interfaces based on the meta data included in the blueprints. There is a *lot* of scope for building any kind of data presentation tools####. The pipeline has Classes for managing interaction with the Architect, which are pretty generic; and currently has some simple, but effective sets of tools for visualising fields; interacting with field values; and visualising the output of calculations as animated SVG's. Basically, it lets users play around and dynamically generate infographics.
+
+#### Extensibility
+The pipeline is designed to be pluggable, extensible, etc. all the buzz words. Basically the project caters for coder/designers looking to create novel ways of presenting and interacting with data, so that they in turn can cater for individuals and organisations engaged in social informatics, who can in turn empower social groups, community organisations, political discourse, news publishers, manufacturers, etc.
+
+
 
 
 
