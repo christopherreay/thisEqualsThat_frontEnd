@@ -95,12 +95,18 @@ By default, the base code presents:
   * the slider input style also has an input box to allow typing of specific values
 * display of the unit for the field
 
-Any manipulation of the input field values is immediately sent to the Architect, which performs calculations and returns the results. Changes that take place before the Architect returns the values are placed in a queue, and sent one by one, each sending waiting for the Architect to return the new values In general (not necessarily) the results returned from the Architect cause the SVG Visualisation to update.
+Any manipulation of the input field values is immediately sent to the Architect, which performs calculations and returns the results. Changes to field values made by the user before the Architect returns, are placed in a queue, and sent one by one, each sending waiting for the Architect to return the new values.
+
+In general (not necessarily) the results returned from the Architect cause the SVG Visualisation to update.
 
 #### SVG Visualisation Component
 The SVG Visualisation Component provides major functionality for visual.tools
 
-> Dyanmically generates, in real time, 2.5D, SVG Infographics
+> Dyanmically generates, in real time, 2.5D, SVG Infographics<br>
+<br>
+the graphic generally consists of the main visualisation; a reference visualisation (ant, person, eiffel tower, etc); axis with size indicator; a text description<br>
+<br>
+This is just the list of stuff it does now. There are a huge range of possibilities for visualisation techniques. The existing implementations allow for represetation of: volume; number (scalar values); ratio, but not, for example: Time; or Geographical Location. The pipeline as a whole is designed to make it simple to implement new SVG Visualisation styles, and add them to blueprint metadata.
 
 > Allows blueprints to specify as metadata how to generate the visualisation
 
@@ -111,7 +117,7 @@ The SVG Visualisation Component provides major functionality for visual.tools
 #### The Input Field HUD and the SVG HUD
 Both the InputField and the SVG HUD plugin infrastructures use the pattern of "hooks", and allow javascript code to arbitrarily alter the default generated output. 
 
-Currently there are 5 hooks implemented in the code base, but there is no structural reasons or limitations to add more wherever useful. There are currently three InputFieldHUD plugins implemented and five or six SVGHUD plugins implemented. Especially the InputFieldHUD plugins have some fairly complex patterns implemented which allow them to interact predictably as the user fiddles with the infogram.
+Currently there are 5 hooks implemented in the code base, but there are no structural reasons or limitations on adding more hooks wherever useful. There are currently three InputFieldHUD plugins implemented and five or six SVGHUD plugins implemented. Especially the InputFieldHUD plugins have some fairly complex patterns implemented which allow them to interact predictably as the user fiddles with the infogram.
 
 The (current) HUD hooks are:
 1. init
@@ -136,14 +142,35 @@ The (current) HUD hooks are:
 > The `Ratio Color plugin` contains techniques/patterns which can be used to build many complex and interesting tools for interactive data visualisation
 
 #### SVG HUD
+Each SVG HUD plugin can introduce any number of menu items above the SVG Visualisation. Data memoisation and cookie management is provided for.
 
-
-
-
-
-
-
-
+* **SVG 3d Clone Timer**
+  * determines the amount of time expected to render the requested SVG (before rendering)
+  * alerts the user if it will take more than 5 seconds to render, and allows the user to cancel
+    * sometimes people (deliberately or accidentally) attempt to, for example, draw 50,000 lightbulbs or people. Whilst the tech will happily do this, its nice to know that it will take 15 seconds or 20 minutes or whatever to render the image, especially if you did it by mistake.
+  * informs the user of the expect amount of time to render
+  * uses cookies to become more accurate over time on any specific device
+* **Reference SVG Select**
+  * by default, the SVG Visualisation picks a natural reference SVG (ant, person, eiffel tower)
+  * the plugin allows the user to select their own choice from a list (fun!, sometimes stupid)
+* **Toggle Features**
+  * switch on and off display of:
+    * Axes
+    * Reference Visualisation
+    * Text Description
+* **Fill Manager**
+  * Blueprint metadata may define any number of color pickers for each Visualisation Def
+  * each color picker may define any algorithm to interact with the CSS colors of the SVG
+    * e.g. this is used to create the 3d shading effect when coloring the cube (https://visual.tools/blueprint/HowMuch), where the front/back, top/bottom, side/side are each the same shade, but slightly different to each other, using the picked color as a base
+* **Randomise Clones**
+  * Presents three menu items to the user
+    1. Position<br>
+       allows the user to determine how irregularly the clones are laid out from "perfectly uniform"
+    2. Detail Color<br>
+       allows the user to randomise the color of every individual path in every clone slightly
+    3. Group Color<br>
+       allows the user to randomise the color of all the paths in each cloned image<br>
+  *
 
 
 The focus of visual tools is not so much on data acquisition and homogonisation, but on presentation. We seek to enable individuals and businesses to create effective, impactful visualisations of systems of equations, or linked data, or any other source of valuable knowledge.
