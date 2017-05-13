@@ -46,14 +46,14 @@ The Architect is coded in Python. Any data accessible to Python code (basically 
 
 #### Blueprints as compositions of other Blueprints
 By Example:
-> A power station burns coal to produce energy, with efficiency 70%<br>
-  Another power station might burn gas with some efficiency 73%<br>
+A power station burns coal to produce energy, with efficiency 70%<br>
+Another power station might burn gas with some efficiency 73%<br>
 
-> The efficiency % defines a relationship between the energy output *by the fuel*<br>
-    and the *usable electrical energy* output by the power station<br>
+The efficiency % defines a relationship between the *energy output by the fuel*<br>
+and the *usable energy input to the power station*<br>
 
-> The Architect allows the user to ask the question:<br>
-    *If I need 100 KwH of energy, how much CO2 will that produce*<br>
+The Architect allows the user to ask the question:<br>
+>  *If I need 100 KwH of energy, how much CO2 will that produce*<br>
   through defining the efficiency relation between the two blueprints (e.g. power station and coal)<br>
 
 #### Linking Blueprints through Units
@@ -63,7 +63,7 @@ By example:
 *Any other Blueprint that defines a KwH field (e.g. a power station) can be plugged into the output*
 
 Therefore it is possible for the user to ask the question:
-> If I leave my bathroom light on overnight, how much CO2 will that produce.<br>
+> *If I leave my bathroom light on overnight, how much CO2 will that produce.*<br>
   (The fun part of this is including data like Which energy tarriff am I using from Which supplier)
   
 #### Summary of data store
