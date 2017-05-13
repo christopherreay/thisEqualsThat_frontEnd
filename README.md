@@ -21,12 +21,13 @@ At visual.tools we believe that for the World to evolve properly, everybody must
   * An Infogram is an instance of a Blueprint
   * Summary of data store
 * The presentation pipeline
+  * Visualisations as Blueprint Metadata
   * Extensibility
   * Presentation of Fields
   * Dynamic Infographics
   * HUD Plugins
     * Input Field HUD - Manipulation of Fields
-    * SVG HUD Manipulation of Infographics
+    * SVG HUD - Manipulation of Infographics
 
 #### Raw data import
 The Architect is coded in Python. Any data accessible to Python code (basically everything) can be imported or linked into the data store.
@@ -47,7 +48,7 @@ The Architect is coded in Python. Any data accessible to Python code (basically 
   * Blueprints can be dynamically built from data sources
 * The data store code is designed to be extensible, with focus on easy import of data from any existing source into Blueprint format
 
-#### Blueprints as compositions of other Blueprints
+#### Blueprints as compositions of other Blueprints ( Symbole `->` )
 By Example:
 A power station burns coal to produce energy, with efficiency 70%<br>
 Another power station might burn gas with some efficiency 73%<br>
@@ -59,7 +60,7 @@ The Architect allows the user to ask the question:<br>
 >  *If I need 100 KwH of energy, how much CO2 will that produce*<br>
   through defining the efficiency relation between the two blueprints (e.g. power station and coal)<br>
 
-#### Linking Blueprints through Units
+#### Linking Blueprints through Units ( Symbol: `=>` )
 By example:
 100 lightbulbs, each of 100 Watts, burning for 100 hours = 1,000 KwH
 
@@ -74,13 +75,40 @@ Therefore it is possible for the user to ask the question:
 or the user's child to ask:<br>
 > *If my parent leaves the bathroom light on overnight, how many delicious fruits could they have bought me instead*
 
+#### The Architect is *fast* at analysing results
+The Architect is designed to be fast at answering questions about relationships within blueprints. Once a question has been asked once, the Architect memoises everything it can in an efficient manner. ProcessPath objects recored the route of calculations, and dependency analysis is memoised for each set of equations. 
+
+It is designed to be able to serve *very large numbers of people* fiddling with it.
+
 #### An Infogram is an instance of a Blueprint
-The Architect is designed to be fast at answering questions about relationships within blueprints. Once a question has been asked once, the Architect memoises everything it can in an efficient manner. It is designed to be able to serve *very large numbers of people*. Each *instance* of a blueprint is called an infogram. An infogram stores all the data necessary to represent the current state of the user fiddling with the relations. Infograms are very light weight, and can be stored / updated / shared / forked efficiently
+Each *instance* of a blueprint is called an infogram. An infogram stores all the data necessary to represent the current state of the user fiddling with the relations. Infograms are very light weight, and can be stored / updated / shared / forked efficiently
   
 #### Summary of data store
 The data store is designed to contribute "explorable relationships" into the existing arena of open, linked and other data sources. People gain real, visceral, internal context through exploration of relationships, and it is **context** that turns "data" into "information". The code within the Architect strives to make it **easy** for the Information Developer or Social Informatic to encode relationships in a way which can be explored, "fiddled with", composed, tweaked, personalised, etc, by their audience, and easy for the audience to consume and share the experiences.
 
 ### The presentation pipeline
+
+#### Visualisations as Blueprint Metadata
+> Example:<br>
+  Calculate the mass of CO2 produced to light the bathroom overnight<br>
+  Visualise the mass as the volume of CO2 at normal density in air
+  
+Upon consideration, we can see that two sets of the same kind of calculation are required. 
+> 1. Calculate the CO2 emissions, as defined by the relations in the Lightbulb=>PowerStation->Coal blueprints
+
+> 2. Calculate the volume of the CO2 at normal CO2 concentraition in air, as defined within the Coal blueprint
+
+Each claculation uses a ProcessPath to produce a result given the current user input.
+> Example continued:<br>
+  The user changes the desired visualisation to see the volume of pure CO2 gas or perhaps the volume of the CO2 frozen
+  
+From this perspective, we can see that the Blueprint must encode density data regarding "CO2 at density in air, CO2 pure, CO2 frozen", and must be able to suggest to the user that these are options for visualising the data.
+
+Each one of these options is called a "VisualisationMeta". Visualisation meta data can be quite complex, involving mathematics, color choices, display plugin options, and anything else necessary to generate the desired visualisation.
+
+    > The process of creating new visualisation tools in the pipeline usually begins with additions to blueprint meta data, which can then be passed through to any javascript plugins
+
+#### Javascript "Front End"
 About 3000 lines of (well written) javascript code provide a series of tools for building interactive user interfaces based on the meta data included in the blueprints. There is a *lot* of scope for building any kind of data presentation tools. The codebase includes Classes for managing interaction with the Architect, which are pretty generic; and currently has some simple, but effective sets of tools for visualising fields; interacting with field values; and visualising the output of calculations as animated SVG's. Basically, it lets users play around and dynamically generate infographics.
 
 #### Extensibility
