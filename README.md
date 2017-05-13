@@ -7,18 +7,21 @@ Visual Tools is a complete pipeline for the presentation of complex data.
 At visual.tools we believe that for the World to evolve properly, everybody must have access to accurate data, and to tools with which they can understand and communicate information relevant to their lives.
 
 ## Pipeline Design
-* Raw data import
-* Blueprints built as models of relations between datapoints
-* Blueprints may be constructed as relations between other Blueprints
-* Exploration of data spaces by dyanmic linking of Blueprints
-* Meta data for presentation of Fields (Field HUD)
-* Meta data for presentation of the results of calculations (SVGVisualisationDef)
-* Meta data for manipulation of generated visualisations (SVG HUD)
+* Data Store
+  * Raw data import
+  * Blueprints built as models of relations between datapoints
+  * Blueprints may be constructed as relations between other Blueprints
+  * Exploration of data spaces by dyanmic linking of Blueprints
+  * Summary of data store
+* The presentation pipeline
+  * Meta data for presentation of Fields (Field HUD)
+  * Meta data for presentation of the results of calculations (SVGVisualisationDef)
+  * Meta data for manipulation of generated visualisations (SVG HUD)
 
-### Raw data import
+#### Raw data import
 The Architect is coded in Python. Any data accessible to Python code (basically everything) can be imported or linked into the data store.
 
-### Blueprints as models of relations
+#### Blueprints as models of relations
 * Each collection in the visual.tools data store is called a "blueprint"
   * Blueprints encode three significant sets of data
     > Relationships between fields<br>
@@ -34,33 +37,34 @@ The Architect is coded in Python. Any data accessible to Python code (basically 
   * Blueprints can be dynamically built from data sources
 * The data store code is designed to be extensible, with focus on easy import of data from any existing source into Blueprint format
 
-### Blueprints as compositions of other Blueprints
+#### Blueprints as compositions of other Blueprints
 By Example:
-> A power station burns coal to produce energy, with some efficiency<br>
-  Another power station might burn gas with some efficiency.<br>
+> A power station burns coal to produce energy, with efficiency 70%<br>
+  Another power station might burn gas with some efficiency 73%<br>
   <br>
   The efficiency % defines a relationship between the energy output *by the fuel*<br>
-    and the *usable electrical energy* output by the power stationv
+    and the *usable electrical energy* output by the power station<br>
   <br>
   The Architect allows the user to ask the question:<br>
     *If I need 100 KwH of energy, how much CO2 will that produce*<br>
-  through defining the efficiency relation between the two blueprints<br>
+  through defining the efficiency relation between the two blueprints (e.g. power station and coal)<br>
 
-### Linking Blueprints through Units
+#### Linking Blueprints through Units
 By example:
-100 lightbulbs, each of 100 Watts, burning for 1 hour = 10,000 KwH
+100 lightbulbs, each of 100 Watts, burning for 100 hours = 1,000 KwH
 
 *Any other Blueprint that defines a KwH field (e.g. a power station) can be plugged into the output*
 
 Therefore it is possible for the user to ask the question:
 > If I leave my bathroom light on overnight, how much CO2 will that produce.<br>
-(The fun part of this is including data like Which energy tarriff am I using from Which supplier)
+  (The fun part of this is including data like Which energy tarriff am I using from Which supplier)
+  
+#### Summary of data store
+The data store is designed to contribute "explorable relationships" into the existing arena of open, linked and other data sources. People gain real, visceral, internal context through exploration of relationships, and it is **context** that turns "data" into "information". The code within the Architect strives to make it **easy** for the Information Developer to encode relationships in a way which can be explored, "fiddled with", composed, tweaked, personalised, etc, by people.
 
 ### The presentation pipeline
-About 3000 lines of javascript code provide a series of tools for building interactive user interfaces based on t
- 
-The visual.tools data store provides for import from accessible data source, for both stored and live linked data. 
-* 
+About 3000 lines of (well written) javascript code provide a series of tools for building interactive user interfaces based on the meta data included in the blueprints.
+
 
 The focus of visual tools is not so much on data acquisition and homogonisation, but on presentation. We seek to enable individuals and businesses to create effective, impactful visualisations of systems of equations, or linked data, or any other source of valuable knowledge.
 
