@@ -106,7 +106,7 @@ From this perspective, we can see that the Blueprint must encode density data re
 
 Each one of these options is called a "VisualisationMeta". Visualisation meta data can be quite complex, involving mathematics, color choices, display plugin options, and anything else necessary to generate the desired visualisation.
 
-    > The process of creating new visualisation tools in the pipeline usually begins with additions to blueprint meta data, which can then be passed through to any javascript plugins
+> The process of creating new visualisation tools in the pipeline usually begins with additions to blueprint meta data, which can then be passed through to any javascript plugins
 
 #### Javascript "Front End"
 About 3000 lines of (well written) javascript code provide a series of tools for building interactive user interfaces based on the meta data included in the blueprints. There is a *lot* of scope for building any kind of data presentation tools. The codebase includes Classes for managing interaction with the Architect, which are pretty generic; and currently has some simple, but effective sets of tools for visualising fields; interacting with field values; and visualising the output of calculations as animated SVG's. Basically, it lets users play around and dynamically generate infographics.
