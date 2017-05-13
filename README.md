@@ -25,8 +25,8 @@ At visual.tools we believe that for the World to evolve properly, everybody must
   * Presentation of Fields
   * Dynamic Infographics
   * HUD Plugins
-    * Presentation of Fields (Field HUD)
-    * Manipulation of generated visualisations (SVG HUD)
+    * Input Field HUD - Manipulation of Fields
+    * SVG HUD Manipulation of Infographics
 
 #### Raw data import
 The Architect is coded in Python. Any data accessible to Python code (basically everything) can be imported or linked into the data store.
@@ -120,7 +120,7 @@ The (current) HUD hooks are:
 4. precolor
 5. postcolor
 
-##### Input Field HUD
+#### Input Field HUD
 
 * **Field Order plugin**
   * Human readable field names
@@ -135,7 +135,8 @@ The (current) HUD hooks are:
 
 > The `Ratio Color plugin` contains techniques/patterns which can be used to build many complex and interesting tools for interactive data visualisation
 
-### SVG HUD
+#### SVG HUD
+
 
 
 
