@@ -86,6 +86,22 @@ About 3000 lines of (well written) javascript code provide a series of tools for
 #### Extensibility
 The pipeline is designed to be pluggable, extensible, etc. all the buzz words. Basically the project caters for coder/designers looking to create novel ways of presenting and interacting with data, so that they in turn can cater for individuals and organisations engaged in social informatics, who can in turn empower social groups, community organisations, political discourse, news publishers, manufacturers, etc.
 
+#### Presentation of Fields
+By default, the base code presents all input fields defined by a blueprint, in random order (since they are python dict keys), with their computer readable names (the python dict keys), and a slider, select list or input box as a control.
+
+#### SVG Visualisation Component
+The SVG Visualisation component provides major functionality for visual.tools
+
+> Dyanmically generates, in real time, 2.5D, SVG Infographics
+
+> Allows blueprints to specify as metadata how to generate the visualisation
+
+> Presents access to javascript objects (through the SVG HUD) to interact with the visualistion in real time
+
+> Provides tools to save and share generated visualisations
+
+
+
 #### Existing Plugins
 Both the InputField and the SVG HUD plugin infrastructures use the pattern of "hooks". Currently there are 5 hooks implemented in the code base, but there is no structural reason not to add more wherever useful. There are two or three InputFieldHUD plugins implemented and five or six SVGHUD plugins implemented. Especially the InputFieldHUD plugins have some fairly complex patterns implemented which allow them to interact predictably as the user fiddles with the infogram.
 
@@ -97,22 +113,21 @@ The (current) HUD hooks are:
 5. postcolor
 
 ##### Input Field HUD
-By default, the base code presents all input fields defined by a blueprint, in random order (since they are python dict keys), with their computer readable names (the python dict keys), and a slider, select list or input box as a control.
 
-> * Field Order plugin
-    * Human readable field names
-    * Field groups (with headers)
-    * Arbitrary text in a field row
-    * Info popup (html) content for any row (field, field group header or text rows)
-* Remove Field plugin
+* **Field Order plugin**
+  * Human readable field names
+  * Field groups (with headers)
+  * Arbitrary text in a field row
+  * Info popup (html) content for any row (field, field group header or text rows)
+* **Remove Field plugin**
   * remove any field from being displayed
-* Ratio Color plugin
-  * this plugin specifically creates controls for the Percentage widget (https://visual.tools/blueprint/Percentage)
+* **Ratio Color plugin**
+  * this plugin creates the controls specifically for the Percentage widget (https://visual.tools/blueprint/Percentage)
   * It interacts with the VisualisationSVG in realtime, and memoises various data as the user reloads content from the Architect.
-  * This plugin contains techniques which can be used to build many complex and interesting tools for interactive data visualisation
 
-##### SVG Visualisation
-The SVG Visualisation component provides a selection of tools for creating engaging, (slightly!) animated, 2.5D SVGs. The code uses the [svg3D](https://github.com/ndebeiss/svg3d) library.
+> The Ration Color plugin contains techniques/patterns which can be used to build many complex and interesting tools for interactive data visualisation
+
+
 
 
 
