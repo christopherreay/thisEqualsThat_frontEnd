@@ -7,7 +7,7 @@ Visual Tools is a complete pipeline for the presentation of complex data.
 At visual.tools we believe that for the World to evolve properly, everybody must have access to accurate data, and to tools with which they can understand and communicate information relevant to their lives.
 
 ## Pipeline Design
-* Data Store
+* Data Store (lovingly called *The Architect*)
   * Raw data import
   * Blueprints built as models of relations between datapoints
   * Blueprints may be constructed as relations between other Blueprints
