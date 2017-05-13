@@ -62,9 +62,15 @@ By example:
 
 *Any other Blueprint that defines a KwH field (e.g. a power station) can be plugged into the output*
 
+Links between any two fields that carry the same `unit` can be created dynamically by the Architect at any time, by a social informatic, as part of a campaign, or by any end user as part of open exploration.
+
 Therefore it is possible for the user to ask the question:
 > *If I leave my bathroom light on overnight, how much CO2 will that produce.*<br>
-  (The fun part of this is including data like Which energy tarriff am I using from Which supplier)
+  (The fun part of this is including data like Which energy tarriff am I using from Which supplier)<br>
+
+or the user's child to ask:<br>
+> *If my parent leaves the bathroom light on overnight, how many delicious fruits could they have bought me instead*
+  
   
 #### Summary of data store
 The data store is designed to contribute "explorable relationships" into the existing arena of open, linked and other data sources. People gain real, visceral, internal context through exploration of relationships, and it is **context** that turns "data" into "information". The code within the Architect strives to make it **easy** for the Information Developer to encode relationships in a way which can be explored, "fiddled with", composed, tweaked, personalised, etc, by people. 
