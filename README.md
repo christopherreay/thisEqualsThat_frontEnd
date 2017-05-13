@@ -142,7 +142,9 @@ The (current) HUD hooks are:
 > The `Ratio Color plugin` contains techniques/patterns which can be used to build many complex and interesting tools for interactive data visualisation
 
 #### SVG HUD
-Each SVG HUD plugin can introduce any number of menu items above the SVG Visualisation. Data memoisation and cookie management is provided for.
+* Each SVG HUD plugin can introduce any number of menu items above the SVG Visualisation
+* Data memoisation and cookie management is provided for
+* Blueprint metadata can automatically call SVG HUD plugins when the Visualisation has rendered
 
 * **SVG 3d Clone Timer**
   * determines the amount of time expected to render the requested SVG (before rendering)
@@ -164,13 +166,16 @@ Each SVG HUD plugin can introduce any number of menu items above the SVG Visuali
     * e.g. this is used to create the 3d shading effect when coloring the cube (https://visual.tools/blueprint/HowMuch), where the front/back, top/bottom, side/side are each the same shade, but slightly different to each other, using the picked color as a base
 * **Randomise Clones**
   * Presents three menu items to the user
-    1. Position<br>
+    1. `Position`<br>
        allows the user to determine how irregularly the clones are laid out from "perfectly uniform"
-    2. Detail Color<br>
+    2. `Detail Color`<br>
        allows the user to randomise the color of every individual path in every clone slightly
-    3. Group Color<br>
+    3. `Group Color`<br>
        allows the user to randomise the color of all the paths in each cloned image<br>
-  *
+  * This plugin is often used automatically by blueprints to give a more organic feel to the generated images
+  * I thought it was nuts, but its actually really good
+    * you can fiddle with it here: (https://visual.tools/blueprint/HowMany). When the page loads you can see that each tree is slightly off centre from perfect layout, each branch is a slightly different color in detail, and each tree has an overall slightly different hue. Cool. And you can do silly things with it :)
+  
 
 
 The focus of visual tools is not so much on data acquisition and homogonisation, but on presentation. We seek to enable individuals and businesses to create effective, impactful visualisations of systems of equations, or linked data, or any other source of valuable knowledge.
