@@ -60,10 +60,13 @@ Therefore it is possible for the user to ask the question:
   (The fun part of this is including data like Which energy tarriff am I using from Which supplier)
   
 #### Summary of data store
-The data store is designed to contribute "explorable relationships" into the existing arena of open, linked and other data sources. People gain real, visceral, internal context through exploration of relationships, and it is **context** that turns "data" into "information". The code within the Architect strives to make it **easy** for the Information Developer to encode relationships in a way which can be explored, "fiddled with", composed, tweaked, personalised, etc, by people.
+The data store is designed to contribute "explorable relationships" into the existing arena of open, linked and other data sources. People gain real, visceral, internal context through exploration of relationships, and it is **context** that turns "data" into "information". The code within the Architect strives to make it **easy** for the Information Developer to encode relationships in a way which can be explored, "fiddled with", composed, tweaked, personalised, etc, by people. 
+
+The Architect is designed to be fast at answering questions about relationships within blueprints. Once a question has been asked once, the Architect memoises everything it can in an efficient manner. It is designed to be able to serve *very large numbers of people*. Each *instance* of a blueprint is called an infogram. An infogram stores all the data necessary to represent the current state of the user fiddling with the relations. Infograms are very light weight, and can be stored / updated / shared / forked efficiently.
 
 ### The presentation pipeline
-About 3000 lines of (well written) javascript code provide a series of tools for building interactive user interfaces based on the meta data included in the blueprints.
+About 3000 lines of (well written) javascript code provide a series of tools for building interactive user interfaces based on the meta data included in the blueprints. There is a *lot* of scope for building any kind of data presentation tools####. The pipeline has Classes for managing interaction with the Architect, which are pretty generic; and currently has some simple, but effective sets of tools for visualising fields; interacting with field values; and visualising the output of calculations as animated SVG's. Basically, it lets users play around and dynamically generate infographics.
+
 
 
 The focus of visual tools is not so much on data acquisition and homogonisation, but on presentation. We seek to enable individuals and businesses to create effective, impactful visualisations of systems of equations, or linked data, or any other source of valuable knowledge.
