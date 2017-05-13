@@ -99,11 +99,11 @@ The (current) HUD hooks are:
 ##### Input Field HUD
 By default, the base code presents all input fields defined by a blueprint, in random order (since they are python dict keys), with their computer readable names (the python dict keys), and a slider, select list or input box as a control.
 
-* Field Order plugin
-  * Human readable field names
-  * Field groups (with headers)
-  * Arbitrary text in a field row
-  * Info popup (html) content for any row (field, field group header or text rows)
+> * Field Order plugin
+    * Human readable field names
+    * Field groups (with headers)
+    * Arbitrary text in a field row
+    * Info popup (html) content for any row (field, field group header or text rows)
 * Remove Field plugin
   * remove any field from being displayed
 * Ratio Color plugin
