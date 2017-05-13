@@ -1,4 +1,5 @@
-# visual.tools - (current production version: https://visual.tools)
+# visual.tools
+https://visual.tools
 
 Visual Tools is a complete pipeline for the presentation of complex data as interactive infographics.
 
