@@ -1,6 +1,6 @@
 # visual.tools
 
-Visual Tools is a complete pipeline for the presentation of complex data.
+Visual Tools is a complete pipeline for the presentation of complex data as interactive infographics.
 
 ## Justification
 
