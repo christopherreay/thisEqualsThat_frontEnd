@@ -10,7 +10,7 @@ At visual.tools we believe that for the World to evolve properly, everybody must
 * Data Store (lovingly called *The Architect*)
   * Raw data import
   * Blueprints built as models of relations between datapoints
-  * Blueprints may be constructed as relations between other Blueprints
+  * Blueprints may be constructed as relations between other Blueprints (composability)
   * Exploration of data spaces by dyanmic linking of Blueprints
   * Summary of data store
 * The presentation pipeline
