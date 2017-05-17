@@ -450,17 +450,20 @@ thisEqualsThat.oop = function()
       success: function(data, status, request)
       { console.log("getInfogram:", infogramID, data);
 
-        var modelClass = ThisEqualsThat.modelClasses[data[0].modelClass]
-        modelClass.modelInstance = new ThisEqualsThat.ModelInstance(modelClass, data[0]);
-        modelClass.modelInstance.modelPosition = "top";
-        modelClass.modelInstance.displayIntoTarget(displayContainer);
-        modelClass.modelInstance.inputFieldAltered(
-            { "outputField": modelClass.modelInstance.lastAlteredOutputField.data.fullAddress
-            },
-            function(data, status, request)
-            { modelClass.modelInstance.setChoosableFields(data);
-            }
-        );
+        var modelClass              = ThisEqualsThat.modelClasses[data[0].modelClass]
+        var modelInstance           =  modelClass.modelInstance = new ThisEqualsThat.ModelInstance(modelClass, data[0]);
+        modelInstance.modelPosition = "top";
+        modelInstance.displayIntoTarget(displayContainer);
+
+        modelInstance.inputFieldAltered({});
+
+        // modelInstance.inputFieldAltered_processServerData
+        //     ( modelInstance,      // "this" reference
+        //       data, null, null,   // ajax callback spoof
+        //       function(data, status, request) //success function
+        //       { modelInstance.setChoosableFields(data);
+        //       }
+        //     );
 
         //TODO: possibly deal with setting bottom model instance stuff?
       }
@@ -712,39 +715,8 @@ thisEqualsThat.oop = function()
           "dataType": "json",
           "data": fieldChangeData,
           "success": function (data, status, request)
-          { console.log(data);
-            This.svg3dDisplayJSON   = data.svg3dDisplayJSON;
-
-            // This.lastAlteredOutputField.data.currentValue = data.newValue;
-            // This.lastAlteredVisualisationField.data.currentValue = data.svg3dDisplayJSON.svgFieldValue;
-
-            // changed data. Now it has all the values of all the fields in it. Going to try to update the UI accordingly
-            for (var fieldName in data.fieldValues)
-            { if (This.inputFields.hasOwnProperty(fieldName) )
-              { var inputField  = This.inputFields[fieldName];
-                var newValue    = data.fieldValues[fieldName];item.replace(/\./g, " ")
-
-                if (newValue != inputField.data.currentValue)
-                { inputField.setValue(newValue);
-                }
-              }
-              //catch (e)
-              //{}
-            }
-
-
-            if (! This.doNotUpdateUI) This.displayCurrentOutput()
-            if (    This.bottomModelInstance && data.bottomModelData
-                &&  This.bottomModelInstance.lastAlteredOutputField && This.bottomModelInstance.lastAlteredOutputField.data)
-            { This.bottomModelInstance.lastAlteredOutputField.data.currentValue = data.bottomModelData.newValue
-              This.bottomModelInstance.lastAlteredVisualisationField.data.currentValue = data.bottomModelData.svg3dDisplayJSON.svgFieldValue;
-              This.bottomModelInstance.svg3dDisplayJSON = data.bottomModelData.svg3dDisplayJSON
-              if (! This.doNotUpdateUI) This.bottomModelInstance.displayCurrentOutput()
-            }
-
-            if (successFunction)
-              successFunction(data, status, request);
-
+          { var ThisModelInstance = This;
+            ThisModelInstance.inputFieldAltered_processServerData(ThisModelInstance, data, status, request, successFunction, doNotUpdateUI);
           },
           "complete": function()
           { console.log("ajax complete", This.ifa_queue[0]);
@@ -782,6 +754,41 @@ thisEqualsThat.oop = function()
     { console.log("pushing to queue", this.ifa_queue[0], arguments);
       this.ifa_queue.push(arguments);
     }
+  }
+  this.ModelInstance.prototype.inputFieldAltered_processServerData = function(ThisModelInstance, data, status, request, successFunction, doNotUpdateUI)
+  { console.log("inputFieldAltered_processServerData:", data);
+    
+    ThisModelInstance.svg3dDisplayJSON   = data.svg3dDisplayJSON;
+
+    // ThisModelInstance.lastAlteredOutputField.data.currentValue = data.newValue;
+    // ThisModelInstance.lastAlteredVisualisationField.data.currentValue = data.svg3dDisplayJSON.svgFieldValue;
+
+    // changed data. Now it has all the values of all the fields in it. Going to try to update the UI accordingly
+    for (var fieldName in data.fieldValues)
+    { if (ThisModelInstance.inputFields.hasOwnProperty(fieldName) )
+      { var inputField  = ThisModelInstance.inputFields[fieldName];
+        var newValue    = data.fieldValues[fieldName];item.replace(/\./g, " ")
+
+        if (newValue != inputField.data.currentValue)
+        { inputField.setValue(newValue);
+        }
+      }
+      //catch (e)
+      //{}
+    }
+
+
+    if (! ThisModelInstance.doNotUpdateUI) ThisModelInstance.displayCurrentOutput()
+    if (    ThisModelInstance.bottomModelInstance && data.bottomModelData
+        &&  ThisModelInstance.bottomModelInstance.lastAlteredOutputField && ThisModelInstance.bottomModelInstance.lastAlteredOutputField.data)
+    { ThisModelInstance.bottomModelInstance.lastAlteredOutputField.data.currentValue = data.bottomModelData.newValue
+      ThisModelInstance.bottomModelInstance.lastAlteredVisualisationField.data.currentValue = data.bottomModelData.svg3dDisplayJSON.svgFieldValue;
+      ThisModelInstance.bottomModelInstance.svg3dDisplayJSON = data.bottomModelData.svg3dDisplayJSON
+      if (! ThisModelInstance.doNotUpdateUI) ThisModelInstance.bottomModelInstance.displayCurrentOutput()
+    }
+
+    if (successFunction)
+      successFunction(data, status, request);
   }
   this.ModelInstance.prototype.setChoosableFields = function(data, status, response)
   {
