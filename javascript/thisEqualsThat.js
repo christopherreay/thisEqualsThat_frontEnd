@@ -91,10 +91,13 @@ thisEqualsThat.oop = function()
     ThisEqualsThat.referenceVisual  = new ThisEqualsThat.ReferenceVisual    ( display.doubleBuffer);
     ThisEqualsThat.scene            = new ThisEqualsThat.ThisEqualsThatScene( display.navbar.thisEqualsThatScene );
 
-    // debugger;
+    this.redirectDisplayFromURL(window.location.pathname);
+  };
 
-    var re = /^\/blueprint\/([^/]*)$/;
-    var directBlueprintLink = window.location.pathname.match(re);
+  this.redirectDisplayFromURL = function(url)
+  { var regex_blueprint = /^\/blueprint\/([^/]*)$/;
+    
+    var directBlueprintLink = url.match(regex_blueprint);
     if (directBlueprintLink != null)
     { var modelClassName = directBlueprintLink[1];
       var modelClassAlternateMaps = 
@@ -112,8 +115,7 @@ thisEqualsThat.oop = function()
       modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
       ThisEqualsThat.scene.setCurrentModelClass(modelClass);    
     }
-    
-  };
+  }
 
   this.mainNavigation = function(navbar)
   { O.create( [ ".bs-component",
