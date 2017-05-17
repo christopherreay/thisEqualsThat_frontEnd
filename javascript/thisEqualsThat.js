@@ -95,26 +95,37 @@ thisEqualsThat.oop = function()
   };
 
   this.redirectDisplayFromURL = function(url)
-  { var regex_blueprint = /^\/blueprint\/([^/]*)$/;
-    
-    var directBlueprintLink = url.match(regex_blueprint);
-    if (directBlueprintLink != null)
-    { var modelClassName = directBlueprintLink[1];
-      var modelClassAlternateMaps = 
-          { "HowMuch":      "VolMassDen",
-            
-            "Particulate":  "Particle",
-            
-            "Ratio":        "PeopleRatioPlay",
-            "Percentage":   "PeopleRatioPlay",
-          }
-      if ( modelClassAlternateMaps.hasOwnProperty(modelClassName) ) 
-      { modelClassName = modelClassAlternateMaps[modelClassName];
-      }
-      var modelClass = ThisEqualsThat.modelClasses[modelClassName];
-      modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
-      ThisEqualsThat.scene.setCurrentModelClass(modelClass);    
+  { var regex = {};
+    regex.blueprint = /^\/blueprint\/([^/]*)$/;
+    regex.infogram  = /^\/infogram\/([^/]*)$/;
+
+    var match = null;
+    for (key in regex)
+    { match = url.match(regex[key]);
+      if ( match )
+        this.redirectDisplayFromURL[key](match)
     }
+  }
+  this.redirectDisplayFromURL.blueprint = function(match)
+  { var modelClassName = match[1];
+    var modelClassAlternateMaps = 
+        { "HowMuch":      "VolMassDen",
+          
+          "Particulate":  "Particle",
+          
+          "Ratio":        "PeopleRatioPlay",
+          "Percentage":   "PeopleRatioPlay",
+        }
+    if ( modelClassAlternateMaps.hasOwnProperty(modelClassName) ) 
+    { modelClassName = modelClassAlternateMaps[modelClassName];
+    }
+    var modelClass = ThisEqualsThat.modelClasses[modelClassName];
+    modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
+    ThisEqualsThat.scene.setCurrentModelClass(modelClass);    
+  }
+  this.redirectDisplayFromURL.infogram = function(match)
+  { var infogramID = match[1];
+    this.getInfogramById(infogramID, ThisEqualsThat.scene.constructContainer);
   }
 
   this.mainNavigation = function(navbar)
@@ -430,6 +441,29 @@ thisEqualsThat.oop = function()
     }
   }
 
+  this.getInfogramByID = function(infogramID, displayContainer)
+  { var This = this;
+    var ajaxOptions =
+    { url: "/getInfogramById",
+      data: { infogramID: infogramID},
+      success: function(data, status, request)
+      { console.log("getInfogram:", this.name);
+        This.modelInstance = new ThisEqualsThat.ModelInstance(This, data[0]);
+        This.modelInstance.modelPosition = "top";
+        This.modelInstance.displayIntoTarget(displayContainer);
+        This.modelInstance.inputFieldAltered(
+            { "outputField": This.modelInstance.lastAlteredOutputField.data.fullAddress
+            },
+            function(data, status, request)
+            { This.modelInstance.setChoosableFields(data);
+            }
+        );
+
+        //TODO: possibly deal with setting bottom model instance stuff?
+      }
+    }
+    $.ajax(ajaxOptions);
+  }
 
   this.ModelClass_iframe = function(modelClassData)
   { this.name     = modelClassData.name || modelClassData.jsonKey;
