@@ -1043,11 +1043,8 @@ thisEqualsThat.oop = function()
         { e.stopPropagation();
         }
       );
-      // display.svgTextDescription.text("Hello World");
-      // display.svgTextInput.on("change", function() { display.svgTextDescription.text($(this).val()); This.svg_createSaveLink(This);});
-    }
 
-    display.saveInfogram
+      display.saveInfogram
       .on
       ( "click",
         function()
@@ -1055,6 +1052,11 @@ thisEqualsThat.oop = function()
           ThisModelInstance.saveInfogram(ThisModelInstance);
         }
       );
+      // display.svgTextDescription.text("Hello World");
+      // display.svgTextInput.on("change", function() { display.svgTextDescription.text($(this).val()); This.svg_createSaveLink(This);});
+    }
+
+    
 
     this.display.editableTextPlaceholder
         .editable
