@@ -723,20 +723,21 @@ svg.rootSVG
 }
 
 
-.svgSaveLink
+.shareMenu
 { position: absolute;
   top: 5px;
   right: 16px;
-  border-radius: 50%;
+
+  display: flex;
+}
+.svgSaveLink, .saveInfogram
+{ border-radius: 50%;
   width: 42px;
   height: 42px;
   box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
 }
 .svgSaveLink > a
-{ position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+{ width: 100%;
   height: 100%;
   padding: 8px;
 }
@@ -744,6 +745,7 @@ svg.rootSVG
 { color: #FAFAFA;
   font-size: 26px;
 }
+
 
 .referenceSVGSelect.btn
 { background-image: url(/static/graphics/thisEquals/icons/visualisation.svg);

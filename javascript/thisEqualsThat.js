@@ -125,7 +125,7 @@ thisEqualsThat.oop = function()
   }
   this.redirectDisplayFromURL.infogram = function(match)
   { var infogramID = match[1];
-    this.getInfogramById(infogramID, ThisEqualsThat.scene.constructContainer);
+    ThisEqualsThat.getInfogramByID(infogramID, ThisEqualsThat.scene.constructContainer);
   }
 
   this.mainNavigation = function(navbar)
@@ -444,18 +444,21 @@ thisEqualsThat.oop = function()
   this.getInfogramByID = function(infogramID, displayContainer)
   { var This = this;
     var ajaxOptions =
-    { url: "/getInfogramById",
-      data: { infogramID: infogramID},
+    { "method": "POST",
+      "url": "/getInfogramByID",
+      "data": { infogramID: infogramID},
       success: function(data, status, request)
-      { console.log("getInfogram:", this.name);
-        This.modelInstance = new ThisEqualsThat.ModelInstance(This, data[0]);
-        This.modelInstance.modelPosition = "top";
-        This.modelInstance.displayIntoTarget(displayContainer);
-        This.modelInstance.inputFieldAltered(
-            { "outputField": This.modelInstance.lastAlteredOutputField.data.fullAddress
+      { console.log("getInfogram:", infogramID, data);
+
+        var modelClass = ThisEqualsThat.modelClasses[data[0].modelClass]
+        modelClass.modelInstance = new ThisEqualsThat.ModelInstance(modelClass, data[0]);
+        modelClass.modelInstance.modelPosition = "top";
+        modelClass.modelInstance.displayIntoTarget(displayContainer);
+        modelClass.modelInstance.inputFieldAltered(
+            { "outputField": modelClass.modelInstance.lastAlteredOutputField.data.fullAddress
             },
             function(data, status, request)
-            { This.modelInstance.setChoosableFields(data);
+            { modelClass.modelInstance.setChoosableFields(data);
             }
         );
 
@@ -864,7 +867,8 @@ thisEqualsThat.oop = function()
   }
   this.ModelInstance.prototype.displayIntoTarget = function(targetContainer)
   { if (! this.hasOwnProperty("display"))
-    { This = this;
+    { var This = this;
+      var ThisModelInstance = this;
       this.display = {};
       var display = this.display;
 
@@ -938,7 +942,11 @@ thisEqualsThat.oop = function()
                               ],
                               // [ ".toggleFeatures" ,
                               // ],
-                              [ ".svgSaveLink.bg_visualTools" ,
+                              [ ".shareMenu",
+                                [ [".svgSaveLink.bg_visualTools",
+                                  ],
+                                  [".saveInfogram"],
+                                ],
                               ],
                               [ "a.editableTextPlaceholder", "@Click to Enter Text",
                               ],
@@ -1031,6 +1039,15 @@ thisEqualsThat.oop = function()
       // display.svgTextDescription.text("Hello World");
       // display.svgTextInput.on("change", function() { display.svgTextDescription.text($(this).val()); This.svg_createSaveLink(This);});
     }
+
+    display.saveInfogram
+      .on
+      ( "click",
+        function()
+        { console.log("saveInfogram");
+          ThisModelInstance.saveInfogram(ThisModelInstance);
+        }
+      );
 
     this.display.editableTextPlaceholder
         .editable
@@ -1409,8 +1426,21 @@ thisEqualsThat.oop = function()
     svgClonableG.dequeue(this.id);
     svgClonableG.hide();
   }
+  this.ModelInstance.prototype.saveInfogram = function(This)
+  { var This = this;
+    var ajaxOptions =
+    { url: "/saveInfogram",
+      data: { "modelInstanceUUID": This.id},
+      success: function(data, status, request)
+      { console.log("saveInfogram:", This.id);
+        
+      }
+    }
+    $.ajax(ajaxOptions);
+  }
   this.ModelInstance.prototype.svg_createSaveLink = function(This)
-  { if (This.disable_createSaveLink == true)
+  { //THIS IS COMPLETELY STUPID. SHOULD ONLY BE DONE WHEN CLICKED ON
+    if (This.disable_createSaveLink == true)
       console.log("svg_createSaveLink disabled");
     else
     { console.log("svg_createSaveLink", This);
