@@ -2817,6 +2817,7 @@ thisEqualsThat.oop = function()
 
     this.display.uiValue_slider.val(unitsAroundOutput(this, this.data.defaultValue));
     this.display.uiValue_slider.data("thisEquals.modelField", this);
+    this.slider_sliderUpdatesText();
 
     return this.display.inputFieldElement;
   }
