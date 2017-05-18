@@ -968,9 +968,9 @@ thisEqualsThat.oop = function()
                               // [ ".toggleFeatures" ,
                               // ],
                               [ ".shareMenu",
-                                [ [".svgSaveLink.bg_visualTools",
+                                [ [".saveInfogram"],
+                                  [".saveSVG",
                                   ],
-                                  [".saveInfogram"],
                                 ],
                               ],
                               [ "a.editableTextPlaceholder", "@Click to Enter Text",
@@ -1068,6 +1068,15 @@ thisEqualsThat.oop = function()
         function()
         { //console.("saveInfogram");
           ThisModelInstance.saveInfogram(ThisModelInstance);
+        }
+      );
+
+      display.saveSVG
+      .on
+      ( "click",
+        function()
+        { //console.("saveInfogram");
+          ThisModelInstance.saveSVG(ThisModelInstance);
         }
       );
       // display.svgTextDescription.text("Hello World");
@@ -1458,13 +1467,51 @@ thisEqualsThat.oop = function()
   this.ModelInstance.prototype.saveInfogram = function(This)
   { var This = this;
     var ajaxOptions =
-    { url: "/saveInfogram",
-      data: { "modelInstanceUUID": This.id},
+    { "method": "POST",
+      "url":    "/saveInfogram",
+      "data":   { "modelInstanceUUID": This.id},
       success: function(data, status, request)
-      { console.log("saveInfogram:", This.id);
+      { console.log("saveInfogram:", data[0].uuid);
         
       }
     }
+    $.ajax(ajaxOptions);
+  }
+  this.ModelInstance.prototype.saveSVG= function(This)
+  { var This = this;
+    
+    var savableContainerSVG = $(This.display.rootSVG).clone();
+    savableContainerSVG
+        .attr("width",          This.display.rootSVG.css("width"))
+        .attr("height",         This.display.rootSVG.css("height"))
+    ;
+    var removeTheseAttributes = ["xmlns:xlink", "xmlns:z", "z:xInfinite", "z:yInfinite", "z:zRatio"];
+    for (attributeToRemove  of removeTheseAttributes)
+    { savableContainerSVG.removeAttr(attributeToRemove)
+    }
+
+
+    var svgString             = savableContainerSVG.get(0).outerHTML;
+    regex_zThreeD             = /z:threeD=\"true\"/g;
+    var removeTheseStrings    = [regex_zThreeD];
+    for (stringToRemove of removeTheseStrings)
+    { svgString = svgString.replace(stringToRemove, "");
+    }
+
+    var ajaxOptions =
+    { "method": "POST", 
+      "url":    "/saveSVG",
+      "data":   { "svgToSave":          svgString,
+                  "svgTextDescription": This.display.svgTextDescription.text(),
+                  "modelOutputField":   This.lastAlteredOutputField.fullAddress,
+                  "modelOutputValue":   This.display.modelOutputValue.text(),
+                },
+      success: function(data, status, request)
+      { console.log("saveSVG:", data);
+        
+      }
+    }
+    console.log("saveSVG, ajaxOptions:", ajaxOptions);
     $.ajax(ajaxOptions);
   }
   this.ModelInstance.prototype.svg_createSaveLink = function(This)
@@ -1477,23 +1524,7 @@ thisEqualsThat.oop = function()
     else
     { //console.("svg_createSaveLink", This);
 
-      var savableContainerSVG = $(This.display.rootSVG).clone();
-      savableContainerSVG
-          .attr("width",          This.display.rootSVG.css("width"))
-          .attr("height",         This.display.rootSVG.css("height"))
-      ;
-      var removeTheseAttributes = ["xmlns:xlink", "xmlns:z", "z:xInfinite", "z:yInfinite", "z:zRatio"];
-      for (attributeToRemove  of removeTheseAttributes)
-      { savableContainerSVG.removeAttr(attributeToRemove)
-      }
-
-
-      var svgString             = savableContainerSVG.get(0).outerHTML;
-      regex_zThreeD             = /z:threeD=\"true\"/g;
-      var removeTheseStrings    = [regex_zThreeD];
-      for (stringToRemove of removeTheseStrings)
-      { svgString = svgString.replace(stringToRemove, "");
-      }
+      
 
       This.display.savableSVGString = svgString;
 
