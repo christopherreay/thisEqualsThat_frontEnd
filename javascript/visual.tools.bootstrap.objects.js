@@ -152,7 +152,7 @@ function($)
       }
 
     }
-    if (depth == 0) console.log("create", toReturn);
+    // if (depth == 0) console.log("create", toReturn);
     return toReturn;
   }
 

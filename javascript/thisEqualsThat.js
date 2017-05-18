@@ -349,6 +349,7 @@ thisEqualsThat.oop = function()
 
     ga('send', 'pageview', "/blueprint/"+modelClass.name);
 
+
   }
 
 
@@ -534,7 +535,7 @@ thisEqualsThat.oop = function()
         function(fieldNameString, value)
         { value['fullAddress'] = fieldNameString
           if (value['inputField'] == true)
-          { console.log("modelInstance: inputField: ", This, value);
+          { //console.log("modelInstance: inputField: ", This, value);
             value['currentValue'] = This.data.fieldValues[fieldNameString]
             var inputField = new ThisEqualsThat.ModelFieldInput(This, value);
             This.inputFieldData[fieldNameString] = inputField;
@@ -591,7 +592,7 @@ thisEqualsThat.oop = function()
         this.data.fields,
         function(index, value)
         { if (value["outputField"] == true)
-          { console.log("modelInstance: outputField: ", This, value);
+          { //console.log("modelInstance: outputField: ", This, value);
             var outputField = new ThisEqualsThat.ModelFieldOutput(This, value);
             This.outputFieldData[value.toString()] = outputField;
             outputField.getDropDownItem(This.outputFieldSelect.menuListItems);
@@ -647,7 +648,7 @@ thisEqualsThat.oop = function()
         this.data.fields,
         function(index, value)
         { if (value["visualisationField"] == true)
-          { console.log("modelInstance: visualisationField: ", This, value);
+          { //console.log("modelInstance: visualisationField: ", This, value);
             var visualisationField = new ThisEqualsThat.ModelFieldVisualisation(This, value);
             This.visualisationFieldData[value.toString()] = visualisationField;
             visualisationField.getDropDownItem(This.visualisationFieldSelect.menuListItems);
@@ -719,7 +720,7 @@ thisEqualsThat.oop = function()
             ThisModelInstance.inputFieldAltered_processServerData(ThisModelInstance, data, status, request, successFunction, doNotUpdateUI);
           },
           "complete": function()
-          { console.log("ajax complete", This.ifa_queue[0]);
+          { //console.log("ajax complete", This.ifa_queue[0]);
 
             This.ifa_queueState = "receivedResponse";
 
@@ -747,11 +748,11 @@ thisEqualsThat.oop = function()
             }
           },
         };
-      console.log(ajaxOptions);
+      console.log("inputFieldAltered, ajaxOptions:", ajaxOptions);
       $.ajax(ajaxOptions);
     }
     else
-    { console.log("pushing to queue", this.ifa_queue[0], arguments);
+    { //console.("pushing to queue", this.ifa_queue[0], arguments);
       this.ifa_queue.push(arguments);
     }
   }
@@ -767,7 +768,7 @@ thisEqualsThat.oop = function()
     for (var fieldName in data.fieldValues)
     { if (ThisModelInstance.inputFields.hasOwnProperty(fieldName) )
       { var inputField  = ThisModelInstance.inputFields[fieldName];
-        var newValue    = data.fieldValues[fieldName];item.replace(/\./g, " ")
+        var newValue    = data.fieldValues[fieldName];
 
         if (newValue != inputField.data.currentValue)
         { inputField.setValue(newValue);
@@ -825,11 +826,11 @@ thisEqualsThat.oop = function()
       bottomModelLinkFieldList.select.on("change", this.bottomModelLinkSelectChangeFunction);
     }
     this.display.bottomModelSelectDiv.html(bottomModelLinkFieldList.select);
-    console.log(choosableFields);
+    //console.(choosableFields);
   }
   this.ModelInstance.prototype.bottomModelLinkSelectChangeFunction = function(event)
   { var bottomModelLinkField = $(event.currentTarget.selectedOptions[0]).data("bottomModelLinkField");
-    console.log(event, bottomModelLinkField);
+    //console.(event, bottomModelLinkField);
     if (! bottomModelLinkField.hasOwnProperty("setBottomModelAjaxOptions"))
     { bottomModelLinkField.setBottomModelAjaxOptions =
       { url: "/setBottomModel",
@@ -847,7 +848,7 @@ thisEqualsThat.oop = function()
     $.ajax(bottomModelLinkField.setBottomModelAjaxOptions);
   }
   this.ModelInstance.prototype.setBottomModelSuccessFunction = function(data, status, request)
-  { console.log(data, this);
+  { //console.(data, this);
     topModelInstance = this.modelInstance;
     if (! topModelInstance.bottomModelHistory.hasOwnProperty(data.id))
     { var bottomModelInstance =
@@ -870,7 +871,7 @@ thisEqualsThat.oop = function()
 
     topModelInstance.display.topModelDiv.toggleClass("bottomModelReshuffle", true);
 
-    console.log(topModelInstance.bottomModelInstance);
+    //console.(topModelInstance.bottomModelInstance);
   }
   this.ModelInstance.prototype.displayIntoTarget = function(targetContainer)
   { if (! this.hasOwnProperty("display"))
@@ -1048,7 +1049,7 @@ thisEqualsThat.oop = function()
       .on
       ( "click",
         function()
-        { console.log("saveInfogram");
+        { //console.("saveInfogram");
           ThisModelInstance.saveInfogram(ThisModelInstance);
         }
       );
@@ -1388,7 +1389,7 @@ thisEqualsThat.oop = function()
                     This.svgHUD.renderHUD("postColor");
 
 
-                    console.log("animationQueue complete", This.ifa_queue[0]);
+                    //console.("animationQueue complete", This.ifa_queue[0]);
                     if (This.ifa_queue.length > 0)
                     { var ifa_item = This.ifa_queue.shift()
                       This.ifa_queueState = "ready";
@@ -1449,10 +1450,13 @@ thisEqualsThat.oop = function()
   }
   this.ModelInstance.prototype.svg_createSaveLink = function(This)
   { //THIS IS COMPLETELY STUPID. SHOULD ONLY BE DONE WHEN CLICKED ON
+    return;
+
     if (This.disable_createSaveLink == true)
-      console.log("svg_createSaveLink disabled");
+    { //console.("svg_createSaveLink disabled");
+    }
     else
-    { console.log("svg_createSaveLink", This);
+    { //console.("svg_createSaveLink", This);
 
       var savableContainerSVG = $(This.display.rootSVG).clone();
       savableContainerSVG
@@ -1492,7 +1496,7 @@ thisEqualsThat.oop = function()
   this.ModelInstance.prototype.displayCurrentOutput = function()
   { var outputField         = this.lastAlteredOutputField;
     var visualisationField  = this.lastAlteredVisualisationField;
-    console.log("displayCurrentOutput", this, outputField)
+    //console.("displayCurrentOutput", this, outputField)
 
 
 
@@ -1515,7 +1519,7 @@ thisEqualsThat.oop = function()
           //svgReferenceVisual.appendTo(This.display.svgReferenceG);
           //$(svgReferenceVisual).attr("transform", "scale(0.2)");
 
-          console.log("importSVG file", importedRootG);
+          //console.("importSVG file", importedRootG);
           thisEqualsThat.svgStore[svgFileName]      = $(importedRootG);
           thisEqualsThat.svgDefsStore[svgFileName]  = $(importedDefs);
 
@@ -1704,7 +1708,7 @@ thisEqualsThat.oop = function()
         function(xml)
         {
               importedNode = document.importNode(xml.documentElement, true);
-              console.log("referenceVisual:" + referenceSVGData.fileHandle);//, importedNode);
+              //console.("referenceVisual:" + referenceSVGData.fileHandle);//, importedNode);
               var referenceRootG = $(importedNode).find("g").first();
               referenceVisualDefs.svgStore[referenceSVGData.fileHandle] = referenceRootG;
               
@@ -2613,7 +2617,7 @@ thisEqualsThat.oop = function()
 
 
   this.ModelFieldInput = function(modelInstance, data)
-  { console.log(modelInstance, data);
+  { //console.(modelInstance, data);
     this.modelInstance  = modelInstance;
     this.fullAddress    = data.fullAddress;
     this.simpleName     = this.fullAddress.replace(/[\[\]\",]/g, "");
@@ -2623,7 +2627,9 @@ thisEqualsThat.oop = function()
   }
 
   this.ModelFieldInput.prototype.setValue = function(newValue, trigger)
-  { fieldType = this.data.fieldType;
+  { console.log("setValue:", arguments);
+
+    fieldType = this.data.fieldType;
     if (fieldType == "select" || fieldType == "text")
     { this.data.currentValue = newValue;
       this["uiValue_" + fieldType].val(newValue);
@@ -2633,12 +2639,6 @@ thisEqualsThat.oop = function()
       this.slider_ifaUpdatesCurrentValue();
     }
 
-    // if (fieldType == "text" || fieldType == "slider")
-    // { var uiInputText = this["uiValue_" + fieldType];
-    //   if (! uiInputText.is(":focus"))
-    //   { uiInputText.val( this.unitsAroundOutput(this.data.currentValue) );
-    //   }
-    // }
   }
   this.ModelFieldInput.prototype.inputFieldAltered = function(This)
   { if (!This) var This = this;
@@ -2669,16 +2669,7 @@ thisEqualsThat.oop = function()
     var display = this.display = {};
 
     var This = this;
-    // O.create
-    // ( [ ".inputFieldElement",
-    //     [ [ ".inputFieldLabel", "@"+this.data.displayName ],
-    //       [ O.dropdown(this.display, null, ".inputFieldSelect", this.simpleName) ],
-    //     ],
-    //   ],
-    //   this.display,
-    //   null
-    // );
-    // this.uiElement = this.display.inputFieldElement;
+    
     O.create
     ( [ ".uiElement.inputFieldElement.inputField.displayFlex.spaceBetween.width100",
         [ [ ".inputFieldLabel.floatLeft.smallCaps", "@"+fieldData.displayName ],
@@ -2692,31 +2683,6 @@ thisEqualsThat.oop = function()
       appendTo
     );
 
-
-    // ( [ ".uiElement.inputFieldElement.displayFlex.spaceBetween",
-    //     [ [ ".inputFieldLabel", "@"+this.data.displayName,
-    //         ,
-    //       ],
-    //     ],
-    //   ],
-    //   this,
-    //   appendTo
-    // );
-
-    // this.uiElement    =
-    //     $("<div />",
-    //       { "class": "inputFieldElement"
-    //       }
-    //     );
-    //   var uiLabel =
-    //     $("<div />",
-    //       { "class": "inputFieldLabel"
-    //       }
-    //     ).text(this.data.displayName);
-
-        //  .append(this.data.displayFieldAddress);
-
-    // var select = $("<select />", {"class": "inputFieldSelect"});
     this.uiValue_select.data("ModelInputField", this);
     this.uiValue_select.on("change", this, this.inputField_select_changeFunction);
     $.each(fieldData.selectableValues,
@@ -2728,11 +2694,6 @@ thisEqualsThat.oop = function()
                   This.uiValue_select.append(selectOption);
                 }
           )
-
-    // this.uiValue_select = select;
-
-    // this.uiElement.append(uiLabel);
-    // this.uiElement.append(this.uiValue_select);
 
     return this.uiElement;
   }
