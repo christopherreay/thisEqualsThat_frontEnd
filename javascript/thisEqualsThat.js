@@ -56,6 +56,7 @@ thisEqualsThat.oop = function()
 
     ThisEqualsThat.display                = $("body");
     ThisEqualsThat.welcome                = new ThisEqualsThat.Welcome(ThisEqualsThat.display);
+    ThisEqualsThat.history                = new ThisEqualsThat.History();
   }
 
   this.Welcome = function(display)
@@ -66,6 +67,15 @@ thisEqualsThat.oop = function()
               display,
               display
             );
+  }
+
+  this.History = function()
+  { var This = this;
+    window.onpopstate = function(event)
+    { console.log(event);
+
+      ThisEqualsThat.redirectDisplayFromURL(window.location.pathname);
+    }
   }
 
   this.displayInterface = function(display)
@@ -1099,6 +1109,8 @@ thisEqualsThat.oop = function()
     )
 
     this.display.modelInstanceDiv.show();
+    window.history.replaceState({}, "", "/blueprint/"+this.modelClass.name);
+    window.document.title = this.modelClass.name;
 
     return this;
   }
