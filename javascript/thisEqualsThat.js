@@ -75,6 +75,8 @@ thisEqualsThat.oop = function()
     { console.log(event);
 
       ThisEqualsThat.redirectDisplayFromURL(window.location.pathname);
+      // var modelInstance = ThisEqualsThat.scene.currentModelClass.getModelInstance();
+      // modelInstance.inputFieldAltered_processServerData(modelInstance, event.state);
     }
   }
 
@@ -106,7 +108,7 @@ thisEqualsThat.oop = function()
 
   this.redirectDisplayFromURL = function(url)
   { var regex = {};
-    regex.blueprint = /^\/blueprint\/([^/]*)$/;
+    regex.blueprint = /^\/blueprint\/([^/]*)/;
     regex.infogram  = /^\/infogram\/([^/]*)$/;
 
     var match = null;
@@ -250,11 +252,12 @@ thisEqualsThat.oop = function()
           });
 
           modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
+          window.history.pushState(null, "", "/blueprint/"+modelClass.name)
           ThisEqualsThat.scene.setCurrentModelClass(modelClass);
           setTimeout(function() {
               $('.constructBlueprint.modal').modal('hide');
               $('.modal svg').remove();
-          }, 500);
+          }, 200);
         }
       );
 
@@ -727,6 +730,7 @@ thisEqualsThat.oop = function()
           "data": fieldChangeData,
           "success": function (data, status, request)
           { var ThisModelInstance = This;
+            // window.history.pushState(data, "", "/blueprint/"+ThisModelInstance.modelClass.name+"/"+data.lastAlteredOutput[0]+"="+data.lastAlteredOutputValue);
             ThisModelInstance.inputFieldAltered_processServerData(ThisModelInstance, data, status, request, successFunction, doNotUpdateUI);
           },
           "complete": function()
@@ -770,6 +774,8 @@ thisEqualsThat.oop = function()
   { console.log("inputFieldAltered_processServerData:", data);
     
     ThisModelInstance.svg3dDisplayJSON   = data.svg3dDisplayJSON;
+
+    window.history.replaceState(data, "", "/blueprint/"+ThisModelInstance.modelClass.name);
 
     // ThisModelInstance.lastAlteredOutputField.data.currentValue = data.newValue;
     // ThisModelInstance.lastAlteredVisualisationField.data.currentValue = data.svg3dDisplayJSON.svgFieldValue;
