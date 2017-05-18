@@ -730,7 +730,7 @@ svg.rootSVG
 
   display: flex;
 }
-.svgSaveLink, .saveInfogram
+.svgSaveLink, .saveInfogram, .saveSVG
 { border-radius: 50%;
   width: 42px;
   height: 42px;
