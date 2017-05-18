@@ -347,9 +347,9 @@ thisEqualsThat.oop = function()
     }
     this.currentModelClass = modelClass;
 
+    //store state to be able to reload from infogram
+    //window.history.pushState(null, "", "/blueprint/"+modelClass.name);
     ga('send', 'pageview', "/blueprint/"+modelClass.name);
-
-
   }
 
 
@@ -770,7 +770,8 @@ thisEqualsThat.oop = function()
       { var inputField  = ThisModelInstance.inputFields[fieldName];
         var newValue    = data.fieldValues[fieldName];
 
-        if (newValue != inputField.data.currentValue)
+        // console.log("setting "+fieldName+" to "+newValue);
+        // if (newValue != inputField.data.currentValue)
         { inputField.setValue(newValue);
         }
       }
