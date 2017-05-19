@@ -95,6 +95,7 @@ thisEqualsThat.oop = function()
               display
             );
     O.create( [ "#doubleBuffer", "#modals" ], display, display );
+    O.create( [ "#wholePageDisableSpinner.fullScreenOverlay.smoothMove" ], display, display );
 
     this.mainNavigation                   (display.navbar);
     this.constructBlueprint               (display.modals);
@@ -970,8 +971,8 @@ thisEqualsThat.oop = function()
                               // [ ".toggleFeatures" ,
                               // ],
                               [ ".shareMenu",
-                                [ [".saveInfogram"],
-                                  [".saveSVG",
+                                [ [".saveInfogram.visualToolsInfogram.btn"],
+                                  [".saveSVG.visualToolsShare.btn",
                                   ],
                                 ],
                               ],
@@ -1468,15 +1469,21 @@ thisEqualsThat.oop = function()
   }
   this.ModelInstance.prototype.saveInfogram = function(This)
   { var This = this;
+
+    ThisEqualsThat.display.wholePageDisableSpinner.show(2);
+
     var ajaxOptions =
     { "method": "POST",
       "url":    "/saveInfogram",
       "data":   { "modelInstanceUUID": This.id},
       success: function(data, status, request)
-      { console.log("saveInfogram:", data[0].uuid);
+      { console.log("saveInfogram:", data);
         
+        window.open(data.infogramURL, "_blank");
+        ThisEqualsThat.display.wholePageDisableSpinner.hide(2);
       }
     }
+    
     $.ajax(ajaxOptions);
   }
   this.regex.onlySimpleCharacters = /[^A-Za-z0-9_-]/g
@@ -1511,6 +1518,7 @@ thisEqualsThat.oop = function()
         ( This.display.svgTextDescription.text() + "___" + This.lastAlteredOutputField.fullAddress + "__" + This.display.modelOutputValue.text()
         );
 
+    ThisEqualsThat.display.wholePageDisableSpinner.show(2);
     var ajaxOptions =
     { "method":       "POST", 
       "url":          "/saveSVG",
@@ -1521,7 +1529,9 @@ thisEqualsThat.oop = function()
       "data":         saveSVGFormData,
       success: function(data, status, request)
       { console.log("saveSVG:", data);
-        
+
+        ThisEqualsThat.display.wholePageDisableSpinner.hide(2);
+        window.open(data.svgURL, "_blank");
       }
     }
     console.log("saveSVG, ajaxOptions:", ajaxOptions);
