@@ -50,7 +50,9 @@ standardPrecision = function(number)
 }
 
 thisEqualsThat.oop = function()
-{ this.init = function()
+{ this.regex = {};
+
+  this.init = function()
   { ThisEqualsThat.componentCookieManager = new ThisEqualsThat.ComponentCookieManager(this);
     ThisEqualsThat.modelClasses           = new ThisEqualsThat.ModelClasses(this);
 
@@ -1477,35 +1479,46 @@ thisEqualsThat.oop = function()
     }
     $.ajax(ajaxOptions);
   }
+  this.regex.onlySimpleCharacters = /[^A-Za-z0-9_-]/g
+  this.regex.oSC = function(stringToMakeSimple)
+  { return stringToMakeSimple.replace(ThisEqualsThat.regex.onlySimpleCharacters, "_");
+  }
   this.ModelInstance.prototype.saveSVG= function(This)
   { var This = this;
     
-    var savableContainerSVG = $(This.display.rootSVG).clone();
-    savableContainerSVG
-        .attr("width",          This.display.rootSVG.css("width"))
-        .attr("height",         This.display.rootSVG.css("height"))
-    ;
+    var svgString =   This.display.rootSVG[0].outerHTML
+
+    // savableContainerSVG
+    //     .attr("width",          This.display.rootSVG.css("width"))
+    //     .attr("height",         This.display.rootSVG.css("height"))
+    // ;
     var removeTheseAttributes = ["xmlns:xlink", "xmlns:z", "z:xInfinite", "z:yInfinite", "z:zRatio"];
     for (attributeToRemove  of removeTheseAttributes)
-    { savableContainerSVG.removeAttr(attributeToRemove)
+    { svgString = svgString.replace(new RegExp(attributeToRemove+".*?\".*?\""), "");
     }
 
-
-    var svgString             = savableContainerSVG.get(0).outerHTML;
     regex_zThreeD             = /z:threeD=\"true\"/g;
     var removeTheseStrings    = [regex_zThreeD];
     for (stringToRemove of removeTheseStrings)
     { svgString = svgString.replace(stringToRemove, "");
     }
 
+    var saveSVGFormData = new FormData();
+    saveSVGFormData.append("svg", svgString);
+
+    var svgFilename = 
+        ThisEqualsThat.regex.oSC
+        ( This.display.svgTextDescription.text() + "___" + This.lastAlteredOutputField.fullAddress + "__" + This.display.modelOutputValue.text()
+        );
+
     var ajaxOptions =
-    { "method": "POST", 
-      "url":    "/saveSVG",
-      "data":   { "svgToSave":          svgString,
-                  "svgTextDescription": This.display.svgTextDescription.text(),
-                  "modelOutputField":   This.lastAlteredOutputField.fullAddress,
-                  "modelOutputValue":   This.display.modelOutputValue.text(),
-                },
+    { "method":       "POST", 
+      "url":          "/saveSVG",
+      "processData":  false,
+      "contextType":  false,
+      "headers":      { "X-VisualTools-SvgFilename": svgFilename,
+                      },
+      "data":         saveSVGFormData,
       success: function(data, status, request)
       { console.log("saveSVG:", data);
         
