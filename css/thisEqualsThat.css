@@ -362,9 +362,32 @@ a.createConstruct
 .visualToolsEye
 { background-image:     url(/static/graphics/visualTools/visual.tools.eye.png);
 
-  min-height: 16px;
-  min-width: 16px;
-  max-width: 200px;
+  min-height:           16px;
+  min-width:            16px;
+  max-width:            200px;
+}
+
+.visualToolsInfogram
+{ background-image:     url(/static/graphics/visualTools/infogram.svg);
+  
+  background-size:      80%;
+  background-repeat:    no-repeat;
+  background-position:  center;
+
+  min-height:           16px;
+  min-width:            16px;
+  max-width:            200px;
+}
+.visualToolsShare
+{ background-image:     url(/static/graphics/visualTools/share.svg);
+  
+  background-size:      80%;
+  background-repeat:    no-repeat;
+  background-position:  center;
+
+  min-height:           16px;
+  min-width:            16px;
+  max-width:            200px;
 }
 
 .profilePic
@@ -551,6 +574,14 @@ a.collapseControl .material-icons
 }
 #welcomeOver.opacityZero
 { opacity: 0.2;
+}
+
+#wholePageDisableSpinner
+{ background: black;
+  opacity:  0.6;
+  z-index:  99999999;
+
+  display:  none;
 }
 
 .mainNav .navbar
