@@ -77,7 +77,7 @@ thisEqualsThat.oop = function()
     { console.log(event);
 
       ThisEqualsThat.loadingInfogramByID = false;
-      
+
       var modelClassName  = event.state.modelClass;
 
       var modelClass      = ThisEqualsThat.modelClasses[modelClassName];
@@ -173,7 +173,7 @@ thisEqualsThat.oop = function()
                         ".createConstruct.row",
                         O.listGroupItem ( navbar,
                                           null,
-                                          "button", ".blueprintItem constructBtn", [12, 12, 6, 6], $('<i class="material-icons">view_comfy</i>'), "", "@Construct", ""
+                                          "button", ".blueprintItem constructBtn", [12, 12, 6, 6], $('<i class="material-icons">view_comfy</i>'), "", "@Blueprints", ""
                                         )[0]
                     )
                   ],
@@ -221,7 +221,7 @@ thisEqualsThat.oop = function()
               modals["modal-content"]
             );
 
-    var modelClassOrder = [ "HowMany", "VolMassDen", "LightBulb", "CO2", "Wood", "Coal", "PeopleRatioPlay", "Earth", "Money", "Particle", "Seesaw"];
+    var modelClassOrder = [ "VolMassDen", "HowMany",  "PeopleRatioPlay", "Money", "Particle", "LightBulb", "CO2", "Wood", "Coal", "Seesaw", ];
     var modelClassData  = { "HowMany"     : { "tutorialVideo": "je_M6gB8nZw" } ,
                             "VolMassDen"  : { "tutorialVideo": "z0LKAOowf9c" } ,
                             "LightBulb"   : { "tutorialVideo": "NnUqU9_hrrg" } ,
