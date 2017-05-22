@@ -76,9 +76,17 @@ thisEqualsThat.oop = function()
     window.onpopstate = function(event)
     { console.log(event);
 
-      ThisEqualsThat.redirectDisplayFromURL(window.location.pathname);
-      // var modelInstance = ThisEqualsThat.scene.currentModelClass.getModelInstance();
-      // modelInstance.inputFieldAltered_processServerData(modelInstance, event.state);
+      ThisEqualsThat.loadingInfogramByID = false;
+      
+      var modelClassName  = event.state.modelClass;
+
+      var modelClass      = ThisEqualsThat.modelClasses[modelClassName];
+      var modelInstance   = modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
+      ThisEqualsThat.scene.setCurrentModelClass(modelClass); 
+      
+      ThisEqualsThat.redirectDisplayFromURL(window.location.pathname, event.state)
+
+      modelInstance.inputFieldAltered_processServerData(modelInstance, event.state);
     }
   }
 
@@ -110,7 +118,7 @@ thisEqualsThat.oop = function()
     this.redirectDisplayFromURL(window.location.pathname);
   };
 
-  this.redirectDisplayFromURL = function(url)
+  this.redirectDisplayFromURL = function(url, state)
   { var regex = {};
     regex.blueprint = /^\/blueprint\/([^/]*)/;
     regex.infogram  = /^\/infogram\/([^/]*)$/;
@@ -119,10 +127,10 @@ thisEqualsThat.oop = function()
     for (key in regex)
     { match = url.match(regex[key]);
       if ( match )
-        this.redirectDisplayFromURL[key](match)
+        this.redirectDisplayFromURL[key](match, state)
     }
   }
-  this.redirectDisplayFromURL.blueprint = function(match)
+  this.redirectDisplayFromURL.blueprint = function(match, state)
   { var modelClassName = match[1];
     var modelClassAlternateMaps = 
         { "HowMuch":      "VolMassDen",
@@ -139,10 +147,12 @@ thisEqualsThat.oop = function()
     modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
     ThisEqualsThat.scene.setCurrentModelClass(modelClass);    
   }
-  this.redirectDisplayFromURL.infogram = function(match)
+  this.redirectDisplayFromURL.infogram = function(match, state)
   { var infogramID = match[1];
     ThisEqualsThat.loadingInfogramByID = "loading";
-    ThisEqualsThat.getInfogramByID(infogramID, ThisEqualsThat.scene.constructContainer);
+    if (! state)
+    { ThisEqualsThat.getInfogramByID(infogramID, ThisEqualsThat.scene.constructContainer);
+    }
   }
 
   this.mainNavigation = function(navbar)
@@ -454,9 +464,9 @@ thisEqualsThat.oop = function()
       $.ajax(ajaxOptions);
     }
     else
-    { if (displayContainer == null) return this.modelInstance;
-
-      this.modelInstance.displayIntoTarget(displayContainer);
+    { if (displayContainer != null) 
+        this.modelInstance.displayIntoTarget(displayContainer);
+      return this.modelInstance;
     }
   }
 
@@ -785,6 +795,7 @@ thisEqualsThat.oop = function()
     }
     else if (ThisEqualsThat.loadingInfogramByID == "loading")
     { ThisEqualsThat.loadingInfogramByID = "loaded"
+      window.history.replaceState(data, "", window.location.pathname);
     }
     else if (ThisEqualsThat.loadingInfogramByID == "loaded")
     { window.history.pushState(data, "", "/blueprint/"+ThisModelInstance.modelClass.name);
