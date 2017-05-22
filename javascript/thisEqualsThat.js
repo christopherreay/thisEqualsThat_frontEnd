@@ -141,6 +141,7 @@ thisEqualsThat.oop = function()
   }
   this.redirectDisplayFromURL.infogram = function(match)
   { var infogramID = match[1];
+    ThisEqualsThat.loadingInfogramByID = "loading";
     ThisEqualsThat.getInfogramByID(infogramID, ThisEqualsThat.scene.constructContainer);
   }
 
@@ -779,7 +780,16 @@ thisEqualsThat.oop = function()
     
     ThisModelInstance.svg3dDisplayJSON   = data.svg3dDisplayJSON;
 
-    window.history.replaceState(data, "", "/blueprint/"+ThisModelInstance.modelClass.name);
+    if (! ThisEqualsThat.loadingInfogramByID)
+    { window.history.replaceState(data, "", "/blueprint/"+ThisModelInstance.modelClass.name);
+    }
+    else if (ThisEqualsThat.loadingInfogramByID == "loading")
+    { ThisEqualsThat.loadingInfogramByID = "loaded"
+    }
+    else if (ThisEqualsThat.loadingInfogramByID == "loaded")
+    { window.history.pushState(data, "", "/blueprint/"+ThisModelInstance.modelClass.name);
+      ThisEqualsThat.loadingInfogramByID = false;
+    }
 
     // ThisModelInstance.lastAlteredOutputField.data.currentValue = data.newValue;
     // ThisModelInstance.lastAlteredVisualisationField.data.currentValue = data.svg3dDisplayJSON.svgFieldValue;
@@ -1137,8 +1147,8 @@ thisEqualsThat.oop = function()
     )
 
     this.display.modelInstanceDiv.show();
-    window.history.replaceState({}, "", "/blueprint/"+this.modelClass.name);
-    window.document.title = this.modelClass.name;
+    // window.history.replaceState({}, "", "/blueprint/"+this.modelClass.name);
+    window.document.title = this.modelClass.name+" - "+this.display.svgTextDescription.text();
 
     return this;
   }
