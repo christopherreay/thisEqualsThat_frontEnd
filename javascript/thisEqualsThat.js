@@ -95,7 +95,8 @@ thisEqualsThat.oop = function()
               display
             );
     O.create( [ "#doubleBuffer", "#modals" ], display, display );
-    O.create( [ "#wholePageDisableSpinner.fullScreenOverlay.smoothMove" ], display, display );
+    O.create( [ "#wholePageDisableSpinner.fullScreenOverlay.smoothMove.displayNone" ], display, display );
+    O.create( [ "#uploadPercentageDiv", "#uploadPercentText" ] , display, display);
 
     this.mainNavigation                   (display.navbar);
     this.constructBlueprint               (display.modals);
@@ -1479,7 +1480,7 @@ thisEqualsThat.oop = function()
   this.ModelInstance.prototype.saveInfogram = function(This)
   { var This = this;
 
-    ThisEqualsThat.display.wholePageDisableSpinner.show(2);
+    ThisEqualsThat.display.wholePageDisableSpinner.toggleClass("displayNone", false);;
 
     var ajaxOptions =
     { "method": "POST",
@@ -1489,7 +1490,7 @@ thisEqualsThat.oop = function()
       { console.log("saveInfogram:", data);
         
         window.open(data.infogramURL, "_blank");
-        ThisEqualsThat.display.wholePageDisableSpinner.hide(2);
+        ThisEqualsThat.display.wholePageDisableSpinner.toggleClass("displayNone", true);;
       }
     }
     
@@ -1528,7 +1529,7 @@ thisEqualsThat.oop = function()
   }
   this.ModelInstance.prototype.saveSVG_local= function(This)
   { 
-    ThisEqualsThat.display.wholePageDisableSpinner.show(2);
+    ThisEqualsThat.display.wholePageDisableSpinner.toggleClass("displayNone", false);
     
     svgData = This.getSVGAsString(This);
 
@@ -1540,7 +1541,7 @@ thisEqualsThat.oop = function()
     // Append anchor to body.
     document.body.appendChild(svgData.downloadLink)
     svgData.downloadLink.click();
-    ThisEqualsThat.display.wholePageDisableSpinner.hide(2);
+    ThisEqualsThat.display.wholePageDisableSpinner.toggleClass("displayNone", true);
 
     // Remove anchor from body
     document.body.removeChild(svgData.downloadLink);
@@ -1550,8 +1551,12 @@ thisEqualsThat.oop = function()
     console.log("saveSVG, ajaxOptions:", ajaxOptions);
   }
   this.ModelInstance.prototype.saveSVG= function(This)
-  { 
-    ThisEqualsThat.display.wholePageDisableSpinner.show(2);
+  { ThisEqualsThat.display.pageWrapper.toggleClass("opacityPoint4", true);
+    ThisEqualsThat.display.wholePageDisableSpinner.toggleClass("displayNone", false);
+    ThisEqualsThat.display.uploadPercentageDiv.appendTo(ThisEqualsThat.display.wholePageDisableSpinner);
+    ThisEqualsThat.display.uploadPercentText.text(standardPrecision(0));
+
+    debugger;
     
     svgData                       = This.getSVGAsString(This);
 
@@ -1566,12 +1571,36 @@ thisEqualsThat.oop = function()
       "headers":      { "X-VisualTools-SvgFilename": svgData.svgFilename,
                       },
       "data":         svgData.saveSVGFormData,
-      success: function(data, status, request)
+      "success": function(data, status, request)
       { console.log("saveSVG:", data);
 
-        ThisEqualsThat.display.wholePageDisableSpinner.hide(2);
+        ThisEqualsThat.display.pageWrapper.toggleClass("opacityPoint4", false);
+        ThisEqualsThat.display.wholePageDisableSpinner.toggleClass("displayNone", true);
+        ThisEqualsThat.display.uploadPercentageDiv.remove();
+        ThisEqualsThat.display.uploadPercentText.text("");
+
         window.open(data.svgURL, "_blank");
+      },
+      "xhr": function ()
+      { var xhr = new window.XMLHttpRequest();
+
+        xhr.upload.addEventListener
+            ( "progress",
+              function(evt)
+              { debugger;
+
+                if (evt.lengthComputable)
+                { var percentageComplete = evt.loaded / evt.total * 100;
+
+                  ThisEqualsThat.display.uploadPercentText.text(standardPrecision(percentageComplete));
+                }
+              },
+              false
+            );
+
+        return xhr;
       }
+
     }
     console.log("saveSVG, ajaxOptions:", ajaxOptions);
     $.ajax(ajaxOptions);

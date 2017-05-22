@@ -131,6 +131,9 @@ a.createConstruct
 .opacityZero
 { opacity: 0.0;
 }
+.opacityPoint4
+{ opacity: 0.4;
+}
 
 .fullHeight, .height100
 { height:   100%;
@@ -583,11 +586,33 @@ a.collapseControl .material-icons
 }
 
 #wholePageDisableSpinner
-{ background: black;
-  opacity:  0.6;
+{ background: rgba(0,0,0,0.6);
   z-index:  99999999;
 
-  display:  none;
+  display:  flex;
+  justify-content: center space-around;
+  align-items: center;
+  align-content: center;
+}
+#uploadPercentageDiv
+{ display: flex;
+
+  justify-content: center space-around;
+  align-items: center;
+  align-content: center;
+
+  width: 50%;
+  min-width: 180px;
+
+  height: 50%;
+  min-height: 64px;
+
+  border-radius: 50%;
+
+  background-color: rgba(14, 75, 80, 1.0);
+
+  text-align: center;
+  font-size: 48px;
 }
 
 .mainNav .navbar
