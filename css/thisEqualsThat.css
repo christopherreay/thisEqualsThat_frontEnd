@@ -345,6 +345,13 @@ a.createConstruct
 
   margin:               auto auto !important;
 }
+.centerBackgroundImage_circle
+{ border-radius: 50% 50%;
+
+  background-size:      50%;
+  background-repeat:    no-repeat;
+  background-position:  center; 
+}
 .visualToolsLogo
 { background-image:     url(/static/graphics/visualTools/visual.tools.logo.png);
 
@@ -370,9 +377,12 @@ a.createConstruct
 .visualToolsInfogram
 { background-image:     url(/static/graphics/visualTools/infogram.svg);
   
-  background-size:      80%;
-  background-repeat:    no-repeat;
-  background-position:  center;
+  min-height:           16px;
+  min-width:            16px;
+  max-width:            200px;
+}
+.visualToolsSave
+{ background-image:     url(/static/graphics/visualTools/save.svg);
 
   min-height:           16px;
   min-width:            16px;
@@ -380,10 +390,6 @@ a.createConstruct
 }
 .visualToolsShare
 { background-image:     url(/static/graphics/visualTools/share.svg);
-  
-  background-size:      80%;
-  background-repeat:    no-repeat;
-  background-position:  center;
 
   min-height:           16px;
   min-width:            16px;
@@ -761,20 +767,11 @@ svg.rootSVG
 
   display: flex;
 }
-.svgSaveLink, .saveInfogram, .saveSVG
+.shareMenu > div 
 { border-radius: 50%;
   width: 42px;
   height: 42px;
   box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
-}
-.svgSaveLink > a
-{ width: 100%;
-  height: 100%;
-  padding: 8px;
-}
-.svgSaveLink > a > i
-{ color: #FAFAFA;
-  font-size: 26px;
 }
 
 

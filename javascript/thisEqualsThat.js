@@ -971,9 +971,9 @@ thisEqualsThat.oop = function()
                               // [ ".toggleFeatures" ,
                               // ],
                               [ ".shareMenu",
-                                [ [".saveInfogram.visualToolsInfogram.btn"],
-                                  [".saveSVG.visualToolsShare.btn",
-                                  ],
+                                [ [ ".saveInfogram.visualToolsInfogram.centerBackgroundImage_circle.btn"],
+                                  [ ".saveSVG_local.visualToolsSave.centerBackgroundImage_circle.btn", ],
+                                  [ ".saveSVG.visualToolsShare.centerBackgroundImage_circle.btn", ],
                                 ],
                               ],
                               [ "a.editableTextPlaceholder", "@Click to Enter Text",
@@ -1071,6 +1071,15 @@ thisEqualsThat.oop = function()
         function()
         { //console.("saveInfogram");
           ThisModelInstance.saveInfogram(ThisModelInstance);
+        }
+      );
+
+      display.saveSVG_local
+      .on
+      ( "click",
+        function()
+        { //console.("saveInfogram");
+          ThisModelInstance.saveSVG_local(ThisModelInstance);
         }
       );
 
@@ -1490,7 +1499,7 @@ thisEqualsThat.oop = function()
   this.regex.oSC = function(stringToMakeSimple)
   { return stringToMakeSimple.replace(ThisEqualsThat.regex.onlySimpleCharacters, "_");
   }
-  this.ModelInstance.prototype.saveSVG= function(This)
+  this.ModelInstance.prototype.getSVGAsString = function(This)
   { var This = this;
     
     var svgString =   This.display.rootSVG[0].outerHTML
@@ -1510,23 +1519,53 @@ thisEqualsThat.oop = function()
     { svgString = svgString.replace(stringToRemove, "");
     }
 
-    var saveSVGFormData = new FormData();
-    saveSVGFormData.append("svg", svgString);
-
     var svgFilename = 
         ThisEqualsThat.regex.oSC
         ( This.display.svgTextDescription.text() + "___" + This.lastAlteredOutputField.fullAddress + "__" + This.display.modelOutputValue.text()
         );
 
+    return { "svgString": svgString, "svgFilename": svgFilename };
+  }
+  this.ModelInstance.prototype.saveSVG_local= function(This)
+  { 
     ThisEqualsThat.display.wholePageDisableSpinner.show(2);
+    
+    svgData = This.getSVGAsString(This);
+
+    svgData.downloadLink          = window.document.createElement('a');
+    svgData.svgBlob               = new Blob( [ svgData.svgString ], {'type': 'image/svg+xml'} );
+    svgData.downloadLink.href     = window.URL.createObjectURL( svgData.svgBlob );
+    svgData.downloadLink.download = svgData.svgFilename+".svg";
+
+    // Append anchor to body.
+    document.body.appendChild(svgData.downloadLink)
+    svgData.downloadLink.click();
+    ThisEqualsThat.display.wholePageDisableSpinner.hide(2);
+
+    // Remove anchor from body
+    document.body.removeChild(svgData.downloadLink);
+    svgData.svgBlob.close();
+    svgData.svgString = "";
+
+    console.log("saveSVG, ajaxOptions:", ajaxOptions);
+  }
+  this.ModelInstance.prototype.saveSVG= function(This)
+  { 
+    ThisEqualsThat.display.wholePageDisableSpinner.show(2);
+    
+    svgData                       = This.getSVGAsString(This);
+
+    svgData.saveSVGFormData       = new FormData();
+    svgData.saveSVGFormData.append("svg", svgData.svgString);
+
     var ajaxOptions =
     { "method":       "POST", 
       "url":          "/saveSVG",
       "processData":  false,
       "contextType":  false,
-      "headers":      { "X-VisualTools-SvgFilename": svgFilename,
+      "headers":      { "X-VisualTools-SvgFilename": svgData.svgFilename,
                       },
-      "data":         saveSVGFormData,
+      "data":         svgData.saveSVGFormData,
       success: function(data, status, request)
       { console.log("saveSVG:", data);
 
