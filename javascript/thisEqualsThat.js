@@ -104,7 +104,7 @@ thisEqualsThat.oop = function()
             );
     O.create( [ "#doubleBuffer", "#modals" ], display, display );
     O.create( [ "#wholePageDisableSpinner.fullScreenOverlay.smoothMove.displayNone" ], display, display );
-    O.create( [ "#uploadPercentageDiv", "#uploadPercentText" ] , display, display);
+    O.create( [ "#uploadPercentageDiv.displayNone", "#uploadPercentText" ] , display, display);
 
     this.mainNavigation                   (display.navbar);
     this.constructBlueprint               (display.modals);

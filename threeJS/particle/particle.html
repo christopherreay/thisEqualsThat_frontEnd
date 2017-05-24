@@ -158,7 +158,8 @@
 						update(1,contr.PPM1,contr.size1,contr.color1);
 						}
 				});
-				
+			update(1,contr.PPM1,contr.size1,contr.color1)
+
 		  var p2 = gui.addFolder('Oxygen');
 				p2.add(contr,"PPM2").onChange(function(value) {
 				update(2,value,contr.size2,contr.color2);
@@ -177,7 +178,9 @@
 						update(2,contr.PPM2,contr.size2,contr.color2);
 						}
 				});
-		  var p3 = gui.addFolder('CO2');
+		  update(2,contr.PPM2,contr.size2,contr.color2)
+
+      var p3 = gui.addFolder('CO2');
 				p3.add(contr,"PPM3").onChange(function(value) {
 				update(3,value,contr.size3,contr.color3);
 				});
@@ -195,6 +198,8 @@
 						update(3,contr.PPM3,contr.size3,contr.color3);
 						}
 				});
+      update(3,contr.PPM3,contr.size3,contr.color3)
+      
 		gui.add(obj,'Take_Picture');
 		};
 
@@ -202,6 +207,7 @@
 			addLogo();
 			animate();
 			boundingBox();
+
 
 
 function boundingBox(){
@@ -329,7 +335,7 @@ function addParticles(ini,count,size,color){
                 logosprite = new THREE.Sprite( material );
 				logosprite.position.set(-310,-160,-600);
 				logosprite.scale.set(230,40,1);
-				scene.add( logosprite );
+				// scene.add( logosprite );
 				
 				var PI2 = Math.PI * 2;
 				program = function ( context ) {
