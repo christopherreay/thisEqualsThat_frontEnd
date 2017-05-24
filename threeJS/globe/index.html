@@ -10,7 +10,7 @@
       body {
         margin: 0;
         padding: 0;
-        background: #000000 url(loading.gif) center center no-repeat;
+        background: #000000 url(/globe/loading.gif) center center no-repeat;
         color: #ffffff;
         font-family: sans-serif;
         font-size: 13px;
@@ -33,7 +33,7 @@
       #currentInfo {
         width: 270px;
         position: absolute;
-        right: 20px;
+        left: 20px;
         top: 63px;
 
         background-color: rgba(0,0,0,0.2);
@@ -59,7 +59,7 @@
         position: absolute;
         top: 20px;
         width: 270px;
-        right: 20px;
+        left: 20px;
         background-color: rgba(0,0,0,0.2);
         border-radius: 3px;
         font: 20px Georgia;
@@ -95,33 +95,9 @@
         position: absolute;
         bottom: 15px;
         left: 20px;
-        background: url(ce.png);
+        background: url(/globe/ce.png);
       }
-    #logo{
-    position: absolute;
-    bottom: 1%;
-    height:10%;
-    width:100%;
-    z-index: 100;
-    display:block;
-  }
-  #logo1 {
-    position: relative;
-    bottom: 4%;
-    left:1%;
-    height:70%;
-    width:20%
-  }
-  #cright{
-    position: absolute;
-    bottom: 1%;
-    left:3%;
-    text-align: right;
-    color:white;
-    font-weight: regular;
-    font-family: sans-serif;
-    font-size: 13px;
-  }
+
 
     </style>
   </head>
@@ -142,10 +118,10 @@
     World Population
   </div>
 
-  <script type="text/javascript" src="third-party/Detector.js"></script>
-  <script type="text/javascript" src="third-party/three.min.js"></script>
-  <script type="text/javascript" src="third-party/Tween.js"></script>
-  <script type="text/javascript" src="globe.js"></script>
+  <script type="text/javascript" src="/globe/third-party/Detector.js"></script>
+  <script type="text/javascript" src="/globe/third-party/three.min.js"></script>
+  <script type="text/javascript" src="/globe/third-party/Tween.js"></script>
+  <script type="text/javascript" src="/globe/globe.js"></script>
   <script type="text/javascript">
 
     if(!Detector.webgl){
@@ -184,7 +160,7 @@
       
       
       xhr = new XMLHttpRequest();
-      xhr.open('GET', 'population909500.json', true);
+      xhr.open('GET', '/globe/population909500.json', true);
       xhr.onreadystatechange = function(e) {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
@@ -205,9 +181,6 @@
     }
 
   </script>
-
-  <div id="logo"><img id="logo1" src="img/logo.png" /></div>
-  <div id="cright">&copy;This Equals (ltd) 2016</div>
 
   </body>
 

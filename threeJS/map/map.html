@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+<meta http-equiv="pragma" content="no-cache" />
+<title>Custom tooltip</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+		<script src="lib/three.min.js"></script>
+		<script src="lib/Projector.js"></script>
+		<script src="lib/CanvasRenderer.js"></script>
+<link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+<style>
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:0; bottom:0; width:100%; z-Index:-100; }
+</style>
+</head>
+<body>
+<div id='map'></div>
+
+<script>
+L.mapbox.accessToken = 'pk.eyJ1IjoieW9nZXNodXByZXRpIiwiYSI6ImNpb3kzbmdlbjAxdnh1Y204YmhhYWNjd3YifQ.QJ1jXBHRbAz0PAnrG6cCLg';
+
+var container, stats, program,gui,anm=true, anmc=true,sprite;
+			var contr,n2=50,o2=10,co2=1;
+			//var cameraControl;
+			//var clock= new THREE.Clock();
+			var camera, scene, renderer, group, particle, camz=300,direction=0,touchstart=false;
+			var currentControlCounter = 3, cubesize=100,boundingCube;
+			var mouseX = 0, mouseY = 0;
+			var pg0=[], pg1=[],pg2=[],pg3=[],pg4=[],pg5=[],pg6=[],pg7=[],pg8=[],pg9=[],pg10=[];
+			var windowHalfX = window.innerWidth / 2;
+			var windowHalfY = window.innerHeight / 2;
+			
+		var Datcontrol = function() {
+		  this.User = 'Control';
+		  this.size=1;
+		  
+		};
+		
+		window.onload = function() {
+			  /*contr = new Datcontrol();
+			  gui = new dat.GUI();
+			  gui.add(contr, 'User');
+			  gui.add(contr,"size",0.5,2).onChange(function(value) {
+				scale=value;
+			});*/
+		}
+		
+		
+var map = L.mapbox.map('map', 'mapbox.streets')
+    .setView([51.45997, -2.59676], 14);
+map.on('popupclose', function(e) {
+  var marker = e.popup._source.feature.properties;
+  console.log("popup close:"+marker);
+});
+var featureLayer = L.mapbox.featureLayer({
+        type: 'FeatureCollection',
+        features: [{
+            type: 'Feature',
+            properties: {
+                'canvasId': 'can1',
+                'marker-color': '#548cba',
+                'marker-size': 'large',
+                'marker-symbol': 'ferry'
+            },
+            geometry: {
+                type: 'Point',
+                coordinates: [-2.59715, 51.45458]
+            }
+		},
+		{
+            type: 'Feature',
+            properties: {
+				'canvasId': 'can2',
+                'marker-color': '#548cba',
+                'marker-size': 'large',
+                'marker-symbol': 'ferry'
+            },
+            geometry: {
+                type: 'Point',
+                coordinates: [-2.59015, 51.45058]
+            }
+        }]
+    })
+    .addTo(map);
+
+	
+// Note that calling `.eachLayer` here depends on setting GeoJSON _directly_
+// above. If you're loading GeoJSON asynchronously, like from CSV or from a file,
+// you will need to do this within a `featureLayer.on('ready'` event.
+featureLayer.eachLayer(function(layer) {
+console.log("layer");
+console.log(layer.feature.properties.canvasId);
+    // here you call `bindPopup` with a string of HTML you create - the feature
+    // properties declared above are available under `layer.feature.properties`
+    var content = '<h2>Particles PPM!<\/h2>' +
+        '<p>----------------------------------------------<br \/>' +
+		'<div id=\"'+layer.feature.properties.canvasId+'\" width="200" height="200"><\/div>'+'<\/p>';
+		
+    layer.bindPopup(content);
+	layer.on('click', function(e) {
+	//document.getElementsByClassName("leaflet-popup-content").style.width="200 px";
+	init();
+	console.log(renderer.domElement);
+	container = document.getElementById(layer.feature.properties.canvasId);
+	container.appendChild( renderer.domElement );
+	//var d = document.getElementById('myCanvas');
+	//d.style.position = "relaive";
+	/*d.style.left = (e.originalEvent.screenX-80)+'px';
+	d.style.top = (e.originalEvent.screenY-250)+'px';*/
+	console.log(e);
+	//console.log(e.originalEvent.screenX,e.originalEvent.screenY)
+	//alert(e.latlng);
+	animate();
+	console.log("click on popup");
+	});		
+});
+
+function update(i,count,size,color){
+	addParticles(i,Math.round(count),size,color);
+}
+
+function addParticles(ini,count,size,color){
+				console.log("in addParticles");
+				var store;
+				//count = Math.round(count/400);
+				store = window['pg'+ini];
+				console.log("store.length "+store.length);
+				if(store.length>0){
+					for(var i=0;i<store.length;i++){
+						group.remove(store[i]);
+					}
+				}
+				switch(ini){
+				case 1:
+					pg1=[];store=pg1;break;
+				case 2:	
+					pg2=[];store=pg2;break;
+				case 3:
+					pg3=[];store=pg3; break;
+				case 4:
+					pg4=[];store=pg4; break;
+				case 5:
+					pg5=[];store=pg5; break;
+				case 6:
+					pg6=[];store=pg6; break;
+				case 7:
+					pg7=[];store=pg7; break;
+				case 8:
+					pg8=[];store=pg8; break;
+				case 9:
+					pg9=[];store=pg9; break;
+				case 10:
+					pg10=[];store=pg10; break;
+				default:
+				}		
+				
+			var material = new THREE.SpriteCanvasMaterial( {
+						color: color,
+						program: program
+					} );
+					
+				var blueposition = -cubesize/2;
+				if (ini==0){
+					for ( var ii = 0; ii < cubesize; ii++ ) {
+						particle = new THREE.Sprite( material );
+						particle.position.x = blueposition;
+						particle.position.y = 0;
+						particle.position.z = 0;
+						//particle.scale.x = particle.scale.y = Math.random() * 1 + r;
+						particle.scale.x = particle.scale.y =  size;
+						group.add( particle );
+						
+						//store.push(particle);
+						particle = new THREE.Sprite( material );
+						particle.position.x = 0;
+						particle.position.y = blueposition;
+						particle.position.z = 0;
+						//particle.scale.x = particle.scale.y = Math.random() * 1 + r;
+						particle.scale.x = particle.scale.y =  size;
+						group.add( particle );
+						//store.push(particle);
+						particle = new THREE.Sprite( material );
+						particle.position.x = 0;
+						particle.position.y = 0;
+						particle.position.z = blueposition;
+						//particle.scale.x = particle.scale.y = Math.random() * 1 + r;
+						particle.scale.x = particle.scale.y =  size;
+						group.add( particle );
+						//store.push(particle);
+						//console.log(particle.position.x);
+						blueposition=blueposition+1;
+						}
+					return;
+					}
+
+				for ( var ii = 0; ii < count; ii++ ) {
+					particle = new THREE.Sprite( material );
+					particle.position.x = Math.random() * cubesize - cubesize/2;
+					particle.position.y = Math.random() * cubesize - cubesize/2;
+					particle.position.z = Math.random() * cubesize - cubesize/2;
+					//particle.scale.x = particle.scale.y = Math.random() * 1 + r;
+					particle.scale.x = particle.scale.y =  size;
+					var velocity ={x:Math.random(),y:Math.random(),z:Math.random()};
+					particle.velocity = velocity;
+					group.add( particle );
+					store.push(particle);
+				}
+				console.log("out addParticles");
+}
+
+			function init(container) {
+				/*container = document.createElement( 'div' );
+				document.body.appendChild( container );*/
+
+				camera = new THREE.PerspectiveCamera( 25, window.innerWidth / window.innerHeight, 1, 5000 );
+				//camera.position.z = 0;
+				//camera.position.x = 400;
+				//camera.position.y = 400;
+
+				scene = new THREE.Scene();
+
+				/*var map = new THREE.TextureLoader().load( "img/fog-240075_1280.jpg" );
+                var material = new THREE.SpriteMaterial( { map: map, fog: false } );
+                sprite = new THREE.Sprite( material );
+				sprite.position.set(0,0,-1000);
+				sprite.scale.set(1500,1500,1500);
+				scene.add( sprite );*/
+				var PI2 = Math.PI * 2;
+				program = function ( context ) {
+
+					context.beginPath();
+					context.arc( 0, 0, 0.5, 0, PI2, true );
+					context.fill();
+
+				};
+
+				group = new THREE.Group();
+				
+				//addParticles(0,100,1,'#0000ff');
+				addParticles(1,n2,4,'#0000ff');
+				addParticles(2,o2,4,'#00ff00');
+				addParticles(3,co2,4,'#ff0000');
+				
+				scene.add( group );
+				//addParticles(4,0.5,2.5,'#000000');
+				renderer = new THREE.CanvasRenderer({ alpha: true });
+				//renderer.setClearColor( 0xa9db8b );
+				//renderer = new THREE.WebGLRenderer({ alpha: true });
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( 200, 200 );
+				//renderer.setSize( 200,100);
+				//container.appendChild( renderer.domElement );
+				//window.addEventListener( 'mousedown', onDocumentTouchStart, false );
+			}
+			
+			function animate() {
+			    //var delta = clock.getDelta();
+				requestAnimationFrame( animate );
+				//cameraControl.update(delta);
+							
+				render();
+			}
+			function render() {
+			    
+				//camera.position.x += ( mouseX - camera.position.x ) * 0.05;
+				//camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
+				camera.position.z = camz;
+				camera.lookAt( scene.position );
+				if(touchstart){
+					if(direction==1)
+						camz+=10;
+					else
+						camz-=10;
+				}
+				
+				if(anm){
+					updateVelocity();
+					}
+				/*
+				if(anmc && boundingCube){
+					group.rotation.x += 0.005;
+					group.rotation.y += 0.005;
+					boundingCube.rotation.x += 0.005;
+					boundingCube.rotation.y += 0.005;
+				}*/
+				renderer.render( scene, camera );
+				
+			}
+function updateVelocity(){
+			//console.log("currentControlCounter "+currentControlCounter);
+			for(var ii=1;ii<=currentControlCounter;ii++){
+				var store = window['pg'+ii];
+				//console.log(store.length);
+				if(store.length>0){
+				
+					for (var j=0;j<store.length;j++){
+						store[j].position.set(store[j].position.x+store[j].velocity.x,store[j].position.y+store[j].velocity.y,store[j].position.z+store[j].velocity.z);
+						if (store[j].position.x>=cubesize/2) store[j].velocity.x=-store[j].velocity.x;
+						if (store[j].position.y>=cubesize/2) store[j].velocity.y=-store[j].velocity.y;
+						if (store[j].position.z>=cubesize/2) store[j].velocity.z=-store[j].velocity.z;
+						if (store[j].position.x<=-cubesize/2) store[j].velocity.x=-store[j].velocity.x;
+						if (store[j].position.y<=-cubesize/2) store[j].velocity.y=-store[j].velocity.y;
+						if (store[j].position.z<=-cubesize/2) store[j].velocity.z=-store[j].velocity.z;
+					}
+				}
+			}
+}			
+</script>
+</body>
+</html>

@@ -1,0 +1,2071 @@
+[33mcommit db79fa3badf8a7d7ece1e219764215890e1d3391[m
+Merge: aa2822b 0159267
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue May 23 19:13:01 2017 +0000
+
+    Merge branch 'master' of github_administrator:christopherreay/thisEqualsThat_frontEnd
+
+[33mcommit aa2822ba645a6965809a6d822d1ee9569ed1a33e[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu May 18 07:17:22 2017 +0000
+
+    removed unecessary console.log statements. console output is now pretty useful. Dropped "create save link every animation" madness
+
+[33mcommit a0fa6687f9c49c129a1d505ff82271b08707b591[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed May 17 19:19:49 2017 +0000
+
+    fixed bug. display.saveInfogram was in the place reserved for weird stuff
+
+[33mcommit 28ae5d5920279b287147696f9eb7e500009d109c[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed May 17 17:29:44 2017 +0000
+
+    fixed slider updates text on initial load
+
+[33mcommit f7218f0540933520745992cef0b844b44a922996[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed May 17 15:44:59 2017 +0000
+
+    refactored out inputFieldAltered's response to the server, use that for #89
+
+[33mcommit 04aa299396098c18b8019b73cd90dbd2385ae334[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed May 17 14:30:40 2017 +0000
+
+    added saveInfogram button, container for all the save buttons, loads the infogram data from the server properly, doesnt apply the current field values
+
+[33mcommit be4d9cb01e23b1b2c3b954b77f18205538e87b81[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed May 17 11:27:41 2017 +0000
+
+    added plugin flow for redirections by URL, and added redirect for infogram
+
+[33mcommit 5b52cb622a247c77bab7aa9d8c7aff935ce35796[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed May 17 10:56:57 2017 +0000
+
+    refactored URL based widget loading, in readyness for infogram direct linking
+
+[33mcommit 015926702acb506076bc52622c400d46cf79cb27[m
+Author: jayDayZee <christopherreay@gmail.com>
+Date:   Sat May 13 17:27:41 2017 +0100
+
+    Update README.md (#85)
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+    
+    * Update README.md
+
+[33mcommit 3571e2cb68ccc129277be2fc9f5568a34e527f72[m
+Merge: fbb572e 65efc63
+Author: jayDayZee <christopherreay@gmail.com>
+Date:   Sat May 13 17:26:55 2017 +0100
+
+    Merge pull request #80 from waffle-iron/master
+    
+    waffle.io Badge
+
+[33mcommit fbb572ef825d06a927a4516d480dec8029502ee6[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu May 11 19:10:08 2017 +0000
+
+    added google analytics tracking, matching widgets on both urls. Added hotjar tracking for both dev and visualtools. but neither are up on production yet
+
+[33mcommit 24cc4c488b83ebbd7a3e3e6e21ad80efcc3b0a9b[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu May 11 15:40:01 2017 +0000
+
+    sorted out stuff for more links whatever direct urls for modelclasses
+
+[33mcommit d57c3985846c5572976a6a21ec167aebf857dcc5[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu May 11 13:05:48 2017 +0000
+
+    using the url in the window to automatically load a blueprint based on the URL
+
+[33mcommit 440a54e37d1caf5934c9e990825e8ee2f8a66b35[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu May 11 12:22:05 2017 +0000
+
+    fixed missing forward slash for inputFieldAltered
+
+[33mcommit 0f1805009d8f25665746302f0de11c707c4c6e5a[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu May 11 12:10:50 2017 +0000
+
+    made urls to standard functions absolute so that other links may work properly
+
+[33mcommit c39704c20bbee26fee27b7a8f86b281aeb358bd0[m
+Author: jayDayZee <christopherreay@gmail.com>
+Date:   Thu Apr 20 15:04:57 2017 +0100
+
+    Create license.lesser.md
+
+[33mcommit 0c686918065021763f5c92ca89f947f2ac926677[m
+Author: jayDayZee <christopherreay@gmail.com>
+Date:   Thu Apr 20 14:59:40 2017 +0100
+
+    Create license.md
+
+[33mcommit 65efc63bda8c947a25fb6542cd36c4b31df77f92[m
+Author: Making GitHub Delicious <iron@waffle.io>
+Date:   Wed Apr 19 11:13:18 2017 -0600
+
+    add waffle.io badge
+
+[33mcommit d7e0aaec1d2750d02330d8acf6bf5b4928816297[m
+Merge: f894a91 c6cc0f5
+Author: Andrew <skateboardsmart@gmail.com>
+Date:   Wed Apr 19 18:17:05 2017 +0300
+
+    Merge pull request #79 from bertonbeil/userInterface_2
+    
+    omg just merge it
+
+[33mcommit c6cc0f5eca31d2af2fabb92635b987c49260fe9f[m
+Merge: c79d806 f894a91
+Author: Andrew <skateboardsmart@gmail.com>
+Date:   Wed Apr 19 18:14:00 2017 +0300
+
+    Merge branch 'master' into userInterface_2
+
+[33mcommit f894a9187be30da4aeae30965804bf5ef84c3a32[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Feb 26 06:36:18 2017 +0000
+
+    minor css improvements
+
+[33mcommit 3801ccf404da6a07e9753db6d234494f314ef8be[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Feb 25 15:20:17 2017 +0000
+
+    tidied up pretty much everything. Time to add new shit again
+
+[33mcommit 94903cea3a0d2fec1a1a0fc27897034d426c37d8[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Feb 25 13:37:09 2017 +0000
+
+    added some awesome stuff to the hudCollection and hudItem things so they kind of look better init
+
+[33mcommit cd72627e3f6476327d0d33de66d54e5d01c6b32a[m
+Merge: a8da414 a393eab
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Feb 25 12:22:10 2017 +0000
+
+    fixed merge conflict
+
+[33mcommit a393eabafc8bac9296637a3ecf6f1b1c39a35156[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Feb 25 12:13:07 2017 +0000
+
+    fixed all the bootstrap weird, and created a global modelInstanceFocus to manage which top / bottom omodel to act on
+
+[33mcommit 22e42b81631d7f611961cfe4678161ce3a280fd4[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Feb 25 07:25:07 2017 +0000
+
+    working reference svg selector
+
+[33mcommit f171addee2c10184dad95c5f5fc60640aefb346d[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Feb 25 07:00:31 2017 +0000
+
+    about to change ThisEqualsThat and thisEqualsThat so they are not wrong. The class should be the T and the global object should be the t
+
+[33mcommit 701a0feae8aa55e2902433d13ac8ed6a55fdc375[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Feb 25 06:05:21 2017 +0000
+
+    css changes for referenceSVGSelect popover
+
+[33mcommit f7ec18611bd175b4980cdc7293cbef95373bf67c[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Feb 22 18:53:52 2017 +0000
+
+    messing around with stuff. Using a global one, but much wasier to make one for each thing
+
+[33mcommit a8da414b158db0de52fe4e64e9286991a5ef895b[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Feb 22 16:52:19 2017 +0000
+
+    turning the referenceSVGSelect into a bootstrap popover. Got content. Working on dynamic delegation
+
+[33mcommit fbf0e564e2657c0e8542da43c0d552bb314e354a[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Feb 21 20:02:04 2017 +0000
+
+    fixed stupid branch nonsense. Putt new css in the right place
+
+[33mcommit 27491e58429c9b67d7056f17db8002520483d433[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Feb 21 15:37:59 2017 +0000
+
+    fixed spinner bug
+
+[33mcommit c79d806776523e55faefdc677c731e39244d2085[m
+Author: Andrew Dmytriv <skateboardsmart@gmail.com>
+Date:   Tue Feb 21 14:23:23 2017 +0200
+
+    fix spinner animation
+
+[33mcommit a42aa79cb16462ba6ed705a710a51c890b4ee011[m
+Merge: 7cbd790 9f2a1ff
+Author: Christopher <christopherreay@gmail.com>
+Date:   Tue Feb 21 10:16:38 2017 +0100
+
+    Merge pull request #72 from bertonbeil/bertonbeil_UI
+    
+    pull request for new UI
+
+[33mcommit 9f2a1ffcae39904366821cd8b37a1893c5138aa5[m
+Merge: af199b8 7cbd790
+Author: Christopher <christopherreay@gmail.com>
+Date:   Tue Feb 21 10:15:56 2017 +0100
+
+    Merge branch 'master' into bertonbeil_UI
+
+[33mcommit af199b8462059623cc5a0322c3da0b178fb96315[m
+Author: Andrew Dmytriv <skateboardsmart@gmail.com>
+Date:   Mon Feb 20 22:09:39 2017 +0200
+
+    change color in collapsing panels, this commit prepared to merge(I hope)
+
+[33mcommit 7cbd790bc7f7d354dc65fb2302a70d09f0946c42[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jan 31 21:55:07 2017 +0000
+
+    fixed bug with field labels. sorted design of PeopleRatioPlay.
+
+[33mcommit e0052188c2b92aa2a3b3c8f02e15fbd5841b6ef0[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jan 31 21:18:47 2017 +0000
+
+    added model info button #64
+
+[33mcommit 9b3067c06c4599a0da776eac254d69986308a772[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jan 31 18:51:15 2017 +0000
+
+    Fixed #63
+
+[33mcommit 429d215b919452cdc2e3a056139338dfc3e3304b[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jan 31 18:46:58 2017 +0000
+
+    Closed #65
+
+[33mcommit 381b5ae488f6efb9c5d414427388c69d87724ece[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jan 31 18:46:46 2017 +0000
+
+    closed #69
+
+[33mcommit 56a4052c57b3e12efe83974eb073df7ccd708881[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jan 31 16:34:35 2017 +0000
+
+    working mock up for comments
+
+[33mcommit 06d7debbc49ba9af22053e66ddc0345af15761f3[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jan 23 18:51:55 2017 +0000
+
+    simple mock up for the commentsing system
+
+[33mcommit 4c1da868c4b241278aaa576a21084931db51321a[m
+Author: Andrew Dmytriv <skateboardsmart@gmail.com>
+Date:   Wed Jan 18 19:11:47 2017 +0200
+
+    fix bubbling in blueprintItem
+
+[33mcommit 3cd2dcf5b958461d55a13ec5a777c7a88b1ad21a[m
+Author: Andrew Dmytriv <skateboardsmart@gmail.com>
+Date:   Mon Jan 16 20:21:28 2017 +0200
+
+    new icons, minor view updates and fix
+
+[33mcommit 77bec52a85ea6205cfbd2732e4b0e0142682c3ff[m
+Author: Andrew Dmytriv <skateboardsmart@gmail.com>
+Date:   Mon Jan 16 01:12:16 2017 +0200
+
+    change collapde panel arrows, blueprintItem new view, description text show on hover in tooltips
+
+[33mcommit 453079977ebe1322180fa3201cb92cf2bbddfbd9[m
+Author: Andrew Dmytriv <skateboardsmart@gmail.com>
+Date:   Sun Jan 15 23:52:53 2017 +0200
+
+    add google material-icons font, change account icon, minor css fix
+
+[33mcommit 5e911342ec8ea832838b0ae8ee2f9f6a528c57cb[m
+Author: Andrew Dmytriv <skateboardsmart@gmail.com>
+Date:   Sat Jan 14 00:37:22 2017 +0200
+
+    new modal fade animation, new concept of blueprintItem view, new colors
+
+[33mcommit 47565cc2fa2d5a5f7621aa8df3d837e65e5bfe85[m
+Author: Andrew Dmytriv <skateboardsmart@gmail.com>
+Date:   Fri Jan 13 04:56:27 2017 +0200
+
+    sliders updated, start position handle indication
+
+[33mcommit ca2718d7d00a072bf273313f3bb9bae374930677[m
+Author: Andrew Dmytriv <skateboardsmart@gmail.com>
+Date:   Fri Jan 13 03:01:41 2017 +0200
+
+    redesign and improve sliders, minor css changes
+
+[33mcommit f05d2879394c28d31824c338436a8d8322d9c2fc[m
+Author: Andrew Dmytriv <skateboardsmart@gmail.com>
+Date:   Thu Jan 12 22:36:33 2017 +0200
+
+    add ripple animation, 'description text' visible only when blueprintItem hovered, bit color changes
+
+[33mcommit e4f316005b8c55bf91ee8440f760aece5c004eb4[m
+Author: Andrew Dmytriv <Andrew Dmytriv>
+Date:   Wed Jan 11 13:23:25 2017 +0200
+
+    default view of output collapsed
+
+[33mcommit 058f5609f595d655a52dbabfc93c65d14b855977[m
+Author: Andrew Dmytriv <Andrew Dmytriv>
+Date:   Thu Dec 29 04:29:09 2016 +0200
+
+    chg color picker icon
+
+[33mcommit 66a9d378de4c0f298edc91d6bb8698b6a8b87ec8[m
+Author: Andrew Dmytriv <Andrew Dmytriv>
+Date:   Thu Dec 29 04:08:59 2016 +0200
+
+    add small animation and opacity prop for checked and unchecked lable
+
+[33mcommit 30cd4f3fc1ba27f3faf190b5d5637c6b56d481d6[m
+Author: Andrew Dmytriv <Andrew Dmytriv>
+Date:   Thu Dec 29 02:44:29 2016 +0200
+
+    fixed icons position, hide default checkboxes
+
+[33mcommit d62748067c3d2faccbe9593e360d3b8fd5802c29[m
+Author: Andrew Dmytriv <Andrew Dmytriv>
+Date:   Thu Dec 29 02:18:35 2016 +0200
+
+    change position "toggleFeatures", add icons
+
+[33mcommit d3022e0e520dea6165e0e3846a661fdc0bbfc431[m
+Author: Andrew Dmytriv <Andrew Dmytriv>
+Date:   Fri Dec 23 23:27:09 2016 +0200
+
+    fixed output and visual panel option view, hotfix text enter text input
+
+[33mcommit ae52fe7c6b787b2b00bed8329ed3f3dad2584158[m
+Author: Andrew Dmytriv <Andrew Dmytriv>
+Date:   Fri Dec 23 20:48:04 2016 +0200
+
+    change font style, new color, fix link hover(panel heading)
+
+[33mcommit 10ea5fb8867c8e5ffe6129d2c823ce61295ba82d[m
+Author: Andrew Dmytriv <Andrew Dmytriv>
+Date:   Fri Dec 23 03:33:44 2016 +0200
+
+    change pop-up styles, video icon, header fix, aligned content to small device
+
+[33mcommit 3ab57078c69fd5fb5bf2c629bce75cd9ea9ebfd1[m
+Author: Andrew Dmytriv <Andrew Dmytriv>
+Date:   Sun Dec 18 11:10:46 2016 +0200
+
+    nav-bar transformed to top, round icons on mouserenter show options
+
+[33mcommit a94b800528172d370979baffca8745a8fd85c4fe[m
+Author: Andrew Dmytriv <Andrew Dmytriv>
+Date:   Sun Dec 11 19:39:10 2016 +0200
+
+    @import google font fixed
+
+[33mcommit 3c3f8b3356c7a5a430a5ec9b364be9daf7538fb9[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Oct 9 07:49:41 2016 +0000
+
+    positioning of iframe for  md and lg lg is fine. Some weird stuff for sm and xs
+
+[33mcommit d91dc989b3db7937ccba5e9fa6542201a5df8bb4[m
+Merge: 22f965c 6d13348
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Oct 8 18:06:14 2016 +0000
+
+    Merge branch 'master' of github_administrator:christopherreay/thisEqualsThat_frontEnd into designInterface
+
+[33mcommit 22f965c146c11fa0e3bc1df02fd6f590e4ada48c[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Oct 2 20:44:25 2016 +0000
+
+    started to complete the responsive layout for sm and xs
+
+[33mcommit 6a3db958ed020e83de3d3c896959cdb289c38eba[m
+Merge: a376abb 86ff857
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Oct 2 14:56:05 2016 +0000
+
+    Merge branch 'designInterface' of github_administrator:christopherreay/thisEqualsThat_frontEnd into designInterface
+
+[33mcommit a376abb5f4f96a7565dfb08f80ac3a947732f3e6[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Oct 2 14:50:50 2016 +0000
+
+    Added the logo for the new template manually
+
+[33mcommit 86ff857c3b7ed1a0fb44086611aecb0c43d968f1[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Oct 2 12:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 6d13348fba84f55bfff7670d693a02e89cd5c78b[m
+Author: Christopher <christopherreay@gmail.com>
+Date:   Sat Oct 1 09:30:41 2016 +0100
+
+    Update README.md
+
+[33mcommit 0cab6dc5c25c9778f289ecb810002547f0502e08[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Sep 25 16:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 9fd582f42ae5c173875d9491aa11110630ec763d[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Sep 21 14:27:36 2016 +0000
+
+    tutorail videos now shown as playlist
+
+[33mcommit 1b8b218692a47faa4c30d93418752de21150f3c4[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Sep 17 13:57:53 2016 +0000
+
+    added tutorial videos with YT player
+
+[33mcommit e81dd2ad79976141cf8a67395dc4fe5c50256016[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Sep 16 14:06:06 2016 +0000
+
+    Added tutorial video infrastructure and also tidied up menus
+
+[33mcommit 7829189acf35f5e585e6206e1d7d5440e99ae07f[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Sep 11 12:51:25 2016 +0000
+
+    tighter bottomModel reshuffle
+
+[33mcommit 0c64572c0e816a4c52e73cc35dbe482532c37ce4[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Sep 11 12:15:57 2016 +0000
+
+    fixed ***last*** :) bug in SVGHUD, was some global This in the scope. replaced it with a proper local This :)
+
+[33mcommit a23a8d595e93fda74c5b2a1fb7fbc5259a7cf177[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Sep 10 20:15:24 2016 +0000
+
+    SVGHUD component HIDE behaviour
+
+[33mcommit 201670f09ccab9206cc5e7e5d299f5e34a3ab3f3[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Sep 10 19:42:42 2016 +0000
+
+    continuous UI improvements
+
+[33mcommit 5a6e87639baa79790fc9c0b5f4bbb9aa61759e29[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Sep 9 15:09:42 2016 +0000
+
+    fixed more shit
+
+[33mcommit 2ad31426c281c646b464e58a6f0507265d4bf40f[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Sep 9 12:07:46 2016 +0000
+
+    put the memoise in the right place for the color smasher
+
+[33mcommit c2fc1be56a53a100027f4e02a0578a9f56beba77[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Sep 9 11:54:30 2016 +0000
+
+    actually fixed all the SVGHUD stuff again. using .data and reaslied cant memoise the bloody svg elements ... oh yes you can, but i was doing it in the wrong place.. hang on
+
+[33mcommit fe14ba7b267d3f1ad9e10be497972dd47d34d936[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Sep 8 17:46:57 2016 +0000
+
+    added edit in place for text editting
+
+[33mcommit c93f0f6637143435058ec47ef75ef80d6a4aab7f[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Sep 8 16:10:19 2016 +0000
+
+    complex layout design and implmenentation on the ball. Time to finishing touches
+
+[33mcommit 759eef3969b84e821335604ff4bf9fb1f4034e68[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Aug 29 21:12:29 2016 +0000
+
+    more stuff hapnned
+
+[33mcommit b62be1b820c9ac25aec5b503753e3961bcc1bfc1[m
+Merge: 545ad2e fdb419f
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Aug 29 15:28:31 2016 +0000
+
+    merged uiLabel and some other shit changes
+
+[33mcommit fdb419fa6cfd64277d8d02bef2e758cadbd0259f[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Aug 29 14:35:32 2016 +0000
+
+    added full element post creation function to the templating language
+
+[33mcommit 545ad2e509edbf72753ba65e30c97c3ed7cc07d1[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Aug 22 10:09:02 2016 +0000
+
+    sorted out various shite
+
+[33mcommit 7aa202390d6f625e032a33afbb1998d350765e68[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Aug 22 08:12:24 2016 +0000
+
+    added inuts to tags, and finished tags
+
+[33mcommit 33c8a3914e3ab4dc1890ca534dad3d3aca821200[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Aug 22 07:53:45 2016 +0000
+
+    more
+
+[33mcommit 096c1893b14df60776ecc07ee8462c3bd88ea9d0[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Aug 16 17:07:41 2016 +0000
+
+    workking onstuff. just about to make select inputField a bootstrap dropdown
+
+[33mcommit e19ec6f60e5e1f69011724911ba4c875616b64c6[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Aug 13 11:08:40 2016 +0000
+
+    sauntering through the depths. Making the interface self explanatory
+
+[33mcommit 51edc342198284fc6ec0cce6186bb0fe684cc46c[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Aug 11 20:38:00 2016 +0000
+
+    pretty much working. Still some issues with svgHUD multiple visualisationField issues
+
+[33mcommit 07eb0e06c6e02365e6af270985222e7c5ce67564[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Aug 11 18:00:51 2016 +0000
+
+    Going beautifully. tidy up SVGHUD next
+
+[33mcommit 6892d59b2b9dc9c9735da16fa6189f7ecea24459[m
+Merge: bdbcbb9 77693ac
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Aug 11 14:38:25 2016 +0000
+
+    Removed more spagetti.
+
+[33mcommit 77693ac0124b1754b15fb95510cebe26999436db[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Aug 11 07:11:05 2016 +0000
+
+    no real changes
+
+[33mcommit 6f6ab3cadade6783b8ac0fa94fa8e3cc2a785753[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Aug 11 06:54:59 2016 +0000
+
+    Got SVG adnimations running. About to change to getMetrics from getBBox
+
+[33mcommit 5e4ea34df6b237e50399f13213a0295219777f32[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Aug 10 21:52:25 2016 +0000
+
+    fixed namespaced elements rendering in O.create (for SVG anyway. No general API for adding namespaces to the dict)
+
+[33mcommit bdbcbb95ddff0b7a1da9c6c86c6bb8192128d89d[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Aug 8 13:06:06 2016 +0000
+
+    sorted out Yogesh 'stuff'. Particles now render on page load
+
+[33mcommit 19732c4e2fac8894cd274d7dc8c80f5f22da3fc9[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Aug 8 12:48:01 2016 +0000
+
+    yeah ,more stuff. Pushing alpha john from this commit
+
+[33mcommit bdaed950320d001ed7914e882ea3bd0d87bd9504[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Aug 8 12:16:54 2016 +0000
+
+    added logos and copyright to the shit, fixed relative shit. fixed #56
+
+[33mcommit 33818a83aa0baecdadba18a75fd474185111b4a2[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Aug 8 11:37:13 2016 +0000
+
+    This is done. Added proper CSS to control height of icons in menu. Reduced menu to 10 items. Ordered menu items. Now I must fix globe html in three.js to make it work for relative location
+
+[33mcommit c395507d5409981835d3a1413ff07fb848de6ffe[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Aug 8 01:04:50 2016 +0000
+
+    added yogesh' stuff
+
+[33mcommit f5ff0a618e6806fc20231eb1b2ae41e53bf3eed5[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Aug 7 14:52:39 2016 +0000
+
+    dunno, all going great
+
+[33mcommit 96793619ba443fa0532f981c856e40b6c749866f[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Aug 7 01:20:36 2016 +0000
+
+    Just about to push not using ID into all svg stuff
+
+[33mcommit eddb44627a5bc8b1ad40a0d42e493d0973ff93ff[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Aug 7 00:39:25 2016 +0000
+
+    fixed displayAddress bug introduced in back end
+
+[33mcommit 2559bfcf6bd852a16782a4ee26f1d23189b2f54c[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Aug 6 23:54:55 2016 +0000
+
+    Umm. loads of stuff working. plodding on
+
+[33mcommit c8c571bc9e75bb7fe301f49bfa032bb839131ab4[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Aug 6 21:51:08 2016 +0000
+
+    getting there
+
+[33mcommit 87750bc64d83f1cfa2653ce354544ba3f8d2c4bc[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Aug 6 19:59:21 2016 +0000
+
+    built templating engine. Adding bootstrap objects
+
+[33mcommit 5d5b9de52259aa554fd9204cec1e834751b9c0e8[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Aug 6 10:30:35 2016 +0000
+
+    its all gone crazy
+
+[33mcommit b95e9b72cc6b26e8cae95840197076e6c71387c5[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Aug 4 11:54:20 2016 +0000
+
+    creating convenienve framework for bootstrap
+
+[33mcommit 435059389c0b0c1bbb86a98fd7e406d2bab72099[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Aug 4 06:46:39 2016 +0000
+
+    going to bed
+
+[33mcommit 47c49934d1955272c5ea941243402dd2182964f8[m
+Merge: 760ae03 4c3ed3f
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Aug 2 11:40:38 2016 +0000
+
+    Merge branch 'master' of github_administrator:christopherreay/thisEqualsThat_frontEnd
+
+[33mcommit 760ae0379f3d1e2d3d284ef75f53ff1ad02c096c[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Aug 2 11:36:57 2016 +0000
+
+    componentCookieManager. Added representations name sent through from the back end. Front end has component cookie manager. Updated clone counter to use cookies to improve accuracy on a device. closed #52
+
+[33mcommit 4c3ed3f7a83457d40a389d5aac6e21f6337d28de[m
+Author: Christopher <christopherreay@gmail.com>
+Date:   Tue Aug 2 07:55:36 2016 +0100
+
+    Create README.md
+
+[33mcommit 77291aabbeda3a2d6f2b87b129f88f1b2a4075e8[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 29 14:32:31 2016 +0000
+
+    sorted issue with memoise fixed #48
+
+[33mcommit 056d07d2f01bc3783b9e1b6a918d2ca1e1a977d5[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 29 13:15:21 2016 +0000
+
+    tidy minor bugs
+
+[33mcommit 3653cb38212c15f3eb754bc5efd256365924b067[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 29 12:52:16 2016 +0000
+
+    created the entire hoMany with 11 lines of code. Automatically lists all cloneable reps. Utter boss. fixed #2 fixed #48
+
+[33mcommit 0769db534f9f821e0932152591a7f3b6b7c863c5[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 29 09:35:32 2016 +0000
+
+    de spagettied the slider event listener code, and fixed #47
+
+[33mcommit 99154741d240b632d89af6076013a60f8262b4cb[m
+Author: Andrew Dmytriv <skateboardsmart@gmail.com>
+Date:   Thu Jul 28 21:05:30 2016 +0300
+
+    more materialize styles and aligned content
+
+[33mcommit 1fba4987d5840cec4e73ec545ab1cfff19b676c8[m
+Merge: 3d75151 3250da3
+Author: Andrew Dmytriv <skateboardsmart@gmail.com>
+Date:   Thu Jul 28 15:46:58 2016 +0300
+
+    Merge branch 'bertonbeil'
+
+[33mcommit 3250da34828b20cda44d69803b870a976a5db581[m
+Merge: 53e656d f2a069f
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 28 11:11:21 2016 +0000
+
+    Andrew, Please resolve merge issues in .js and .css
+
+[33mcommit 53e656dff3c09633cd193088bacbb682dec5a08c[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 28 09:39:17 2016 +0000
+
+    forced fetch from remote bretonbeil_
+
+[33mcommit f2a069ff25c8031d0addf36ece7e90604e35c06c[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 28 08:24:05 2016 +0000
+
+    whatever
+
+[33mcommit 818c121d3d40f3c74d033dfd5a0387591cef0173[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 28 08:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 3d751516797a514483f2c96e8bc5b9e076310357[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 27 20:53:44 2016 +0000
+
+    added cloneTimer to warn users of crazy rendering time. Also added 'defaultDict' for inputFieldHUD to load the thing, which is in the harness. Might be a tad sensitve.
+
+[33mcommit 4e9350310546595437f29b54b06bd04d703537d3[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 27 19:59:47 2016 +0000
+
+    Finally made the blasted actual svgHUD foolproof. Simpler. Hammered the scopes properly. Using the combination of the object storing the data, and a single DOM element, that updates its data on every inputFieldAltered (includes the changing of the visualisation field)
+
+[33mcommit de1e0f40761edd453de5f40123cb5e4b488e58fa[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 27 18:58:14 2016 +0000
+
+    added fieldInputElement tooltips. h3 added to the element, and css for the rest
+
+[33mcommit e9dbc93791fce296c682dbedac3c5081d8352289[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 27 17:59:20 2016 +0000
+
+    various interface improvements
+
+[33mcommit 698e0b02c10aafa2ffd9787f4f43cccac1516c4f[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 27 17:27:23 2016 +0000
+
+    added doOnce guard to FieldOrder inputFieldHUD plugin
+
+[33mcommit 3f014d5190ae8bb91975a2691da0d28ca916992b[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 27 17:16:40 2016 +0000
+
+    added xmlns url to svgs so browsers know what to do with their xml documents (show images ;) )
+
+[33mcommit 19638349c6aaaf2b98533c5d12c9df81f54f516f[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 27 16:31:41 2016 +0000
+
+    moved the inputFieldHUD specification to the modelClass definition. Reorders fields and generates groupHeader element
+
+[33mcommit 24308afa9bba21bb1257f4b11e251043632a38b5[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 27 16:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit fbd20d44c68be38b24ab85e39d9b58c7911b39b3[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 27 15:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 63cbc8389d449a1a99a0a46697ec2087c7b8f001[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 27 14:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 9d658c26d7ba3ed313226024e24db880d126fa7f[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 27 12:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit ca459aa842091b3928bd780954ebc04e2fe1f8ff[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 27 11:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit e708614fd3a71f8461a3fa52e1d2a4add7c34f03[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 27 09:56:03 2016 +0000
+
+    fixed randomise clones for new layout. Using element.data to pass local context works great
+
+[33mcommit 82f2db8ebca5b596063063c29f5f7271f7376b76[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 27 08:23:15 2016 +0000
+
+    fixed same bug as before. Tired.good. Also removed some more code :) And reliased this code structure means the contexts can just be dumped in the dtaabse alongside the instance, and loaded at any time to revert state .Cool. or put in a cookie for that matter
+
+[33mcommit c00ee7a9a93877428f25fed37942e9976251238e[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 26 22:30:33 2016 +0000
+
+    finally fixed all the fail logic of the svgHUD. crazy mad man
+
+[33mcommit 1fb365ec8d4f7117cfacbe8b690fb788ba7bb14f[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 26 19:52:02 2016 +0000
+
+    fixed bug of toElement being chrome specific, now using target
+
+[33mcommit 62d27e7c9e408bba8cea96d529194719bd4b305a[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 26 19:16:38 2016 +0000
+
+    updated og tags for the scottish votin model
+
+[33mcommit f70170a9682097c7ab7b9fe1b82ccbab366abead[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 26 18:08:16 2016 +0000
+
+    sorted out everything, worked through the isseus. Will have to redo things for the other SVG hiud. and pull the whole thing out into a framework. but its good
+
+[33mcommit 01042ac492181d7575e8332d4f11eb832f2758da[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 26 16:18:31 2016 +0000
+
+    built fillmaneger plugin. I *think* its working perfectly. but I dont know when exactly the bug disappeared. Looking at a bug where mulitple visualisation fields fuckup. Found some accidental globals (one)... some time ago.. but wasnth that. more or less anyway. Fill Manager plugin itself is awesome
+
+[33mcommit 4e3a950e47dbf1aea5e55ac27488ec1fccd7f9b6[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 26 11:49:05 2016 +0000
+
+    fixed saveSVG link issues
+
+[33mcommit cecb8bb56380d8503eb1fa6e2218f8a8691a5ed2[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 26 10:57:23 2016 +0000
+
+    tidied up ratioColorTotal interface
+
+[33mcommit 0514d11ff6064ab87c2a723d1c77e35775fdbed4[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 26 00:12:39 2016 +0000
+
+    fixed buges. Was.... fail for location of .html=() in renderHUD of svgHUD... was happened every hook, not just init
+
+[33mcommit 1e91195994b2475a3b807d4b16375c0f65f73eca[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 25 23:41:23 2016 +0000
+
+    broken
+
+[33mcommit 87c812b4386442b1f05c15e055444a31c63e3c9e[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 25 23:06:26 2016 +0000
+
+    reworked a whole bunch of spagetti. The jquery slider plugin is a bitch and shoul dbe changed imimedahtely, its a spagetti Meat BALL. Allo works. Really nicesly. Interaace is good. etc. Basically merge this branch. Coolio
+
+[33mcommit 314f07788c28703802ab9bb0ddb84ad2f61e901d[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 25 17:48:36 2016 +0000
+
+    yeah Thats that branch done really. apart from the interface carp to make it beteer
+
+[33mcommit de634df20c6fbfceb5196c4818e1c78904d39cb7[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 25 15:27:52 2016 +0000
+
+    changed all references of 'colour' to 'color'. Had to be done lolz
+
+[33mcommit 8b6d0c1dd1bd02512b7310e9f5247c873d839c57[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 25 12:03:43 2016 +0000
+
+    colours working. Adding ti inputFieldHUD
+
+[33mcommit db50fdf71076655fd8dbd9d01d8a02d071429b7a[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 25 11:37:44 2016 +0000
+
+    New color paths method. Worked in alpha based mixAmount. Swithed to internal represenastion of colours with tinycolor. half way through migrating code to use american 'color' not 'colour'. Curnrenlty missing the color property loz.black.com
+
+[33mcommit 15b4b6c4ffbd057830526d6d69f7ef4cdc672798[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Jul 24 17:13:50 2016 +0000
+
+    getting there
+
+[33mcommit 3face42640fe04d3906924ee4bbabddeb0026ca4[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Jul 24 13:49:50 2016 +0000
+
+    getting there
+
+[33mcommit 1b4620f9985465c6f173eae8ecf9424184ebfd69[m
+Merge: c648daa d3b5df3
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Jul 24 10:52:43 2016 +0000
+
+    Merge branch 'master' into inputFieldHUD
+    because I cant workout how to rebase or what the point is really. I like the idea, but it s apain in the arse
+
+[33mcommit d3b5df3523393abc6567a50135a44d1f3d8a9857[m
+Merge: 2f03182 a9660cf
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Jul 23 20:58:14 2016 +0000
+
+    Merge branch 'bertonbeil_autocommit_dev' into bertonbeil
+
+[33mcommit c648daa89ecf2f32c653b6fec402259dab7fce15[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Jul 23 19:51:59 2016 +0000
+
+    stuff there
+
+[33mcommit a9660cf8a9fc94c4250d5008ec5d125d2c5b2d93[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Jul 23 17:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 44501e51ffd575eb3aa4d7fc8944b259fd048ca2[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Jul 23 16:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 2f03182e56a88f057614c9b76984d1173bb065d5[m
+Merge: 0d21c1d 3012cbf
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 22 11:31:08 2016 +0000
+
+    merged bertonbeil with master dev
+
+[33mcommit 0d21c1dc9e6c9a89409f0b289581f74dde510c4d[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 22 09:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 18c032467d6f42776bd17d7a3ea804d41625f251[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 22 08:00:02 2016 +0000
+
+    autoCommit
+
+[33mcommit 0d1c776b35d3d11fbf822584b3f88cab647005fe[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 22 07:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit bff0a050ca645328584e5b36b7d527da9bde642a[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 22 06:00:02 2016 +0000
+
+    autoCommit
+
+[33mcommit bb34107e8009288b8bb3b67eb44295cafb6cd2ca[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 22 05:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 68ee4b128262318b58eb7662d21619fc16a82b68[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 22 04:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit fa4d02d4064c6997d8b7a7a02de9a6e047208c32[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 22 03:00:02 2016 +0000
+
+    autoCommit
+
+[33mcommit 950d670d3afcc87304d417ac6ac09806850b4320[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 21 12:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit efcbe2b7da98f0ca2c04cd6d7c549f2585ff664d[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 21 11:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 9b7f38b6fca7880d1aa62fbe244dd93f274bcb13[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 21 10:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit ecdb551806d79d4d3caf17b07cd4bd5956aa68f1[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 21 09:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 2c2fdcf250dc148ea5c98bb48806f05240829e06[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 21 08:00:02 2016 +0000
+
+    autoCommit
+
+[33mcommit 612797a89aa9a4ef1a45c7ffe52e6ffb0754f8e7[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 21 07:00:02 2016 +0000
+
+    autoCommit
+
+[33mcommit 34cb34a12fee3bd78959eb8185f95ecdca4f1c1a[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 21 06:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit f126a5632a1c4ed516fe65d58a8d369e49b3c350[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 21 05:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 5163394fcbeea09106c169940b28fa3538206c65[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 20 18:00:02 2016 +0000
+
+    autoCommit
+
+[33mcommit 909e4b59bd5d7543b8c496f99ce43a7594d3b441[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 20 17:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 3fd1b82ab210bf2eb340300c0175e1820428a22c[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 20 16:00:02 2016 +0000
+
+    autoCommit
+
+[33mcommit 454c6f851114f50befdf9c400e5deef91236f702[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 20 15:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit bc50c2a087c6a4cbe526dbbf1dcdec1bb6fe831a[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 20 14:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit cb44f54bac9d2afb20afede44706f73dccdb1dc8[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 20 13:00:02 2016 +0000
+
+    autoCommit
+
+[33mcommit d1277ea3c0d51a28e284468e21bd5d578bb69b64[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 20 01:00:02 2016 +0000
+
+    autoCommit
+
+[33mcommit 965bcac8f8cfe6565b1aa9870fab79365e256d61[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 20 00:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 982ee6a98a5221ca805b970d0811c385eb10b2aa[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 19 23:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 474e63568c869bc8db1c83686ddd422a4ed67af4[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 19 22:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 610c455723141095438b41886e86d18b6d536eba[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 19 18:00:02 2016 +0000
+
+    autoCommit
+
+[33mcommit 6ec47e96b318898775506e2ad9f94606558a5d90[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 19 17:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 93744905116514154f1f4f315e3f04af598a9947[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 19 16:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 9788106e991f82b0e333923ac82cd13435246801[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 19 15:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 9570f9d6fa803e9238a2fdad758944cf13a2ef68[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 19 14:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 79e24c46985c9f55fe8754ad3d14355a5e0e2869[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 19 13:32:18 2016 +0000
+
+    hideFields implemented; need to refactor out of rep_ into its own config per blueprint
+
+[33mcommit a51484d201caa2f95eb00c1fa6dd757ae922f373[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 19 13:00:02 2016 +0000
+
+    autoCommit
+
+[33mcommit dbaf9d9a2514396bc7e7b4cf537d31901a86ee8a[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 19 11:00:02 2016 +0000
+
+    autoCommit
+
+[33mcommit af53a24387061212b615659d6cb3cc1e016763ea[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 19 10:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 15d842aab7379805091ae499928f5c0d9ae8ea1d[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 19 09:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 2ca737f69bc4e07388a6cad580362d226f41ca2f[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 18 19:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 45171bb9f1223392963158811cba5eff97a6ab6c[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 18 18:00:02 2016 +0000
+
+    autoCommit
+
+[33mcommit 419f8e9cec1f99ab43bb9d105643121a5a423d78[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 18 17:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit d9978a1f0edc0a106f76eb6a5d9b320f60f52ed9[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 18 16:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 1dc5c86449fbda3de01dc258d4e968a349fe77f9[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 18 15:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit a083ef375ee1500d63693482eba2291f4f49e2ab[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 18 14:45:39 2016 +0000
+
+    moved svgHUD initilisation to ModelInstance constructor. basic InputFieldHUD streup. Just strarting work on Replace plugni
+
+[33mcommit 728a431f3475f47a2a0ffe79f24120d6b8ace02d[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 18 14:00:02 2016 +0000
+
+    autoCommit
+
+[33mcommit 3012cbf8ae7a78a9d99e8806b9fcc68de5b8b095[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 14 09:02:19 2016 +0000
+
+    added svgHUD to all rep_ in database. Added optimisation, if degreeOfRandom == 0 do nothing to the three randomiseClones functions
+
+[33mcommit 047e445be963b6fa9925a1dba42f76668b8f44bb[m
+Merge: 429e045 0d72b6b
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 14 08:43:57 2016 +0000
+
+    Merge branch 'svgHUD' of github_administrator:christopherreay/thisEqualsThat_frontEnd into svgHUD
+
+[33mcommit 429e0450bde9f458311267208834be35ee911217[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 14 08:43:25 2016 +0000
+
+    added svgHUD to all rep_ in database. Added optimisation, if degreeOfRandom == 0 do nothing to the three randomiseClones functions
+
+[33mcommit 0d72b6b8f292d107ec041db9bae3a9817a5e7e55[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 14 08:40:43 2016 +0000
+
+    added svgHUD to all rep_ in database. Added optimisation, if degreeOfRandom == 0 do nothing to the three randomiseClones functions
+
+[33mcommit eaa803dc5ecb58aff5bb9ae816a33b8141e502d7[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 14 08:32:19 2016 +0000
+
+    working version. SThink I will merge with master
+
+[33mcommit e06b11cb03c3d1efd15f1fe15e2979056e6c733b[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 14 05:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 24c375b2b68b96c8c1e805352b6de69267c6e6fb[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 14 04:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 6f4d7db147590eb2653752e7d951f9d83372dfe3[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 14 03:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 013bd28b694bb2f298b05793f94ac8b712befb52[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 14 02:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 40e0415246b4b7ea6d3969fb04c37ac4aa823ff3[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 14 01:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 98e77e85ef40fc858cd932e9b40b38657cd34e3f[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 14 00:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 9e6ed9dc69b940fd12ead901af1b535cbba3e107[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 13 23:24:26 2016 +0000
+
+    umm. yes.. Need to work out a way of ordering the plugins. Thinking about using css3d transforms rather than svg3d... but not right now. Once plugins are ordered, might make the recolor clones also a plugin... though its not really one.. but it is actually who knows.
+
+[33mcommit 052a6e43544c307783f8f76f784c7649ce3658ea[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 13 22:50:05 2016 +0000
+
+    absolutely beautiful interaction between the two color changing randomers. Memoising is beautiful. Amazing fuckup for position. Left in place overnight for john in the morning
+
+[33mcommit c01e810cdd3805111d8fdf5e9b9adf095b7af904[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 13 21:41:00 2016 +0000
+
+    plugin works amazin. implement the other two, and then remove the old ones. Need to deal with the ratio, possbly as a plugin too?
+
+[33mcommit 535bb6bc30c0794adf8b602bf1d110ec60cacee8[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 13 21:18:13 2016 +0000
+
+    plugin aspects working. got looping function creation down well done. Need to add a baseline so the % randomness can go back and forth. Memoised normalDistribution works sick
+
+[33mcommit 06d2bb9e4fc343c524c3b61ded8942b9f459c9a3[m
+Merge: 0f01cf0 058d301
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 13 20:32:23 2016 +0000
+
+    Merge branch 'svgHUD' of github_administrator:christopherreay/thisEqualsThat_frontEnd into svgHUD
+
+[33mcommit 0f01cf0c71272e235290c90e04a9d3445306e267[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 13 20:25:42 2016 +0000
+
+    fixed missing uiValue_text and uiValue_select updaters
+
+[33mcommit 058d3014536f1be4745563feea4c7d1b4d6f7619[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 13 20:23:08 2016 +0000
+
+    getting there with randomiseClones group
+
+[33mcommit 78369ff8c943c1ce6bea8feffcc04b9d585c9ee3[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 13 15:17:31 2016 +0000
+
+    recoded colorpicker plugin to work by lastOutputVisualisation. Configured CO2 modelClass to have different initialColors for the different states of CO2
+
+[33mcommit b075d822ea0c5d0a25495af908ca220928ba5ff9[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 12 18:29:34 2016 +0000
+
+    complete for the sake of basic Alpha testing. Style's need to be made specific to the model instance (np with selector including modelInstance id. Change the ID to be simpler, with classe for the other shite). Moving forward would be looking at setting up different CSS rules for different output fields. This could also easy be done with css selctors. The problem here is saving. So need to write the modelInstance ID into the actual SVG, or otherwise make the Svg unique per modelInstance and per visualisationOutput and possibly outputField.  moving on, set up some new HUD plugins for everything.
+
+[33mcommit 6ff748859d93d5da22cb54dee80890b89dadb1f6[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jul 12 16:48:59 2016 +0000
+
+    created pluinable 'svgHUD'. Created example 'colorPicker' config which allows the color of the greyCube representation to be altered. Uses CSS embeded in the svg. works lovely. Clearly need to move the definition s of the svgDefs for modelclasses to some front endy, javascripty kind of a place, .. They are now basically widgets.. so john should like that
+
+[33mcommit c5176d88a130529ad376eaebbcc8fa88b6633292[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 11 21:16:21 2016 +0000
+
+    Put in basic function calls for svgHUDColorPickers. Need to add display.svgHUD. line 1592 also
+
+[33mcommit babd3119f9595dd7f6c81ed1f4054b108d33384b[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 11 20:59:56 2016 +0000
+
+    added svgHUD to back end
+
+[33mcommit 1a8e2233325d032f9a5043289ffe8f13e23784aa[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 11 19:28:39 2016 +0000
+
+    completed fixing bux shit. gonna merge to master I guess
+
+[33mcommit 95b61fcb201ec02e706648fe76b99ab7e85fff30[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Jul 10 21:05:39 2016 +0000
+
+    ok, updating all sliders to the current values in the DB works. Heavily reliant on blocking inputFieldAltered during response processing (this should be shown as disabling the inputFields, which is good anyway). The DB update **does not** attempt to maintain coherent contents. It serves the answer asked for as quickly as possible given the dependencies of the equations. It is still not clear how to make the volume change in response to the density , given that we are outputing mass as the outputField. It would seem that somehow the visualisation field shdoul take precedence, or once again the outputField and visualisationField should be one and the same thing. This may work out now, given the interface is more... interfacy
+
+[33mcommit 4b1af310877df19ff2260fb1eeee39394ec04e3d[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Jul 10 20:36:21 2016 +0000
+
+    found some old bugs, code was clearly not used before, called right functions ;)
+
+[33mcommit 0f8eb9dbb81cd66187b8dc498e578f84932aafe8[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Jul 10 20:14:42 2016 +0000
+
+    made dict keys strings
+
+[33mcommit 622559176d1fdc2564e8314b8784ececf90ccc1a[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Jul 10 20:14:00 2016 +0000
+
+    moved reenable inputFieldAltered to always callback
+
+[33mcommit 0655371ba160c1288d94b791bf8f968de7f5184e[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Jul 10 20:10:25 2016 +0000
+
+    fuck knows. added a setValue function for inputField objects, setup inputFieldAltered to block itself until the server returns with the last response. lol, though only in 'success' better make that finally :) umm... might work?
+
+[33mcommit 08dd123ebddd972177f20034c872e3fd4372cc5b[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 8 18:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit b1d774538d83845979a67b8ff223918d002029af[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 8 15:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit b6e7f03b0f00e3451da661e970bd06cc99619d7f[m
+Merge: 964016e 02d35ce
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 8 10:50:23 2016 +0000
+
+    merged scotland
+
+[33mcommit 964016eb3a2dbe56405a87bf33948df6a63fa540[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 8 10:45:43 2016 +0000
+
+    who knows
+
+[33mcommit 02d35ce9839d98932b510f0f426089bf26e30c0b[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 8 10:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit d9c7a843f92b001f967fd4fa3d8210dc10de11b0[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 8 07:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 5cab8eb20e60d273675c07f303a0734f5a1c44cf[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 7 17:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 7d5094462a151a52da2ef2584b4e1d8abf7f51d4[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 7 16:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 3de4a2c4b4f10440942a5d4432776f625003b216[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 7 16:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit c8ca7dc1ac9b1e2b101dc1672ceccc61c8b555ab[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 7 15:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit f8da39d47db24a52d34d4f7fa858f6bbc593eddc[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jul 7 14:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit bd623a3e2c9f83aea5bf7e3f53a6f69a9a3e94bf[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 6 23:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 5d064ff89b70da15a79e73c4c9e7e424cb8cbf53[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 6 22:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 41be43afdc4546c259924e65e2c539136aeb8552[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 6 21:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 6be7437e732669cd90215224b2196de0d5122be9[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 6 19:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 8802b742cea8be4712076b57fdcc224c4cb80bdd[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jul 6 18:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 03cb4ba8905ba5fe54158b8f9a32af5e75dc64bb[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 4 17:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 42b784bd6c68fadec82310064ceb684eecfbd692[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 4 16:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 766dd030087c9704aaad8c45fff167dff356989e[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 4 15:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 0aef05ce81a92054e76417c7d55c9ae30d078544[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 4 14:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 2b7a63edf5fa921de0e4a390f2a38437171d2e05[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 4 13:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 0ba1ce81201bcc8ef66f43131f2a5c166dbd96fd[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 4 12:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit c26838285808d63057dd94fb11dd32da378d757c[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jul 4 11:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit a8650d854578c4b79b7b27a6437128aa1ccf7fb8[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Jul 2 16:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 58242007246383d972f156c54083c5693bc5dfcd[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 1 23:00:02 2016 +0000
+
+    autoCommit
+
+[33mcommit be6104bc3b79889e04d3a4bdb00e4292a34dbf73[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 1 22:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 0e3e0e3efc86b21b6ff56ff715f5a81891363e52[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 1 18:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 34d42c39bc0b540b532796d98662386626bfd8b9[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 1 17:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit d0875a3a6bd374c470a6ebec0230c5a20a774089[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 1 16:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 5f5a73ec2baf322bce6e7b842c52e921415f4a29[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 1 15:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 8dea6dcea74a66bd357fde1785180ee6c3ab975c[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 1 14:00:02 2016 +0000
+
+    autoCommit
+
+[33mcommit 1722fd486441a9e3957011a5f0ff43c2911b15cf[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 1 13:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 0d28e9c8834842a6736aefbd9a2547a433ae1423[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 1 12:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 35bac66d812d33a2da76d2dbdfb9ee30f00d292a[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 1 07:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit bf1dad456c52c44ea80b06375e8eee72b0aed7b8[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 1 06:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 092e299ac7eca528c73574d87df5fb57474c8a34[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jul 1 05:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit fd6d42d346cb9d5f5e71c7c669dc11c7b70d289f[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jun 30 13:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit cc62619b5101dc23b872e242ba47fc90fbeaa95c[m
+Merge: c45f21f 139e245
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jun 29 14:13:54 2016 +0000
+
+    bertonbeil Merge
+
+[33mcommit c3b859cae733c428415daded7bd4181c506b1ce8[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jun 29 14:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 139e245dbfac13ddaafa9481095d86ad8c476e5e[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jun 29 13:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit c45f21f6768ba6c4de03ac21f6b983a06df403b5[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jun 29 11:55:31 2016 +0000
+
+    scotishElectionsFixed
+
+[33mcommit 23eacfe61086b50a6e94f40d32f19679cec3b69c[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jun 27 17:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 533ad4cf90a2219a69276443d7b43dec9c84788e[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jun 27 16:00:02 2016 +0000
+
+    autoCommit
+
+[33mcommit 93047a1a6fd813ea8d64057533cbf86c58e6ce87[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jun 27 14:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 68a6bc073bc96e1761c3cef8f0c1d130a6201afb[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jun 27 13:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 1265141077e21f2a5efdcc5337b0d1ac55e0c3c1[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon Jun 27 10:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 949a356c4da5915ca0211525ffdb9f651ac28227[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Jun 26 15:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 4eb2dd0bd02cbef5b71a11f3bf09112b6a68d3ef[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Jun 26 01:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 81fc49eaa5d40f312a9e46108f9c0365e78578d5[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Jun 25 19:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit dd9061539cad2eb75f071fe15990fa1aeb5ae87c[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Jun 25 18:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 3197a3c66ad479aa4272d22a4c1a5925b78c01c5[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Jun 25 17:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit a68c28a491cbc3dc98a9752261a7739b3ca590c1[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Jun 25 00:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit fa02d2e64f82db9c5347e584c20aa70377211a9a[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jun 24 23:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 245c2d2aeb98d52cae0f81ba52e00c55e3c57536[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jun 24 22:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 93c4a95b346fd186bbed3df63ae57e35c5374295[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jun 24 19:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 45b65b6b93989ac98c944fe95e25420287f4719d[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jun 24 18:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit dc3c5d7e923318823cac05f08dc0fac5c47afd46[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jun 22 19:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 675b7c74204f5b2793ecc285a269e5a15b91d85c[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jun 22 18:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit adeccf29c70e9ea32844aeae0b9ab6adf697b39e[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jun 22 17:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 698298947138ad7dfdcc5800a815fcbb0657a418[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jun 22 16:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 0f04a5e679342e5f8270b1bded127ad9f3c60340[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jun 22 15:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit d3796452b81316b3b305c99a083d75e5d34df078[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jun 22 14:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 403610455a7cd0fa9d13c204be0255463cedaf66[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jun 22 13:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 7eab48e6dd438967fc7f8d5c97f4d92c14fa65d6[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jun 21 20:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 085ab5561338cf007583c2cb58e7f0bcc14a6286[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jun 21 19:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 5d6b75061f502743afd4f9d894dc3700f8d6f616[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jun 21 18:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 4520ed9623bf1fdd7053424c3ad6dce3a4abdf7e[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Jun 18 20:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 30018cecc1342837eebb40613ecb2d7d67c95a89[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Jun 18 19:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit f23ae043db1cc8f5878ed47fe195c00438b4fdb5[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat Jun 18 17:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 7083d2e45e04d226e12d725772e04903330fb431[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Jun 12 16:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 60a1dc9129d9ef9ecd80a60fce95fc31bea5f6cc[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Jun 12 15:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 1e47a4aba5cbc0df72f85e61a31128796843a9ab[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jun 10 18:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 8c67c25805ca5bcc2e87172a9ca64eb658500a08[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jun 10 17:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 2dfb9c505ecc50b402c5ccd50159ee9909794f0c[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jun 10 04:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 8a83a1323c3347fd56b0c86707c9adde498f4883[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jun 10 03:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 1194a202b8aeb693d6a44b9cfc343425db53e169[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jun 10 02:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit b785f154d2378bd3209cae5af1e15c918fd88b96[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jun 10 01:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 9c718a74ba2557ffbe0390fa76bff41303dcb887[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Fri Jun 10 00:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 1ff996e2823f7e771fc1b9acf65ab4064c7c3b6d[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu Jun 9 00:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit c1a1a8f569a89213a99f7f33839363dbf9ee58c7[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jun 7 22:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit c905e5d1fe80e83ecc026c960702615c8c6d46e3[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jun 7 21:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 36c6ff469b0c38dd02b331f25228bd4bab32c638[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jun 7 17:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 84642786f7761a573a7acab2593c9225dc35b61c[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue Jun 7 10:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 9fe65788e62e6b78681f9d2b31723721a17c9f19[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Jun 5 09:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 7f24bdbb17d99cd5302170da7847535240aec304[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Jun 5 08:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit f534bd71040a9bf93b0af24838d24f70cebf0904[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Jun 5 07:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 5e4ab79d1da95d01827e9408842c0a807fd5971f[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Jun 5 06:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit f41418289e89fbef8f5695e38a263a1eff893b25[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Jun 5 05:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit ff7850d25d117eaaeacfb9c23a1eafc32494e2c7[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sun Jun 5 04:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit da209950aaf6ce92c7d9feafa1f5c5c5459b04bb[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Wed Jun 1 18:02:54 2016 +0000
+
+    changed randomise position to use normal distribution, rather than 100 repeitions
+
+[33mcommit d2526213b71e4951870f3a54da01baa8ca0e45bd[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon May 30 19:09:19 2016 +0000
+
+    completed link into google sheets. added parameter to inputFieldAltered to allow calling without updating UI (ancillary bug, UI crashes if updates happen whilst updating. Actually I could probaaly change the code and just add it all to the same queue. Whats the awesome jquery hybrid quging library?
+
+[33mcommit f868b20f48ef12ef647a4d92d9af0ae4608d6c81[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Mon May 30 13:05:37 2016 +0000
+
+    configured for https for google and to run behind nginx
+
+[33mcommit 1ac14b06d302156c367a7eae6f8d559d3c1866a1[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Sat May 28 15:36:07 2016 +0000
+
+    changed to https for google acces.. need https all the way upstream
+
+[33mcommit 208fb0d07310c352b936ae3cfb21a6053caed813[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Tue May 24 17:00:01 2016 +0000
+
+    autoCommit
+
+[33mcommit 6781482b3a23685be2bb3fcd2b0fc7313fc32c78[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu May 19 19:48:30 2016 +0000
+
+    autoCommit
+
+[33mcommit 17b19312e071cdc1269ec4478f1f13821d3d0912[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu May 19 19:42:47 2016 +0000
+
+    updated Css for static place
+
+[33mcommit db35866ed97000552f607ec8e1822018cd4195ee[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu May 19 19:19:37 2016 +0000
+
+    removed person ldirectory
+
+[33mcommit 71524c4af53115e6480d94a9b31f03cfcec80a56[m
+Author: Christopher Reay <christopherreay@gmail.com>
+Date:   Thu May 19 18:59:19 2016 +0000
+
+    Front end first commit. Ready for open source
