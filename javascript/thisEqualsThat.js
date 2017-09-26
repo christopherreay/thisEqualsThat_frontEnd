@@ -221,7 +221,7 @@ thisEqualsThat.oop = function()
               modals["modal-content"]
             );
 
-    var modelClassOrder = [ "VolMassDen", "HowMany",  "PeopleRatioPlay", "Money", "Particle", "LightBulb", "CO2", "Wood", "Coal", "Seesaw", ];
+    var modelClassOrder = [ "VolMassDen", "HowMany",  "PeopleRatioPlay", "Money", "Particle", "LightBulb", "CO2", "Wood", "Coal", "Seesaw", "ElectricKettle"];
     var modelClassData  = { "HowMany"     : { "tutorialVideo": "je_M6gB8nZw" } ,
                             "VolMassDen"  : { "tutorialVideo": "z0LKAOowf9c" } ,
                             "LightBulb"   : { "tutorialVideo": "NnUqU9_hrrg" } ,
@@ -448,7 +448,7 @@ thisEqualsThat.oop = function()
       { url: "/getClassInstance",
         data: { modelClassName: this.name},
         success: function(data, status, request)
-        { console.log("getInstance:", this.name);
+        { console.log("getInstance:", This.name);
           This.modelInstance = new ThisEqualsThat.ModelInstance(This, data[0]);
           This.modelInstance.modelPosition = "top";
           This.modelInstance.displayIntoTarget(displayContainer);
