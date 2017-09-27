@@ -1364,7 +1364,7 @@ thisEqualsThat.oop = function()
                         };
                   }
 
-                  var clones                  = $(This.display.svgVisualisationG).data("svg3dclones");
+                  var clones                  = This.display.svgClonableG[0].svg3dclones;
                   var cloneCount              = clones.length;
                   var clonesNotChosenCount    = cloneCount;
                   var clonesNotChosenMemoise  = Array.apply(null, Array(cloneCount)).map(function (_, i) {return i;});
