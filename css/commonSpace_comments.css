@@ -20,6 +20,11 @@
 { height: 50%;
   width: 100%;
 }
+.commenting-field.main .textarea-wrapper .textarea
+{ margin: 4px;
+  padding: 2px;
+  outline: solid 1px black;
+}
 
 .force-redraw::before {
   content: "";
