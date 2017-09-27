@@ -96,6 +96,7 @@
             if (elem.svg3dUse !== undefined) {
                 parentNode = elem.svg3dUse.parentNode;
             }
+            $(parentNode).data("svg3dclones", elem.svg3dclones);
             // sort the clones by their z coordinates
             while (i--) {
                 current = elem.svg3dclones[i];
