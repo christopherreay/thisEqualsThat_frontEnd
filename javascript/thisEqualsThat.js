@@ -1,5 +1,5 @@
 window.thisEqualsThat = {};
-thisEqualsThat.graphicLoadVersion = "0.0.9.20160726.1639";
+thisEqualsThat.graphicLoadVersion = "0.0.9.20171003.1858";
 
 $('body').append('<link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">');
 
@@ -802,8 +802,8 @@ thisEqualsThat.oop = function()
       ThisEqualsThat.loadingInfogramByID = false;
     }
 
-    // ThisModelInstance.lastAlteredOutputField.data.currentValue = data.newValue;
-    // ThisModelInstance.lastAlteredVisualisationField.data.currentValue = data.svg3dDisplayJSON.svgFieldValue;
+    ThisModelInstance.lastAlteredOutputField.data.currentValue = data.newValue;
+    ThisModelInstance.lastAlteredVisualisationField.data.currentValue = data.svg3dDisplayJSON.svgFieldValue;
 
     // changed data. Now it has all the values of all the fields in it. Going to try to update the UI accordingly
     for (var fieldName in data.fieldValues)
@@ -975,9 +975,9 @@ thisEqualsThat.oop = function()
                                 .attr("xmlns:z",      "http://debeissat.nicolas.free.fr/svg3d/svg3d.rng")
                                 .attr("width",        "100%")
                                 .attr("height",       "100%")
-                                .attr("z:xInfinite",  "50")
-                                .attr("z:yInfinite",  "100")
-                                .attr("z:zRatio",     "5")
+                                .attr("z:xInfinite",  "1200000000000")
+                                .attr("z:yInfinite",  "1000000")
+                                .attr("z:zRatio",     "0.0001")
 
                                 .attr("class", "rootSVG id_"+this.id),
                                 [ [ "svg:defs.svgDefs" ],
