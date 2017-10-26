@@ -1756,10 +1756,12 @@ thisEqualsThat.oop = function()
 
 
     this.svgReferenceDefs =
-    [ { "heightThreshold": 0.03,  "fileHandle": "Ant",          "height": 0.002},
-      { "heightThreshold": 17.2,  "fileHandle": "SuperBlonde",  "height": 1.72},
+    [ //{ "heightThreshold": 0.03,  "fileHandle": "Ant",          "height": 0.002},
+      // { "heightThreshold": 17.2,  "fileHandle": "SuperBlonde",  "height": 1.72},
       //{ "heightThreshold": 33.0,  "fileHandle": "Bus",        "height": 4.40},
-      { "heightThreshold": 132.0, "fileHandle": "EiffelTower",  "height": 301.0}
+      //{ "heightThreshold": 132.0, "fileHandle": "EiffelTower",  "height": 301.0}
+
+      { "heightThreshold": 17.2,  "fileHandle": "bristolEnergyCoop",  "height": 1.72},
     ];
     this.svgReferenceDefsByName = {};
     for (var counter=0; counter < this.svgReferenceDefs.length; counter ++)
