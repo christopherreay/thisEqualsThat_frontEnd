@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-flat-20030114.dtd">
+<svg xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink" 
+ xmlns:z="http://debeissat.nicolas.free.fr/svg3d/svg3d.rng" 
+ z:xInfinite="300" z:yInfinite="200" z:zRatio="2">
+
+	<g id="g1">
+      <image x="0" y="0" width="100" height="127"
+     xlink:href="/static/svg/img/electricKettle_100pxWide.png"/>
+      
+	</g>
+</svg>

@@ -1,11 +1,12 @@
 window.thisEqualsThat = {};
-thisEqualsThat.graphicLoadVersion = "0.0.9.20160726.1639";
+thisEqualsThat.graphicLoadVersion = "0.0.9.20171003.1858";
 
 $('body').append('<link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">');
 
 thisEqualsThat.svg          = {};
 thisEqualsThat.svgStore     = {};
 thisEqualsThat.svgDefsStore = {};
+thisEqualsThat.svgXmlnsURLsStore = {};
 thisEqualsThat.memoise_normalDistribution = {};
 
 
@@ -221,7 +222,7 @@ thisEqualsThat.oop = function()
               modals["modal-content"]
             );
 
-    var modelClassOrder = [ "VolMassDen", "HowMany",  "PeopleRatioPlay", "Money", "Particle", "LightBulb", "CO2", "Wood", "Coal", "Seesaw", ];
+    var modelClassOrder = [ "VolMassDen", "HowMany",  "PeopleRatioPlay", "Money", "Particle", "LightBulb", "CO2", "Wood", "Coal", "Seesaw", "ElectricKettle"];
     var modelClassData  = { "HowMany"     : { "tutorialVideo": "je_M6gB8nZw" } ,
                             "VolMassDen"  : { "tutorialVideo": "z0LKAOowf9c" } ,
                             "LightBulb"   : { "tutorialVideo": "NnUqU9_hrrg" } ,
@@ -448,7 +449,7 @@ thisEqualsThat.oop = function()
       { url: "/getClassInstance",
         data: { modelClassName: this.name},
         success: function(data, status, request)
-        { console.log("getInstance:", this.name);
+        { console.log("getInstance:", This.name);
           This.modelInstance = new ThisEqualsThat.ModelInstance(This, data[0]);
           This.modelInstance.modelPosition = "top";
           This.modelInstance.displayIntoTarget(displayContainer);
@@ -802,8 +803,8 @@ thisEqualsThat.oop = function()
       ThisEqualsThat.loadingInfogramByID = false;
     }
 
-    // ThisModelInstance.lastAlteredOutputField.data.currentValue = data.newValue;
-    // ThisModelInstance.lastAlteredVisualisationField.data.currentValue = data.svg3dDisplayJSON.svgFieldValue;
+    ThisModelInstance.lastAlteredOutputField.data.currentValue = data.newValue;
+    ThisModelInstance.lastAlteredVisualisationField.data.currentValue = data.svg3dDisplayJSON.svgFieldValue;
 
     // changed data. Now it has all the values of all the fields in it. Going to try to update the UI accordingly
     for (var fieldName in data.fieldValues)
@@ -975,9 +976,9 @@ thisEqualsThat.oop = function()
                                 .attr("xmlns:z",      "http://debeissat.nicolas.free.fr/svg3d/svg3d.rng")
                                 .attr("width",        "100%")
                                 .attr("height",       "100%")
-                                .attr("z:xInfinite",  "50")
-                                .attr("z:yInfinite",  "100")
-                                .attr("z:zRatio",     "5")
+                                .attr("z:xInfinite",  "1200000000000")
+                                .attr("z:yInfinite",  "1000000")
+                                .attr("z:zRatio",     "0.0001")
 
                                 .attr("class", "rootSVG id_"+this.id),
                                 [ [ "svg:defs.svgDefs" ],
@@ -1364,7 +1365,7 @@ thisEqualsThat.oop = function()
                         };
                   }
 
-                  var clones                  = $(This.display.svgVisualisationG).data("svg3dclones");
+                  var clones                  = This.display.svgClonableG[0].svg3dclones;
                   var cloneCount              = clones.length;
                   var clonesNotChosenCount    = cloneCount;
                   var clonesNotChosenMemoise  = Array.apply(null, Array(cloneCount)).map(function (_, i) {return i;});
@@ -1566,10 +1567,8 @@ thisEqualsThat.oop = function()
 
     // Remove anchor from body
     document.body.removeChild(svgData.downloadLink);
-    svgData.svgBlob.close();
-    svgData.svgString = "";
-
-    console.log("saveSVG, ajaxOptions:", ajaxOptions);
+    delete svgData.svgBlob;
+    delete svgData.svgString;
   }
   this.ModelInstance.prototype.saveSVG= function(This)
   { ThisEqualsThat.display.pageWrapper.toggleClass("opacityPoint4", true);
@@ -1673,17 +1672,28 @@ thisEqualsThat.oop = function()
     if (!(thisEqualsThat.svgStore.hasOwnProperty(svgFileName)))
     { d3.xml("/static/svg/"+svgFileName+"?ver="+thisEqualsThat.graphicLoadVersion, 'image/svg+xml',
         function(xml)
-        { var importedNode    = document.importNode(xml.documentElement, true);
-          var importedRootG   = importedNode.getElementsByTagNameNS(d3.ns.prefix.svg, "g")[0];
-          var importedDefs    = importedNode.getElementsByTagNameNS(d3.ns.prefix.svg, "defs")[0];
+        { var importedNode        = document.importNode(xml.documentElement, true);
+          
+          var importedRootG       = importedNode.getElementsByTagNameNS(d3.ns.prefix.svg, "g")[0];
+          
+          var importedDefs        = importedNode.getElementsByTagNameNS(d3.ns.prefix.svg, "defs")[0];
+          
+          var importedXmlnsURLs   = {};
+          var svgAttributes       = importedNode.getAttributeNames();
+          var importedXmlnsNames  = svgAttributes.filter( (attribute) => attribute.startsWith("xmlns:") );
+          for (var i=importedXmlnsNames.length-1; i>-1; i--)
+          { importedXmlnsURLs[importedXmlnsNames[i]] = importedNode.getAttribute(importedXmlnsNames[i]);
+          }
 
           //var svgReferenceVisual  = $(thisEqualsThat.scene.referenceVisual.getSVGData(This.svg3dDisplayJSON.svgRelativeHighness)).clone();
           //svgReferenceVisual.appendTo(This.display.svgReferenceG);
           //$(svgReferenceVisual).attr("transform", "scale(0.2)");
 
           //console.("importSVG file", importedRootG);
-          thisEqualsThat.svgStore[svgFileName]      = $(importedRootG);
-          thisEqualsThat.svgDefsStore[svgFileName]  = $(importedDefs);
+          thisEqualsThat.svgStore[svgFileName]            = $(importedRootG);
+          thisEqualsThat.svgDefsStore[svgFileName]        = $(importedDefs);
+          thisEqualsThat.svgXmlnsURLsStore[svgFileName]   = importedXmlnsURLs;
+          // thisEqualsThat.svgXmlnsStore[svgFileName] = 
 
           This.displayCurrentOutput_2(This);
         }
@@ -1719,7 +1729,15 @@ thisEqualsThat.oop = function()
   }
 
   this.ModelInstance.prototype.appendSVGToDisplay = function()
-  { this.display.svgClonableG = thisEqualsThat.svgStore[this.svg3dDisplayJSON.svgFile].clone();
+  { var svgXmlnsAttributes  = thisEqualsThat.svgXmlnsURLsStore[this.svg3dDisplayJSON.svgFile];
+    var xmlnsNames          = Object.keys(svgXmlnsAttributes);
+    var xmlnsName;
+    for (i=xmlnsNames.length-1; i>-1; i--)
+    { xmlnsName = xmlnsNames[i];
+      this.display.rootSVG.attr(xmlnsName, svgXmlnsAttributes[xmlnsName]);
+    }
+
+    this.display.svgClonableG = thisEqualsThat.svgStore[this.svg3dDisplayJSON.svgFile].clone();
 
     $(this.display.svgVisualisationG).html(this.display.svgClonableG);
 
@@ -1756,10 +1774,12 @@ thisEqualsThat.oop = function()
 
 
     this.svgReferenceDefs =
-    [ { "heightThreshold": 0.03,  "fileHandle": "Ant",          "height": 0.002},
-      { "heightThreshold": 17.2,  "fileHandle": "SuperBlonde",  "height": 1.72},
+    [ //{ "heightThreshold": 0.03,  "fileHandle": "Ant",          "height": 0.002},
+      // { "heightThreshold": 17.2,  "fileHandle": "SuperBlonde",  "height": 1.72},
       //{ "heightThreshold": 33.0,  "fileHandle": "Bus",        "height": 4.40},
-      { "heightThreshold": 132.0, "fileHandle": "EiffelTower",  "height": 301.0}
+      //{ "heightThreshold": 132.0, "fileHandle": "EiffelTower",  "height": 301.0}
+
+      { "heightThreshold": 17.2,  "fileHandle": "bristolEnergyCoop",  "height": 1.72},
     ];
     this.svgReferenceDefsByName = {};
     for (var counter=0; counter < this.svgReferenceDefs.length; counter ++)
