@@ -1567,10 +1567,8 @@ thisEqualsThat.oop = function()
 
     // Remove anchor from body
     document.body.removeChild(svgData.downloadLink);
-    svgData.svgBlob.close();
-    svgData.svgString = "";
-
-    console.log("saveSVG, ajaxOptions:", ajaxOptions);
+    delete svgData.svgBlob;
+    delete svgData.svgString;
   }
   this.ModelInstance.prototype.saveSVG= function(This)
   { ThisEqualsThat.display.pageWrapper.toggleClass("opacityPoint4", true);
