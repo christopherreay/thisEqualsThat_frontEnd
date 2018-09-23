@@ -271,9 +271,10 @@ a.createConstruct
   height: 60px;
 }
 .mainNav-collapse
-{ float: right;
+{
+  /*float: right;
   width: 50%;
-  padding: 10px 0;
+  padding: 10px 0;*/
 }
 .navbarContent
 { height: 40px;
@@ -281,7 +282,7 @@ a.createConstruct
 }
 .createConstruct
 { float: right;
-  margin-right: 50px;
+  /*margin-right: 50px;*/
 }
  .navbarContent button.profileBbtn
 { padding: 0;
@@ -295,10 +296,10 @@ a.createConstruct
   overflow: visible;
   transition: all .3s;
 }
-.constructBtn .material-icons,
+/*.constructBtn .material-icons,
 .profileBbtn .material-icons
 { font-size: 40px;
-}
+}*/
 .profileBbtn .row-content
 { display: none;
 
