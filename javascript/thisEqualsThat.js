@@ -222,23 +222,26 @@ thisEqualsThat.oop = function()
               modals["modal-content"]
             );
 
-    var modelClassOrder = [ "VolMassDen", "HowMany",  "PeopleRatioPlay", "Money", "Particle", "LightBulb", "CO2", "Wood", "Coal", "Seesaw", "ElectricKettle"];
-    var modelClassData  = { "HowMany"     : { "tutorialVideo": "je_M6gB8nZw" } ,
-                            "VolMassDen"  : { "tutorialVideo": "z0LKAOowf9c" } ,
-                            "LightBulb"   : { "tutorialVideo": "NnUqU9_hrrg" } ,
+    var modelClassOrder = [ "VolMassDen", "HowMany",  "PeopleRatioPlay", "Money", "Particle", "LightBulb", "CO2", "Wood", "Coal", "Seesaw", "ElectricKettle", "Voting", "Ideation", "RegionalData", "CurriculumRadialMap"];
+    var modelClassData  = { "HowMany"     : { "tutorialVideo": "je_M6gB8nZw", "tutorialIndex": 1, "tutorialPlaylist": "PLvcKSclDckD0GLGEqdladfF0AS6wdysLk",} ,
+                            "VolMassDen"  : { "tutorialVideo": "z0LKAOowf9c", "tutorialIndex": 2, "tutorialPlaylist": "PLvcKSclDckD0GLGEqdladfF0AS6wdysLk",} ,
+                            "LightBulb"   : { "tutorialVideo": "NnUqU9_hrrg", "tutorialIndex": 3, "tutorialPlaylist": "PLvcKSclDckD0GLGEqdladfF0AS6wdysLk",} ,
+                            "Voting"      : { "tutorialVideo": "vtseiJwFGjc", "tutorialIndex": 4, "tutorialPlaylist": "PLvcKSclDckD0AwDVXRFUfMwWhX2nuCH6x",} ,
                           };
 
+
+    let tutorialIndex = 0;
     $.each( modelClassOrder,
       function (index, key)
       { var blueprintItem = ThisEqualsThat.modelClasses[key].getBlueprintItem(modals.constructBlueprint, modals.constructBlueprintContainer)[0];
         var modelClass    = blueprintItem.data("thisEquals_blueprint");
         if ( modelClassData.hasOwnProperty(key) )
         { O.create( [ ".videoOverlay.smoothMove" ], {}, blueprintItem );
-          modelClass.tutorialVideo = modelClassData[key].tutorialVideo;
-
+          // modelClass.tutorialVideo = modelClassData[key].tutorialVideo;
+          modelClass.youtubeData   = modelClassData[key];
 
         }
-        modelClass.tutorialIndex = index;
+
       }
     );
 
@@ -297,20 +300,20 @@ thisEqualsThat.oop = function()
           }
           var modelClass = $(event.currentTarget).closest(".blueprintItem").data("thisEquals_blueprint");
 
-          if (! modals.constructBlueprint.hasOwnProperty("tutorialPlayer") )
+          if (! modals.constructBlueprint.hasOwnProperty("youtubeData") )
           { modals.constructBlueprint.tutorialPlayer
               = new YT.Player
               ( 'blueprintTutorialPlayer',
                 { height:   modals.blueprintTutorialPlayer.height() - 15,
                   width:    modals.blueprintTutorialPlayer.width()  - 15,
-                  videoId:  modelClass.tutorialVideo,
+                  videoId:  modelClass.youtubeData.tutorialVideo,
                   events:
                   { 'onReady':
                       function()
                       { modals.constructBlueprint.tutorialPlayer
                             .loadPlaylist
-                            ( { "playlist": ["je_M6gB8nZw", "z0LKAOowf9c", "NnUqU9_hrrg"],
-                                "index":    modelClass.tutoralIndex,
+                            ( { "playlist": modelClass.youtubeData.tutorialPlaylist,
+                                "index":    modelClass.youtubeData.tutorialIndex,
                               }
                             )
                       },
@@ -322,8 +325,8 @@ thisEqualsThat.oop = function()
           else
           { modals.constructBlueprint.tutorialPlayer
               .loadPlaylist
-              ( { "playlist": "PLvcKSclDckD0GLGEqdladfF0AS6wdysLk",
-                  "index":    modelClass.tutoralIndex,
+              ( { "playlist": modelClass.youtubeData.tutorialPlaylist,
+                  "index":    modelClass.youtubeData.tutorialIndex,
                 }
               )
           }
