@@ -83,8 +83,8 @@ thisEqualsThat.oop = function()
 
       var modelClass      = ThisEqualsThat.modelClasses[modelClassName];
       var modelInstance   = modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
-      ThisEqualsThat.scene.setCurrentModelClass(modelClass); 
-      
+      ThisEqualsThat.scene.setCurrentModelClass(modelClass);
+
       ThisEqualsThat.redirectDisplayFromURL(window.location.pathname, event.state)
 
       modelInstance.inputFieldAltered_processServerData(modelInstance, event.state);
@@ -133,20 +133,20 @@ thisEqualsThat.oop = function()
   }
   this.redirectDisplayFromURL.blueprint = function(match, state)
   { var modelClassName = match[1];
-    var modelClassAlternateMaps = 
+    var modelClassAlternateMaps =
         { "HowMuch":      "VolMassDen",
-          
+
           "Particulate":  "Particle",
-          
+
           "Ratio":        "PeopleRatioPlay",
           "Percentage":   "PeopleRatioPlay",
         }
-    if ( modelClassAlternateMaps.hasOwnProperty(modelClassName) ) 
+    if ( modelClassAlternateMaps.hasOwnProperty(modelClassName) )
     { modelClassName = modelClassAlternateMaps[modelClassName];
     }
     var modelClass = ThisEqualsThat.modelClasses[modelClassName];
     modelClass.getModelInstance(ThisEqualsThat.scene.constructContainer);
-    ThisEqualsThat.scene.setCurrentModelClass(modelClass);    
+    ThisEqualsThat.scene.setCurrentModelClass(modelClass);
   }
   this.redirectDisplayFromURL.infogram = function(match, state)
   { var infogramID = match[1];
@@ -405,9 +405,9 @@ thisEqualsThat.oop = function()
             }
         );
         setTimeout
-        ( function() 
+        ( function()
           { ThisEqualsThat.display.welcomeOver.toggleClass("opacityZero", true);
-     
+
             setTimeout
             ( function()
               { ThisEqualsThat.displayInterface(ThisEqualsThat.display);
@@ -435,10 +435,10 @@ thisEqualsThat.oop = function()
       function(passThrough, appendTo)
       { if (! this.hasOwnProperty("blueprintItem") )
         { var displayName = this.displayName || this.name;
-          this.blueprintItem = 
+          this.blueprintItem =
               O.listGroupItem
-              ( passThrough, 
-                appendTo, 
+              ( passThrough,
+                appendTo,
                 "button", ".blueprintItem.ripplelink", [4, 6, 6, 12], $("<img class='blueprintIcon smoothMove' src='"+this.imageURL+"' />"), "", "@"+displayName, "@");
           passThrough.blueprintItem.data("thisEquals_blueprint", this);
           //O.create( [ ".videoOverlay.smoothMove" ], passThrough, passThrough.blueprintItem );
@@ -468,7 +468,7 @@ thisEqualsThat.oop = function()
       $.ajax(ajaxOptions);
     }
     else
-    { if (displayContainer != null) 
+    { if (displayContainer != null)
         this.modelInstance.displayIntoTarget(displayContainer);
       return this.modelInstance;
     }
@@ -791,7 +791,7 @@ thisEqualsThat.oop = function()
   }
   this.ModelInstance.prototype.inputFieldAltered_processServerData = function(ThisModelInstance, data, status, request, successFunction, doNotUpdateUI)
   { console.log("inputFieldAltered_processServerData:", data);
-    
+
     ThisModelInstance.svg3dDisplayJSON   = data.svg3dDisplayJSON;
 
     if (! ThisEqualsThat.loadingInfogramByID)
@@ -1121,7 +1121,7 @@ thisEqualsThat.oop = function()
       // display.svgTextInput.on("change", function() { display.svgTextDescription.text($(this).val()); This.svg_createSaveLink(This);});
     }
 
-    
+
 
     this.display.editableTextPlaceholder
         .editable
@@ -1513,12 +1513,12 @@ thisEqualsThat.oop = function()
       "data":   { "modelInstanceUUID": This.id},
       success: function(data, status, request)
       { console.log("saveInfogram:", data);
-        
+
         window.open(data.infogramURL, "_blank");
         ThisEqualsThat.display.wholePageDisableSpinner.toggleClass("displayNone", true);;
       }
     }
-    
+
     $.ajax(ajaxOptions);
   }
   this.regex.onlySimpleCharacters = /[^A-Za-z0-9_-]/g
@@ -1527,7 +1527,7 @@ thisEqualsThat.oop = function()
   }
   this.ModelInstance.prototype.getSVGAsString = function(This)
   { var This = this;
-    
+
     var svgString =   This.display.rootSVG[0].outerHTML
 
     // savableContainerSVG
@@ -1545,7 +1545,7 @@ thisEqualsThat.oop = function()
     { svgString = svgString.replace(stringToRemove, "");
     }
 
-    var svgFilename = 
+    var svgFilename =
         ThisEqualsThat.regex.oSC
         ( This.display.svgTextDescription.text() + "___" + This.lastAlteredOutputField.fullAddress + "__" + This.display.modelOutputValue.text()
         );
@@ -1553,9 +1553,9 @@ thisEqualsThat.oop = function()
     return { "svgString": svgString, "svgFilename": svgFilename };
   }
   this.ModelInstance.prototype.saveSVG_local= function(This)
-  { 
+  {
     ThisEqualsThat.display.wholePageDisableSpinner.toggleClass("displayNone", false);
-    
+
     svgData = This.getSVGAsString(This);
 
     svgData.downloadLink          = window.document.createElement('a');
@@ -1580,14 +1580,14 @@ thisEqualsThat.oop = function()
     ThisEqualsThat.display.uploadPercentText.text(standardPrecision(0));
 
     debugger;
-    
+
     svgData                       = This.getSVGAsString(This);
 
     svgData.saveSVGFormData       = new FormData();
     svgData.saveSVGFormData.append("svg", svgData.svgString);
 
     var ajaxOptions =
-    { "method":       "POST", 
+    { "method":       "POST",
       "url":          "/saveSVG",
       "processData":  false,
       "contextType":  false,
@@ -1638,7 +1638,7 @@ thisEqualsThat.oop = function()
     else
     { //console.("svg_createSaveLink", This);
 
-      
+
 
       This.display.savableSVGString = svgString;
 
@@ -1676,11 +1676,11 @@ thisEqualsThat.oop = function()
     { d3.xml("/static/svg/"+svgFileName+"?ver="+thisEqualsThat.graphicLoadVersion, 'image/svg+xml',
         function(xml)
         { var importedNode        = document.importNode(xml.documentElement, true);
-          
+
           var importedRootG       = importedNode.getElementsByTagNameNS(d3.ns.prefix.svg, "g")[0];
-          
+
           var importedDefs        = importedNode.getElementsByTagNameNS(d3.ns.prefix.svg, "defs")[0];
-          
+
           var importedXmlnsURLs   = {};
           var svgAttributes       = importedNode.getAttributeNames();
           var importedXmlnsNames  = svgAttributes.filter( (attribute) => attribute.startsWith("xmlns:") );
@@ -1696,7 +1696,7 @@ thisEqualsThat.oop = function()
           thisEqualsThat.svgStore[svgFileName]            = $(importedRootG);
           thisEqualsThat.svgDefsStore[svgFileName]        = $(importedDefs);
           thisEqualsThat.svgXmlnsURLsStore[svgFileName]   = importedXmlnsURLs;
-          // thisEqualsThat.svgXmlnsStore[svgFileName] = 
+          // thisEqualsThat.svgXmlnsStore[svgFileName] =
 
           This.displayCurrentOutput_2(This);
         }
@@ -1896,7 +1896,7 @@ thisEqualsThat.oop = function()
               //console.("referenceVisual:" + referenceSVGData.fileHandle);//, importedNode);
               var referenceRootG = $(importedNode).find("g").first();
               referenceVisualDefs.svgStore[referenceSVGData.fileHandle] = referenceRootG;
-              
+
               var referenceSVGSelectListItemSVG = $(document.createElementNS(d3.ns.prefix.svg, "svg"))
                   .attr("xmlns",        "http://www.w3.org/2000/svg")
                   .attr("xmlns:xlink",  "http://www.w3.org/1999/xlink")
@@ -2270,9 +2270,9 @@ thisEqualsThat.oop = function()
       if ($.inArray(tagHook, hudTagHooks) >-1 )
       { this.plugins[hudComponent][tagHook](defaultDict[hudDescriptor], this.contextData[hudComponent]);
       }
-      
+
     }
-    
+
 
     var svg3dDisplayJSON  = this.modelInstance.svg3dDisplayJSON;
 
@@ -2377,17 +2377,17 @@ thisEqualsThat.oop = function()
     if (! ThisEqualsThat.referenceVisual.popoverCreated)
     { $(document).popover
       ( { "selector":   ".referenceSVGSelect.hudItem",
-          "container":  "body", 
-          "html":       true, 
-          "title":      "Choose reference visual", 
-          "content":    "<div class='referenceSVGSelectListContainer'>"+ThisEqualsThat.referenceVisual.svgSelectList.html()+"</div>", 
+          "container":  "body",
+          "html":       true,
+          "title":      "Choose reference visual",
+          "content":    "<div class='referenceSVGSelectListContainer'>"+ThisEqualsThat.referenceVisual.svgSelectList.html()+"</div>",
           "placement" : "bottom",
           "viewport":   { "selector": "."+modelInstance.id+" .svgDiv", "padding": "10px" },
           "trigger":    "click focus",
           //"template":   '<div class="popover referenceSVGSelectListPopover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
 
           "template" :  '<div class="popover referenceSVGSelectListPopover" role="tooltip"><div class="popover-arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
-        } 
+        }
       )
 
       $("body").on
@@ -2396,7 +2396,7 @@ thisEqualsThat.oop = function()
             { var selectedDiv     = $(clickEvent.currentTarget)
               var fileHandle      = selectedDiv.attr("thisequals_filehandle");
               var modelInstance   = ThisEqualsThat.modelInstanceFocus;
-              
+
               if (This.userSelectedReferenceSVG == fileHandle)
               { modelInstance.userSelectedReferenceSVG = "";
                 // $(this).find(".referenceSVGSelectListItem").toggleClass("userSelectedReferenceSVG_selected", false);
@@ -2408,9 +2408,9 @@ thisEqualsThat.oop = function()
               }
               selectedDiv.closest(".referenceSVGSelectListPopover").popover("hide");
               setImmediate
-              ( function() 
-                { modelInstance.inputFieldAltered.call(modelInstance); 
-                  delete modelInstance.display.referenceSVGSelect.data("bs.popover")._activeTrigger.click; 
+              ( function()
+                { modelInstance.inputFieldAltered.call(modelInstance);
+                  delete modelInstance.display.referenceSVGSelect.data("bs.popover")._activeTrigger.click;
                 }
               );
             }
@@ -2425,7 +2425,7 @@ thisEqualsThat.oop = function()
   { //do nothing... yet :)
   }
   this.SVGHUD.prototype.referenceSVGSelect.prototype.preClone = function(svgHUD, context)
-  { 
+  {
   }
 
   this.SVGHUD.prototype.toggleFeatures = function(svgHUD, context)
@@ -2477,7 +2477,7 @@ thisEqualsThat.oop = function()
   { //do nothing... yet :)
   }
   this.SVGHUD.prototype.toggleFeatures.prototype.preClone = function(svgHUD, context)
-  { 
+  {
   }
 
 
@@ -2489,7 +2489,7 @@ thisEqualsThat.oop = function()
     this.svgHUD.divForHUD.append(this.context.display);
   }
   this.SVGHUD.prototype.fillManager.prototype.display   = function()
-  { 
+  {
   }
   this.SVGHUD.prototype.fillManager.prototype.hide      = function()
   { if ( this.context.hasOwnProperty("display") )
@@ -2854,7 +2854,7 @@ thisEqualsThat.oop = function()
     var display = this.display = {};
 
     var This = this;
-    
+
     O.create
     ( [ ".uiElement.inputFieldElement.inputField.displayFlex.spaceBetween.width100",
         [ [ ".inputFieldLabel.floatLeft.smallCaps", "@"+fieldData.displayName ],
@@ -2932,7 +2932,7 @@ thisEqualsThat.oop = function()
   }
   this.ModelFieldInput.prototype.inputField_text_changeFunction = function(event)
   { var This  = $(this).data("thisEquals.modelField");
-    
+
     This.data.currentValue = $(this).val();
     setImmediate
     ( function()

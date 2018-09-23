@@ -169,10 +169,10 @@ a.createConstruct
 }
 
 .colorRed
-{ color: red !important;  
+{ color: red !important;
 }
 .backgroundRed
-{ background-color: red !important;  
+{ background-color: red !important;
 }
 /*.color_visualTools
 { color: rgba(35, 190, 204, 1.0);
@@ -353,7 +353,7 @@ a.createConstruct
 
   background-size:      50%;
   background-repeat:    no-repeat;
-  background-position:  center; 
+  background-position:  center;
 }
 .visualToolsLogo
 { background-image:     url(/static/graphics/visualTools/visual.tools.logo.png);
@@ -379,7 +379,7 @@ a.createConstruct
 
 .visualToolsInfogram
 { background-image:     url(/static/graphics/visualTools/infogram.svg);
-  
+
   min-height:           16px;
   min-width:            16px;
   max-width:            200px;
@@ -792,7 +792,7 @@ svg.rootSVG
 
   display: flex;
 }
-.shareMenu > div 
+.shareMenu > div
 { border-radius: 50%;
   width: 42px;
   height: 42px;
@@ -1256,7 +1256,7 @@ path.highlight, .highlight path
 .ratioColorTotal .sp-preview
 { height: 10px;
   width: 10px;
-  
+
   margin-left: 4px;
   margin-top: 4px;
   border-radius: 50%;

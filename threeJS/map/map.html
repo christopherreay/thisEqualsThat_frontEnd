@@ -10,9 +10,9 @@
 <title>Custom tooltip</title>
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
-		<script src="lib/three.min.js"></script>
-		<script src="lib/Projector.js"></script>
-		<script src="lib/CanvasRenderer.js"></script>
+		<script src="../lib/three.min.js"></script>
+		<script src="../lib/Projector.js"></script>
+		<script src="../lib/CanvasRenderer.js"></script>
 <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
 <style>
   body { margin:0; padding:0; }
@@ -35,13 +35,13 @@ var container, stats, program,gui,anm=true, anmc=true,sprite;
 			var pg0=[], pg1=[],pg2=[],pg3=[],pg4=[],pg5=[],pg6=[],pg7=[],pg8=[],pg9=[],pg10=[];
 			var windowHalfX = window.innerWidth / 2;
 			var windowHalfY = window.innerHeight / 2;
-			
+
 		var Datcontrol = function() {
 		  this.User = 'Control';
 		  this.size=1;
-		  
+
 		};
-		
+
 		window.onload = function() {
 			  /*contr = new Datcontrol();
 			  gui = new dat.GUI();
@@ -50,8 +50,8 @@ var container, stats, program,gui,anm=true, anmc=true,sprite;
 				scale=value;
 			});*/
 		}
-		
-		
+
+
 var map = L.mapbox.map('map', 'mapbox.streets')
     .setView([51.45997, -2.59676], 14);
 map.on('popupclose', function(e) {
@@ -89,7 +89,7 @@ var featureLayer = L.mapbox.featureLayer({
     })
     .addTo(map);
 
-	
+
 // Note that calling `.eachLayer` here depends on setting GeoJSON _directly_
 // above. If you're loading GeoJSON asynchronously, like from CSV or from a file,
 // you will need to do this within a `featureLayer.on('ready'` event.
@@ -101,7 +101,7 @@ console.log(layer.feature.properties.canvasId);
     var content = '<h2>Particles PPM!<\/h2>' +
         '<p>----------------------------------------------<br \/>' +
 		'<div id=\"'+layer.feature.properties.canvasId+'\" width="200" height="200"><\/div>'+'<\/p>';
-		
+
     layer.bindPopup(content);
 	layer.on('click', function(e) {
 	//document.getElementsByClassName("leaflet-popup-content").style.width="200 px";
@@ -118,7 +118,7 @@ console.log(layer.feature.properties.canvasId);
 	//alert(e.latlng);
 	animate();
 	console.log("click on popup");
-	});		
+	});
 });
 
 function update(i,count,size,color){
@@ -139,7 +139,7 @@ function addParticles(ini,count,size,color){
 				switch(ini){
 				case 1:
 					pg1=[];store=pg1;break;
-				case 2:	
+				case 2:
 					pg2=[];store=pg2;break;
 				case 3:
 					pg3=[];store=pg3; break;
@@ -158,13 +158,13 @@ function addParticles(ini,count,size,color){
 				case 10:
 					pg10=[];store=pg10; break;
 				default:
-				}		
-				
+				}
+
 			var material = new THREE.SpriteCanvasMaterial( {
 						color: color,
 						program: program
 					} );
-					
+
 				var blueposition = -cubesize/2;
 				if (ini==0){
 					for ( var ii = 0; ii < cubesize; ii++ ) {
@@ -175,7 +175,7 @@ function addParticles(ini,count,size,color){
 						//particle.scale.x = particle.scale.y = Math.random() * 1 + r;
 						particle.scale.x = particle.scale.y =  size;
 						group.add( particle );
-						
+
 						//store.push(particle);
 						particle = new THREE.Sprite( material );
 						particle.position.x = 0;
@@ -241,12 +241,12 @@ function addParticles(ini,count,size,color){
 				};
 
 				group = new THREE.Group();
-				
+
 				//addParticles(0,100,1,'#0000ff');
 				addParticles(1,n2,4,'#0000ff');
 				addParticles(2,o2,4,'#00ff00');
 				addParticles(3,co2,4,'#ff0000');
-				
+
 				scene.add( group );
 				//addParticles(4,0.5,2.5,'#000000');
 				renderer = new THREE.CanvasRenderer({ alpha: true });
@@ -258,16 +258,16 @@ function addParticles(ini,count,size,color){
 				//container.appendChild( renderer.domElement );
 				//window.addEventListener( 'mousedown', onDocumentTouchStart, false );
 			}
-			
+
 			function animate() {
 			    //var delta = clock.getDelta();
 				requestAnimationFrame( animate );
 				//cameraControl.update(delta);
-							
+
 				render();
 			}
 			function render() {
-			    
+
 				//camera.position.x += ( mouseX - camera.position.x ) * 0.05;
 				//camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
 				camera.position.z = camz;
@@ -278,7 +278,7 @@ function addParticles(ini,count,size,color){
 					else
 						camz-=10;
 				}
-				
+
 				if(anm){
 					updateVelocity();
 					}
@@ -290,7 +290,7 @@ function addParticles(ini,count,size,color){
 					boundingCube.rotation.y += 0.005;
 				}*/
 				renderer.render( scene, camera );
-				
+
 			}
 function updateVelocity(){
 			//console.log("currentControlCounter "+currentControlCounter);
@@ -298,7 +298,7 @@ function updateVelocity(){
 				var store = window['pg'+ii];
 				//console.log(store.length);
 				if(store.length>0){
-				
+
 					for (var j=0;j<store.length;j++){
 						store[j].position.set(store[j].position.x+store[j].velocity.x,store[j].position.y+store[j].velocity.y,store[j].position.z+store[j].velocity.z);
 						if (store[j].position.x>=cubesize/2) store[j].velocity.x=-store[j].velocity.x;
@@ -310,7 +310,7 @@ function updateVelocity(){
 					}
 				}
 			}
-}			
+}
 </script>
 </body>
 </html>
