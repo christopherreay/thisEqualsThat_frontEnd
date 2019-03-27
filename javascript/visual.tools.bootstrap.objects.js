@@ -476,12 +476,37 @@ function($)
     return toReturn;
   }
 
+  let originalLeave = $.fn.tooltip.Constructor.prototype.leave;
+  $.fn.tooltip.Constructor.prototype.leave = function(obj) {
+
+    debugger;
+
+    let self = obj instanceof this.constructor ?
+      obj : $(obj.currentTarget)[this.type](this.getDelegateOptions()).data('bs.' + this.type)
+    let container, timeout;
+
+    originalLeave.call(this, obj);
+
+    if (obj.currentTarget) {
+      container = $(obj.currentTarget).siblings('.tooltip')
+      timeout = self.timeout;
+      container.one('mouseenter', function() {
+        //We entered the actual popover – call off the dogs
+        clearTimeout(timeout);
+        //Let's monitor popover content instead
+        container.one('mouseleave', function() {
+          $.fn.tooltip.Constructor.prototype.leave.call(self, self);
+        });
+      })
+    }
+  };
+
   this.tooltip =
   function(passThrough, appendTo, tooltipPrependList, tooltipContents, tooltipOptions)
-  { var toReturn = 
+  { var toReturn =
     O.create
     ( [ tooltipPrependList+"",
-        [ [ $("<a href=='#' class='tooltip' data-toggle='tooltip' title='"+tooltipContents+"' />"), 
+        [ [ $("<a href=='#' class='tooltip' data-toggle='tooltip' title='"+tooltipContents+"' />"),
           ],
         ],
       ],

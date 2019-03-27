@@ -1777,12 +1777,14 @@ thisEqualsThat.oop = function()
 
 
     this.svgReferenceDefs =
-    [ //{ "heightThreshold": 0.03,  "fileHandle": "Ant",          "height": 0.002},
-      // { "heightThreshold": 17.2,  "fileHandle": "SuperBlonde",  "height": 1.72},
-      //{ "heightThreshold": 33.0,  "fileHandle": "Bus",        "height": 4.40},
-      //{ "heightThreshold": 132.0, "fileHandle": "EiffelTower",  "height": 301.0}
-
+    [
+      { "heightThreshold": 0.03,  "fileHandle": "Ant",          "height": 0.002},
       { "heightThreshold": 17.2,  "fileHandle": "bristolEnergyCoop",  "height": 1.72},
+      // { "heightThreshold": 17.2,  "fileHandle": "SuperBlonde",  "height": 1.72},
+      { "heightThreshold": 33.0,  "fileHandle": "Bus",        "height": 4.40},
+      { "heightThreshold": 132.0, "fileHandle": "EiffelTower",  "height": 301.0}
+
+
     ];
     this.svgReferenceDefsByName = {};
     for (var counter=0; counter < this.svgReferenceDefs.length; counter ++)
@@ -1981,7 +1983,8 @@ thisEqualsThat.oop = function()
         }
         else if (orderItem.startsWith("#fieldInfo_") )
         { var fieldElement  = elementList[elementList.length -1]
-          O.tooltip( {}, fieldElement, ".fieldElementTooltip", orderItem.substring(11), {"html":true, "placement": "right", "container": This.inputFieldHUD.modelInstance.display.svgDiv});
+          debugger;
+          O.tooltip( {}, fieldElement, ".fieldElementTooltip", orderItem.substring(11).replace(/\'/g, "\\\""), {"html":true, "placement": "right", "container": This.inputFieldHUD.modelInstance.display.svgDiv, "trigger": "hover click"});
         }
         else
         { elementList.push(this.inputFieldHUD.modelInstance.inputFields[`["${orderItem.replace(", ", "\", \"")}"]`].uiElement); //"
@@ -3286,14 +3289,14 @@ $().ready(
     ga('send', 'pageview');
 
 
-    (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:500067,hjsv:5};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+    // (function(h,o,t,j,a,r){
+    //     h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+    //     h._hjSettings={hjid:500067,hjsv:5};
+    //     a=o.getElementsByTagName('head')[0];
+    //     r=o.createElement('script');r.async=1;
+    //     r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+    //     a.appendChild(r);
+    // })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
 
 
     window.ThisEqualsThat = new thisEqualsThat.oop();
