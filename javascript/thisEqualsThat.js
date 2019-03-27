@@ -1534,7 +1534,7 @@ thisEqualsThat.oop = function()
     //     .attr("width",          This.display.rootSVG.css("width"))
     //     .attr("height",         This.display.rootSVG.css("height"))
     // ;
-    var removeTheseAttributes = ["xmlns:xlink", "xmlns:z", "z:xInfinite", "z:yInfinite", "z:zRatio"];
+    var removeTheseAttributes = ["xmlns:z", "z:xInfinite", "z:yInfinite", "z:zRatio"];
     for (attributeToRemove  of removeTheseAttributes)
     { svgString = svgString.replace(new RegExp(attributeToRemove+".*?\".*?\""), "");
     }
