@@ -1,5 +1,5 @@
 window.thisEqualsThat = {};
-thisEqualsThat.graphicLoadVersion = "0.0.9.20171003.1858";
+thisEqualsThat.graphicLoadVersion = "0.0.9.20190327.16:40";
 
 $('body').append('<link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">');
 
@@ -1534,7 +1534,7 @@ thisEqualsThat.oop = function()
     //     .attr("width",          This.display.rootSVG.css("width"))
     //     .attr("height",         This.display.rootSVG.css("height"))
     // ;
-    var removeTheseAttributes = ["xmlns:z", "z:xInfinite", "z:yInfinite", "z:zRatio"];
+    var removeTheseAttributes = ["xmlns:z", "z:xInfinite", "z:yInfinite", "z:zRatio"]; //xmlns:xlink
     for (attributeToRemove  of removeTheseAttributes)
     { svgString = svgString.replace(new RegExp(attributeToRemove+".*?\".*?\""), "");
     }
